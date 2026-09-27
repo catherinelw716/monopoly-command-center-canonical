@@ -1,0 +1,46 @@
+{
+  "season": 2026,
+  "week": null,
+  "snapshot_type": "FRIDAY_FREEZE",
+  "captured_at_utc": "REPLACE_WITH_UTC_TIMESTAMP",
+  "market_source": "REPLACE_WITH_MARKET_SOURCE",
+  "market_observed_at_utc": "REPLACE_WITH_UTC_TIMESTAMP",
+  "input_source": "manual-verified",
+  "games": [
+    {
+      "game_id": "REPLACE",
+      "away_team": "REPLACE",
+      "home_team": "REPLACE",
+      "kickoff_utc": "REPLACE_WITH_UTC_TIMESTAMP",
+      "sly_home_spread": null,
+      "market_home_spread": null,
+      "market_notes": "",
+      "v1": {
+        "side": null,
+        "confidence": null,
+        "probability": null
+      },
+      "external": {
+        "sportsline": {
+          "side": null,
+          "type": null,
+          "grade": null,
+          "reference_line": null,
+          "observed_at_utc": null
+        },
+        "gridiron": {
+          "side": null,
+          "probability": null,
+          "reference_line": null,
+          "observed_at_utc": null
+        },
+        "lucas": {
+          "signal": null,
+          "side": null,
+          "observed_at_utc": null
+        }
+      },
+      "notes": ""
+    }
+  ]
+}
