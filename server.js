@@ -1,23 +1,54 @@
 const http = require('http');
 const fs = require('fs');
-const zlib = require('zlib');
 
 const port = process.env.PORT || 10000;
-const packed = fs.readFileSync('app.br.b64', 'utf8').trim();
-const html = zlib.brotliDecompressSync(Buffer.from(packed, 'base64'));
+const BASE_URL = process.env.BASE_URL || 'https://monopoly-command-center-v67.floot.app/_cdn/static/f4ebb851-c03c-451c-81c5-343be9983db0-command-center-v67-all3-currentmodel.txt';
+const patch = fs.readFileSync('canonical-patch.html', 'utf8');
+let cachedHtml = null;
+let loadError = null;
 
-const server = http.createServer((req, res) => {
+async function loadApp() {
+  if (cachedHtml) return cachedHtml;
+  const response = await fetch(BASE_URL, { redirect: 'follow' });
+  if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
+  const base = await response.text();
+  if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
+  cachedHtml = base.includes('</body>') ? base.replace('</body>', `${patch}\n</body>`) : `${base}\n${patch}`;
+  return cachedHtml;
+}
+
+const server = http.createServer(async (req, res) => {
   if (req.url === '/healthz') {
-    res.writeHead(200, {'content-type':'text/plain; charset=utf-8'});
-    return res.end('ok');
+    try {
+      const html = await loadApp();
+      res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3'}));
+    } catch (err) {
+      loadError = String(err && err.message ? err.message : err);
+      res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
+      return res.end(JSON.stringify({status:'error', error:loadError}));
+    }
   }
-  res.writeHead(200, {
-    'content-type': 'text/html; charset=utf-8',
-    'cache-control': 'no-store, max-age=0'
-  });
-  res.end(html);
+  try {
+    const html = await loadApp();
+    res.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'no-store, max-age=0'
+    });
+    res.end(html);
+  } catch (err) {
+    loadError = String(err && err.message ? err.message : err);
+    res.writeHead(503, {'content-type':'text/plain; charset=utf-8'});
+    res.end(`Command Center failed to load: ${loadError}`);
+  }
 });
 
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, '0.0.0.0', async () => {
   console.log(`Command Center listening on ${port}`);
+  try {
+    const html = await loadApp();
+    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes`);
+  } catch (err) {
+    console.error('Initial canonical app load failed:', err);
+  }
 });
