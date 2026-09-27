@@ -1,0 +1,42 @@
+<style id="week3-four-source-authoritative-style">
+#week3FourSourceAuthoritative{margin:12px 0}.w3fs-note{font-size:9px;color:#94a3b8;line-height:1.4;margin-top:6px}.w3fs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:9px}.w3fs-grid>div{padding:10px;border:1px solid rgba(148,163,184,.14);border-radius:10px;background:rgba(15,23,42,.24);min-width:0}.w3fs-grid small{display:block;color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}.w3fs-grid b{display:block;font-size:13px;line-height:1.3}.w3fs-grid span{display:block;color:#9db3aa;font-size:9px;line-height:1.4;margin-top:4px}@media(max-width:760px){.w3fs-grid{grid-template-columns:1fr 1fr}}
+</style>
+<script id="week3-four-source-authoritative-layer">
+(function(){
+ const TS='Sep 27 · 12:01 PM ET';
+ const M={
+  'MIN @ TB':{rank:1,pick:'MIN -1.5',grade:'A',state:'PLAY',current:'MIN -2.5',diff:'-1.0',edge:'6.03% material'},
+  'CAR @ CLE':{rank:2,pick:'CLE +2.5',grade:'A-',state:'PLAY',current:'CLE +2',diff:'-0.5',edge:'3.37% material'},
+  'SEA @ WAS':{rank:3,pick:'WAS +7.5',grade:'A-',state:'PLAY',current:'WAS +7',diff:'-0.5',edge:'3.37% material'},
+  'LAC @ BUF':{rank:4,pick:'BUF -7',grade:'A-',state:'PLAY',current:'BUF -7.5',diff:'-0.5',edge:'3.32% material'},
+  'NE @ JAX':{rank:5,pick:'NE +3',grade:'B+',state:'PLAY',current:'NE +2.5',diff:'-0.5',edge:'2.76% material'},
+  'KC @ MIA':{rank:6,pick:'KC -10.5',grade:'B',state:'WATCH',current:'KC -10.5',diff:'0.0',edge:'effectively neutral / context'},
+  'ARI @ SF':{rank:7,pick:'ARI +8.5',grade:'B',state:'WATCH',current:'ARI +8.5',diff:'0.0',edge:'effectively neutral / context'},
+  'LAR @ DEN':{rank:8,pick:'DEN +2.5',grade:'B',state:'WATCH',current:'DEN +2.5',diff:'0.0',edge:'effectively neutral / context'},
+  'CIN @ PIT':{rank:9,pick:'PIT +3.5',grade:'B-',state:'WATCH',current:'PIT +3.5',diff:'0.0',edge:'effectively neutral / context'},
+  'BAL @ DAL':{rank:10,pick:'DAL +3.5',grade:'B-',state:'WATCH',current:'DAL +3.5',diff:'0.0',edge:'effectively neutral / context'},
+  'HOU @ IND':{rank:11,pick:'IND +1.5',grade:'B-',state:'WATCH',current:'IND +1.5',diff:'0.0',edge:'effectively neutral / context'},
+  'NYJ @ DET':{rank:12,pick:'DET -6.5',grade:'C+',state:'WATCH',current:'DET -6.5',diff:'0.0',edge:'effectively neutral'},
+  'TEN @ NYG':{rank:13,pick:'TEN +2.5',grade:'C+',state:'WATCH',current:'TEN +2.5',diff:'0.0',edge:'effectively neutral'},
+  'LV @ NO':{rank:14,pick:'NO -3',grade:'C+',state:'WATCH',current:'NO -3',diff:'0.0',edge:'effectively neutral'},
+  'PHI @ CHI':{rank:15,pick:'PHI -4.5',grade:'—',state:'LOCKED',current:'—',diff:'—',edge:'locked'}
+ };
+ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function currentGame(){try{const q=new URLSearchParams(location.search).get('game');if(q&&M[q])return q;}catch(e){}const txt=(document.getElementById('gameHero')?.textContent||'')+' '+(document.body?.textContent||'');return Object.keys(M).find(g=>txt.includes(g))||'';}
+ function sports(d){if(!d?.sl)return {main:'No captured source',meta:''};const s=d.sl;return {main:s.rec||'—',meta:`${s.grade||'—'} · ${s.type||'—'} · ${s.picks||0} picks${s.type==='ATS'?'':' · not an ATS vote'}`};}
+ function grid(d){if(!d?.ga)return {main:'No captured source',meta:''};const g=d.ga;if(g.awayPct===g.homePct)return {main:'50/50 · NO TAKE',meta:`ref ${g.ref||'—'}${g.exact?' · exact Sly line':' · reference mismatch'}`};const away=g.awayPct>g.homePct;return {main:(away?g.away:g.home)+' · '+Math.max(g.awayPct,g.homePct)+'%',meta:`ref ${g.ref||'—'}${g.exact?' · exact Sly line':' · reference mismatch'}`};}
+ function lucas(game){const l=(window.lucasWeek3||{})[game];return l?{main:l.side,meta:l.signal+' · captured external view'}:{main:'NO TAKE',meta:'No captured Lucas take'};}
+ function render(game){const m=M[game];if(!m)return;const d=(window.week3ScreenshotSources||{})[game];const sl=sports(d),ga=grid(d),lu=lucas(game);
+   ['canonicalSourceSnapshot','screenshotSourceDrilldown','lucasGameSourcePanel','week3FourSourceAuthoritative'].forEach(id=>document.getElementById(id)?.remove());
+   const anchor=document.getElementById('week3AuthoritativeGameRead')||document.getElementById('gameHero');if(!anchor)return;
+   const box=document.createElement('div');box.id='week3FourSourceAuthoritative';box.className='panel';
+   box.innerHTML=`<div class="eyebrow">4-source game view · model refreshed ${TS}</div><h3>${esc(game)}</h3><div class="w3fs-grid"><div><small>Our V2 Model · current</small><b>${esc(m.pick)} · ${esc(m.grade)} · ${esc(m.state)}</b><span>#${m.rank} · market ${esc(m.current)} · DIFF ${esc(m.diff)} · ${esc(m.edge)}</span></div><div><small>SportsLine · captured snapshot</small><b>${esc(sl.main)}</b><span>${esc(sl.meta)}</span></div><div><small>Gridiron AI · captured snapshot</small><b>${esc(ga.main)}</b><span>${esc(ga.meta)}</span></div><div><small>Lucas · captured snapshot</small><b>${esc(lu.main)}</b><span>${esc(lu.meta)}</span></div></div><div class="w3fs-note"><b>Freshness:</b> Our V2 model/current market is the Sep 27 12:01 PM ET pre-lock refresh. SportsLine, Gridiron and Lucas are the most recently captured source snapshots already stored in the Command Center; they are shown for context and are not mislabeled as 12:01-current unless separately refreshed.</div>`;
+   anchor.insertAdjacentElement('afterend',box);
+   window.week3FourSourceQA={game,model:m.pick,timestamp:TS,externalSnapshotLabeled:true};
+ }
+ function apply(){const g=currentGame();if(g)render(g);}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,500));else setTimeout(apply,500);
+ setTimeout(apply,1450);
+ document.addEventListener('click',e=>{const card=e.target.closest('[data-game]');if(card&&M[card.dataset.game])setTimeout(()=>render(card.dataset.game),180);const nav=e.target.closest('[data-source-view="compare"],[data-view="games"]');if(nav)setTimeout(apply,280);},true);
+})();
+</script>
