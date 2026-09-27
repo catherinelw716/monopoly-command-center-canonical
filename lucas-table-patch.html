@@ -1,0 +1,47 @@
+<script id="canonical-lucas-table-layer">
+(function(){
+  const lucas={
+    'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},
+    'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},
+    'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},
+    'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},
+    'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},
+    'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},
+    'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
+  };
+
+  if(!document.getElementById('canonical-lucas-board-style')){
+    const style=document.createElement('style');
+    style.id='canonical-lucas-board-style';
+    style.textContent=`.vg-sources{grid-template-columns:repeat(4,minmax(0,1fr))!important}.source-mini.lucas{background:#2a2011;color:#fff4d6;border-color:#6d5424}.source-mini.lucas small{color:#d7b96f}.source-mini.lucas b{color:#ffd983}@media(max-width:700px){.vg-sources{grid-template-columns:repeat(2,minmax(0,1fr))!important}}`;
+    document.head.appendChild(style);
+  }
+
+  function decorate(){
+    document.querySelectorAll('.visual-game[data-game]').forEach(card=>{
+      const sources=card.querySelector('.vg-sources');
+      if(!sources) return;
+      sources.querySelector('.source-mini.lucas')?.remove();
+      const pick=lucas[card.dataset.game];
+      const tile=document.createElement('div');
+      tile.className='source-mini lucas';
+      tile.innerHTML=pick
+        ? `<small>Lucas</small><b>${pick.signal}</b><span>${pick.side}</span>`
+        : `<small>Lucas</small><b>NO TAKE</b><span>—</span>`;
+      sources.appendChild(tile);
+    });
+  }
+
+  decorate();
+  const observer=new MutationObserver(decorate);
+  ['gamesList','todayGameList','recommendedPlays'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) observer.observe(el,{childList:true,subtree:true});
+  });
+
+  setTimeout(()=>{
+    const count=document.querySelectorAll('#gamesList .visual-game .source-mini.lucas').length;
+    window.lucasTableQA={status:count===15?'PASS':'FAIL',visibleRows:count,expectedRows:15};
+  },0);
+})();
+</script>
