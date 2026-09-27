@@ -1,0 +1,64 @@
+<style id="week3-prelock-command-center-style">
+.prelock-banner{margin:10px 0;padding:10px 12px;border:1px solid rgba(59,130,246,.28);background:rgba(59,130,246,.08);border-radius:12px;font-size:11px;line-height:1.45}.prelock-banner b{color:#dbeafe}.edge-chip{display:inline-flex;padding:3px 7px;border-radius:999px;font-size:9px;font-weight:800;margin-left:5px}.edge-material{background:rgba(34,197,94,.14);color:#bbf7d0}.edge-context{background:rgba(148,163,184,.12);color:#cbd5e1}.edge-neutral{background:rgba(245,158,11,.12);color:#fde68a}
+</style>
+<script id="week3-prelock-command-center-layer">
+(function(){
+ const TS='Sep 27 · 12:01 PM ET';
+ const C_BANK=11400,A_BANK=10300;
+ const data={
+  'MIN @ TB':{rank:1,pick:'MIN -1.5',grade:'A',state:'PLAY',current:'MIN -2.5',diff:'-1.0',edge:'6.03%',kind:'MATERIAL',c:100,a:200},
+  'CAR @ CLE':{rank:2,pick:'CLE +2.5',grade:'A-',state:'PLAY',current:'CLE +2',diff:'-0.5',edge:'3.37%',kind:'MATERIAL',c:100,a:0},
+  'SEA @ WAS':{rank:3,pick:'WAS +7.5',grade:'A-',state:'PLAY',current:'WAS +7',diff:'-0.5',edge:'3.37%',kind:'MATERIAL',c:0,a:100},
+  'LAC @ BUF':{rank:4,pick:'BUF -7',grade:'A-',state:'PLAY',current:'BUF -7.5',diff:'-0.5',edge:'3.32%',kind:'MATERIAL',c:100,a:0},
+  'NE @ JAX':{rank:5,pick:'NE +3',grade:'B+',state:'PLAY',current:'NE +2.5',diff:'-0.5',edge:'2.76%',kind:'MATERIAL',c:0,a:100},
+  'KC @ MIA':{rank:6,pick:'KC -10.5',grade:'B',state:'WATCH',current:'KC -10.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0},
+  'ARI @ SF':{rank:7,pick:'ARI +8.5',grade:'B',state:'WATCH',current:'ARI +8.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:100},
+  'LAR @ DEN':{rank:8,pick:'DEN +2.5',grade:'B',state:'WATCH',current:'DEN +2.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0},
+  'CIN @ PIT':{rank:9,pick:'PIT +3.5',grade:'B-',state:'WATCH',current:'PIT +3.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0},
+  'BAL @ DAL':{rank:10,pick:'DAL +3.5',grade:'B-',state:'WATCH',current:'DAL +3.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:0},
+  'HOU @ IND':{rank:11,pick:'IND +1.5',grade:'B-',state:'WATCH',current:'IND +1.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:0},
+  'NYJ @ DET':{rank:12,pick:'DET -6.5',grade:'C+',state:'WATCH',current:'DET -6.5',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'TEN @ NYG':{rank:13,pick:'TEN +2.5',grade:'C+',state:'WATCH',current:'TEN +2.5',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'LV @ NO':{rank:14,pick:'NO -3',grade:'C+',state:'WATCH',current:'NO -3',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'PHI @ CHI':{rank:15,pick:'PHI -4.5',grade:'—',state:'LOCKED',current:'—',diff:'—',edge:'locked',kind:'NEUTRAL',c:0,a:0}
+ };
+ const pct=(n,d)=>(100*n/d).toFixed(1)+'%';
+ function applyGames(){
+  if(Array.isArray(window.games)){
+   window.games.forEach(g=>{const x=data[g.game];if(!x)return;Object.assign(g,{rank:x.rank,lean:x.pick,decision:x.state,state:x.state,confidence:x.grade,current:x.current,diff:x.diff,catherine:x.c,amanda:x.a});});
+   window.games.sort((a,b)=>(data[a.game]?.rank||99)-(data[b.game]?.rank||99));
+   try{if(typeof window.renderBoards==='function')window.renderBoards();else if(typeof renderBoards==='function')renderBoards();}catch(e){}
+  }
+  if(Array.isArray(window.sourceData)){
+   window.sourceData.forEach(d=>{const x=data[d.game];if(!x)return;d.ourRank=x.rank;d.ourGrade=x.grade;d.ourPick=x.pick;d.ourState=x.state;d.currentMarket=x.current;d.v2Edge=x.edge;d.v2EdgeKind=x.kind;});
+   window.sourceData.sort((a,b)=>(data[a.game]?.rank||99)-(data[b.game]?.rank||99));
+  }
+ }
+ function banner(){
+  const t=document.getElementById('today');if(!t)return;
+  let b=document.getElementById('prelockFreshness');if(!b){b=document.createElement('div');b.id='prelockFreshness';b.className='prelock-banner';const first=t.querySelector('.panel');(first||t).prepend(b);}
+  b.innerHTML=`<b>Pre-lock refresh · ${TS}</b><br>Current-market layer updated. V1 remains production champion; V2-0006C remains the research/challenger probability layer. Tournament sizing is shown separately from football-edge strength.`;
+ }
+ function today(){
+  const t=document.getElementById('today');if(!t)return;banner();
+  const k=t.querySelector('.kpis');if(k)k.innerHTML=`<div class="kpi"><small>Catherine</small><b>$11,400</b><span>#30 · $600 current V2 allocation (${pct(600,C_BANK)})</span></div><div class="kpi"><small>Amanda</small><b>$10,300</b><span>#44 · $500 current V2 allocation (${pct(500,A_BANK)})</span></div><div class="kpi"><small>Household outlay</small><b>$1,100</b><span>${pct(1100,C_BANK+A_BANK)} · robust-risk objective</span></div><div class="kpi"><small>Strongest price edge</small><b>MIN -1.5</b><span>Market ~MIN -2.5 · 1 point of Sly value</span></div>`;
+  const a=t.querySelector('.alerts');if(a)a.innerHTML=`<div class="alert green"><span class="dot"></span><div><b>MIN -1.5 is the strongest refreshed V2 price edge.</b><br>Sly is one point better than the 12:01 ET market.</div></div><div class="alert green"><span class="dot"></span><div><b>Five genuine price-value sides now lead the board.</b><br>MIN -1.5, CLE +2.5, WAS +7.5, BUF -7 and NE +3.</div></div><div class="alert yellow"><span class="dot"></span><div><b>Low wager size does not mean weak football signal.</b><br>The current $1,100 household allocation is driven by the robust tournament downside objective; edge ranking and stake sizing are intentionally separate.</div></div>`;
+ }
+ function portfolio(){
+  const p=document.getElementById('portfolio');if(!p)return;
+  const fp=p.querySelector('.section-head + .panel');if(fp)fp.innerHTML=`<div class="eyebrow">Week 3 pre-lock · ${TS}</div><b style="display:block;font-size:18px;margin-top:3px">Current robust V2 allocation: $1,100 household</b><p style="font-size:10px;color:#9db3aa;margin:5px 0 0">This is the latest risk-adjusted tournament allocation, not a direct measure of football conviction. The optimizer currently prefers preserving future bankroll after taking minimum exposure to the identified edges.</p>`;
+  const pg=p.querySelector('.portfolio-grid');if(pg)pg.innerHTML=`<div class="panel entry-card"><div class="eyebrow">Catherine · #30 · $11,400</div><h3>$600 · 6 games</h3><div class="wager-list"><div class="wager"><b>MIN -1.5</b><span>$100</span></div><div class="wager"><b>CLE +2.5</b><span>$100</span></div><div class="wager"><b>BUF -7</b><span>$100</span></div><div class="wager"><b>KC -10.5</b><span>$100</span></div><div class="wager"><b>DEN +2.5</b><span>$100</span></div><div class="wager"><b>PIT +3.5</b><span>$100</span></div></div></div><div class="panel entry-card"><div class="eyebrow">Amanda · #44 · $10,300</div><h3>$500 · 4 games</h3><div class="wager-list"><div class="wager"><b>MIN -1.5</b><span>$200</span></div><div class="wager"><b>WAS +7.5</b><span>$100</span></div><div class="wager"><b>NE +3</b><span>$100</span></div><div class="wager"><b>ARI +8.5</b><span>$100</span></div></div></div>`;
+ }
+ function analysis(){
+  const s=document.getElementById('analysis');if(!s)return;
+  const first=s.querySelector('.panel');if(first)first.innerHTML=`<div class="eyebrow">Pre-lock synthesis · ${TS}</div><h2>Overall Analysis</h2><p><b>Price-edge ranking:</b> MIN -1.5 (strongest), CLE +2.5, WAS +7.5, BUF -7, NE +3. Market-equal games remain effectively neutral in frozen V2 and are not promoted by the model's tiny residual drift.</p><div class="prelock-banner"><b>Model state</b><br>V1 remains production champion. V2-0006C-global-hybrid-r1 is the challenger/research probability layer. SportsLine, Gridiron and Lucas remain contextual/external evidence and are not mathematically weighted into V2 probabilities.</div>`;
+ }
+ function decorateRows(){
+  document.querySelectorAll('[data-game]').forEach(el=>{const x=data[el.dataset.game];if(!x)return;el.dataset.v2Edge=x.edge;});
+ }
+ function apply(){applyGames();today();portfolio();analysis();decorateRows();window.week3PrelockQA={timestamp:TS,householdOutlay:1100,catherine:600,amanda:500,materialEdges:['MIN -1.5','CLE +2.5','WAS +7.5','BUF -7','NE +3'],snapshot:'week_03_current_market_2026-09-27_1201ET.json'};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,250));else setTimeout(apply,250);
+ setTimeout(apply,1100);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-view="today"],[data-view="portfolio"],[data-view="analysis"],[data-view="games"]'))setTimeout(apply,160);});
+})();
+</script>
