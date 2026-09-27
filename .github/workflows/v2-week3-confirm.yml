@@ -1,0 +1,32 @@
+name: V2 Week 3 Confirmation
+
+on:
+  push:
+    paths:
+      - 'v2/run_week3_second_stage_confirm.py'
+      - '.github/workflows/v2-week3-confirm.yml'
+  workflow_dispatch:
+
+jobs:
+  confirm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy
+      - name: Run focused confirmation
+        run: |
+          python v2/run_week3_second_stage_confirm.py > /tmp/confirm.json
+          python - <<'PY'
+          import json
+          d=json.load(open('v2/results/week3_second_stage_confirm.json'))
+          b=d['best_overall']
+          print('BEST', {k:b[k] for k in ['c_games','a_games','c_fraction','a_fraction','household_outlay','robust_floor_utility','robust_average_utility','base_expected_household_prize_share','base_p_any_cash','base_future_minimum_failure_risk']})
+          print('BETS', b['bets_by_entry'])
+          print('BY_STRUCTURE')
+          for x in d['best_by_structure']:
+              print(x['c_games'],x['a_games'],x['c_fraction'],x['a_fraction'],x['household_outlay'],round(x['robust_floor_utility'],8),round(x['base_future_minimum_failure_risk'],6))
+          PY
