@@ -4,6 +4,7 @@ const fs = require('fs');
 const port = process.env.PORT || 10000;
 const BASE_URL = process.env.BASE_URL || 'https://monopoly-command-center-v67.floot.app/_cdn/static/f4ebb851-c03c-451c-81c5-343be9983db0-command-center-v67-all3-currentmodel.txt';
 const patch = fs.readFileSync('canonical-patch.html', 'utf8');
+const lucasTablePatch = fs.readFileSync('lucas-table-patch.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
 
@@ -13,7 +14,8 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
-  cachedHtml = base.includes('</body>') ? base.replace('</body>', `${patch}\n</body>`) : `${base}\n${patch}`;
+  const combinedPatch = `${patch}\n${lucasTablePatch}`;
+  cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
 }
 
