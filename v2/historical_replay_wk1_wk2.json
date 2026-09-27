@@ -1,0 +1,87 @@
+{
+  "source": "monopoly_pool_canonical_history_wk1_wk2_v2_audited.json",
+  "note": "Compact QA fixture preserving user-supplied actual wagers and known commissioner reconciliation differences.",
+  "weeks": [
+    {
+      "week": 1,
+      "entries": {
+        "Catherine": {
+          "official_start": 10000,
+          "ledger_expected_end": 12000,
+          "commissioner_end": 12000,
+          "bets": [
+            ["CHI @ CAR", "away", 1000],
+            ["ATL @ PIT", "home", 800],
+            ["WAS @ PHI", "home", 500],
+            ["GB @ MIN", "home", 500],
+            ["BAL @ IND", "away", 200]
+          ]
+        },
+        "Amanda": {
+          "official_start": 10000,
+          "ledger_expected_end": 10500,
+          "commissioner_end": 11000,
+          "bets": [
+            ["BUF @ HOU", "away", 500],
+            ["DAL @ NYG", "away", 1000],
+            ["MIA @ LV", "home", 300],
+            ["ATL @ PIT", "home", 1000],
+            ["WAS @ PHI", "home", 300]
+          ]
+        }
+      },
+      "home_outcomes": {
+        "CHI @ CAR": "home_loss",
+        "ATL @ PIT": "home_cover",
+        "WAS @ PHI": "home_loss",
+        "GB @ MIN": "home_cover",
+        "BAL @ IND": "home_loss",
+        "BUF @ HOU": "home_loss",
+        "DAL @ NYG": "home_cover",
+        "MIA @ LV": "home_cover"
+      }
+    },
+    {
+      "week": 2,
+      "entries": {
+        "Catherine": {
+          "official_start": 12000,
+          "ledger_expected_end": 11400,
+          "commissioner_end": 11400,
+          "bets": [
+            ["SEA @ ARI", "away", 1000],
+            ["NO @ BAL", "home", 800],
+            ["PIT @ NE", "away", 500],
+            ["WAS @ DAL", "home", 500],
+            ["JAX @ DEN", "away", 400],
+            ["GB @ NYJ", "away", 400]
+          ]
+        },
+        "Amanda": {
+          "official_start": 11000,
+          "ledger_expected_end": 10200,
+          "commissioner_end": 10300,
+          "bets": [
+            ["NO @ BAL", "home", 1000],
+            ["SEA @ ARI", "away", 1500],
+            ["GB @ NYJ", "away", 1000],
+            ["LV @ LAC", "home", 300],
+            ["PHI @ TEN", "home", 200],
+            ["NYG @ LAR", "away", 200]
+          ]
+        }
+      },
+      "home_outcomes": {
+        "SEA @ ARI": "home_loss",
+        "NO @ BAL": "home_loss",
+        "PIT @ NE": "home_cover",
+        "WAS @ DAL": "home_cover",
+        "JAX @ DEN": "home_cover",
+        "GB @ NYJ": "home_cover",
+        "LV @ LAC": "home_loss",
+        "PHI @ TEN": "home_cover",
+        "NYG @ LAR": "home_cover"
+      }
+    }
+  ]
+}
