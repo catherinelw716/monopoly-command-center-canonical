@@ -1,0 +1,109 @@
+
+<script id="canonical-current-layer">
+(function(){
+  const TS='Sep 26 · 8:15 PM ET';
+  const internal={
+    'LAC @ BUF':{rank:1,grade:'A-',pick:'BUF -7',state:'PLAY',current:'BUF -7',catherine:800,amanda:0},
+    'LAR @ DEN':{rank:2,grade:'A-',pick:'DEN +2.5',state:'PLAY',current:'LAR -2.5',catherine:700,amanda:600},
+    'KC @ MIA':{rank:3,grade:'A-',pick:'KC -10.5',state:'PLAY',current:'KC -10.5',catherine:0,amanda:700},
+    'PHI @ CHI':{rank:4,grade:'A-',pick:'PHI -4.5',state:'PLAY',current:'PHI -4.5',catherine:600,amanda:0},
+    'SEA @ WAS':{rank:5,grade:'B+',pick:'SEA -7.5',state:'PLAY',current:'SEA -7.5',catherine:0,amanda:500},
+    'CAR @ CLE':{rank:6,grade:'B+',pick:'CAR -2.5',state:'PLAY',current:'CAR -2.5',catherine:500,amanda:0},
+    'MIN @ TB':{rank:7,grade:'B+',pick:'MIN -1.5',state:'PLAY',current:'MIN -1.5',catherine:0,amanda:500},
+    'HOU @ IND':{rank:8,grade:'B',pick:'HOU -1.5',state:'WATCH',current:'HOU -1.5',catherine:0,amanda:0},
+    'TEN @ NYG':{rank:9,grade:'B',pick:'TEN +2.5',state:'WATCH',current:'NYG -2.5',catherine:0,amanda:0},
+    'BAL @ DAL':{rank:10,grade:'B',pick:'BAL -3.5',state:'WATCH',current:'BAL -3.5',catherine:0,amanda:0},
+    'NYJ @ DET':{rank:11,grade:'B',pick:'DET -6.5',state:'WATCH',current:'DET -6.5',catherine:0,amanda:0},
+    'LV @ NO':{rank:12,grade:'B-',pick:'NO -3',state:'WATCH',current:'NO -3',catherine:0,amanda:0},
+    'CIN @ PIT':{rank:13,grade:'B-',pick:'CIN -3.5',state:'WATCH',current:'CIN -3.5',catherine:0,amanda:0},
+    'ARI @ SF':{rank:14,grade:'C+',pick:'ARI +8.5',state:'WATCH',current:'SF -8.5',catherine:0,amanda:0},
+    'NE @ JAX':{rank:15,grade:'C-',pick:'NE +3',state:'PASS',current:'JAX -3',catherine:0,amanda:0}
+  };
+  const lucas={
+    'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
+  };
+  window.lucasWeek3=lucas;
+
+  function team(x){return String(x||'').split(' ')[0].replace('JAC','JAX');}
+  if(Array.isArray(window.sourceData)){
+    sourceData.forEach(d=>{
+      const u=internal[d.game]; if(!u) return;
+      d.ourRank=u.rank; d.ourGrade=u.grade; d.ourPick=u.pick; d.ourState=u.state;
+      d.lucasPick=lucas[d.game]?.side||'—'; d.lucasSignal=lucas[d.game]?.signal||'NO TAKE';
+      const votes=[team(u.pick)];
+      if(d.sportsType==='Spread') votes.push(team(d.sportsPick));
+      if(d.gridPick) votes.push(team(d.gridPick));
+      if(lucas[d.game]) votes.push(team(lucas[d.game].side));
+      const counts={}; votes.filter(Boolean).forEach(v=>counts[v]=(counts[v]||0)+1);
+      const best=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'';
+      d.agreement=`${counts[best]||0}/${votes.length} ${best}`;
+    });
+    sourceData.sort((a,b)=>a.ourRank-b.ourRank);
+  }
+  if(Array.isArray(window.games)){
+    games.forEach(g=>{
+      const u=internal[g.game]; if(!u) return;
+      g.rank=u.rank; g.lean=u.pick; g.decision=u.state; g.state=u.state; g.confidence=u.grade; g.current=u.current; g.catherine=u.catherine; g.amanda=u.amanda;
+    });
+    games.sort((a,b)=>a.rank-b.rank);
+  }
+
+  function gradeClass(g){ if(String(g).startsWith('A'))return 'src-a'; if(String(g).startsWith('B'))return 'src-b'; if(String(g).startsWith('C'))return 'src-c'; return 'src-d'; }
+  window.renderSourceComparison=function(){
+    const tbody=document.getElementById('sourceCompareBody'); if(!tbody||!Array.isArray(window.sourceData)) return;
+    tbody.innerHTML=sourceData.map(d=>{
+      const sportsMeta=d.sportsType==='Spread' ? `ATS · ${d.sportsPickCount} SportsLine picks · projected ${d.sportsScore}` : `NO ATS TAKE · ${d.sportsType.toUpperCase()} SIM · ${d.sportsPickCount} SportsLine picks`;
+      const lineWarn=d.gridLine && d.gridLine!==d.sly ? ' · different reference line' : '';
+      const lp=lucas[d.game];
+      return `<tr><td><b>${d.game}</b><span class="src-sub">${d.time} · Sly ${d.sly}</span></td><td><span class="src-grade ${gradeClass(d.ourGrade)}">${d.ourGrade}</span><b>${d.ourPick}</b><span class="src-sub">#${d.ourRank} · ${d.ourState}</span></td><td><span class="src-grade ${gradeClass(d.sportsGrade)}">${d.sportsGrade}</span><b>${d.sportsPick}</b><span class="src-sub">${sportsMeta}</span></td><td><b>${d.gridPick} · ${d.gridProb}%</b><span class="src-sub">Gridiron ref ${d.gridLine}${lineWarn}</span></td><td><b>${lp?lp.side:'—'}</b><span class="src-sub">${lp?lp.signal+' · Sly line':'NO TAKE'}</span></td><td><b>${d.agreement}</b><span class="src-sub">ATS-side agreement only; totals/ML excluded</span></td></tr>`;
+    }).join('');
+    const th=document.querySelector('#sourceCompare .source-table thead tr');
+    if(th && th.children.length===5) th.innerHTML='<th>Game</th><th>Our Model</th><th>SportsLine</th><th>Gridiron AI</th><th>Lucas</th><th>Cross-source read</th>';
+    const top=document.getElementById('sourceTopGrid'); if(top){
+      const ours=[...sourceData].sort((a,b)=>a.ourRank-b.ourRank).slice(0,5);
+      const sl=[...sourceData].filter(d=>d.sportsType==='Spread').sort((a,b)=>({A:4,B:3,C:2,D:1}[b.sportsGrade?.[0]]||0)-({A:4,B:3,C:2,D:1}[a.sportsGrade?.[0]]||0)).slice(0,5);
+      const gr=[...sourceData].sort((a,b)=>b.gridProb-a.gridProb).slice(0,5);
+      const l=Object.entries(lucas);
+      const row=(label,pick,meta)=>`<div class="source-pick"><div><b>${pick}</b><span class="src-sub">${meta}</span></div><span>${label}</span></div>`;
+      top.innerHTML=`<div class="source-top-card"><div class="src-label">Our Model · top 5</div><h3>Command Center</h3>${ours.map(d=>row('#'+d.ourRank,d.ourPick,d.game+' · '+d.ourGrade)).join('')}</div>`+
+      `<div class="source-top-card"><div class="src-label">SportsLine · ATS leaders</div><h3>SportsLine</h3>${sl.map(d=>row(d.sportsGrade,d.sportsPick,d.game+' · native SIM')).join('')}</div>`+
+      `<div class="source-top-card"><div class="src-label">Gridiron · highest cover %</div><h3>Gridiron AI</h3>${gr.map(d=>row(d.gridProb+'%',d.gridPick,d.game+' · ref '+d.gridLine)).join('')}</div>`+
+      `<div class="source-top-card"><div class="src-label">Lucas · independent</div><h3>Week 3</h3>${l.map(([g,x])=>row(x.signal,x.side,g)).join('')}</div>`;
+    }
+  };
+
+  const nav=document.querySelector('.primary-nav');
+  if(nav && !nav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.className='nav-btn';b.dataset.view='analysis';b.textContent='Overall Analysis';nav.insertBefore(b,nav.querySelector('[data-view="games"]'));}
+  const mnav=document.querySelector('.mobile-nav');
+  if(mnav && !mnav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.dataset.view='analysis';b.textContent='Analysis';mnav.insertBefore(b,mnav.querySelector('[data-view="games"]'));mnav.style.gridTemplateColumns='repeat(5,1fr)';}
+  if(!document.getElementById('analysis')){
+    const s=document.createElement('section'); s.id='analysis'; s.className='view';
+    s.innerHTML=`<div class="panel"><div class="eyebrow">Cross-source synthesis · ${TS}</div><h2>Overall Analysis</h2><p>Current read across Our Model, SportsLine, Gridiron and Lucas. SportsLine total/moneyline SIMs are shown but do not count as ATS votes; Gridiron reference-line mismatches remain explicit.</p></div>
+    <div class="grid3" style="margin-top:12px"><div class="panel"><h3>Best four-source convergence</h3><p><b>CAR -2.5</b> · Our B+ / SportsLine B / Gridiron 54% / Lucas LIKE. Injury burden and public concentration keep sizing moderate.</p></div><div class="panel"><h3>Strongest internal plays</h3><p><b>BUF -7 · DEN +2.5 · KC -10.5 · PHI -4.5</b></p></div><div class="panel"><h3>Highest-priority watch</h3><p><b>TEN +2.5</b> · Lucas LEAN + Gridiron 57% at PK, but Gridiron’s displayed line is stale versus the current NYG -2.5 market.</p></div></div>
+    <div class="panel" style="margin-top:12px"><h3>What changed materially</h3><p><b>SEA -7.5 upgraded:</b> the current market caught up to -7.5, removing the earlier price disadvantage. <b>HOU -1.5 and NO -3 downgraded:</b> their earlier stale-number advantages disappeared. <b>NE +3 moved to PASS:</b> the market now matches JAX -3 and both external spread sources point Jacksonville.</p></div>`;
+    const lab=document.getElementById('lab'); lab?.parentNode?.insertBefore(s,lab);
+  }
+
+  const lab=document.getElementById('lab');
+  if(lab && !document.getElementById('sourcePerformancePanel')){
+    const p=document.createElement('div'); p.id='sourcePerformancePanel'; p.className='panel'; p.style.margin='14px 0';
+    const rows=Object.entries(lucas).map(([g,x])=>`<tr><td>${g}</td><td><b>${x.side}</b></td><td>${x.signal}</td><td>Pending</td></tr>`).join('');
+    p.innerHTML=`<div class="eyebrow">Lab · source performance</div><h3>Independent ATS source ledger</h3><p>Prospective grading at Sly’s frozen line. No retrospective backfill. Our Model, SportsLine, Gridiron and Lucas remain independent.</p><div class="grid3"><div><b>Our Model</b><br><small>Grade + ATS result</small></div><div><b>SportsLine</b><br><small>Native ATS grade only</small></div><div><b>Gridiron</b><br><small>Raw probability + reference line</small></div></div><h4 style="margin-top:12px">Lucas · Week 3</h4><div style="overflow:auto"><table><thead><tr><th>Game</th><th>Pick</th><th>Signal</th><th>ATS result</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    lab.insertBefore(p,lab.firstChild);
+  }
+
+  const psec=document.getElementById('portfolio');
+  if(psec){const fp=psec.querySelector('.section-head + .panel');if(fp)fp.innerHTML='<b>Current allocation</b><br/>$4,900 household · Catherine $2,600 · Amanda $2,300 · seven unique games · DEN +2.5 is the only shared position ($1,300 / 26.5%).'; const pg=psec.querySelector('.portfolio-grid');if(pg)pg.innerHTML='<div class="panel"><h3>Catherine · $2,600</h3><p><b>BUF -7 · $800</b></p><p><b>DEN +2.5 · $700</b></p><p><b>PHI -4.5 · $600</b></p><p><b>CAR -2.5 · $500</b></p></div><div class="panel"><h3>Amanda · $2,300</h3><p><b>KC -10.5 · $700</b></p><p><b>DEN +2.5 · $600</b></p><p><b>SEA -7.5 · $500</b></p><p><b>MIN -1.5 · $500</b></p></div>';}
+
+  const toggle=document.querySelector('[data-source-view="compare"]'); if(toggle) toggle.textContent='All 4 Sources';
+  renderSourceComparison();
+
+  const errs=[]; const warns=[];
+  if(!Array.isArray(sourceData)||sourceData.length!==15) errs.push('Source comparison is not 15/15');
+  const ranks=Object.values(internal).map(x=>x.rank).sort((a,b)=>a-b); if(ranks.some((r,i)=>r!==i+1)) errs.push('Internal ranks are not unique 1–15');
+  sourceData.forEach(d=>{if(!d.sportsGrade||!d.sportsPick||!d.sportsType) errs.push('SportsLine incomplete: '+d.game); if(!d.gridPick||d.gridProb==null||!d.gridLine) errs.push('Gridiron incomplete: '+d.game); if(d.gridLine!==d.sly) warns.push('Gridiron line differs from Sly: '+d.game+' ('+d.gridLine+' vs '+d.sly+')');});
+  window.commandCenterQAReport={status:errs.length?'FAIL':(warns.length?'PASS_WITH_WARNINGS':'PASS'),errors:errs,warnings:warns,generatedAt:new Date().toISOString()};
+  const snap=document.querySelector('.snapshot'); if(snap)snap.innerHTML='<b>Week 3 · Current through '+TS+'</b><br/>Sly frozen · current market · SportsLine · Gridiron · Lucas';
+})();
+</script>
+
