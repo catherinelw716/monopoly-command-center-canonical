@@ -140,7 +140,6 @@ def fit_variant_walkforward(df: pd.DataFrame, features: list[str], variant: str)
 def subgroup_report(detail: pd.DataFrame) -> dict:
     d = detail.copy()
     d["season_phase"] = np.where(d["week"] <= 5, "weeks_1_5", np.where(d["week"] <= 10, "weeks_6_10", "weeks_11_plus"))
-    # Conventional normalized home spread: negative means home favorite.
     d["home_role"] = np.where(d["home_spread_closing"] < 0, "home_favorite", np.where(d["home_spread_closing"] > 0, "home_underdog", "pickem"))
     abs_spread = d["home_spread_closing"].abs()
     d["spread_bucket"] = pd.cut(abs_spread, [-0.01, 2.5, 3.5, 6.5, 9.5, 100], labels=["0_to_2.5", "3_to_3.5", "4_to_6.5", "7_to_9.5", "10_plus"])
@@ -253,7 +252,12 @@ def main():
     df = build_lightweight_history(args.start_season, args.end_season)
     result, detail = run(df)
     write_report(result, detail, args.out_dir)
-    print(json.dumps({"verdict": result["verdict"], "ranking": [{"variant": x["variant"], "improvement": x["mean_mae_improvement"], "ci": x["mae_improvement_95pct_season_bootstrap"], "hit": x["pooled_selected_side_hit_rate"]} for x in result["variants_ranked"]]}, indent=2))
+    best = result["variants_ranked"][0]["variant"]
+    print(json.dumps({
+        "verdict": result["verdict"],
+        "ranking": [{"variant": x["variant"], "improvement": x["mean_mae_improvement"], "ci": x["mae_improvement_95pct_season_bootstrap"], "hit": x["pooled_selected_side_hit_rate"]} for x in result["variants_ranked"]],
+        "best_variant_subgroups": {"variant": best, **result["subgroups"][best]},
+    }, indent=2))
 
 
 if __name__ == "__main__":
