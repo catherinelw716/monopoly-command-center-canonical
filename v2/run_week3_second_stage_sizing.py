@@ -1,18 +1,16 @@
-"""Second-stage Week 3 sizing optimizer using common random numbers.
+"""Second-stage Week 3 game-count and sizing optimizer using common random numbers.
 
-The game set is frozen from the 15-run stability/red-team pass. This script answers
-only the sizing question: how much total deployment should each entry use once game
-selection is held fixed?
-
-All candidate allocations are evaluated on the same simulated NFL draws, field paths,
-and continuation paths for a given stress state. This sharply reduces Monte Carlo noise
-in pairwise sizing comparisons.
+The stable candidate order is frozen from the 15-run stability/red-team pass. This
+stage compares 4-, 5-, and 6-game structures and deployment levels without allowing
+Monte Carlo noise to reshuffle game identity.
 """
 from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Mapping
+
+import numpy as np
 
 from monopoly_simulator import Bet, load_regular_rules
 from monopoly_tournament_optimizer import (
@@ -33,47 +31,52 @@ STATE = ROOT / "v2/season_2026/week_02_field_state.json"
 RULES = ROOT / "v2/monopoly_contract.json"
 OUTPUT = ROOT / "v2/results/week3_second_stage_sizing.json"
 
-# Frozen from the 15-run stability pass. Supporting games carry no manufactured edge;
-# they remain at the contest minimum and only the material-price-edge anchor is scaled.
-FROZEN_GAMES = {
+# Stability-tested order. First four are the stable core; fifth/sixth are marginal adds.
+CANDIDATES = {
     "Catherine": (
-        ("LAC @ BUF", "home"),   # BUF -7 anchor
-        ("CAR @ CLE", "away"),   # CAR -2.5
-        ("KC @ MIA", "away"),    # KC -10.5
-        ("ARI @ SF", "away"),    # ARI +8.5
+        ("LAC @ BUF", "home", "BUF -7", True),
+        ("CAR @ CLE", "away", "CAR -2.5", False),
+        ("KC @ MIA", "away", "KC -10.5", False),
+        ("ARI @ SF", "away", "ARI +8.5", False),
+        ("BAL @ DAL", "home", "DAL +3.5", False),
+        ("HOU @ IND", "home", "IND +1.5", False),
     ),
     "Amanda": (
-        ("NE @ JAX", "away"),    # NE +3 anchor
-        ("SEA @ WAS", "away"),   # SEA -7.5
-        ("MIN @ TB", "away"),    # MIN -1.5
-        ("LAR @ DEN", "home"),   # DEN +2.5
+        ("NE @ JAX", "away", "NE +3", True),
+        ("SEA @ WAS", "away", "SEA -7.5", False),
+        ("MIN @ TB", "away", "MIN -1.5", False),
+        ("LAR @ DEN", "home", "DEN +2.5", False),
+        ("CIN @ PIT", "home", "PIT +3.5", False),
+        ("NYJ @ DET", "home", "DET -6.5", False),
     ),
 }
 
-DEPLOYMENT_FRACTIONS = (0.05, 0.075, 0.10, 0.125, 0.15, 0.175, 0.20, 0.25, 0.30, 0.35)
+DEPLOYMENT_FRACTIONS = (0.08, 0.10, 0.12, 0.15, 0.18, 0.20, 0.25, 0.30, 0.35)
+GAME_COUNTS = (4, 5, 6)
 EDGE_SHRINK_FACTORS = (1.00, 0.75, 0.50, 0.25)
 
 
-def round_to_increment(x: float, increment: int) -> int:
-    return int(round(x / increment) * increment)
-
-
-def build_fixed_portfolio(balances: Dict[str, int], c_fraction: float, a_fraction: float, minimum: int, increment: int):
+def build_portfolio(
+    balances: Mapping[str, int], rules, c_fraction: float, a_fraction: float,
+    c_games: int, a_games: int,
+) -> Dict[str, tuple[Bet, ...]]:
     out = {}
-    for entry, fraction in (("Catherine", c_fraction), ("Amanda", a_fraction)):
+    for entry, fraction, n_games in (
+        ("Catherine", c_fraction, c_games),
+        ("Amanda", a_fraction, a_games),
+    ):
+        selected = CANDIDATES[entry][:n_games]
         balance = int(balances[entry])
-        target = round_to_increment(balance * fraction, increment)
-        target = max(target, 4 * minimum)
+        target = int(np.floor(balance * fraction / rules.wager_increment) * rules.wager_increment)
+        minimum_total = n_games * rules.minimum_wager
+        target = max(target, minimum_total)
         target = min(target, balance)
-        support_total = 3 * minimum
-        anchor_amount = target - support_total
-        if anchor_amount < minimum:
-            anchor_amount = minimum
-            target = 4 * minimum
-        games = FROZEN_GAMES[entry]
-        bets = [Bet(games[0][0], games[0][1], int(anchor_amount))]
-        bets.extend(Bet(gid, side, minimum) for gid, side in games[1:])
-        out[entry] = tuple(bets)
+        amounts = [rules.minimum_wager] * n_games
+        amounts[0] += target - minimum_total
+        out[entry] = tuple(
+            Bet(gid, side, int(amount))
+            for (gid, side, _label, _material), amount in zip(selected, amounts)
+        )
     return out
 
 
@@ -84,115 +87,116 @@ def main() -> None:
     balances = {"Catherine": state.catherine_balance, "Amanda": state.amanda_balance}
     scenarios = default_field_scenarios()
 
-    # Higher-resolution than the selection-stage optimizer. The same cfg seed and the
-    # deterministic per-game seeding inside _sample_household_current_week create CRN.
+    # Higher-resolution evaluation with common random numbers across every candidate.
     cfg = OptimizerConfig(simulations=3000, seed=716)
     prepared = prepare_field_paths(state, scenarios, cfg)
     prob_sets = {f: shrink_probabilities(probs, f) for f in EDGE_SHRINK_FACTORS}
 
     rows = []
-    for cf in DEPLOYMENT_FRACTIONS:
-        for af in DEPLOYMENT_FRACTIONS:
-            bets = build_fixed_portfolio(
-                balances, cf, af, rules.minimum_wager, rules.wager_increment
-            )
-            stress = []
-            base_metrics = None
-            base_downside = None
-            for idx, factor in enumerate(EDGE_SHRINK_FACTORS):
-                pset = prob_sets[factor]
-                downside = _current_week_downside(
-                    balances,
-                    bets,
-                    pset,
-                    rules,
-                    cfg,
-                    seed=cfg.seed + 5000 + idx * 100,
-                    alpha=0.10,
-                )
-                retention = float(downside["minimum_entry_cvar_retention"])
-                metrics = evaluate_portfolio_across_scenarios(
-                    balances,
-                    bets,
-                    pset,
-                    rules,
-                    state,
-                    scenarios,
-                    cfg,
-                    prepared_field_paths=prepared,
-                )
-                if factor == 1.0:
-                    base_metrics = metrics
-                    base_downside = downside
-                for scenario_name, m in metrics["by_scenario"].items():
-                    stress.append({
-                        "edge_shrink_factor": factor,
-                        "field_scenario": scenario_name,
-                        "expected_household_prize_share": m["expected_household_prize_share"],
-                        "future_minimum_failure_risk": m["future_minimum_failure_risk"],
-                        "current_week_cvar_retention": retention,
-                        "utility": _scenario_utility(m, retention),
+    for cg in GAME_COUNTS:
+        for ag in GAME_COUNTS:
+            for cf in DEPLOYMENT_FRACTIONS:
+                for af in DEPLOYMENT_FRACTIONS:
+                    bets = build_portfolio(balances, rules, cf, af, cg, ag)
+                    stress = []
+                    base_metrics = None
+                    base_downside = None
+                    weighted_utilities = []
+                    for idx, factor in enumerate(EDGE_SHRINK_FACTORS):
+                        pset = prob_sets[factor]
+                        downside = _current_week_downside(
+                            balances, bets, pset, rules, cfg,
+                            seed=cfg.seed + 5000 + idx * 100, alpha=0.10,
+                        )
+                        retention = float(downside["minimum_entry_cvar_retention"])
+                        metrics = evaluate_portfolio_across_scenarios(
+                            balances, bets, pset, rules, state, scenarios, cfg,
+                            prepared_field_paths=prepared,
+                        )
+                        weighted_utilities.append(_scenario_utility(metrics["weighted"], retention))
+                        if factor == 1.0:
+                            base_metrics = metrics
+                            base_downside = downside
+                        for scenario_name, m in metrics["by_scenario"].items():
+                            stress.append({
+                                "edge_shrink_factor": factor,
+                                "field_scenario": scenario_name,
+                                "expected_household_prize_share": m["expected_household_prize_share"],
+                                "future_minimum_failure_risk": m["future_minimum_failure_risk"],
+                                "current_week_cvar_retention": retention,
+                                "utility": _scenario_utility(m, retention),
+                            })
+
+                    assert base_metrics is not None and base_downside is not None
+                    weighted = base_metrics["weighted"]
+                    rows.append({
+                        "c_games": cg,
+                        "a_games": ag,
+                        "c_fraction": cf,
+                        "a_fraction": af,
+                        "bets_by_entry": serialize_bets(bets),
+                        "outlay_by_entry": base_metrics["outlay_by_entry"],
+                        "household_outlay": base_metrics["household_outlay"],
+                        "robust_floor_utility": min(x["utility"] for x in stress),
+                        "robust_average_utility": float(np.mean(weighted_utilities)),
+                        "base_expected_household_prize_share": weighted["expected_household_prize_share"],
+                        "base_p_any_cash": weighted["p_any_cash"],
+                        "base_p_top3": weighted["p_top3"],
+                        "base_p_first": weighted["p_first"],
+                        "base_future_minimum_failure_risk": weighted["future_minimum_failure_risk"],
+                        "base_current_week_downside": base_downside,
                     })
 
-            assert base_metrics is not None and base_downside is not None
-            floor_utility = min(x["utility"] for x in stress)
-            avg_utility = sum(x["utility"] for x in stress) / len(stress)
-            weighted = base_metrics["weighted"]
-            row = {
-                "c_fraction": cf,
-                "a_fraction": af,
-                "bets_by_entry": serialize_bets(bets),
-                "outlay_by_entry": base_metrics["outlay_by_entry"],
-                "household_outlay": base_metrics["household_outlay"],
-                "robust_floor_utility": floor_utility,
-                "robust_average_utility": avg_utility,
-                "base_expected_household_prize_share": weighted["expected_household_prize_share"],
-                "base_p_any_cash": weighted["p_any_cash"],
-                "base_future_minimum_failure_risk": weighted["future_minimum_failure_risk"],
-                "base_current_week_downside": base_downside,
-                "stress": stress,
-            }
-            rows.append(row)
-
-    # Primary: worst-state utility. Secondary: average utility, lower failure risk,
-    # then lower outlay. Because every candidate shares the same random draws, these
-    # comparisons are much less sensitive to Monte Carlo realization noise.
-    rows.sort(
-        key=lambda r: (
+    def key(r):
+        return (
             r["robust_floor_utility"],
             r["robust_average_utility"],
+            r["base_expected_household_prize_share"],
             -r["base_future_minimum_failure_risk"],
             -r["household_outlay"],
-        ),
-        reverse=True,
-    )
+        )
+
+    rows.sort(key=key, reverse=True)
+    by_pair = []
+    for cg in GAME_COUNTS:
+        for ag in GAME_COUNTS:
+            subset = [r for r in rows if r["c_games"] == cg and r["a_games"] == ag]
+            by_pair.append(max(subset, key=key))
+    by_pair.sort(key=key, reverse=True)
 
     result = {
-        "status": "WEEK3_SECOND_STAGE_SIZING_CRN",
+        "status": "WEEK3_SECOND_STAGE_GAMECOUNT_SIZING_CRN",
         "simulations": cfg.simulations,
         "seed": cfg.seed,
         "deployment_grid": list(DEPLOYMENT_FRACTIONS),
+        "game_counts_tested": list(GAME_COUNTS),
         "edge_shrink_factors": list(EDGE_SHRINK_FACTORS),
-        "frozen_games": {
-            k: [{"game_id": gid, "side": side} for gid, side in v]
-            for k, v in FROZEN_GAMES.items()
+        "stable_candidate_order": {
+            entry: [
+                {"game_id": gid, "side": side, "label": label, "material_market_edge": material}
+                for gid, side, label, material in games
+            ]
+            for entry, games in CANDIDATES.items()
         },
+        "best_overall": rows[0],
+        "best_by_game_count_pair": by_pair,
+        "top20": rows[:20],
         "probability_ranking": ranking,
-        "best": rows[0],
-        "top10": rows[:10],
-        "all_candidates": rows,
         "guardrails": [
-            "Game selection is frozen before sizing; this stage cannot swap games.",
-            "Supporting games remain at the $100 contest minimum because they have no material frozen V2 price edge.",
-            "Incremental dollars are assigned only to BUF -7 for Catherine and NE +3 for Amanda.",
-            "Common random numbers are used across all sizing candidates through identical seeds and precomputed field paths.",
-            "Sizing is stress-tested across conservative/median/aggressive field scenarios and 100/75/50/25% retained directional model edge.",
-            "This is a V2 research sizing result, not automatic wager execution."
+            "Frozen NFL probabilities are unchanged.",
+            "All candidates use common random numbers through identical seeds and precomputed field paths.",
+            "The stable candidate order is frozen before sizing; this stage only chooses 4/5/6 depth and deployment.",
+            "Supporting games remain at the $100 minimum because they have no material frozen V2 price edge.",
+            "Incremental dollars go only to BUF -7 for Catherine and NE +3 for Amanda.",
+            "Weather remains contextual analysis only and is not folded into frozen cover probabilities.",
         ],
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
-    print(json.dumps({"best": result["best"], "top10": result["top10"]}, indent=2, sort_keys=True))
+    print(json.dumps({
+        "best_overall": result["best_overall"],
+        "best_by_game_count_pair": result["best_by_game_count_pair"],
+    }, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
