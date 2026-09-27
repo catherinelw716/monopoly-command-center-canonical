@@ -63,8 +63,10 @@ def main():
         cfg=cfg,
         fractions=(0.10, 0.20, 0.35, 0.50, 0.65, 0.80, 1.00),
         game_counts=(4, 5, 6),
+        current_week_cvar_alpha=0.10,
     )
     base = opt["base_metrics"]
+    downside = opt["base_current_week_downside"]
     result = {
         "status": "WEEK3_SUNDAY_ROBUST_RESEARCH",
         "snapshot_metadata": {k: v for k, v in snapshot.items() if k != "games"},
@@ -81,6 +83,7 @@ def main():
             "base_p_top3": base["weighted"]["p_top3"],
             "base_p_first": base["weighted"]["p_first"],
             "base_future_minimum_failure_risk": base["weighted"]["future_minimum_failure_risk"],
+            "current_week_downside": downside,
             "household_outlay": base["household_outlay"],
             "overlap": base["overlap"],
             "stress_metrics": opt["stress_metrics"],
@@ -89,7 +92,8 @@ def main():
             "Prediction layer uses frozen market-anchored hybrid model only; standings do not alter cover probabilities.",
             "Current-market snapshot is Sunday research evidence, not a reconstructed Friday freeze.",
             "Robust optimizer has no arbitrary bankroll-percentage cap; deployment remains an output.",
-            "External sources/injury news are red-team context and are not hard-coded into V2 probabilities."
+            "Immediate downside is represented by minimum per-entry current-week 10% CVaR capital retention.",
+            "Weather, external sources, and injury news remain red-team/context layers and are not hard-coded into V2 probabilities."
         ],
     }
     out = ROOT / args.output
