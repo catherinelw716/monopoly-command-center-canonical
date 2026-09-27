@@ -1,0 +1,165 @@
+<script id="canonical-ux-consensus-layer">
+(function(){
+  const lucas = window.lucasWeek3 || {
+    'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},
+    'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},
+    'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},
+    'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},
+    'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},
+    'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},
+    'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
+  };
+
+  function team(side){
+    const s=String(side||'').trim();
+    if(!s || s==='—') return '';
+    return s.split(/\s+/)[0].replace('JAC','JAX');
+  }
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function money(n){return n?('$'+Number(n).toLocaleString()):'—';}
+  function gameRow(game){return Array.isArray(window.games)?window.games.find(g=>g.game===game):null;}
+
+  function externalRead(d){
+    const exact=[];
+    const context=[];
+    if(d && d.sportsType==='Spread' && d.sportsPick){
+      exact.push({name:'SportsLine',side:d.sportsPick,team:team(d.sportsPick),meta:d.sportsGrade?('native '+d.sportsGrade):'ATS'});
+    } else if(d && d.sportsPick){
+      context.push({name:'SportsLine',side:d.sportsPick,meta:'non-ATS model output'});
+    }
+    if(d && d.gridPick && !d.gridNoTake){
+      const item={name:'Gridiron',side:d.gridPick,team:team(d.gridPick),meta:(d.gridProb!=null?d.gridProb+'% · ':'')+'ref '+(d.gridLine||'unknown')};
+      if(d.gridExact) exact.push(item); else context.push(item);
+    } else if(d && d.gridNoTake){
+      context.push({name:'Gridiron',side:'NO TAKE',meta:'50/50'});
+    }
+    const lp=lucas[d?.game];
+    if(lp) exact.push({name:'Lucas',side:lp.side,team:team(lp.side),meta:lp.signal});
+
+    const counts={}; exact.forEach(v=>{if(v.team) counts[v.team]=(counts[v.team]||0)+1;});
+    const ordered=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    let label='No exact-line external consensus', cls='consensus-none';
+    if(exact.length===1){label=`1 source: ${exact[0].side}`;cls='consensus-one';}
+    else if(ordered.length){
+      const [best,n]=ordered[0];
+      if(ordered.length>1 && ordered[0][1]===ordered[1][1]){label=`Split ${exact.length}-source board`;cls='consensus-split';}
+      else {label=`${n}/${exact.length} support ${best}`;cls=n===exact.length?'consensus-strong':'consensus-mixed';}
+    }
+    return {exact,context,label,cls};
+  }
+
+  function styles(){
+    if(document.getElementById('canonical-ux-consensus-style')) return;
+    const s=document.createElement('style');
+    s.id='canonical-ux-consensus-style';
+    s.textContent=`
+      .cc-action-copy{font-size:13px;line-height:1.45;color:var(--muted,#9ca3af)}
+      .cc-action-title{font-weight:800;margin-bottom:3px}
+      .cc-board-panel{margin-top:14px}
+      .cc-board-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px}
+      .cc-board-head p{margin:4px 0 0;color:var(--muted,#9ca3af);font-size:13px}
+      .cc-board-wrap{overflow:auto;border:1px solid rgba(148,163,184,.18);border-radius:14px}
+      .cc-board{width:100%;border-collapse:collapse;min-width:1040px;font-size:12px}
+      .cc-board th{position:sticky;top:0;background:rgba(15,23,42,.96);text-align:left;padding:9px 10px;color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.08em;z-index:1}
+      .cc-board td{padding:10px;border-top:1px solid rgba(148,163,184,.12);vertical-align:top}
+      .cc-board tr[data-game]{cursor:pointer}.cc-board tr[data-game]:hover{background:rgba(148,163,184,.06)}
+      .cc-rank{font-weight:900;font-size:14px}.cc-game{font-weight:800}.cc-sub{display:block;color:#94a3b8;font-size:10px;margin-top:3px;line-height:1.35}
+      .cc-state,.cc-consensus{display:inline-flex;align-items:center;border-radius:999px;padding:4px 7px;font-weight:800;font-size:10px;white-space:nowrap}
+      .cc-state.PLAY{background:rgba(34,197,94,.16);color:#86efac}.cc-state.WATCH{background:rgba(234,179,8,.16);color:#fde68a}.cc-state.PASS{background:rgba(239,68,68,.14);color:#fca5a5}
+      .consensus-strong{background:rgba(34,197,94,.16);color:#86efac}.consensus-mixed{background:rgba(59,130,246,.16);color:#93c5fd}.consensus-split{background:rgba(234,179,8,.16);color:#fde68a}.consensus-one,.consensus-none{background:rgba(148,163,184,.12);color:#cbd5e1}
+      .cc-source-dots{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px}.cc-source-dot{border:1px solid rgba(148,163,184,.2);border-radius:6px;padding:2px 5px;color:#cbd5e1;font-size:9px}
+      .cc-latest{margin-top:14px}.cc-change-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.cc-change{padding:11px;border:1px solid rgba(148,163,184,.15);border-radius:12px}.cc-change b{display:block;margin-bottom:4px}.cc-change span{font-size:11px;color:#94a3b8;line-height:1.4}
+      @media(max-width:760px){.cc-change-grid{grid-template-columns:1fr}.cc-board-panel{margin-left:-2px;margin-right:-2px}.cc-board-head{align-items:flex-start;flex-direction:column}.cc-board-wrap{border-radius:10px}}
+    `;
+    document.head.appendChild(s);
+  }
+
+  function renameNeedsAttention(today){
+    today.querySelectorAll('h1,h2,h3,h4,.eyebrow').forEach(el=>{
+      if(el.textContent.trim().toLowerCase()==='needs attention') el.textContent='Action required before lock';
+    });
+    const alerts=today.querySelector('.alerts');
+    if(!alerts) return;
+    const wagered=(Array.isArray(window.games)?window.games:[]).filter(g=>Number(g.catherine||0)+Number(g.amanda||0)>0).map(g=>g.game);
+    const names=wagered.length?wagered.join(' · '):'all wagered games';
+    alerts.innerHTML=`
+      <div class="alert yellow"><span class="dot"></span><div><div class="cc-action-title">Sunday-AM final verification</div><div class="cc-action-copy">Confirm inactive lists and the current multi-book consensus for ${esc(names)} before lock.</div></div></div>
+      <div class="alert yellow"><span class="dot"></span><div><div class="cc-action-title">Key-number movement check</div><div class="cc-action-copy">Escalate any move through 3 or 7 on a wagered game. Do not treat a probability captured at a different reference spread as if it were measured at Sly's line.</div></div></div>
+      <div class="alert green"><span class="dot"></span><div><div class="cc-action-title">Source data is context, not an automatic vote</div><div class="cc-action-copy">SportsLine, Gridiron and Lucas are shown everywhere they are relevant. Exact-line ATS evidence counts in consensus; moneyline/total output and mismatched spread references remain visible but are not silently converted.</div></div></div>`;
+  }
+
+  function buildBoard(today){
+    if(!Array.isArray(window.sourceData) || !window.sourceData.length) return;
+    document.getElementById('canonicalSlateBoard')?.remove();
+    const old=document.getElementById('recommendedPlays');
+    if(old) old.style.display='none';
+    today.querySelectorAll('h1,h2,h3,h4,.eyebrow').forEach(el=>{
+      const t=el.textContent.trim().toLowerCase();
+      if(t==='decision board' || t==='recommended plays') el.style.display='none';
+    });
+
+    const panel=document.createElement('div'); panel.id='canonicalSlateBoard'; panel.className='panel cc-board-panel';
+    const rows=[...window.sourceData].sort((a,b)=>(a.ourRank||99)-(b.ourRank||99)).map(d=>{
+      const g=gameRow(d.game)||{}; const x=externalRead(d);
+      const exact=x.exact.map(v=>`<span class="cc-source-dot">${esc(v.name)}: ${esc(v.side)}</span>`).join('');
+      const context=x.context.map(v=>`<span class="cc-source-dot">${esc(v.name)}: ${esc(v.side)} · ${esc(v.meta)}</span>`).join('');
+      const our=d.ourPick||g.lean||'—'; const grade=d.ourGrade||g.confidence||'—'; const state=d.ourState||g.decision||g.state||'WATCH';
+      const market=g.current||d.current||'—'; const sly=g.sly||d.sly||'—';
+      return `<tr data-game="${esc(d.game)}">
+        <td><span class="cc-rank">#${esc(d.ourRank||g.rank||'—')}</span></td>
+        <td><span class="cc-game">${esc(d.game)}</span><span class="cc-sub">${esc(d.time||g.time||'')} · Sly ${esc(sly)} · Market ${esc(market)}</span></td>
+        <td><b>${esc(our)}</b><span class="cc-sub">${esc(grade)}</span></td>
+        <td><span class="cc-consensus ${x.cls}">${esc(x.label)}</span><div class="cc-source-dots">${exact}${context}</div></td>
+        <td><span class="cc-state ${esc(state)}">${esc(state)}</span></td>
+        <td><b>${money(g.catherine)}</b></td><td><b>${money(g.amanda)}</b></td>
+      </tr>`;
+    }).join('');
+    panel.innerHTML=`<div class="cc-board-head"><div><div class="eyebrow">All 15 games · decision + external evidence</div><h2>Slate Decision Board</h2><p>Our ranking stays distinct from external consensus. SportsLine, Gridiron and Lucas are data points; only comparable ATS references count toward the exact-line consensus badge.</p></div></div><div class="cc-board-wrap"><table class="cc-board"><thead><tr><th>Rank</th><th>Game / price</th><th>Our pick</th><th>External consensus</th><th>State</th><th>Catherine</th><th>Amanda</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+
+    const alerts=today.querySelector('.alerts');
+    if(alerts) alerts.insertAdjacentElement('afterend',panel); else today.prepend(panel);
+    panel.querySelectorAll('tr[data-game]').forEach(row=>row.addEventListener('click',()=>{
+      const game=row.dataset.game;
+      const target=(Array.isArray(window.games)?window.games:[]).find(x=>x.game===game);
+      try{
+        if(typeof window.openGame==='function') return window.openGame(game);
+        if(typeof openGame==='function') return openGame(game);
+        history.replaceState(null,'','?game='+encodeURIComponent(game));
+        const gameCard=document.querySelector(`.visual-game[data-game="${CSS.escape(game)}"]`); if(gameCard) gameCard.click();
+      }catch(e){}
+    }));
+  }
+
+  function latestChanges(today){
+    document.getElementById('canonicalLatestChanges')?.remove();
+    if(!Array.isArray(window.sourceData)) return;
+    const strongest=[...window.sourceData].sort((a,b)=>(a.ourRank||99)-(b.ourRank||99)).slice(0,3).map(d=>{
+      const x=externalRead(d); return `<div class="cc-change"><b>${esc(d.ourPick||d.game)}</b><span>${esc(d.game)} · ${esc(x.label)}. Our state: ${esc(d.ourState||'—')}.</span></div>`;
+    }).join('');
+    const p=document.createElement('div'); p.id='canonicalLatestChanges'; p.className='panel cc-latest';
+    p.innerHTML=`<div class="eyebrow">Current snapshot</div><h3>Latest decision context</h3><div class="cc-change-grid">${strongest}</div>`;
+    document.getElementById('canonicalSlateBoard')?.insertAdjacentElement('afterend',p);
+  }
+
+  function ensureLucasEverywhere(){
+    if(!Array.isArray(window.sourceData)) return;
+    window.sourceData.forEach(d=>{const lp=lucas[d.game]; d.lucasPick=lp?.side||'—'; d.lucasSignal=lp?.signal||'NO TAKE';});
+    if(typeof window.renderSourceComparison==='function') window.renderSourceComparison();
+  }
+
+  function render(){
+    styles(); ensureLucasEverywhere();
+    const today=document.getElementById('today'); if(!today) return;
+    renameNeedsAttention(today); buildBoard(today); latestChanges(today);
+    window.commandCenterUxQA={
+      sourceRows:Array.isArray(window.sourceData)?window.sourceData.length:0,
+      lucasRows:Array.isArray(window.sourceData)?window.sourceData.filter(d=>d.lucasPick).length:0,
+      boardRows:document.querySelectorAll('#canonicalSlateBoard tbody tr').length,
+      status:document.querySelectorAll('#canonicalSlateBoard tbody tr').length===15?'PASS':'CHECK'
+    };
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(render,0)); else setTimeout(render,0);
+  setTimeout(render,350);
+})();
+</script>
