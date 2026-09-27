@@ -41,6 +41,7 @@ jobs:
           v2/shadow_pipeline_qa.py
           v2/monopoly_simulator.py
           v2/monopoly_simulator_qa.py
+          v2/monopoly_historical_replay_qa.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
@@ -48,10 +49,14 @@ jobs:
       - name: Run deterministic Monopoly simulator QA
         run: python v2/monopoly_simulator_qa.py
 
+      - name: Replay audited Week 1-2 Monopoly history
+        run: python v2/monopoly_historical_replay_qa.py
+
       - name: Validate JSON contracts and frozen model artifact
         run: |
           python -m json.tool v2/data_contract.json > /dev/null
           python -m json.tool v2/monopoly_contract.json > /dev/null
+          python -m json.tool v2/historical_replay_wk1_wk2.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
           from v2.shadow_model import ShadowModel
