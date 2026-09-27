@@ -31,8 +31,6 @@ STATE = ROOT / "v2/season_2026/week_02_field_state.json"
 RULES = ROOT / "v2/monopoly_contract.json"
 OUTPUT = ROOT / "v2/results/week3_prelock_second_stage.json"
 
-# Candidate order starts with refreshed material price edges, then contextual support.
-# Material sides are determined by Sly-vs-live price value, not by stale pre-refresh context.
 CANDIDATES = {
     "Catherine": (
         ("MIN @ TB", "away", "MIN -1.5", True),
@@ -109,7 +107,7 @@ def main() -> None:
     balances = {"Catherine": state.catherine_balance, "Amanda": state.amanda_balance}
     scenarios = default_field_scenarios()
 
-    cfg = OptimizerConfig(simulations=5000, seed=716)
+    cfg = OptimizerConfig(simulations=1500, seed=716)
     prepared = prepare_field_paths(state, scenarios, cfg)
     prob_sets = {f: shrink_probabilities(probs, f) for f in EDGE_SHRINK_FACTORS}
 
@@ -164,7 +162,7 @@ def main() -> None:
     by_pair.sort(key=key,reverse=True)
 
     result={
-        "status":"WEEK3_PRELOCK_SECOND_STAGE_CRN",
+        "status":"WEEK3_PRELOCK_SECOND_STAGE_CRN_COARSE",
         "snapshot":"week_03_current_market_2026-09-27_1201ET.json",
         "simulations":cfg.simulations,"seed":cfg.seed,
         "deployment_grid":list(DEPLOYMENT_FRACTIONS),"game_counts_tested":list(GAME_COUNTS),
@@ -176,7 +174,8 @@ def main() -> None:
             "Common random numbers used across candidate allocations.",
             "Incremental stake allocated only across refreshed material price-edge games, proportional to frozen V2 edge.",
             "Contextual/supporting positions remain at $100 minimum.",
-            "Game count and deployment are outputs, not fixed assumptions."
+            "Game count and deployment are outputs, not fixed assumptions.",
+            "This is the coarse search; finalists receive a separate higher-resolution confirmation."
         ]}
     OUTPUT.parent.mkdir(parents=True,exist_ok=True)
     OUTPUT.write_text(json.dumps(result,indent=2,sort_keys=True),encoding="utf-8")
