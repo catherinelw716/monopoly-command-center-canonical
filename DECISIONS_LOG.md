@@ -116,3 +116,21 @@ Evidence: V2-0006D evaluated 2,560 held-out games across 2010–2019 using no 20
 Why: The same narrow mechanism replicated across a distinct historical era and larger line-offset range. Further retrospective tuning now risks converting validation into optimization.
 
 Next consequence: V2-0010 is prospective-only. Freeze predictions before outcomes, capture Sly Friday and pre-kick market snapshots separately, and evaluate without retroactive model edits. V1 remains production champion.
+
+## 2026-09-27 — V2-0010 shadow ledger is append-only and model artifact is frozen
+Decision: Begin prospective shadow capture using a committed frozen artifact and an append-only SHA-256 hash-chained event ledger. Do not insert reconstructed historical prediction rows.
+
+Frozen artifact: `v2/model_artifacts/v2_global_hybrid_2016_2025.json`
+- model version: `V2-0006C-global-hybrid-r1`
+- artifact hash: `da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026`
+- training seasons: 2016–2025
+- training games: 2,639
+- residual mean: 0.0375142
+- residual sigma: 12.7173713
+- global push shrink: 75
+
+Integrity controls: prediction captures are rejected at/after kickoff; FRIDAY_FREEZE and PRE_KICK_FINAL are unique snapshot keys per game; final results are appended as separate settlement events; any historical event edit breaks the hash chain; deterministic CI QA verifies probability sums, integer/half-point push handling, duplicate rejection, timing rejection, and tamper detection.
+
+Promotion guardrail: do not consider V2 probability-layer promotion before at least 100 settled prospective snapshots across at least 6 distinct NFL weeks, and only if hybrid Brier improves over the frozen normal baseline without material log-loss/calibration deterioration.
+
+Why: After historical replication, the primary risk is no longer finding another retrospective variation—it is contaminating prospective evidence. The ledger makes the future evaluation auditable and keeps stale-line research point-in-time.
