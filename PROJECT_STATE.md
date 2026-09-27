@@ -153,21 +153,58 @@ Relevant result files:
 - `v2/EXPERIMENT_0006D_DESIGN.md`
 - `v2/EXPERIMENT_0006D_RESULTS.md`
 
-## Immediate next V2 step — V2-0010 prospective shadow
-**Do not do more retrospective architecture tuning just because another variation is available.**
+## V2-0010 prospective shadow — ACTIVE
+The prospective infrastructure is now implemented and QA-passed.
 
-V2-0010 is registered as prospective-only:
-1. freeze each prediction before outcome
-2. capture Sly line and timestamp
-3. capture point-in-time market fair line at **FRIDAY_FREEZE**
-4. capture a separate **PRE_KICK_FINAL** market snapshot
-5. compute frozen global-hybrid P(cover/push/loss) at Sly's exact line
-6. keep V1 prediction alongside it for champion/challenger comparison
-7. preserve SportsLine/Gridiron/Lucas as external context, not mathematical votes
-8. after outcomes, score Brier/log loss and exact-line result without retroactive edits
-9. do not retune architecture from an individual win/loss week
+### Frozen model artifact
+`v2/model_artifacts/v2_global_hybrid_2016_2025.json`
 
-The next practical implementation is a durable 2026 shadow ledger + prediction script that stores these immutable snapshots.
+- model version: `V2-0006C-global-hybrid-r1`
+- artifact hash: `da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026`
+- training seasons: 2016–2025
+- training games: 2,639
+- residual mean: 0.0375142099
+- residual sigma: 12.7173713390
+- selected global push shrink: 75
+
+The artifact was independently regenerated on Render and the logged artifact hash matched the committed artifact.
+
+### Shadow infrastructure
+- `v2/SHADOW_VALIDATION_PROTOCOL.md`
+- `v2/shadow_model.py`
+- `v2/fit_shadow_model.py`
+- `v2/shadow_ledger.py`
+- `v2/capture_shadow_snapshot.py`
+- `v2/validate_shadow_ledger.py`
+- `v2/settle_shadow_results.py`
+- `v2/score_shadow_ledger.py`
+- `v2/shadow_pipeline_qa.py`
+- `v2/shadow_event_schema.json`
+- `v2/shadow_snapshot_template.json`
+- `v2/shadow/README.md`
+
+The ledger is append-only JSONL with a SHA-256 hash chain. Prediction events are rejected at/after kickoff. FRIDAY_FREEZE and PRE_KICK_FINAL are unique per-game snapshot keys. Results are separate settlement events. CI verifies probability integrity, timing rejection, duplicate rejection, and tamper detection.
+
+No reconstructed historical prediction rows were inserted. The live ledger will begin only with a genuinely prospective capture.
+
+### Promotion guardrail
+Do not consider replacing V1's probability layer before at least:
+- **100 settled prospective snapshots**, and
+- **6 distinct NFL weeks**, and
+- intact ledger integrity, and
+- hybrid Brier improvement over the frozen normal baseline without material log-loss/calibration deterioration.
+
+This floor is not a guarantee of power; continue shadowing if uncertainty remains.
+
+## Immediate next V2 operating step
+At the next valid slate:
+1. capture Sly's frozen spread and a timestamped market observation in a **FRIDAY_FREEZE** batch
+2. include V1 and SportsLine/Gridiron/Lucas context exactly as observed when available
+3. before each kickoff, capture a separate **PRE_KICK_FINAL** batch at the unchanged Sly spread and latest verified market line
+4. append results only after games are final
+5. run `score_shadow_ledger.py`; do not retune architecture from individual results
+
+This is now an operating evidence-collection phase, not another retrospective model-search phase.
 
 ## Future reminders
 1. **Historical intra-week odds:** revisit paid timestamped history when rigorous Friday-Sly-freeze to Sunday-market testing is reached. Do not fabricate this from opener/close data.
@@ -182,5 +219,5 @@ Then read, in order:
 2. `DECISIONS_LOG.md`
 3. `V2_MODEL_SPEC.md` for architecture/background
 4. `v2/experiment_registry.csv`
-5. latest relevant V2 result/design file
+5. latest relevant V2 result/design file or `v2/SHADOW_VALIDATION_PROTOCOL.md`
 6. relevant UI/source files for app changes
