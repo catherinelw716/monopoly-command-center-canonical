@@ -1,0 +1,35 @@
+name: V2 Week 3 Prelock
+
+on:
+  push:
+    paths:
+      - 'v2/run_week3_sunday_robust.py'
+      - 'v2/season_2026/week_03_current_market_2026-09-27_1201ET.json'
+      - '.github/workflows/v2-week3-prelock.yml'
+  workflow_dispatch:
+
+jobs:
+  prelock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy
+      - name: Run targeted pre-lock optimizer
+        run: |
+          python v2/run_week3_sunday_robust.py --simulations 1200 --output /tmp/prelock.json > /tmp/prelock_stdout.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/prelock.json'))
+          o=d['optimizer']
+          print('PARAMS', o['parameters'])
+          print('OUTLAY', o['household_outlay'])
+          print('FAILURE', o['base_future_minimum_failure_risk'])
+          print('BETS', o['bets_by_entry'])
+          print('TOP_EDGES')
+          for x in d['probability_ranking'][:8]:
+              print(x['game_id'], x['suggested_side'], round(x['edge_per_dollar'],6), x['sly_home_spread'], x['market_home_spread'])
+          PY
