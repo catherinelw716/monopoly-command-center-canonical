@@ -1,4 +1,3 @@
-
 <script id="canonical-current-layer">
 (function(){
   const TS='Sep 26 · 8:15 PM ET';
@@ -22,66 +21,86 @@
   const lucas={
     'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
   };
+  const gridExact=new Set(['LAC @ BUF','CAR @ CLE','NYJ @ DET','NE @ JAX','CIN @ PIT','ARI @ SF','MIN @ TB','LAR @ DEN','LV @ NO']);
+  const gridNoTake=new Set(['SEA @ WAS','CIN @ PIT','MIN @ TB']);
   window.lucasWeek3=lucas;
-
   function team(x){return String(x||'').split(' ')[0].replace('JAC','JAX');}
+  function sourceByGame(game){return Array.isArray(window.sourceData)?window.sourceData.find(x=>x.game===game):null;}
+
   if(Array.isArray(window.sourceData)){
-    sourceData.forEach(d=>{
+    window.sourceData.forEach(d=>{
       const u=internal[d.game]; if(!u) return;
       d.ourRank=u.rank; d.ourGrade=u.grade; d.ourPick=u.pick; d.ourState=u.state;
       d.lucasPick=lucas[d.game]?.side||'—'; d.lucasSignal=lucas[d.game]?.signal||'NO TAKE';
+      d.gridExact=gridExact.has(d.game); d.gridNoTake=gridNoTake.has(d.game);
       const votes=[team(u.pick)];
       if(d.sportsType==='Spread') votes.push(team(d.sportsPick));
-      if(d.gridPick) votes.push(team(d.gridPick));
+      if(d.gridPick && !d.gridNoTake) votes.push(team(d.gridPick));
       if(lucas[d.game]) votes.push(team(lucas[d.game].side));
       const counts={}; votes.filter(Boolean).forEach(v=>counts[v]=(counts[v]||0)+1);
       const best=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'';
       d.agreement=`${counts[best]||0}/${votes.length} ${best}`;
     });
-    sourceData.sort((a,b)=>a.ourRank-b.ourRank);
+    window.sourceData.sort((a,b)=>a.ourRank-b.ourRank);
   }
   if(Array.isArray(window.games)){
-    games.forEach(g=>{
+    window.games.forEach(g=>{
       const u=internal[g.game]; if(!u) return;
-      g.rank=u.rank; g.lean=u.pick; g.decision=u.state; g.state=u.state; g.confidence=u.grade; g.current=u.current; g.catherine=u.catherine; g.amanda=u.amanda;
+      Object.assign(g,{rank:u.rank,lean:u.pick,decision:u.state,state:u.state,confidence:u.grade,current:u.current,catherine:u.catherine,amanda:u.amanda,diff:'0.0'});
     });
-    games.sort((a,b)=>a.rank-b.rank);
+    window.games.sort((a,b)=>a.rank-b.rank);
+    if(typeof window.renderBoards==='function') window.renderBoards();
+    else if(typeof renderBoards==='function') renderBoards();
   }
 
   function gradeClass(g){ if(String(g).startsWith('A'))return 'src-a'; if(String(g).startsWith('B'))return 'src-b'; if(String(g).startsWith('C'))return 'src-c'; return 'src-d'; }
   window.renderSourceComparison=function(){
     const tbody=document.getElementById('sourceCompareBody'); if(!tbody||!Array.isArray(window.sourceData)) return;
-    tbody.innerHTML=sourceData.map(d=>{
+    tbody.innerHTML=window.sourceData.map(d=>{
       const sportsMeta=d.sportsType==='Spread' ? `ATS · ${d.sportsPickCount} SportsLine picks · projected ${d.sportsScore}` : `NO ATS TAKE · ${d.sportsType.toUpperCase()} SIM · ${d.sportsPickCount} SportsLine picks`;
-      const lineWarn=d.gridLine && d.gridLine!==d.sly ? ' · different reference line' : '';
+      const gridMain=d.gridNoTake?`50/50 · NO TAKE`:`${d.gridPick} · ${d.gridProb}%`;
+      const gridMeta=`Gridiron ref ${d.gridLine}${d.gridExact?' · exact Sly-equivalent line':' · DIFFERENT REFERENCE LINE'}`;
       const lp=lucas[d.game];
-      return `<tr><td><b>${d.game}</b><span class="src-sub">${d.time} · Sly ${d.sly}</span></td><td><span class="src-grade ${gradeClass(d.ourGrade)}">${d.ourGrade}</span><b>${d.ourPick}</b><span class="src-sub">#${d.ourRank} · ${d.ourState}</span></td><td><span class="src-grade ${gradeClass(d.sportsGrade)}">${d.sportsGrade}</span><b>${d.sportsPick}</b><span class="src-sub">${sportsMeta}</span></td><td><b>${d.gridPick} · ${d.gridProb}%</b><span class="src-sub">Gridiron ref ${d.gridLine}${lineWarn}</span></td><td><b>${lp?lp.side:'—'}</b><span class="src-sub">${lp?lp.signal+' · Sly line':'NO TAKE'}</span></td><td><b>${d.agreement}</b><span class="src-sub">ATS-side agreement only; totals/ML excluded</span></td></tr>`;
+      return `<tr><td><b>${d.game}</b><span class="src-sub">${d.time} · Sly ${d.sly}</span></td><td><span class="src-grade ${gradeClass(d.ourGrade)}">${d.ourGrade}</span><b>${d.ourPick}</b><span class="src-sub">#${d.ourRank} · ${d.ourState}</span></td><td><span class="src-grade ${gradeClass(d.sportsGrade)}">${d.sportsGrade}</span><b>${d.sportsPick}</b><span class="src-sub">${sportsMeta}</span></td><td><b>${gridMain}</b><span class="src-sub">${gridMeta}</span></td><td><b>${lp?lp.side:'—'}</b><span class="src-sub">${lp?lp.signal+' · exact Sly line':'NO TAKE'}</span></td><td><b>${d.agreement}</b><span class="src-sub">ATS-side agreement only; totals/ML/50-50 excluded</span></td></tr>`;
     }).join('');
     const th=document.querySelector('#sourceCompare .source-table thead tr');
-    if(th && th.children.length===5) th.innerHTML='<th>Game</th><th>Our Model</th><th>SportsLine</th><th>Gridiron AI</th><th>Lucas</th><th>Cross-source read</th>';
+    if(th) th.innerHTML='<th>Game</th><th>Our Model</th><th>SportsLine</th><th>Gridiron AI</th><th>Lucas</th><th>Cross-source read</th>';
     const top=document.getElementById('sourceTopGrid'); if(top){
-      const ours=[...sourceData].sort((a,b)=>a.ourRank-b.ourRank).slice(0,5);
-      const sl=[...sourceData].filter(d=>d.sportsType==='Spread').sort((a,b)=>({A:4,B:3,C:2,D:1}[b.sportsGrade?.[0]]||0)-({A:4,B:3,C:2,D:1}[a.sportsGrade?.[0]]||0)).slice(0,5);
-      const gr=[...sourceData].sort((a,b)=>b.gridProb-a.gridProb).slice(0,5);
-      const l=Object.entries(lucas);
+      const ours=[...window.sourceData].sort((a,b)=>a.ourRank-b.ourRank).slice(0,5);
+      const sl=[...window.sourceData].filter(d=>d.sportsType==='Spread').sort((a,b)=>({A:4,B:3,C:2,D:1}[b.sportsGrade?.[0]]||0)-({A:4,B:3,C:2,D:1}[a.sportsGrade?.[0]]||0)).slice(0,5);
+      const gr=[...window.sourceData].filter(d=>!d.gridNoTake).sort((a,b)=>b.gridProb-a.gridProb).slice(0,5);
       const row=(label,pick,meta)=>`<div class="source-pick"><div><b>${pick}</b><span class="src-sub">${meta}</span></div><span>${label}</span></div>`;
-      top.innerHTML=`<div class="source-top-card"><div class="src-label">Our Model · top 5</div><h3>Command Center</h3>${ours.map(d=>row('#'+d.ourRank,d.ourPick,d.game+' · '+d.ourGrade)).join('')}</div>`+
-      `<div class="source-top-card"><div class="src-label">SportsLine · ATS leaders</div><h3>SportsLine</h3>${sl.map(d=>row(d.sportsGrade,d.sportsPick,d.game+' · native SIM')).join('')}</div>`+
-      `<div class="source-top-card"><div class="src-label">Gridiron · highest cover %</div><h3>Gridiron AI</h3>${gr.map(d=>row(d.gridProb+'%',d.gridPick,d.game+' · ref '+d.gridLine)).join('')}</div>`+
-      `<div class="source-top-card"><div class="src-label">Lucas · independent</div><h3>Week 3</h3>${l.map(([g,x])=>row(x.signal,x.side,g)).join('')}</div>`;
+      top.innerHTML=`<div class="source-top-card"><div class="src-label">Our Model · top 5</div><h3>Command Center</h3>${ours.map(d=>row('#'+d.ourRank,d.ourPick,d.game+' · '+d.ourGrade)).join('')}</div><div class="source-top-card"><div class="src-label">SportsLine · ATS leaders</div><h3>SportsLine</h3>${sl.map(d=>row(d.sportsGrade,d.sportsPick,d.game+' · native SIM')).join('')}</div><div class="source-top-card"><div class="src-label">Gridiron · highest directional %</div><h3>Gridiron AI</h3>${gr.map(d=>row(d.gridProb+'%',d.gridPick,d.game+' · ref '+d.gridLine+(d.gridExact?'':' · mismatch'))).join('')}</div><div class="source-top-card"><div class="src-label">Lucas · independent</div><h3>Week 3</h3>${Object.entries(lucas).map(([g,x])=>row(x.signal,x.side,g)).join('')}</div>`;
     }
   };
 
+  function goAnalysis(btn){ btn.addEventListener('click',()=>{ if(typeof window.switchView==='function') window.switchView('analysis'); else if(typeof switchView==='function') switchView('analysis'); else {document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('analysis')?.classList.add('active');document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view==='analysis'));window.scrollTo(0,0);} }); }
   const nav=document.querySelector('.primary-nav');
-  if(nav && !nav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.className='nav-btn';b.dataset.view='analysis';b.textContent='Overall Analysis';nav.insertBefore(b,nav.querySelector('[data-view="games"]'));}
+  if(nav && !nav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.className='nav-btn';b.dataset.view='analysis';b.textContent='Overall Analysis';nav.insertBefore(b,nav.querySelector('[data-view="games"]'));goAnalysis(b);}
   const mnav=document.querySelector('.mobile-nav');
-  if(mnav && !mnav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.dataset.view='analysis';b.textContent='Analysis';mnav.insertBefore(b,mnav.querySelector('[data-view="games"]'));mnav.style.gridTemplateColumns='repeat(5,1fr)';}
+  if(mnav && !mnav.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.dataset.view='analysis';b.textContent='Analysis';mnav.insertBefore(b,mnav.querySelector('[data-view="games"]'));mnav.style.gridTemplateColumns='repeat(5,1fr)';goAnalysis(b);}
   if(!document.getElementById('analysis')){
     const s=document.createElement('section'); s.id='analysis'; s.className='view';
-    s.innerHTML=`<div class="panel"><div class="eyebrow">Cross-source synthesis · ${TS}</div><h2>Overall Analysis</h2><p>Current read across Our Model, SportsLine, Gridiron and Lucas. SportsLine total/moneyline SIMs are shown but do not count as ATS votes; Gridiron reference-line mismatches remain explicit.</p></div>
-    <div class="grid3" style="margin-top:12px"><div class="panel"><h3>Best four-source convergence</h3><p><b>CAR -2.5</b> · Our B+ / SportsLine B / Gridiron 54% / Lucas LIKE. Injury burden and public concentration keep sizing moderate.</p></div><div class="panel"><h3>Strongest internal plays</h3><p><b>BUF -7 · DEN +2.5 · KC -10.5 · PHI -4.5</b></p></div><div class="panel"><h3>Highest-priority watch</h3><p><b>TEN +2.5</b> · Lucas LEAN + Gridiron 57% at PK, but Gridiron’s displayed line is stale versus the current NYG -2.5 market.</p></div></div>
-    <div class="panel" style="margin-top:12px"><h3>What changed materially</h3><p><b>SEA -7.5 upgraded:</b> the current market caught up to -7.5, removing the earlier price disadvantage. <b>HOU -1.5 and NO -3 downgraded:</b> their earlier stale-number advantages disappeared. <b>NE +3 moved to PASS:</b> the market now matches JAX -3 and both external spread sources point Jacksonville.</p></div>`;
+    s.innerHTML=`<div class="panel"><div class="eyebrow">Cross-source synthesis · ${TS}</div><h2>Overall Analysis</h2><p>Current read across Our Model, SportsLine, Gridiron and Lucas. SportsLine total/moneyline SIMs do not count as ATS votes. Gridiron 50/50 games are NO TAKE, and reference-line mismatches remain explicit.</p></div><div class="grid3" style="margin-top:12px"><div class="panel"><h3>Best four-source convergence</h3><p><b>CAR -2.5</b> · Our B+ / SportsLine B / Gridiron 54% / Lucas LIKE. Injury burden and public concentration keep sizing moderate.</p></div><div class="panel"><h3>Strongest internal plays</h3><p><b>BUF -7 · DEN +2.5 · KC -10.5 · PHI -4.5</b></p></div><div class="panel"><h3>Highest-priority watch</h3><p><b>TEN +2.5</b> · Lucas LEAN + Gridiron 57% at PK, but that Gridiron reference is stale versus current NYG -2.5.</p></div></div><div class="panel" style="margin-top:12px"><h3>Material changes</h3><p><b>SEA -7.5 upgraded</b> after the market caught up to the frozen number. <b>HOU -1.5 and NO -3 downgraded</b> after earlier price advantages disappeared. <b>NE +3 is PASS.</b> <b>CAR -2.5 promoted</b> on four-source convergence.</p></div>`;
     const lab=document.getElementById('lab'); lab?.parentNode?.insertBefore(s,lab);
+  }
+
+  function addSourceSnapshot(game){
+    const d=sourceByGame(game); const u=internal[game]; if(!d||!u) return;
+    document.getElementById('canonicalSourceSnapshot')?.remove();
+    const lp=lucas[game]; const box=document.createElement('div'); box.id='canonicalSourceSnapshot'; box.className='panel'; box.style.margin='12px 0';
+    const sports=d.sportsType==='Spread'?`${d.sportsPick} · native ${d.sportsGrade}`:`NO ATS TAKE · ${d.sportsType} ${d.sportsPick}`;
+    const grid=d.gridNoTake?'50/50 · NO TAKE':`${d.gridPick} · ${d.gridProb}%`;
+    box.innerHTML=`<div class="eyebrow">All 4 Sources · frozen/current snapshot</div><h3>${game}</h3><div class="grid3"><div><b>Our Model</b><br>${u.pick} · ${u.grade} · ${u.state}</div><div><b>SportsLine</b><br>${sports}</div><div><b>Gridiron</b><br>${grid}<br><small>Ref ${d.gridLine}${d.gridExact?' · exact equivalent':' · reference mismatch'}</small></div></div><div style="margin-top:10px"><b>Lucas</b><br>${lp?lp.side+' · '+lp.signal:'NO TAKE'}</div>`;
+    const hero=document.getElementById('gameHero'); hero?.insertAdjacentElement('afterend',box);
+  }
+  document.addEventListener('click',e=>{const row=e.target.closest('[data-game]'); if(row) setTimeout(()=>addSourceSnapshot(row.dataset.game),0);});
+
+  const today=document.getElementById('today');
+  if(today){
+    document.getElementById('sourceCoverage')?.remove();
+    const k=today.querySelector('.kpis'); if(k)k.innerHTML='<div class="kpi"><small>Catherine</small><b>$11,400</b><span>30th after W2</span></div><div class="kpi"><small>Amanda</small><b>$10,300</b><span>44th after W2</span></div><div class="kpi"><small>Household outlay</small><b>$4,900</b><span>Current portfolio</span></div><div class="kpi"><small>Shared exposure</small><b>DEN only</b><span>$1,300 · 26.5% of outlay</span></div>';
+    const a=today.querySelector('.alerts'); if(a)a.innerHTML='<div class="alert green"><span class="dot"></span><div><b>CAR -2.5 is the cleanest four-source convergence.</b><br/>Our Model, SportsLine, Gridiron and Lucas all support Carolina, with sizing capped for injuries/public concentration.</div></div><div class="alert green"><span class="dot"></span><div><b>SEA -7.5 upgraded to PLAY.</b><br/>The market caught up to the frozen number, removing the prior price disadvantage.</div></div><div class="alert red"><span class="dot"></span><div><b>NE +3 is PASS.</b><br/>SportsLine and Gridiron both favor Jacksonville while the earlier price edge disappeared.</div></div>';
   }
 
   const lab=document.getElementById('lab');
@@ -93,17 +112,28 @@
   }
 
   const psec=document.getElementById('portfolio');
-  if(psec){const fp=psec.querySelector('.section-head + .panel');if(fp)fp.innerHTML='<b>Current allocation</b><br/>$4,900 household · Catherine $2,600 · Amanda $2,300 · seven unique games · DEN +2.5 is the only shared position ($1,300 / 26.5%).'; const pg=psec.querySelector('.portfolio-grid');if(pg)pg.innerHTML='<div class="panel"><h3>Catherine · $2,600</h3><p><b>BUF -7 · $800</b></p><p><b>DEN +2.5 · $700</b></p><p><b>PHI -4.5 · $600</b></p><p><b>CAR -2.5 · $500</b></p></div><div class="panel"><h3>Amanda · $2,300</h3><p><b>KC -10.5 · $700</b></p><p><b>DEN +2.5 · $600</b></p><p><b>SEA -7.5 · $500</b></p><p><b>MIN -1.5 · $500</b></p></div>';}
+  if(psec){
+    const fp=psec.querySelector('.section-head + .panel'); if(fp)fp.innerHTML='<div class="eyebrow">Current allocation</div><b style="display:block;font-size:18px;margin-top:3px">$4,900 household · Catherine $2,600 · Amanda $2,300</b><p style="font-size:10px;color:#9db3aa;margin:5px 0 0">Seven unique games; DEN +2.5 is the only shared position ($1,300 / 26.5%).</p>';
+    const pg=psec.querySelector('.portfolio-grid');if(pg)pg.innerHTML='<div class="panel entry-card"><div class="eyebrow">Catherine</div><h3>$2,600 current outlay</h3><div class="wager-list"><div class="wager"><b>BUF -7</b><span>$800</span></div><div class="wager"><b>DEN +2.5</b><span>$700</span></div><div class="wager"><b>PHI -4.5</b><span>$600</span></div><div class="wager"><b>CAR -2.5</b><span>$500</span></div></div></div><div class="panel entry-card"><div class="eyebrow">Amanda</div><h3>$2,300 current outlay</h3><div class="wager-list"><div class="wager"><b>KC -10.5</b><span>$700</span></div><div class="wager"><b>DEN +2.5</b><span>$600</span></div><div class="wager"><b>SEA -7.5</b><span>$500</span></div><div class="wager"><b>MIN -1.5</b><span>$500</span></div></div></div>';
+    const pk=psec.querySelector('.portfolio-grid + .kpis'); if(pk)pk.innerHTML='<div class="kpi"><small>Combined bankroll</small><b>$21,700</b><span>After Week 2</span></div><div class="kpi"><small>Current outlay</small><b>22.6%</b><span>$4,900 household</span></div><div class="kpi"><small>Games represented</small><b>7</b><span>across 8 positions</span></div><div class="kpi"><small>Shared exposure</small><b>26.5%</b><span>DEN only · $1,300</span></div>';
+    const after=pk?.nextElementSibling; if(after&&after.classList.contains('panel')) after.innerHTML='<div class="eyebrow">Portfolio read</div><div class="alerts"><div class="alert green"><span class="dot"></span><div><b>Diversification is intentional.</b><br/>Only DEN is shared; the other six household positions are split across the two entries.</div></div><div class="alert green"><span class="dot"></span><div><b>CAR added at moderate size.</b><br/>Strongest four-source convergence, but not sized like the top internal A- plays.</div></div><div class="alert red"><span class="dot"></span><div><b>No HOU / NO / NE allocation.</b><br/>Their earlier price theses no longer survive the current market/source check.</div></div></div>';
+  }
 
   const toggle=document.querySelector('[data-source-view="compare"]'); if(toggle) toggle.textContent='All 4 Sources';
-  renderSourceComparison();
+  window.renderSourceComparison();
 
-  const errs=[]; const warns=[];
-  if(!Array.isArray(sourceData)||sourceData.length!==15) errs.push('Source comparison is not 15/15');
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT); let n; while(n=walker.nextNode()){if(/rerun/i.test(n.nodeValue))n.nodeValue=n.nodeValue.replace(/full-rerun/gi,'current').replace(/post-rerun/gi,'current').replace(/rerun/gi,'current analysis');if(/All 3 Sources/i.test(n.nodeValue))n.nodeValue=n.nodeValue.replace(/All 3 Sources/gi,'All 4 Sources');}
+
+  const errs=[],warns=[];
+  if(!Array.isArray(window.sourceData)||window.sourceData.length!==15) errs.push('Source comparison is not 15/15');
+  if(!Array.isArray(window.games)||window.games.length!==15) errs.push('Game board is not 15/15');
   const ranks=Object.values(internal).map(x=>x.rank).sort((a,b)=>a-b); if(ranks.some((r,i)=>r!==i+1)) errs.push('Internal ranks are not unique 1–15');
-  sourceData.forEach(d=>{if(!d.sportsGrade||!d.sportsPick||!d.sportsType) errs.push('SportsLine incomplete: '+d.game); if(!d.gridPick||d.gridProb==null||!d.gridLine) errs.push('Gridiron incomplete: '+d.game); if(d.gridLine!==d.sly) warns.push('Gridiron line differs from Sly: '+d.game+' ('+d.gridLine+' vs '+d.sly+')');});
+  if(Object.values(internal).filter(x=>x.catherine>0).length<4||Object.values(internal).filter(x=>x.amanda>0).length<4) errs.push('An entry has fewer than four wagers');
+  if(Object.values(internal).reduce((s,x)=>s+x.catherine+x.amanda,0)!==4900) errs.push('Portfolio total is not $4,900');
+  window.sourceData?.forEach(d=>{if(!d.sportsGrade||!d.sportsPick||!d.sportsType) errs.push('SportsLine incomplete: '+d.game);if(!d.gridPick||d.gridProb==null||!d.gridLine) errs.push('Gridiron incomplete: '+d.game);if(!d.gridExact) warns.push('Gridiron reference differs from Sly: '+d.game+' ('+d.gridLine+' vs '+d.sly+')');});
+  if(!document.querySelector('[data-view="analysis"]')||!document.getElementById('analysis')) errs.push('Overall Analysis navigation missing');
+  if(document.body.innerText.toLowerCase().includes('rerun')) errs.push('Forbidden rerun copy remains visible');
   window.commandCenterQAReport={status:errs.length?'FAIL':(warns.length?'PASS_WITH_WARNINGS':'PASS'),errors:errs,warnings:warns,generatedAt:new Date().toISOString()};
   const snap=document.querySelector('.snapshot'); if(snap)snap.innerHTML='<b>Week 3 · Current through '+TS+'</b><br/>Sly frozen · current market · SportsLine · Gridiron · Lucas';
 })();
 </script>
-
