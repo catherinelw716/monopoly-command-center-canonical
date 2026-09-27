@@ -1,0 +1,24 @@
+{
+  "season": 2026,
+  "week": 3,
+  "status": "OPTIMIZER_EXECUTION_PROXY_NOT_PROSPECTIVE_EVIDENCE",
+  "captured_context": "Canonical repo source-screenshot-data-patch.html current lines as of the existing Sep 26 Command Center snapshot.",
+  "market_proxy_policy": "Single-source current spread proxy used only to exercise V2-0009 benchmark/optimizer mechanics. It is not the robust multi-book fair market required for production V2 probabilities and is not V2-0010 prospective evidence.",
+  "games": [
+    {"game_id":"LAC @ BUF","market_home_spread":-7.0,"sly_home_spread":-7.0},
+    {"game_id":"CAR @ CLE","market_home_spread":2.5,"sly_home_spread":2.5},
+    {"game_id":"NYJ @ DET","market_home_spread":-6.5,"sly_home_spread":-6.5},
+    {"game_id":"HOU @ IND","market_home_spread":1.5,"sly_home_spread":1.5},
+    {"game_id":"NE @ JAX","market_home_spread":-3.0,"sly_home_spread":-3.0},
+    {"game_id":"KC @ MIA","market_home_spread":10.5,"sly_home_spread":10.5},
+    {"game_id":"TEN @ NYG","market_home_spread":-2.5,"sly_home_spread":-2.5},
+    {"game_id":"CIN @ PIT","market_home_spread":3.5,"sly_home_spread":3.5},
+    {"game_id":"SEA @ WAS","market_home_spread":7.5,"sly_home_spread":7.5},
+    {"game_id":"ARI @ SF","market_home_spread":-8.5,"sly_home_spread":-8.5},
+    {"game_id":"MIN @ TB","market_home_spread":1.5,"sly_home_spread":1.5},
+    {"game_id":"BAL @ DAL","market_home_spread":3.5,"sly_home_spread":3.5},
+    {"game_id":"LV @ NO","market_home_spread":-3.0,"sly_home_spread":-3.0},
+    {"game_id":"LAR @ DEN","market_home_spread":2.5,"sly_home_spread":2.5},
+    {"game_id":"PHI @ CHI","market_home_spread":3.5,"sly_home_spread":4.5}
+  ]
+}
