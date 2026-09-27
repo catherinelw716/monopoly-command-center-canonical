@@ -185,7 +185,12 @@ The artifact was independently regenerated on Render and the logged artifact has
 
 The ledger is append-only JSONL with a SHA-256 hash chain. Prediction events are rejected at/after kickoff. FRIDAY_FREEZE and PRE_KICK_FINAL are unique per-game snapshot keys. Results are separate settlement events. CI verifies probability integrity, timing rejection, duplicate rejection, and tamper detection.
 
-No reconstructed historical prediction rows were inserted. The live ledger will begin only with a genuinely prospective capture.
+### Week 3 Sly freeze is already preserved
+The Week 3 Sly Friday lines were already known before V2-0010 activation and are now durably stored in `v2/season_2026/week_03_sly_freeze.json`.
+
+All 15 frozen target lines are preserved using conventional home-team spread signs. These are valid target-line inputs for Week 3 shadow evaluation.
+
+Important distinction: having Sly's frozen Friday line does **not by itself** create a valid retrospective FRIDAY_FREEZE V2 prediction. The strict protocol also needs a contemporaneous Friday market observation/timestamp. Do not substitute a later Sunday/current market for that missing Friday observation. If a Friday market snapshot can be verified from previously captured project evidence, it may be used; otherwise Week 3's Sly freeze remains valid and the first fully prospective model snapshot can be PRE_KICK_FINAL.
 
 ### Promotion guardrail
 Do not consider replacing V1's probability layer before at least:
@@ -197,12 +202,13 @@ Do not consider replacing V1's probability layer before at least:
 This floor is not a guarantee of power; continue shadowing if uncertainty remains.
 
 ## Immediate next V2 operating step
-At the next valid slate:
-1. capture Sly's frozen spread and a timestamped market observation in a **FRIDAY_FREEZE** batch
-2. include V1 and SportsLine/Gridiron/Lucas context exactly as observed when available
-3. before each kickoff, capture a separate **PRE_KICK_FINAL** batch at the unchanged Sly spread and latest verified market line
-4. append results only after games are final
-5. run `score_shadow_ledger.py`; do not retune architecture from individual results
+For Week 3 / subsequent slates:
+1. use the already-preserved Week 3 Sly frozen spreads as the immutable target line
+2. search prior project evidence for a genuinely contemporaneous Friday market snapshot; use it only if its timing/provenance can be verified
+3. before each remaining kickoff, capture a **PRE_KICK_FINAL** snapshot at the unchanged Sly spread and latest verified market line
+4. for future weeks, capture both FRIDAY_FREEZE and PRE_KICK_FINAL prospectively
+5. append results only after games are final
+6. run `score_shadow_ledger.py`; do not retune architecture from individual results
 
 This is now an operating evidence-collection phase, not another retrospective model-search phase.
 
