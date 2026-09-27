@@ -17,24 +17,48 @@
     'LAR @ DEN':{sl:{proj:'LAR 21 · DEN 22',open:'DEN +2.5 · O/U 44',current:'DEN +2.5 · O/U 44',picks:3,grade:'B',rec:'DEN +2.5',type:'ATS'},ga:{away:'LAR -2.5',awayPct:49,home:'DEN +2.5',homePct:51,ref:'LAR -2.5',exact:true}},
     'PHI @ CHI':{sl:{proj:'PHI 23 · CHI 17',open:'CHI +4.5 · O/U 41',current:'CHI +3.5 · O/U 42.5',picks:5,grade:'C',rec:'UNDER 42.5',type:'TOTAL'},ga:{away:'PHI -3',awayPct:46,home:'CHI +3',homePct:54,ref:'PHI -3',exact:false}}
   };
-  const LUCAS=window.lucasWeek3||{'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}};
   window.week3ScreenshotSources=DATA;
-  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function gameFromText(t){const s=String(t||'').replace(/\s+/g,' ');return Object.keys(DATA).find(g=>s.includes(g))||'';}
-  function sourceTable(){return [...document.querySelectorAll('table')].find(t=>{const x=t.querySelector('thead')?.innerText||'';return x.includes('SportsLine')&&x.includes('Gridiron');})||null;}
-  function strongerGA(g){const x=DATA[g].ga;if(x.awayPct===x.homePct)return '50/50 · NO TAKE';return x.awayPct>x.homePct?x.away+' · '+x.awayPct+'%':x.home+' · '+x.homePct+'%';}
-  function sportsHTML(sl){return `<b>${esc(sl.rec)}</b><span class="src-sub">${esc(sl.type)} · grade ${esc(sl.grade)} · ${sl.picks} SportsLine picks<br>Projected ${esc(sl.proj)}<br>Open ${esc(sl.open)} · Current ${esc(sl.current)}<br>User-supplied SportsLine screenshot</span>`;}
-  function gridHTML(g){const x=DATA[g].ga;return `<b>${esc(strongerGA(g))}</b><span class="src-sub">${esc(x.away)} ${x.awayPct}% · ${esc(x.home)} ${x.homePct}%<br>Reference ${esc(x.ref)} · ${x.exact?'same Sly spread':'DIFFERENT reference spread'}<br>User-supplied GridironAI screenshot</span>`;}
-  function exactExternal(g){const d=DATA[g], votes=[]; if(d.sl.type==='ATS') votes.push(d.sl.rec.split(' ')[0]); if(d.ga.exact&&d.ga.awayPct!==d.ga.homePct) votes.push((d.ga.awayPct>d.ga.homePct?d.ga.away:d.ga.home).split(' ')[0]); const lp=LUCAS[g]; if(lp) votes.push(lp.side.split(' ')[0]); const c={};votes.forEach(v=>c[v]=(c[v]||0)+1);const o=Object.entries(c).sort((a,b)=>b[1]-a[1]);if(!votes.length)return 'No comparable ATS vote';if(o.length>1&&o[0][1]===o[1][1])return `Split ${votes.length}-source ATS board`;return `${o[0][1]}/${votes.length} exact-line ATS support ${o[0][0]}`;}
-  function patchTable(){const t=sourceTable();if(!t)return;const hr=t.querySelector('thead tr');if(!hr)return;let hs=[...hr.cells].map(c=>c.textContent.trim()); if(!hs.includes('Lucas')){const th=document.createElement('th');th.textContent='Lucas';const ci=hs.findIndex(x=>/Cross-source/i.test(x));hr.insertBefore(th,ci>=0?hr.cells[ci]:null);hs=[...hr.cells].map(c=>c.textContent.trim());}
-    const is=hs.findIndex(x=>/SportsLine/i.test(x)), ig=hs.findIndex(x=>/Gridiron/i.test(x)), il=hs.indexOf('Lucas'), ic=hs.findIndex(x=>/Cross-source/i.test(x));
-    [...t.querySelectorAll('tbody tr')].forEach(r=>{const g=gameFromText(r.cells[0]?.innerText);if(!g)return;while(r.cells.length<hs.length)r.appendChild(document.createElement('td')); if(is>=0)r.cells[is].innerHTML=sportsHTML(DATA[g].sl); if(ig>=0)r.cells[ig].innerHTML=gridHTML(g); if(il>=0){const lp=LUCAS[g];r.cells[il].innerHTML=lp?`<b>${esc(lp.side)}</b><span class="src-sub">${esc(lp.signal)} · independent source</span>`:'<b>—</b><span class="src-sub">NO TAKE</span>';} if(ic>=0)r.cells[ic].innerHTML=`<b>${esc(exactExternal(g))}</b><span class="src-sub">SportsLine non-ATS outputs and Gridiron mismatched reference lines stay visible but do not count as exact-line ATS votes.</span>`;});
+  const L=window.lucasWeek3||{};
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const gameFrom=text=>Object.keys(DATA).find(g=>String(text||'').replace(/\s+/g,' ').includes(g))||'';
+  const stronger=g=>{const x=DATA[g].ga;if(x.awayPct===x.homePct)return '50/50 · NO TAKE';return x.awayPct>x.homePct?`${x.away} · ${x.awayPct}%`:`${x.home} · ${x.homePct}%`;};
+
+  function patchSourceCompare(){
+    const table=[...document.querySelectorAll('table')].find(t=>{const h=t.querySelector('thead')?.innerText||'';return h.includes('SportsLine')&&h.includes('Gridiron');});
+    if(!table)return;
+    const hr=table.querySelector('thead tr'); if(!hr)return;
+    const heads=[...hr.cells].map(c=>(c.textContent||'').trim());
+    const is=heads.findIndex(h=>/SportsLine/i.test(h)), ig=heads.findIndex(h=>/Gridiron/i.test(h));
+    [...table.querySelectorAll('tbody tr')].forEach(r=>{
+      const g=gameFrom(r.cells[0]?.innerText||r.innerText); if(!g)return;
+      const d=DATA[g];
+      if(is>=0&&r.cells[is])r.cells[is].innerHTML=`<b>${esc(d.sl.rec)}</b><span class="src-sub">${esc(d.sl.type)} · grade ${esc(d.sl.grade)} · ${d.sl.picks} SportsLine picks<br>Projected ${esc(d.sl.proj)}<br>Open ${esc(d.sl.open)} · Current ${esc(d.sl.current)}<br>User-supplied SportsLine screenshot</span>`;
+      if(ig>=0&&r.cells[ig])r.cells[ig].innerHTML=`<b>${esc(stronger(g))}</b><span class="src-sub">${esc(d.ga.away)} ${d.ga.awayPct}% · ${esc(d.ga.home)} ${d.ga.homePct}%<br>Reference ${esc(d.ga.ref)} · ${d.ga.exact?'same Sly spread':'DIFFERENT reference spread'}<br>User-supplied GridironAI screenshot</span>`;
+    });
   }
-  function tile(container,label,main,meta,cls){let x=[...container.querySelectorAll('.source-mini')].find(el=>(el.querySelector('small')?.textContent||'').toLowerCase().includes(label.toLowerCase()));if(!x){x=document.createElement('div');x.className='source-mini '+(cls||'');container.appendChild(x);}x.innerHTML=`<small>${esc(label)}</small><b>${esc(main)}</b><span>${esc(meta)}</span>`;}
-  function patchGameCards(){document.querySelectorAll('.visual-game[data-game]').forEach(card=>{const g=card.dataset.game;if(!DATA[g])return;const box=card.querySelector('.vg-sources');if(!box)return;const d=DATA[g];tile(box,'SportsLine',d.sl.rec,`${d.sl.grade} · ${d.sl.type} · ${d.sl.picks} picks`,'sportsline');tile(box,'Gridiron',strongerGA(g),`ref ${d.ga.ref}${d.ga.exact?'':' · mismatch'}`,'gridiron');const lp=LUCAS[g];tile(box,'Lucas',lp?lp.signal:'NO TAKE',lp?lp.side:'—','lucas');});}
-  function patchDrilldown(){const q=new URLSearchParams(location.search).get('game');const g=q&&DATA[q]?q:null;if(!g)return;let p=document.getElementById('screenshotSourceDrilldown');if(!p){p=document.createElement('div');p.id='screenshotSourceDrilldown';p.className='panel';p.style.margin='12px 0';const hero=document.getElementById('gameHero');if(hero)hero.insertAdjacentElement('afterend',p);else return;}const d=DATA[g],lp=LUCAS[g];p.innerHTML=`<div class="eyebrow">Screenshot-verified source data</div><h3>${esc(g)}</h3><div class="grid3"><div><b>SportsLine</b><br>${esc(d.sl.rec)} · ${esc(d.sl.grade)} · ${esc(d.sl.type)}<br><small>${d.sl.picks} picks · Projected ${esc(d.sl.proj)}<br>Open ${esc(d.sl.open)}<br>Current ${esc(d.sl.current)}</small></div><div><b>Gridiron AI</b><br>${esc(strongerGA(g))}<br><small>${esc(d.ga.away)} ${d.ga.awayPct}% · ${esc(d.ga.home)} ${d.ga.homePct}%<br>Ref ${esc(d.ga.ref)} · ${d.ga.exact?'same Sly spread':'different reference spread'}</small></div><div><b>Lucas</b><br>${lp?esc(lp.side)+' · '+esc(lp.signal):'NO TAKE'}<br><small>Independent source</small></div></div><p class="src-sub" style="margin-top:10px">SportsLine and Gridiron values above are transcribed from the user-supplied screenshots. Non-ATS SportsLine SIM outputs and Gridiron probabilities at a different spread are context, not exact-line ATS votes.</p>`;}
-  function patchBoard(){const b=document.querySelector('#robustSlateDecisionBoard tbody');if(!b)return;[...b.rows].forEach(r=>{const g=r.dataset.game;if(!DATA[g]||!r.cells[2])return;const d=DATA[g],lp=LUCAS[g];r.cells[2].innerHTML=`<span class="robust-pill">${esc(exactExternal(g))}</span><span class="robust-sub">SportsLine: ${esc(d.sl.rec)} · ${esc(d.sl.grade)} · ${esc(d.sl.type)} · ${d.sl.picks} picks<br>Gridiron: ${esc(strongerGA(g))} · ref ${esc(d.ga.ref)}${d.ga.exact?'':' · mismatch'}<br>Lucas: ${lp?esc(lp.side)+' · '+esc(lp.signal):'NO TAKE'}</span>`;});}
-  function apply(){try{patchTable();patchGameCards();patchDrilldown();patchBoard();window.sourceScreenshotQA={games:Object.keys(DATA).length,tableRows:sourceTable()?.querySelectorAll('tbody tr').length||0,cards:[...document.querySelectorAll('.visual-game[data-game]')].filter(x=>DATA[x.dataset.game]).length};}catch(e){console.error('source screenshot patch',e);}}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,80));else setTimeout(apply,80);setTimeout(apply,600);setTimeout(apply,1600);setInterval(apply,3500);new MutationObserver(()=>setTimeout(apply,50)).observe(document.documentElement,{subtree:true,childList:true});
+
+  function patchGameCards(){
+    document.querySelectorAll('.visual-game[data-game],#games [data-game]').forEach(card=>{
+      const g=card.dataset.game||gameFrom(card.innerText); if(!DATA[g])return;
+      const box=card.querySelector('.vg-sources,.sources-grid,.source-grid,.game-sources'); if(!box)return;
+      const d=DATA[g];
+      const ensure=(key,label,main,meta)=>{let t=box.querySelector(`[data-source-key="${key}"]`)||[...box.querySelectorAll('.source-mini')].find(x=>(x.querySelector('small')?.textContent||'').toLowerCase().includes(label.toLowerCase()));if(!t){t=document.createElement('div');t.className='source-mini';box.appendChild(t);}t.dataset.sourceKey=key;t.innerHTML=`<small>${esc(label)}</small><b>${esc(main)}</b><span>${esc(meta)}</span>`;};
+      ensure('sportsline','SportsLine',d.sl.rec,`${d.sl.grade} · ${d.sl.type} · ${d.sl.picks} picks`);
+      ensure('gridiron','Gridiron',stronger(g),`ref ${d.ga.ref}${d.ga.exact?'':' · mismatch'}`);
+    });
+  }
+
+  function patchDetail(){
+    const q=new URLSearchParams(location.search).get('game'); const g=q&&DATA[q]?q:null; if(!g)return;
+    const hero=document.getElementById('gameHero'); if(!hero)return;
+    let p=document.getElementById('screenshotSourceDrilldown'); if(!p){p=document.createElement('div');p.id='screenshotSourceDrilldown';p.className='panel source-snapshot-card';hero.insertAdjacentElement('afterend',p);}
+    const d=DATA[g],lp=L[g];
+    p.innerHTML=`<div class="eyebrow">Screenshot-verified source data</div><div class="source-card-grid"><div class="source-card"><small>SportsLine</small><strong>${esc(d.sl.rec)}</strong><span>${esc(d.sl.grade)} · ${esc(d.sl.type)} · ${d.sl.picks} picks</span><span>Projected ${esc(d.sl.proj)}</span><span>Current ${esc(d.sl.current)}</span></div><div class="source-card"><small>Gridiron AI</small><strong>${esc(stronger(g))}</strong><span>${esc(d.ga.away)} ${d.ga.awayPct}% · ${esc(d.ga.home)} ${d.ga.homePct}%</span><span>Ref ${esc(d.ga.ref)} · ${d.ga.exact?'same Sly spread':'different reference spread'}</span></div><div class="source-card"><small>Lucas</small><strong>${lp?esc(lp.side):'NO TAKE'}</strong><span>${lp?esc(lp.signal):'—'}</span></div></div>`;
+  }
+
+  function apply(){patchSourceCompare();patchGameCards();patchDetail();window.screenshotSourceQA={games:Object.keys(DATA).length};}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,120));else setTimeout(apply,120);
+  setTimeout(apply,700);
+  document.addEventListener('click',e=>{if(e.target.closest('[data-view="games"],[data-game]'))setTimeout(apply,150);});
 })();
 </script>
