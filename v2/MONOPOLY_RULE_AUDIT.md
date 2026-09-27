@@ -1,12 +1,13 @@
 # NFL Monopoly — Simulator Rule Audit
 
-Status: **ACTIVE — rule confirmation before V2-0009 simulator build**
+Status: **ACTIVE — sufficient to begin V2-0009 core simulator build**
 
-Purpose: lock the exact contest mechanics before writing the Monopoly tournament simulator or Catherine/Amanda joint optimizer. No simulator assumption should be inferred from conventional survivor/ATS pools.
+Purpose: preserve the contest mechanics that materially affect the optimizer without letting edge-case rule auditing derail the V2 roadmap.
 
-## A. Confirmed rules already in the canonical project
+## A. Confirmed core rules
 
-### Weekly wagering
+### Season start / weekly wagering
+- **Every entry started Week 1 with $10,000.** This is the season starting bankroll, not a playoff rule.
 - ATS only, using Sly's frozen spreads.
 - Cover = net **+1x wager**.
 - Loss = net **-1x wager**.
@@ -26,65 +27,51 @@ Purpose: lock the exact contest mechanics before writing the Monopoly tournament
 - 5th: **1%**
 - Commissioner: **6%**
 
+### Confirmed later-season / playoff constraints
+These are real contest constraints, but they should **not dominate the current early-season optimizer design**.
+- Week 18 qualification threshold: **$3,000 remaining balance**.
+- Wild Card: **6 games × $500 minimum each**.
+- Divisional: **4 games × $750 minimum each**.
+- Conference Championship: **2 games × $1,500 minimum each**.
+- Super Bowl: **$3,000 minimum**.
+- Only the balance available entering a playoff weekend can be wagered during that weekend.
+
 ### Household optimization policy
 - Catherine and Amanda are separate entries but optimized jointly at the household level.
 - Number of games, total deployment, wager sizes, and overlap are optimizer outputs, not fixed heuristics.
 - Standings affect portfolio risk, not NFL cover probabilities.
 
-## B. Previously recorded details that require user confirmation before encoding
+## B. Modeling priority
 
-These appeared in prior project work, but are deliberately **not yet treated as simulator truth** until Catherine confirms them:
+The current V2-0009 build should focus first on the mechanics that matter now:
+1. current balance and rank;
+2. weekly Sly-line cover/push/loss probabilities;
+3. $100 wager increments and four-game minimum;
+4. field balance distribution / observed field behavior;
+5. Catherine/Amanda shared NFL outcome correlation;
+6. top-heavy final payout objective;
+7. preserving sufficient future bankroll to remain viable.
 
-- Starting bankroll per entry: **$10,000**.
-- Week 18 / playoff qualification threshold: **$3,000 remaining balance**.
-- Wild Card round minimum: **6 games × $500 each**.
-- Divisional round minimum: **4 games × $750 each**.
-- Conference Championship minimum: **2 games × $1,500 each**.
-- Super Bowl minimum: **$3,000**.
-- Previously recorded operating interpretation: only the balance available entering a playoff weekend can be wagered during that weekend.
+The playoff minimum schedule belongs in the season-state transition model, but it is a **future constraint**, not the central driver of Week 3 recommendations.
 
-## C. Still missing / must be explicitly locked
+## C. Details that can remain parameterized until they become decision-relevant
 
-### Regular season / qualification
-- Exact meaning of the $3,000 Week 18 threshold: qualification for what, and measured at what timestamp?
-- Whether an entry below the threshold is eliminated immediately or simply ineligible for postseason wagering.
-- Whether Week 18 itself is part of the regular-season bankroll race before qualification is assessed.
-- Whether any regular-season minimum changes later in the year.
+Do not stop the core simulator build to interrogate these now. Keep them explicit parameters/TODOs rather than inventing rules:
+- exact tie-break procedure for equal final balances;
+- precise administrative handling of an entry that cannot satisfy a future playoff minimum;
+- playoff submission timing differences, if any;
+- whether any uncommon edge-case exception exists around pushes or late changes.
 
-### Playoffs
-- Whether every qualifying entry continues independently through all NFL playoff rounds.
-- Whether balances carry forward unchanged from regular season into Wild Card and then round to round.
-- Whether a player may wager **more** than the stated playoff minimums.
-- Whether the listed playoff minimum is per game, total round deployment, or mandatory on every game in the round.
-- Whether all games in a playoff round must be wagered or only a minimum number.
-- Whether losing below a future-round minimum causes elimination.
-- What happens to an entry whose balance is insufficient to meet the required round minimum.
-- Whether pushes preserve the full stake and count toward required deployment.
+Before these details can materially change an optimizer recommendation, confirm them with Catherine.
 
-### Timing / submission
-- Whether playoff lines are issued using the same Thursday/Friday process or a different schedule.
-- Whether wagers can be changed until kickoff during the playoffs.
-- Whether each game's bet locks individually at kickoff.
+## D. Build sequence
 
-### Ranking / payouts
-- Exact final ranking variable: ending Monopoly balance after the Super Bowl?
-- Tie-break procedure for equal final balances.
-- Whether payout percentages are applied to the real-money entry pool and whether ties split positions/payouts in any special way.
-- Whether non-qualifying/eliminated balances remain in published standings but cannot win.
+Proceed with V2-0009 now:
+1. create the machine-readable contest/state contract using the confirmed rules above;
+2. build and unit-test weekly bankroll transitions;
+3. replay known Week 1–2 Catherine/Amanda results to verify accounting;
+4. represent the observed field balance distribution and historical behavior;
+5. build the joint Monte Carlo season simulator;
+6. benchmark candidate allocation policies and then optimize Catherine/Amanda jointly.
 
-### Field / simulator mechanics
-- Exact number of entries at season start and whether late entries are possible.
-- Whether every entry begins with the same bankroll.
-- Whether there are any rebuy, reset, borrowing, negative-balance, or zero-balance rules.
-- Whether a wager can ever exceed current available balance.
-- Whether the pool permits an entry to wager its entire balance.
-
-## D. Build gate
-
-Do **not** begin the production V2-0009 simulator until Sections B and C are resolved enough to encode the contest deterministically.
-
-Once the rules are locked:
-1. convert them into a machine-readable simulator contract;
-2. add unit tests for every bankroll transition and qualification/elimination rule;
-3. replay known historical seasons/weekly balances to verify accounting;
-4. only then build the field-policy model and Catherine/Amanda Monte Carlo optimizer.
+Rule auditing is now a supporting control, not the primary workstream.
