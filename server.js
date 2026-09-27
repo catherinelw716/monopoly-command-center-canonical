@@ -11,6 +11,7 @@ const consistencyPatch = fs.readFileSync('consistency-patch.html', 'utf8');
 const mobilePatch = fs.readFileSync('mobile-patch.html', 'utf8');
 const mobileNavFix = fs.readFileSync('mobile-nav-fix.html', 'utf8');
 const wagerSizingPatch = fs.readFileSync('wager-sizing-patch.html', 'utf8');
+const consensusModelFix = fs.readFileSync('consensus-model-fix.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
 
@@ -20,7 +21,7 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
-  const combinedPatch = `${patch}\n${lucasTablePatch}\n${sourceScreenshotPatch}\n${gameDetailUiPatch}\n${consistencyPatch}\n${mobilePatch}\n${mobileNavFix}\n${wagerSizingPatch}`;
+  const combinedPatch = `${patch}\n${lucasTablePatch}\n${sourceScreenshotPatch}\n${gameDetailUiPatch}\n${consistencyPatch}\n${mobilePatch}\n${mobileNavFix}\n${wagerSizingPatch}\n${consensusModelFix}`;
   cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
 }
@@ -30,7 +31,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const html = await loadApp();
       res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
-      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3-field-aware-sizing'}));
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3-optimized-count-consensus4'}));
     } catch (err) {
       loadError = String(err && err.message ? err.message : err);
       res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
@@ -55,7 +56,7 @@ server.listen(port, '0.0.0.0', async () => {
   console.log(`Command Center listening on ${port}`);
   try {
     const html = await loadApp();
-    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; field-aware sizing included`);
+    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; optimized count + four-source consensus included`);
   } catch (err) {
     console.error('Initial canonical app load failed:', err);
   }
