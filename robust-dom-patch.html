@@ -1,0 +1,108 @@
+<script id="canonical-robust-dom-layer">
+(function(){
+  const lucas={
+    'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},
+    'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},
+    'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},
+    'NYJ @ DET':{side:'DET -6.5',signal:'LIKE'},
+    'CIN @ PIT':{side:'CIN -3.5',signal:'LEAN'},
+    'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},
+    'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
+  };
+  function gameKey(text){
+    const s=String(text||'').replace(/\s+/g,' ').trim();
+    return Object.keys(lucas).concat(['LAC @ BUF','KC @ MIA','SEA @ WAS','NE @ JAX','ARI @ SF','BAL @ DAL','HOU @ IND','LV @ NO']).find(g=>s.includes(g))||'';
+  }
+  function pickTeam(text){
+    const m=String(text||'').match(/\b([A-Z]{2,3})\s[+-]\d+(?:\.\d+)?\b/);
+    return m?m[1].replace('JAC','JAX'):'';
+  }
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function ensureStyle(){
+    if(document.getElementById('robust-dom-style')) return;
+    const st=document.createElement('style'); st.id='robust-dom-style';
+    st.textContent='.robust-board{overflow:auto;border:1px solid rgba(148,163,184,.18);border-radius:14px}.robust-board table{width:100%;border-collapse:collapse;min-width:980px;font-size:12px}.robust-board th{padding:9px 10px;text-align:left;color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.robust-board td{padding:10px;border-top:1px solid rgba(148,163,184,.12);vertical-align:top}.robust-sub{display:block;color:#94a3b8;font-size:10px;margin-top:4px;line-height:1.35}.robust-pill{display:inline-block;padding:3px 7px;border-radius:999px;background:rgba(148,163,184,.12);font-weight:800;font-size:10px}.robust-lucas{font-weight:800;color:#ffd983}';
+    document.head.appendChild(st);
+  }
+  function sourceTable(){
+    return Array.from(document.querySelectorAll('table')).find(function(t){
+      const h=t.querySelector('thead'); if(!h) return false;
+      const x=h.innerText||''; return x.includes('SportsLine')&&x.includes('Gridiron');
+    })||null;
+  }
+  function patchSourceTable(){
+    const table=sourceTable(); if(!table) return null;
+    const hr=table.querySelector('thead tr'); if(!hr) return table;
+    const headers=Array.from(hr.children).map(function(x){return (x.textContent||'').trim();});
+    if(!headers.includes('Lucas')){
+      const th=document.createElement('th'); th.textContent='Lucas';
+      const cross=Array.from(hr.children).find(function(x){return /Cross-source/i.test(x.textContent||'');});
+      hr.insertBefore(th,cross||null);
+    }
+    Array.from(table.querySelectorAll('tbody tr')).forEach(function(tr){
+      const g=gameKey(tr.cells[0]&&tr.cells[0].innerText); if(!g) return;
+      const rowHeaders=Array.from(hr.children).map(function(x){return (x.textContent||'').trim();});
+      const lucasIndex=rowHeaders.indexOf('Lucas');
+      if(lucasIndex<0) return;
+      if(tr.cells.length<rowHeaders.length){
+        const td=document.createElement('td');
+        const lp=lucas[g];
+        td.innerHTML=lp?'<span class="robust-lucas">'+esc(lp.side)+'</span><span class="robust-sub">'+esc(lp.signal)+' · independent source</span>':'<b>—</b><span class="robust-sub">NO TAKE</span>';
+        const crossIndex=rowHeaders.findIndex(function(x){return /Cross-source/i.test(x);});
+        tr.insertBefore(td,crossIndex>=0?tr.cells[crossIndex]:null);
+      }
+    });
+    return table;
+  }
+  function patchActionQueue(){
+    const today=document.getElementById('today'); if(!today) return;
+    const heading=Array.from(today.querySelectorAll('h1,h2,h3,h4,.eyebrow')).find(function(x){return /^(Needs attention|Action required before lock)$/i.test((x.textContent||'').trim());});
+    if(heading) heading.textContent='Action required before lock';
+    const alerts=today.querySelector('.alerts'); if(!alerts) return;
+    if(alerts.dataset.robustAction==='1') return;
+    alerts.innerHTML='<div class="alert yellow"><span class="dot"></span><div><b>Sunday-AM final verification.</b><br/>Confirm inactive lists and current multi-book prices on every wagered game before lock.</div></div><div class="alert yellow"><span class="dot"></span><div><b>Key-number movement check.</b><br/>Reassess any wagered game that moves through 3 or 7, and keep model probabilities tied to the spread they were actually evaluated against.</div></div>';
+    alerts.dataset.robustAction='1';
+  }
+  function buildBoard(){
+    const today=document.getElementById('today'); const table=patchSourceTable(); if(!today||!table) return;
+    const tbody=table.querySelector('tbody'); const hr=table.querySelector('thead tr'); if(!tbody||!hr) return;
+    const heads=Array.from(hr.children).map(function(x){return (x.textContent||'').trim();});
+    const idx={game:heads.findIndex(function(x){return x==='Game';}),ours:heads.findIndex(function(x){return /Our Model/i.test(x);}),sports:heads.findIndex(function(x){return /SportsLine/i.test(x);}),grid:heads.findIndex(function(x){return /Gridiron/i.test(x);}),lucas:heads.indexOf('Lucas')};
+    if(idx.game<0||idx.ours<0) return;
+    let panel=document.getElementById('robustSlateDecisionBoard');
+    if(!panel){panel=document.createElement('div');panel.id='robustSlateDecisionBoard';panel.className='panel';}
+    const rows=Array.from(tbody.rows).map(function(r){
+      const g=gameKey(r.cells[idx.game]&&r.cells[idx.game].innerText); if(!g) return '';
+      const ours=r.cells[idx.ours]?r.cells[idx.ours].innerText.trim():'—';
+      const sports=r.cells[idx.sports]?r.cells[idx.sports].innerText.trim():'—';
+      const grid=r.cells[idx.grid]?r.cells[idx.grid].innerText.trim():'—';
+      const lp=lucas[g]; const luc=lp?(lp.side+' · '+lp.signal):'NO TAKE';
+      const votes=[pickTeam(sports),pickTeam(grid),lp?pickTeam(lp.side):''].filter(Boolean);
+      const counts={}; votes.forEach(function(v){counts[v]=(counts[v]||0)+1;});
+      const ordered=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];});
+      let consensus='No comparable ATS consensus';
+      if(votes.length===1) consensus='1 ATS source: '+ordered[0];
+      else if(ordered.length){consensus=(ordered.length>1&&counts[ordered[0]]===counts[ordered[1]])?'Split external board':(counts[ordered[0]]+'/'+votes.length+' directional support '+ordered[0]);}
+      const state=(ours.match(/\b(PLAY|WATCH|PASS)\b/)||[])[1]||'—';
+      return '<tr data-game="'+esc(g)+'"><td><b>'+esc(g)+'</b></td><td>'+esc(ours)+'</td><td><span class="robust-pill">'+esc(consensus)+'</span><span class="robust-sub">SportsLine: '+esc(sports)+'<br>Gridiron: '+esc(grid)+'<br>Lucas: '+esc(luc)+'<br>Directional summary only; preserve each source\'s reference line.</span></td><td><b>'+esc(state)+'</b></td></tr>';
+    }).join('');
+    if(!rows) return;
+    panel.innerHTML='<div class="eyebrow">All 15 games · our decision vs outside evidence</div><h2>Slate Decision Board</h2><p>Our model stays separate from external consensus. SportsLine, Gridiron and Lucas are shown as independent data points, with original reference lines preserved.</p><div class="robust-board"><table><thead><tr><th>Game</th><th>Our model</th><th>External consensus</th><th>State</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    const old=document.getElementById('recommendedPlays'); if(old) old.style.display='none';
+    const oldHeading=Array.from(today.querySelectorAll('h1,h2,h3,h4,.eyebrow')).find(function(x){return /^Decision board$/i.test((x.textContent||'').trim());}); if(oldHeading) oldHeading.style.display='none';
+    const alerts=today.querySelector('.alerts'); if(alerts&&panel.parentNode!==today) alerts.insertAdjacentElement('afterend',panel);
+    panel.querySelectorAll('tr[data-game]').forEach(function(row){row.onclick=function(){const card=document.querySelector('.visual-game[data-game="'+row.dataset.game.replace(/"/g,'')+'"]');if(card) card.click();};});
+  }
+  function renameSourceButtons(){
+    Array.from(document.querySelectorAll('button,a,span')).forEach(function(el){if((el.textContent||'').trim()==='All 3 Sources') el.textContent='All 4 Sources';});
+  }
+  let running=false;
+  function apply(){
+    if(running) return; running=true;
+    try{ensureStyle();renameSourceButtons();patchActionQueue();patchSourceTable();buildBoard();window.robustCommandCenterQA={lucasHeader:!!Array.from((sourceTable()&&sourceTable().querySelectorAll('th'))||[]).find(function(x){return (x.textContent||'').trim()==='Lucas';}),boardRows:document.querySelectorAll('#robustSlateDecisionBoard tbody tr').length,actionLabel:!!Array.from(document.querySelectorAll('#today h1,#today h2,#today h3,#today h4,#today .eyebrow')).find(function(x){return (x.textContent||'').trim()==='Action required before lock';})};}catch(e){console.error('robust patch',e);}finally{running=false;}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){setTimeout(apply,50);}); else setTimeout(apply,50);
+  setTimeout(apply,500); setTimeout(apply,1500); setInterval(apply,3000);
+  const obs=new MutationObserver(function(){setTimeout(apply,30);}); obs.observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
