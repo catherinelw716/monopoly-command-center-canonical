@@ -1,0 +1,93 @@
+{
+  "version": "0.1.0",
+  "sign_conventions": {
+    "home_margin": "home_score - away_score; positive means home team won",
+    "home_spread": "sportsbook handicap from home-team perspective; negative means home favorite",
+    "sly_home_spread": "Sly handicap normalized to home-team perspective; negative means home favorite",
+    "ats_margin_home": "home_margin + sly_home_spread",
+    "home_cover": "ats_margin_home > 0",
+    "push": "ats_margin_home == 0"
+  },
+  "prediction_snapshots": [
+    {
+      "name": "FRIDAY_FREEZE",
+      "description": "First full-slate decision state after Sly issues Friday lines. Only data published at or before snapshot_timestamp is allowed."
+    },
+    {
+      "name": "PRE_KICK_FINAL",
+      "description": "Final decision state immediately before each game's betting lock/kickoff. Only data published at or before snapshot_timestamp is allowed."
+    }
+  ],
+  "gold_row_key": ["game_id", "snapshot_name", "snapshot_timestamp"],
+  "required_columns": {
+    "identity": [
+      "game_id", "season", "week", "game_type", "kickoff_timestamp", "home_team", "away_team"
+    ],
+    "snapshot": [
+      "snapshot_name", "snapshot_timestamp", "data_build_timestamp"
+    ],
+    "sly": [
+      "sly_home_spread", "sly_issued_timestamp"
+    ],
+    "market": [
+      "market_home_spread_consensus", "market_home_spread_low", "market_home_spread_high", "market_book_count", "market_snapshot_timestamp"
+    ],
+    "targets": [
+      "home_score", "away_score", "home_margin", "ats_margin_home", "home_cover", "push"
+    ]
+  },
+  "optional_feature_families": {
+    "team_efficiency": [
+      "home_off_epa_roll", "away_off_epa_roll", "home_def_epa_roll", "away_def_epa_roll",
+      "home_pass_epa_roll", "away_pass_epa_roll", "home_pass_def_epa_roll", "away_pass_def_epa_roll",
+      "home_success_rate_roll", "away_success_rate_roll"
+    ],
+    "qb": [
+      "home_qb_gsis_id", "away_qb_gsis_id", "home_qb_epa_roll", "away_qb_epa_roll",
+      "home_qb_cpoe_roll", "away_qb_cpoe_roll", "home_qb_start_uncertainty", "away_qb_start_uncertainty"
+    ],
+    "personnel": [
+      "home_injury_burden", "away_injury_burden", "home_ol_continuity", "away_ol_continuity",
+      "home_missing_snap_share", "away_missing_snap_share"
+    ],
+    "context": [
+      "home_rest_days", "away_rest_days", "rest_diff", "division_game", "neutral_site", "roof", "surface",
+      "home_travel_timezone_diff", "away_travel_timezone_diff"
+    ],
+    "market_path": [
+      "market_open_home_spread", "market_move_from_open", "sly_vs_market_points", "crossed_key_3", "crossed_key_7",
+      "market_dispersion", "spread_price_equivalent_adjustment"
+    ],
+    "external": [
+      "sportsline_side", "sportsline_reference_spread", "sportsline_grade", "sportsline_timestamp",
+      "gridiron_side", "gridiron_reference_spread", "gridiron_probability", "gridiron_timestamp",
+      "lucas_side", "lucas_signal", "lucas_timestamp"
+    ]
+  },
+  "point_in_time_rules": [
+    "Every source timestamp used in a feature must be <= snapshot_timestamp.",
+    "Rolling football features must use only games completed before snapshot_timestamp.",
+    "Target-game final score and post-kickoff data are prohibited from all features.",
+    "Closing lines may be used only for a snapshot if the closing timestamp is <= snapshot_timestamp.",
+    "A Friday row may not use Sunday market, injury, depth-chart, weather or external-source updates.",
+    "Missing external predictions remain missing; do not impute as 50 percent or neutral.",
+    "External recommendations at a different spread must retain their native reference spread.",
+    "If a historical source cannot be reconstructed point-in-time, exclude it from training and use prospective evaluation instead."
+  ],
+  "monopoly_rules": {
+    "minimum_games_per_entry": 4,
+    "minimum_wager": 100,
+    "wager_increment": 100,
+    "cover_net_multiplier": 1.0,
+    "loss_net_multiplier": -1.0,
+    "push_net_multiplier": 0.0,
+    "payout_percentages": {
+      "1": 0.56,
+      "2": 0.25,
+      "3": 0.10,
+      "4": 0.02,
+      "5": 0.01,
+      "commissioner": 0.06
+    }
+  }
+}
