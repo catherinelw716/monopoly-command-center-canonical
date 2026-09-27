@@ -23,10 +23,25 @@ jobs:
           python-version: '3.11'
 
       - name: Install V2 dependencies
-        run: pip install nflreadpy polars pyarrow
+        run: pip install nflreadpy polars pyarrow numpy pandas scikit-learn
 
       - name: Compile research scripts
-        run: python -m py_compile v2/build_historical_dataset.py v2/build_baseline_features.py v2/qa_checks.py
+        run: >-
+          python -m py_compile
+          v2/build_historical_dataset.py
+          v2/build_baseline_features.py
+          v2/qa_checks.py
+          v2/shadow_model.py
+          v2/shadow_ledger.py
+          v2/fit_shadow_model.py
+          v2/capture_shadow_snapshot.py
+          v2/validate_shadow_ledger.py
+          v2/settle_shadow_results.py
+          v2/score_shadow_ledger.py
+          v2/shadow_pipeline_qa.py
+
+      - name: Run deterministic shadow-ledger QA
+        run: python v2/shadow_pipeline_qa.py
 
       - name: Validate JSON contract
         run: python -m json.tool v2/data_contract.json > /dev/null
