@@ -1,0 +1,42 @@
+<style id="canonical-game-detail-ui">
+#gameHero{border-radius:16px!important;overflow:hidden!important;margin-bottom:12px!important}
+#canonicalSourceSnapshot,#screenshotSourceDrilldown,#lucasGameSourcePanel{border-radius:16px!important}
+.source-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.source-card{border:1px solid rgba(148,163,184,.16);border-radius:12px;padding:12px;background:rgba(15,23,42,.26);min-width:0}
+.source-card small{display:block;color:#94a3b8;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.source-card strong{display:block;font-size:15px;line-height:1.2;margin-bottom:5px}
+.source-card span{display:block;color:#94a3b8;font-size:10px;line-height:1.4;margin-top:2px}
+.source-detail-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0}
+.source-detail-name{display:block;color:#94a3b8;font-size:9px;text-transform:uppercase;font-weight:800;letter-spacing:.08em;margin-bottom:3px}
+.source-signal-chip{display:inline-flex;border-radius:999px;padding:4px 8px;background:rgba(245,158,11,.12);color:#f6c85f;font-size:10px;font-weight:800}
+#gameDetail .panel,#gameAnalysis .panel,#game-detail .panel,.game-detail .panel{border-radius:16px!important}
+#gameDetail h2,#gameDetail h3,#gameAnalysis h2,#gameAnalysis h3,#game-detail h2,#game-detail h3,.game-detail h2,.game-detail h3{line-height:1.15!important;margin-bottom:8px!important}
+#gameDetail p,#gameAnalysis p,#game-detail p,.game-detail p{line-height:1.55!important}
+#gameDetail ul,#gameAnalysis ul,#game-detail ul,.game-detail ul{padding-left:18px!important;margin:8px 0!important}
+#gameDetail li,#gameAnalysis li,#game-detail li,.game-detail li{margin:5px 0!important;line-height:1.45!important}
+@media(max-width:760px){
+ .source-card-grid{grid-template-columns:1fr!important;gap:8px!important}
+ .source-card{padding:11px!important}
+ #gameHero{border-radius:12px!important}
+ #gameDetail .panel,#gameAnalysis .panel,#game-detail .panel,.game-detail .panel{padding:12px!important;border-radius:12px!important}
+ #gameDetail h2,#gameAnalysis h2,#game-detail h2,.game-detail h2{font-size:19px!important}
+ #gameDetail h3,#gameAnalysis h3,#game-detail h3,.game-detail h3{font-size:15px!important}
+ #gameDetail p,#gameAnalysis p,#game-detail p,.game-detail p{font-size:12px!important;line-height:1.5!important}
+}
+</style>
+<script id="canonical-game-detail-ui-script">
+(function(){
+ function polish(){
+   const roots=[document.getElementById('gameDetail'),document.getElementById('gameAnalysis'),document.getElementById('game-detail'),document.querySelector('.game-detail')].filter(Boolean);
+   roots.forEach(root=>{
+     root.querySelectorAll(':scope > div:not(.panel),:scope > section:not(.panel)').forEach(el=>{
+       if((el.textContent||'').trim().length>20&&!el.classList.contains('view'))el.classList.add('panel');
+     });
+     root.querySelectorAll('p').forEach(p=>{if((p.textContent||'').trim().length>180)p.style.maxWidth='78ch';});
+   });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(polish,120));else setTimeout(polish,120);
+ setTimeout(polish,700);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-game]'))setTimeout(polish,160);});
+})();
+</script>
