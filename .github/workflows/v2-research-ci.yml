@@ -39,13 +39,19 @@ jobs:
           v2/settle_shadow_results.py
           v2/score_shadow_ledger.py
           v2/shadow_pipeline_qa.py
+          v2/monopoly_simulator.py
+          v2/monopoly_simulator_qa.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
 
+      - name: Run deterministic Monopoly simulator QA
+        run: python v2/monopoly_simulator_qa.py
+
       - name: Validate JSON contracts and frozen model artifact
         run: |
           python -m json.tool v2/data_contract.json > /dev/null
+          python -m json.tool v2/monopoly_contract.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
           from v2.shadow_model import ShadowModel
