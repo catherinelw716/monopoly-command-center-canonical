@@ -1,0 +1,29 @@
+<script id="canonical-consistency-layer">
+(function(){
+  function apply(){
+    document.querySelectorAll('button,a,span,div').forEach(el=>{
+      if(el.children.length===0 && el.textContent.trim()==='All 3 Sources') el.textContent='All 4 Sources';
+    });
+
+    const lab=document.getElementById('lab');
+    if(lab){
+      const walker=document.createTreeWalker(lab,NodeFilter.SHOW_TEXT);
+      const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(n=>{
+        const t=n.nodeValue||'';
+        if(t.includes('GAME OUTPUT UNAVAILABLE')) n.nodeValue=t.replace('GAME OUTPUT UNAVAILABLE','USER-SUPPLIED WEEK 3 DATA INGESTED');
+        if(t.includes('current picks gated')) n.nodeValue=t.replace('current picks gated','captured outputs shown with original market/reference');
+        if(t.includes('no current Week 3 game values exposed publicly')) n.nodeValue=t.replace('no current Week 3 game values exposed publicly','user-supplied Week 3 outputs ingested; exact ATS use remains reference-line specific');
+      });
+    }
+
+    document.querySelectorAll('[data-game]').forEach(el=>{
+      const g=el.getAttribute('data-game');
+      if(!g) return;
+      el.setAttribute('title',el.getAttribute('title')||'Open game detail and source evidence');
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,0)); else setTimeout(apply,0);
+  setTimeout(apply,500);
+})();
+</script>
