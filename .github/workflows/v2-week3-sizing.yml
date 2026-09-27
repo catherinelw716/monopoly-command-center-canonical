@@ -1,0 +1,38 @@
+name: V2 Week 3 Sizing
+
+on:
+  push:
+    paths:
+      - 'v2/run_week3_second_stage_sizing.py'
+      - 'v2/season_2026/week_03_current_market_2026-09-27_1120ET.json'
+      - 'v2/season_2026/week_02_field_state.json'
+      - 'v2/model_artifacts/v2_global_hybrid_2016_2025.json'
+      - '.github/workflows/v2-week3-sizing.yml'
+  workflow_dispatch:
+
+jobs:
+  sizing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependency
+        run: pip install numpy
+      - name: Run Week 3 second-stage sizing
+        run: |
+          python v2/run_week3_second_stage_sizing.py > /tmp/week3_second_stage_stdout.json
+          python - <<'PY'
+          import json
+          d=json.load(open('v2/results/week3_second_stage_sizing.json'))
+          b=d['best_overall']
+          print('BEST', {k:b[k] for k in ['c_games','a_games','c_fraction','a_fraction','household_outlay','robust_floor_utility','robust_average_utility','base_expected_household_prize_share','base_p_any_cash','base_future_minimum_failure_risk']})
+          print('BETS', b['bets_by_entry'])
+          print('BY_PAIR')
+          for x in d['best_by_game_count_pair']:
+              print(x['c_games'], x['a_games'], x['c_fraction'], x['a_fraction'], x['household_outlay'], round(x['robust_floor_utility'], 6), round(x['base_future_minimum_failure_risk'], 6))
+          PY
