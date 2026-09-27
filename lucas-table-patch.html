@@ -1,6 +1,13 @@
+<style id="canonical-lucas-source-style">
+.source-mini.lucas,.lucas-source-tile{background:rgba(245,158,11,.10)!important;border:1px solid rgba(245,158,11,.32)!important}
+.source-mini.lucas small,.lucas-source-tile small{color:#d6ad55!important}
+.source-mini.lucas b,.lucas-source-tile b,.lucas-pick{color:#f6c85f!important;font-weight:800!important}
+.lucas-sub{display:block;color:var(--muted,#94a3b8);font-size:10px;line-height:1.35;margin-top:3px}
+@media(max-width:760px){.vg-sources{grid-template-columns:repeat(2,minmax(0,1fr))!important}.lucas-source-tile{min-width:0}}
+</style>
 <script id="canonical-lucas-table-layer">
 (function(){
-  const lucas={
+  const L={
     'CAR @ CLE':{side:'CAR -2.5',signal:'LIKE'},
     'LAR @ DEN':{side:'LAR -2.5',signal:'LIKE'},
     'PHI @ CHI':{side:'PHI -4.5',signal:'LIKE'},
@@ -9,39 +16,67 @@
     'MIN @ TB':{side:'MIN -1.5',signal:'LEAN'},
     'TEN @ NYG':{side:'TEN +2.5',signal:'LEAN'}
   };
+  window.lucasWeek3=L;
+  const allGames=['LAC @ BUF','CAR @ CLE','NYJ @ DET','HOU @ IND','NE @ JAX','KC @ MIA','TEN @ NYG','CIN @ PIT','SEA @ WAS','ARI @ SF','MIN @ TB','BAL @ DAL','LV @ NO','LAR @ DEN','PHI @ CHI'];
+  const gameFrom=function(text){const s=String(text||'').replace(/\s+/g,' ');return allGames.find(g=>s.includes(g))||'';};
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  if(!document.getElementById('canonical-lucas-board-style')){
-    const style=document.createElement('style');
-    style.id='canonical-lucas-board-style';
-    style.textContent=`.vg-sources{grid-template-columns:repeat(4,minmax(0,1fr))!important}.source-mini.lucas{background:#2a2011;color:#fff4d6;border-color:#6d5424}.source-mini.lucas small{color:#d7b96f}.source-mini.lucas b{color:#ffd983}@media(max-width:700px){.vg-sources{grid-template-columns:repeat(2,minmax(0,1fr))!important}}`;
-    document.head.appendChild(style);
-  }
+  function tileHTML(g){const p=L[g];return p?`<small>Lucas</small><b>${esc(p.signal)}</b><span>${esc(p.side)}</span>`:`<small>Lucas</small><b>NO TAKE</b><span>—</span>`;}
 
-  function decorate(){
-    document.querySelectorAll('.visual-game[data-game]').forEach(card=>{
-      const sources=card.querySelector('.vg-sources');
-      if(!sources) return;
-      sources.querySelector('.source-mini.lucas')?.remove();
-      const pick=lucas[card.dataset.game];
-      const tile=document.createElement('div');
-      tile.className='source-mini lucas';
-      tile.innerHTML=pick
-        ? `<small>Lucas</small><b>${pick.signal}</b><span>${pick.side}</span>`
-        : `<small>Lucas</small><b>NO TAKE</b><span>—</span>`;
-      sources.appendChild(tile);
+  function patchCards(){
+    document.querySelectorAll('.visual-game[data-game],#games [data-game]').forEach(card=>{
+      const g=card.dataset.game||gameFrom(card.innerText); if(!g) return;
+      const box=card.querySelector('.vg-sources,.sources-grid,.source-grid,.game-sources'); if(!box) return;
+      let tile=box.querySelector('.source-mini.lucas,.lucas-source-tile');
+      if(!tile){tile=document.createElement('div');tile.className=box.classList.contains('vg-sources')?'source-mini lucas':'lucas-source-tile';box.appendChild(tile);}
+      tile.innerHTML=tileHTML(g);
     });
   }
 
-  decorate();
-  const observer=new MutationObserver(decorate);
-  ['gamesList','todayGameList','recommendedPlays'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) observer.observe(el,{childList:true,subtree:true});
-  });
+  function patchGamesTable(){
+    const scope=document.getElementById('games')||document;
+    [...scope.querySelectorAll('table')].forEach(table=>{
+      const hr=table.querySelector('thead tr'); if(!hr) return;
+      const headers=[...hr.cells].map(c=>(c.textContent||'').trim());
+      if(!headers.some(h=>/game/i.test(h))) return;
+      if(headers.includes('Lucas')) return;
+      const rows=[...table.querySelectorAll('tbody tr')];
+      if(!rows.some(r=>gameFrom(r.innerText))) return;
+      const th=document.createElement('th'); th.textContent='Lucas'; hr.appendChild(th);
+      rows.forEach(r=>{
+        const g=gameFrom(r.innerText); const td=document.createElement('td');
+        if(g){const p=L[g];td.innerHTML=p?`<span class="lucas-pick">${esc(p.side)}</span><span class="lucas-sub">${esc(p.signal)}</span>`:`<b>—</b><span class="lucas-sub">NO TAKE</span>`;}
+        r.appendChild(td);
+      });
+    });
+  }
 
-  setTimeout(()=>{
-    const count=document.querySelectorAll('#gamesList .visual-game .source-mini.lucas').length;
-    window.lucasTableQA={status:count===15?'PASS':'FAIL',visibleRows:count,expectedRows:15};
-  },0);
+  function patchSourceCompare(){
+    const table=[...document.querySelectorAll('table')].find(t=>{const h=t.querySelector('thead')?.innerText||'';return h.includes('SportsLine')&&h.includes('Gridiron');});
+    if(!table) return;
+    const hr=table.querySelector('thead tr'); if(!hr) return;
+    let headers=[...hr.cells].map(c=>(c.textContent||'').trim());
+    let li=headers.indexOf('Lucas');
+    if(li<0){const th=document.createElement('th');th.textContent='Lucas';const cross=headers.findIndex(h=>/Cross-source/i.test(h));hr.insertBefore(th,cross>=0?hr.cells[cross]:null);headers=[...hr.cells].map(c=>(c.textContent||'').trim());li=headers.indexOf('Lucas');}
+    [...table.querySelectorAll('tbody tr')].forEach(r=>{
+      const g=gameFrom(r.cells[0]?.innerText||r.innerText); if(!g) return;
+      while(r.cells.length<headers.length) r.appendChild(document.createElement('td'));
+      const p=L[g]; r.cells[li].innerHTML=p?`<span class="lucas-pick">${esc(p.side)}</span><span class="lucas-sub">${esc(p.signal)} · independent source</span>`:`<b>—</b><span class="lucas-sub">NO TAKE</span>`;
+    });
+  }
+
+  function patchDetailSources(){
+    const q=new URLSearchParams(location.search).get('game'); const g=q&&allGames.includes(q)?q:null; if(!g) return;
+    const hero=document.getElementById('gameHero'); if(!hero) return;
+    let panel=document.getElementById('lucasGameSourcePanel');
+    if(!panel){panel=document.createElement('div');panel.id='lucasGameSourcePanel';panel.className='panel source-panel-enhanced';hero.insertAdjacentElement('afterend',panel);}
+    const p=L[g];
+    panel.innerHTML=`<div class="eyebrow">Independent source</div><div class="source-detail-row"><div><span class="source-detail-name">Lucas</span><strong>${p?esc(p.side):'NO TAKE'}</strong></div><span class="source-signal-chip">${p?esc(p.signal):'—'}</span></div>`;
+  }
+
+  function apply(){patchCards();patchGamesTable();patchSourceCompare();patchDetailSources();window.lucasCoverageQA={gameTable:!![...document.querySelectorAll('#games table th')].find(x=>x.textContent.trim()==='Lucas'),cards:document.querySelectorAll('.source-mini.lucas,.lucas-source-tile').length,sourceCompare:!![...document.querySelectorAll('th')].find(x=>x.textContent.trim()==='Lucas')};}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,100));else setTimeout(apply,100);
+  setTimeout(apply,700);
+  document.addEventListener('click',e=>{if(e.target.closest('[data-view="games"],[data-game]'))setTimeout(apply,120);});
 })();
 </script>
