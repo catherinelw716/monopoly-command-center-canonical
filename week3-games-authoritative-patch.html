@@ -1,0 +1,101 @@
+<style id="week3-games-authoritative-style">
+.authoritative-game-read{margin:12px 0;padding:12px;border:1px solid rgba(34,197,94,.24);background:rgba(34,197,94,.07);border-radius:14px}.authoritative-game-read .agr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:9px}.authoritative-game-read .agr-grid>div{padding:8px;border-radius:9px;background:rgba(15,23,42,.24);border:1px solid rgba(148,163,184,.12)}.authoritative-game-read small{display:block;color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.05em}.authoritative-game-read b{display:block;margin-top:3px}@media(max-width:760px){.authoritative-game-read .agr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script id="week3-games-authoritative-layer">
+(function(){
+ const TS='Sep 27 · 12:01 PM ET';
+ const D={
+  'MIN @ TB':{rank:1,pick:'MIN -1.5',grade:'A',state:'PLAY',current:'MIN -2.5',diff:'-1.0',edge:'6.03%',kind:'MATERIAL',c:100,a:200},
+  'CAR @ CLE':{rank:2,pick:'CLE +2.5',grade:'A-',state:'PLAY',current:'CLE +2',diff:'-0.5',edge:'3.37%',kind:'MATERIAL',c:100,a:0,legacy:['CAR -2.5']},
+  'SEA @ WAS':{rank:3,pick:'WAS +7.5',grade:'A-',state:'PLAY',current:'WAS +7',diff:'-0.5',edge:'3.37%',kind:'MATERIAL',c:0,a:100,legacy:['SEA -7.5']},
+  'LAC @ BUF':{rank:4,pick:'BUF -7',grade:'A-',state:'PLAY',current:'BUF -7.5',diff:'-0.5',edge:'3.32%',kind:'MATERIAL',c:100,a:0},
+  'NE @ JAX':{rank:5,pick:'NE +3',grade:'B+',state:'PLAY',current:'NE +2.5',diff:'-0.5',edge:'2.76%',kind:'MATERIAL',c:0,a:100},
+  'KC @ MIA':{rank:6,pick:'KC -10.5',grade:'B',state:'WATCH',current:'KC -10.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0},
+  'ARI @ SF':{rank:7,pick:'ARI +8.5',grade:'B',state:'WATCH',current:'ARI +8.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:100},
+  'LAR @ DEN':{rank:8,pick:'DEN +2.5',grade:'B',state:'WATCH',current:'DEN +2.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0},
+  'CIN @ PIT':{rank:9,pick:'PIT +3.5',grade:'B-',state:'WATCH',current:'PIT +3.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:100,a:0,legacy:['CIN -3.5']},
+  'BAL @ DAL':{rank:10,pick:'DAL +3.5',grade:'B-',state:'WATCH',current:'DAL +3.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:0,legacy:['BAL -3.5']},
+  'HOU @ IND':{rank:11,pick:'IND +1.5',grade:'B-',state:'WATCH',current:'IND +1.5',diff:'0.0',edge:'neutral',kind:'CONTEXT',c:0,a:0,legacy:['HOU -1.5']},
+  'NYJ @ DET':{rank:12,pick:'DET -6.5',grade:'C+',state:'WATCH',current:'DET -6.5',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'TEN @ NYG':{rank:13,pick:'TEN +2.5',grade:'C+',state:'WATCH',current:'TEN +2.5',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'LV @ NO':{rank:14,pick:'NO -3',grade:'C+',state:'WATCH',current:'NO -3',diff:'0.0',edge:'neutral',kind:'NEUTRAL',c:0,a:0},
+  'PHI @ CHI':{rank:15,pick:'PHI -4.5',grade:'—',state:'LOCKED',current:'—',diff:'—',edge:'locked',kind:'NEUTRAL',c:0,a:0}
+ };
+ const externalSelector='.vg-sources,.source-card,.source-mini,#canonicalSourceSnapshot,#screenshotSourceDrilldown,#lucasGameSourcePanel,#sourceCompare';
+ function authoritativeData(){
+   if(Array.isArray(window.games)){
+     window.games.forEach(g=>{const x=D[g.game];if(!x)return;Object.assign(g,{rank:x.rank,lean:x.pick,pick:x.pick,recommendation:x.pick,decision:x.state,state:x.state,confidence:x.grade,current:x.current,diff:x.diff,catherine:x.c,amanda:x.a,v2Edge:x.edge,v2EdgeKind:x.kind});});
+     window.games.sort((a,b)=>(D[a.game]?.rank||99)-(D[b.game]?.rank||99));
+   }
+   if(Array.isArray(window.sourceData)){
+     window.sourceData.forEach(s=>{const x=D[s.game];if(!x)return;Object.assign(s,{ourRank:x.rank,ourGrade:x.grade,ourPick:x.pick,ourState:x.state,currentMarket:x.current,v2Edge:x.edge,v2EdgeKind:x.kind});});
+     window.sourceData.sort((a,b)=>(D[a.game]?.rank||99)-(D[b.game]?.rank||99));
+   }
+ }
+ function setText(root,selectors,value){
+   selectors.forEach(sel=>root.querySelectorAll(sel).forEach(el=>{if(!el.closest(externalSelector))el.textContent=value;}));
+ }
+ function replaceLegacyInCard(card,x){
+   if(!x.legacy?.length)return;
+   const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT);
+   const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+   nodes.forEach(n=>{const p=n.parentElement;if(!p||p.closest(externalSelector))return;let t=n.nodeValue||'';x.legacy.forEach(old=>{if(t.trim()===old)t=t.replace(old,x.pick);});n.nodeValue=t;});
+ }
+ function syncCard(card,game){
+   const x=D[game];if(!x)return;
+   card.dataset.game=game;card.dataset.v2Edge=x.edge;card.dataset.v2EdgeKind=x.kind;card.dataset.currentMarket=x.current;card.dataset.authoritativeTs=TS;
+   setText(card,['[data-field="pick"]','[data-role="pick"]','.game-pick','.model-pick','.our-pick','.recommendation-pick','.recommended-side'],x.pick);
+   setText(card,['[data-field="decision"]','[data-role="decision"]','.game-decision','.decision-state','.model-state'],x.state);
+   setText(card,['[data-field="confidence"]','[data-role="confidence"]','.game-confidence','.model-grade'],x.grade);
+   setText(card,['[data-field="current"]','[data-role="current"]','.current-line','.market-line'],x.current);
+   setText(card,['[data-field="diff"]','[data-role="diff"]','.line-diff','.diff-value'],x.diff);
+   replaceLegacyInCard(card,x);
+ }
+ function syncGamesView(){
+   authoritativeData();
+   const view=document.getElementById('games');if(!view)return;
+   view.querySelectorAll('[data-game]').forEach(card=>{const game=card.dataset.game;if(D[game])syncCard(card,game);});
+   // Some legacy cards did not carry data-game. Match only the game title, then patch that card.
+   Object.keys(D).forEach(game=>{
+     [...view.querySelectorAll('tr,.panel,.game-card,.card')].forEach(el=>{if(el.dataset.game)return;const txt=(el.textContent||'').replace(/\s+/g,' ');if(txt.includes(game)){el.dataset.game=game;syncCard(el,game);}});
+   });
+ }
+ function gameFromLocation(){
+   try{const q=new URLSearchParams(location.search).get('game');if(q&&D[q])return q;}catch(e){}
+   const hero=document.getElementById('gameHero');const txt=hero?.textContent||'';return Object.keys(D).find(g=>txt.includes(g))||'';
+ }
+ function freshDetail(game){
+   const x=D[game];if(!x)return;
+   document.getElementById('canonicalSourceSnapshot')?.remove();
+   document.getElementById('week3AuthoritativeGameRead')?.remove();
+   const hero=document.getElementById('gameHero');if(!hero)return;
+   const box=document.createElement('div');box.id='week3AuthoritativeGameRead';box.className='authoritative-game-read';
+   box.innerHTML=`<div class="eyebrow">Authoritative pre-lock recommendation · ${TS}</div><h3>${game} · ${x.pick}</h3><div class="agr-grid"><div><small>V2 recommendation</small><b>${x.pick} · ${x.grade} · ${x.state}</b></div><div><small>Current market</small><b>${x.current}</b></div><div><small>DIFF</small><b>${x.diff}</b></div><div><small>Edge status</small><b>${x.kind==='MATERIAL'?x.edge+' material price edge':x.kind.toLowerCase()}</b></div></div><p style="font-size:10px;color:#9db3aa;margin:8px 0 0">Football edge and tournament stake sizing are separate. Current allocation: Catherine $${x.c} · Amanda $${x.a}.</p>`;
+   hero.insertAdjacentElement('afterend',box);
+ }
+ function syncConsensus(){
+   const table=[...document.querySelectorAll('table')].find(t=>(t.querySelector('thead')?.innerText||'').includes('Our Model'));
+   if(!table)return;
+   [...table.querySelectorAll('tbody tr')].forEach(r=>{const game=Object.keys(D).find(g=>(r.cells[0]?.innerText||'').includes(g));if(!game)return;const x=D[game];const heads=[...table.querySelectorAll('thead th')].map(h=>(h.textContent||'').trim());const our=heads.findIndex(h=>/Our Model/i.test(h));if(our>=0&&r.cells[our])r.cells[our].innerHTML=`<b>${x.pick}</b><span class="src-sub">#${x.rank} · ${x.grade} · ${x.state}<br>${x.kind==='MATERIAL'?x.edge+' V2 price edge':'effectively neutral/context'}</span>`;
+     r.querySelectorAll('.src-vote-chip.model').forEach(ch=>ch.innerHTML=`<b>Our Model</b> ${x.pick} · ${x.grade}`);
+   });
+ }
+ const originalRender=window.renderBoards;
+ if(typeof originalRender==='function'&&!originalRender.__week3AuthoritativeWrapped){
+   const wrapped=function(){authoritativeData();const out=originalRender.apply(this,arguments);setTimeout(()=>{syncGamesView();syncConsensus();},0);return out;};
+   wrapped.__week3AuthoritativeWrapped=true;window.renderBoards=wrapped;
+ }
+ function apply(){
+   authoritativeData();
+   try{if(typeof window.renderBoards==='function')window.renderBoards();else if(typeof renderBoards==='function')renderBoards();}catch(e){}
+   setTimeout(()=>{syncGamesView();syncConsensus();const g=gameFromLocation();if(g)freshDetail(g);},40);
+   window.week3GamesAuthoritativeQA={timestamp:TS,rank1:D['MIN @ TB'].pick,flips:['CLE +2.5','WAS +7.5','PIT +3.5','DAL +3.5','IND +1.5'],ready:true};
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,350));else setTimeout(apply,350);
+ setTimeout(apply,1250);
+ document.addEventListener('click',e=>{
+   const nav=e.target.closest('[data-view="games"],[data-source-view="compare"]');if(nav)setTimeout(apply,260);
+   const card=e.target.closest('[data-game]');if(card){const game=card.dataset.game;if(D[game])setTimeout(()=>freshDetail(game),30);}
+ },true);
+})();
+</script>
