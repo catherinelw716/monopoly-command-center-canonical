@@ -1,0 +1,98 @@
+{
+  "season": 2026,
+  "week": 3,
+  "status": "CONTEXT_TIEBREAK_ONLY_NOT_PROBABILITY_MODEL",
+  "captured_date": "2026-09-27",
+  "policy": {
+    "material_model_edge_threshold": 0.01,
+    "rule": "Material market-derived V2 edges always outrank contextual preferences. Context is used only to rank/select near-neutral games and may choose the opposite side when the frozen model edge is below threshold. Context never changes P(cover/push/loss).",
+    "score_scale": "0-5 ordinal selection priority, not probability points",
+    "weather": "Weather is a contextual risk/confidence input only. Material wind/rain generally lowers selection priority unless other evidence is strong; it never silently changes model probabilities."
+  },
+  "games": {
+    "CAR @ CLE": {
+      "preferred_side": "away",
+      "context_score": 5.0,
+      "label": "CAR -2.5",
+      "basis": ["strong prior cross-source alignment in canonical Command Center", "Jalen Coker expected to play; Xavier Legette game-time decision"],
+      "weather_risk": "LOW_MODERATE"
+    },
+    "SEA @ WAS": {
+      "preferred_side": "away",
+      "context_score": 4.0,
+      "label": "SEA -7.5",
+      "basis": ["prior Command Center PLAY", "Sam Darnold available", "Jayden Daniels unavailable"],
+      "weather_risk": "MATERIAL_WIND_RAIN"
+    },
+    "KC @ MIA": {
+      "preferred_side": "away",
+      "context_score": 3.5,
+      "label": "KC -10.5",
+      "basis": ["strong prior Command Center/source support", "Patrick Mahomes and Rashee Rice full participants; Josh Simmons out"],
+      "weather_risk": "LOW"
+    },
+    "MIN @ TB": {
+      "preferred_side": "away",
+      "context_score": 3.0,
+      "label": "MIN -1.5",
+      "basis": ["prior Lucas lean", "Kyler Murray cleared concussion protocol and is starting", "Tampa Bay has several defensive absences"],
+      "weather_risk": "LOW_MODERATE"
+    },
+    "ARI @ SF": {
+      "preferred_side": "away",
+      "context_score": 2.8,
+      "label": "ARI +8.5",
+      "basis": ["San Francisco injury burden creates underdog-context value", "Nick Bosa expected out; receiver room remains depleted"],
+      "weather_risk": "LOW"
+    },
+    "LAR @ DEN": {
+      "preferred_side": "home",
+      "context_score": 2.5,
+      "label": "DEN +2.5",
+      "basis": ["Puka Nacua listed doubtful", "Denver altitude/home context"],
+      "weather_risk": "MODERATE_WIND_ALTITUDE"
+    },
+    "BAL @ DAL": {
+      "preferred_side": "home",
+      "context_score": 2.0,
+      "label": "DAL +3.5",
+      "basis": ["Zay Flowers true game-time decision", "neutral-site Rio conditions add uncertainty"],
+      "weather_risk": "MODERATE_HUMIDITY_RAIN_FIELD"
+    },
+    "CIN @ PIT": {
+      "preferred_side": "home",
+      "context_score": 1.5,
+      "label": "PIT +3.5",
+      "basis": ["no strong independent contextual edge; retained as lower-tier diversification option"],
+      "weather_risk": "LOW"
+    },
+    "HOU @ IND": {
+      "preferred_side": "home",
+      "context_score": 1.0,
+      "label": "IND +1.5",
+      "basis": ["no strong independent contextual edge", "Charvarius Ward expected to play"],
+      "weather_risk": "ROOF_CONDITIONAL_LOW"
+    },
+    "NYJ @ DET": {
+      "preferred_side": "home",
+      "context_score": 1.0,
+      "label": "DET -6.5",
+      "basis": ["no strong independent contextual edge"],
+      "weather_risk": "INDOOR_NEUTRAL"
+    },
+    "TEN @ NYG": {
+      "preferred_side": "away",
+      "context_score": 0.8,
+      "label": "TEN +2.5",
+      "basis": ["Giants quarterback uncertainty", "weather adds substantial variance"],
+      "weather_risk": "MATERIAL_WIND_RAIN"
+    },
+    "LV @ NO": {
+      "preferred_side": "home",
+      "context_score": 0.5,
+      "label": "NO -3",
+      "basis": ["no current Sly price edge", "Brock Bowers expected to play for Las Vegas"],
+      "weather_risk": "INDOOR_NEUTRAL"
+    }
+  }
+}
