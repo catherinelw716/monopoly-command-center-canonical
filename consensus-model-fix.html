@@ -1,0 +1,52 @@
+<style id="consensus-model-fix-style">
+.consensus-four-label{display:block;font-size:9px;color:#94a3b8;margin-top:4px;line-height:1.35}.src-vote-chip.model{border-color:rgba(99,102,241,.24);background:rgba(99,102,241,.10)}
+</style>
+<script id="consensus-model-fix-layer">
+(function(){
+  const MODEL={
+    'LAC @ BUF':{pick:'BUF -7',grade:'A-'},'CAR @ CLE':{pick:'CAR -2.5',grade:'B+'},'NYJ @ DET':{pick:'DET -6.5',grade:'B'},'HOU @ IND':{pick:'HOU -1.5',grade:'B'},'NE @ JAX':{pick:'NE +3',grade:'C-'},'KC @ MIA':{pick:'KC -10.5',grade:'A-'},'TEN @ NYG':{pick:'TEN +2.5',grade:'B'},'CIN @ PIT':{pick:'CIN -3.5',grade:'B-'},'SEA @ WAS':{pick:'SEA -7.5',grade:'B+'},'ARI @ SF':{pick:'ARI +8.5',grade:'C+'},'MIN @ TB':{pick:'MIN -1.5',grade:'B+'},'BAL @ DAL':{pick:'BAL -3.5',grade:'B'},'LV @ NO':{pick:'NO -3',grade:'B-'},'LAR @ DEN':{pick:'DEN +2.5',grade:'A-'},'PHI @ CHI':{pick:'PHI -4.5',grade:'A-'}
+  };
+  const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const team=s=>{const m=String(s||'').match(/\b([A-Z]{2,3})\b/);return m?m[1].replace('JAC','JAX'):'';};
+  const gameFrom=text=>Object.keys(MODEL).find(g=>String(text||'').replace(/\s+/g,' ').includes(g))||'';
+  function sourceTable(){return [...document.querySelectorAll('table')].find(t=>{const h=t.querySelector('thead')?.innerText||'';return h.includes('SportsLine')&&h.includes('Gridiron')&&h.includes('Lucas');})||null;}
+  function ensureOrder(table){
+    const hr=table?.querySelector('thead tr');if(!hr)return null;
+    let heads=[...hr.cells].map(c=>(c.textContent||'').trim());
+    const li=heads.findIndex(h=>/^Lucas$/i.test(h));let ci=heads.findIndex(h=>/Cross-source|Consensus/i.test(h));
+    if(li<0)return null;
+    if(ci<0){const th=document.createElement('th');th.textContent='Cross-source consensus';hr.cells[li].after(th);[...table.querySelectorAll('tbody tr')].forEach(r=>{const td=document.createElement('td');r.cells[li]?.after(td);});}
+    heads=[...hr.cells].map(c=>(c.textContent||'').trim());ci=heads.findIndex(h=>/Cross-source|Consensus/i.test(h));
+    const newLi=heads.findIndex(h=>/^Lucas$/i.test(h));
+    if(ci!==newLi+1){const ch=hr.cells[ci],lh=hr.cells[newLi];lh.after(ch);[...table.querySelectorAll('tbody tr')].forEach(r=>{const cells=[...r.cells],l=cells[newLi],c=cells[ci];if(l&&c)l.after(c);});}
+    const finalHeads=[...hr.cells].map(c=>(c.textContent||'').trim());
+    return {our:finalHeads.findIndex(h=>/Our Model/i.test(h)),sl:finalHeads.findIndex(h=>/SportsLine/i.test(h)),ga:finalHeads.findIndex(h=>/Gridiron/i.test(h)),lucas:finalHeads.findIndex(h=>/^Lucas$/i.test(h)),cons:finalHeads.findIndex(h=>/Cross-source|Consensus/i.test(h))};
+  }
+  function consensus(g){
+    const D=window.week3ScreenshotSources||{},d=D[g],L=window.lucasWeek3||{},lp=L[g],m=MODEL[g];
+    if(!d||!m)return null;
+    const votes=[{name:'Our Model',side:m.pick,team:team(m.pick),eligible:true,meta:m.grade,kind:'model'}];
+    votes.push({name:'SportsLine',side:d.sl.rec,team:d.sl.type==='ATS'?team(d.sl.rec):'',eligible:d.sl.type==='ATS',meta:d.sl.type==='ATS'?d.sl.grade:`${d.sl.type} context`});
+    const gp=d.ga.awayPct===d.ga.homePct?'':(d.ga.awayPct>d.ga.homePct?d.ga.away:d.ga.home),gPct=Math.max(d.ga.awayPct,d.ga.homePct);
+    votes.push({name:'Gridiron',side:gp||'NO TAKE',team:d.ga.exact&&gp?team(gp):'',eligible:!!(d.ga.exact&&gp),meta:gp?(d.ga.exact?`${gPct}% @ Sly`:`${gPct}% ref mismatch`):'50/50'});
+    votes.push({name:'Lucas',side:lp?lp.side:'NO TAKE',team:lp?team(lp.side):'',eligible:!!lp,meta:lp?lp.signal:'no take'});
+    const eligible=votes.filter(v=>v.eligible&&v.team),counts={};eligible.forEach(v=>counts[v.team]=(counts[v.team]||0)+1);
+    const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);let lead='',count=0,split=false;
+    if(sorted.length){lead=sorted[0][0];count=sorted[0][1];split=sorted.length>1&&sorted[1][1]===count;}
+    let summary;if(!eligible.length)summary='No ATS-comparable votes';else if(split)summary=`Split ${eligible.length}-source ATS board`;else summary=`${count}/${eligible.length} ATS votes support ${lead}`;
+    return {votes,lead,count,eligible:eligible.length,split,summary};
+  }
+  function apply(){
+    const t=sourceTable();if(!t)return;const idx=ensureOrder(t);if(!idx||idx.cons<0)return;
+    [...t.querySelectorAll('tbody tr')].forEach(r=>{const g=gameFrom(r.cells[0]?.innerText||r.innerText);if(!g)return;const c=consensus(g);if(!c)return;while(r.cells.length<=idx.cons)r.appendChild(document.createElement('td'));
+      const badgeClass=c.eligible===4&&c.count===4?'strong':c.split?'split':c.eligible===0?'none':'';
+      const chips=c.votes.map(v=>{const cls=!v.eligible?'na':(c.split?'':v.team===c.lead?'support':'other');return `<span class="src-vote-chip ${cls} ${v.kind||''}"><b>${esc(v.name)}</b> ${esc(v.side)} · ${esc(v.meta)}</span>`;}).join('');
+      r.cells[idx.cons].innerHTML=`<div class="src-consensus-main"><span class="src-consensus-badge ${badgeClass}">${esc(c.summary)}</span></div><span class="consensus-four-label">All four sources are represented below. Non-ATS or mismatched-reference outputs stay visible but do not count as comparable ATS votes.</span><div class="src-vote-row">${chips}</div>`;
+    });
+    window.fourSourceConsensusQA={rows:t.querySelectorAll('tbody tr').length,modelChips:t.querySelectorAll('.src-vote-chip.model').length,includesOurModel:true};
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,260));else setTimeout(apply,260);
+  setTimeout(apply,1000);
+  document.addEventListener('click',e=>{if(e.target.closest('[data-source-view="compare"],[data-view="games"],[data-view="analysis"]'))setTimeout(apply,180);});
+})();
+</script>
