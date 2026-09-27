@@ -52,6 +52,11 @@ def main():
         ROOT / "v2/season_2026/week_03_current_market_2026-09-27_1120ET.json",
         ROOT / "v2/model_artifacts/v2_global_hybrid_2016_2025.json",
     )
+    context = json.loads(
+        (ROOT / "v2/season_2026/week_03_context_tiebreak_2026-09-27.json").read_text(encoding="utf-8")
+    )
+    context_games = context["games"]
+    threshold = float(context["policy"]["material_model_edge_threshold"])
     balances = {"Catherine": state.catherine_balance, "Amanda": state.amanda_balance}
     from monopoly_tournament_optimizer import OptimizerConfig
     cfg = OptimizerConfig(simulations=args.simulations, seed=716)
@@ -64,12 +69,16 @@ def main():
         fractions=(0.10, 0.20, 0.35, 0.50, 0.65, 0.80, 1.00),
         game_counts=(4, 5, 6),
         current_week_cvar_alpha=0.10,
+        contextual_preferences=context_games,
+        material_edge_threshold=threshold,
     )
     base = opt["base_metrics"]
     downside = opt["base_current_week_downside"]
     result = {
-        "status": "WEEK3_SUNDAY_ROBUST_RESEARCH",
+        "status": "WEEK3_SUNDAY_ROBUST_CONTEXT_TIEBREAK_RESEARCH",
         "snapshot_metadata": {k: v for k, v in snapshot.items() if k != "games"},
+        "context_policy": context["policy"],
+        "context_games": context_games,
         "probability_ranking": ranking,
         "optimizer": {
             "objective": opt["objective"],
@@ -86,6 +95,8 @@ def main():
             "current_week_downside": downside,
             "household_outlay": base["household_outlay"],
             "overlap": base["overlap"],
+            "contextual_tiebreak_enabled": opt["contextual_tiebreak_enabled"],
+            "material_edge_threshold": opt["material_edge_threshold"],
             "stress_metrics": opt["stress_metrics"],
         },
         "guardrails": [
@@ -93,7 +104,8 @@ def main():
             "Current-market snapshot is Sunday research evidence, not a reconstructed Friday freeze.",
             "Robust optimizer has no arbitrary bankroll-percentage cap; deployment remains an output.",
             "Immediate downside is represented by minimum per-entry current-week 10% CVaR capital retention.",
-            "Weather, external sources, and injury news remain red-team/context layers and are not hard-coded into V2 probabilities."
+            "Context is used only below the material V2 edge threshold; it never changes probabilities or creates artificial allocation edge.",
+            "Weather remains a required game-analysis field and contextual risk input, not part of the frozen V2 probability model."
         ],
     }
     out = ROOT / args.output
