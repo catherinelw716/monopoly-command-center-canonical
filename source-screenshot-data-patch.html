@@ -1,3 +1,34 @@
+<style id="canonical-source-eval-style">
+.src-eval-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:22px;padding:0 7px;border-radius:999px;font-size:10px;font-weight:900;line-height:1;letter-spacing:.02em;margin:0 6px 5px 0;border:1px solid transparent;vertical-align:middle}
+.src-grade-a{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.30)}
+.src-grade-b{background:rgba(59,130,246,.16);color:#93c5fd;border-color:rgba(59,130,246,.30)}
+.src-grade-c{background:rgba(245,158,11,.16);color:#fcd34d;border-color:rgba(245,158,11,.30)}
+.src-grade-d{background:rgba(239,68,68,.15);color:#fca5a5;border-color:rgba(239,68,68,.28)}
+.src-type-ats{background:rgba(99,102,241,.14);color:#c7d2fe;border-color:rgba(99,102,241,.28)}
+.src-type-context{background:rgba(148,163,184,.12);color:#cbd5e1;border-color:rgba(148,163,184,.22)}
+.src-grid-strong{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.30)}
+.src-grid-edge{background:rgba(59,130,246,.16);color:#93c5fd;border-color:rgba(59,130,246,.30)}
+.src-grid-thin{background:rgba(245,158,11,.14);color:#fde68a;border-color:rgba(245,158,11,.26)}
+.src-grid-neutral{background:rgba(148,163,184,.12);color:#cbd5e1;border-color:rgba(148,163,184,.22)}
+.src-lucas-like{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.30)}
+.src-lucas-lean{background:rgba(245,158,11,.16);color:#fcd34d;border-color:rgba(245,158,11,.30)}
+.src-lucas-none{background:rgba(148,163,184,.12);color:#cbd5e1;border-color:rgba(148,163,184,.22)}
+.src-ref-warn{display:inline-flex;margin-top:5px;padding:3px 6px;border-radius:6px;background:rgba(239,68,68,.12);color:#fca5a5;font-size:9px;font-weight:800;border:1px solid rgba(239,68,68,.22)}
+.src-consensus-main{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:6px}
+.src-consensus-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;background:rgba(59,130,246,.16);color:#bfdbfe;border:1px solid rgba(59,130,246,.28)}
+.src-consensus-badge.strong{background:rgba(34,197,94,.16);color:#bbf7d0;border-color:rgba(34,197,94,.28)}
+.src-consensus-badge.split{background:rgba(245,158,11,.16);color:#fde68a;border-color:rgba(245,158,11,.28)}
+.src-consensus-badge.none{background:rgba(148,163,184,.12);color:#cbd5e1;border-color:rgba(148,163,184,.22)}
+.src-vote-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.src-vote-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:7px;border:1px solid rgba(148,163,184,.18);background:rgba(148,163,184,.07);font-size:9px;color:#cbd5e1;white-space:nowrap}
+.src-vote-chip b{font-size:9px!important;color:#e5e7eb!important}
+.src-vote-chip.support{background:rgba(34,197,94,.10);border-color:rgba(34,197,94,.20);color:#bbf7d0}
+.src-vote-chip.other{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.16);color:#fecaca}
+.src-vote-chip.na{opacity:.72}
+.src-primary-pick{display:block;font-weight:850;margin:1px 0 3px}
+.src-sub{display:block;color:var(--muted,#94a3b8);font-size:10px;line-height:1.4;margin-top:3px}
+@media(max-width:760px){.src-vote-row{gap:3px}.src-vote-chip{font-size:8px;padding:3px 5px}.src-consensus-main{gap:5px}}
+</style>
 <script id="canonical-source-screenshot-data">
 (function(){
   const DATA={
@@ -21,19 +52,69 @@
   const L=window.lucasWeek3||{};
   const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const gameFrom=text=>Object.keys(DATA).find(g=>String(text||'').replace(/\s+/g,' ').includes(g))||'';
+  const team=s=>{const m=String(s||'').match(/\b([A-Z]{2,3})\b/);return m?m[1].replace('JAC','JAX'):'';};
+  const extractSide=s=>{const m=String(s||'').match(/\b([A-Z]{2,3})\s(?:PK|[+-]\d+(?:\.\d+)?)\b/);return m?m[0].replace('JAC','JAX'):'';};
   const stronger=g=>{const x=DATA[g].ga;if(x.awayPct===x.homePct)return '50/50 · NO TAKE';return x.awayPct>x.homePct?`${x.away} · ${x.awayPct}%`:`${x.home} · ${x.homePct}%`;};
+  const gridPick=g=>{const x=DATA[g].ga;if(x.awayPct===x.homePct)return '';return x.awayPct>x.homePct?x.away:x.home;};
+  const gradeClass=g=>'src-grade-'+String(g||'').charAt(0).toLowerCase();
+  const lucasClass=s=>s==='LIKE'?'src-lucas-like':s==='LEAN'?'src-lucas-lean':'src-lucas-none';
+  const gridClass=p=>p>=55?'src-grid-strong':p>=52?'src-grid-edge':p===51?'src-grid-thin':'src-grid-neutral';
+
+  function getSourceTable(){return [...document.querySelectorAll('table')].find(t=>{const h=t.querySelector('thead')?.innerText||'';return h.includes('SportsLine')&&h.includes('Gridiron');})||null;}
+  function ensureConsensusAfterLucas(table){
+    const hr=table?.querySelector('thead tr'); if(!hr)return;
+    let heads=[...hr.cells].map(c=>(c.textContent||'').trim());
+    let li=heads.findIndex(h=>/^Lucas$/i.test(h));
+    let ci=heads.findIndex(h=>/Cross-source|Consensus/i.test(h));
+    if(li<0)return;
+    if(ci<0){const th=document.createElement('th');th.textContent='Cross-source consensus';hr.cells[li].after(th);[...table.querySelectorAll('tbody tr')].forEach(r=>{const td=document.createElement('td');r.cells[li]?.after(td);});return;}
+    hr.cells[ci].textContent='Cross-source consensus';
+    if(ci!==li+1){
+      const crossHead=hr.cells[ci]; const lucasHead=[...hr.cells].find(c=>(c.textContent||'').trim()==='Lucas'); lucasHead?.after(crossHead);
+      [...table.querySelectorAll('tbody tr')].forEach(r=>{const cells=[...r.cells];const lucasTd=cells[li],crossTd=cells[ci];if(lucasTd&&crossTd&&lucasTd.nextElementSibling!==crossTd)lucasTd.after(crossTd);});
+    }
+  }
+
+  function sportsHTML(sl){
+    const typeClass=sl.type==='ATS'?'src-type-ats':'src-type-context';
+    const typeLabel=sl.type==='MONEYLINE'?'ML':sl.type;
+    return `<div><span class="src-eval-badge ${gradeClass(sl.grade)}">${esc(sl.grade)}</span><span class="src-eval-badge ${typeClass}">${esc(typeLabel)}</span></div><span class="src-primary-pick">${esc(sl.rec)}</span><span class="src-sub">${sl.picks} SportsLine picks · projected ${esc(sl.proj)}<br>Open ${esc(sl.open)} · Current ${esc(sl.current)}${sl.type==='ATS'?'':'<br>Context only for ATS consensus'}</span>`;
+  }
+  function gridHTML(g){
+    const x=DATA[g].ga, pct=Math.max(x.awayPct,x.homePct), main=stronger(g);
+    const badge=x.awayPct===x.homePct?'50/50':pct+'%';
+    return `<div><span class="src-eval-badge ${gridClass(x.awayPct===x.homePct?50:pct)}">${esc(badge)}</span><span class="src-eval-badge ${x.exact?'src-type-ats':'src-type-context'}">${x.exact?'AT SLY':'REF MISMATCH'}</span></div><span class="src-primary-pick">${esc(main)}</span><span class="src-sub">${esc(x.away)} ${x.awayPct}% · ${esc(x.home)} ${x.homePct}%<br>Reference ${esc(x.ref)}</span>${x.exact?'':`<span class="src-ref-warn">Different reference spread — context only</span>`}`;
+  }
+  function lucasHTML(g){const p=L[g];return p?`<div><span class="src-eval-badge ${lucasClass(p.signal)}">${esc(p.signal)}</span></div><span class="src-primary-pick">${esc(p.side)}</span><span class="src-sub">Independent source · Sly line</span>`:`<div><span class="src-eval-badge src-lucas-none">NO TAKE</span></div><span class="src-primary-pick">—</span><span class="src-sub">No Week 3 opinion</span>`;}
+
+  function consensusHTML(g,ourText){
+    const d=DATA[g],lp=L[g],ourSide=extractSide(ourText),ourTeam=team(ourSide);
+    const sources=[{name:'Model',side:ourSide,team:ourTeam,eligible:!!ourTeam}];
+    if(d.sl.type==='ATS')sources.push({name:'SportsLine',side:d.sl.rec,team:team(d.sl.rec),eligible:true});else sources.push({name:'SportsLine',side:d.sl.rec,team:'',eligible:false,why:d.sl.type});
+    const gp=gridPick(g); if(d.ga.exact&&gp)sources.push({name:'Gridiron',side:gp,team:team(gp),eligible:true});else sources.push({name:'Gridiron',side:gp||'NO TAKE',team:'',eligible:false,why:d.ga.exact?'50/50':'ref mismatch'});
+    if(lp)sources.push({name:'Lucas',side:lp.side,team:team(lp.side),eligible:true});else sources.push({name:'Lucas',side:'NO TAKE',team:'',eligible:false,why:'no take'});
+    const eligible=sources.filter(s=>s.eligible&&s.team),counts={};eligible.forEach(s=>counts[s.team]=(counts[s.team]||0)+1);
+    const ordered=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    let leader='',n=0,summary='No comparable ATS consensus',cls='none';
+    if(ordered.length){leader=ordered[0][0];n=ordered[0][1];const tied=ordered.length>1&&ordered[1][1]===n;if(tied){summary=`Split ${eligible.length}-source ATS board`;cls='split';}else{summary=`${n}/${eligible.length} eligible ATS sources support ${leader}`;cls=n===eligible.length&&eligible.length>1?'strong':'';}}
+    const chips=sources.map(s=>{const state=!s.eligible?'na':(leader&&s.team===leader?'support':'other');const label=s.eligible?(s.side||s.team):`${s.side||'—'} · ${s.why||'N/A'}`;return `<span class="src-vote-chip ${state}"><b>${esc(s.name)}</b>${esc(label)}</span>`;}).join('');
+    const excluded=4-eligible.length;
+    return `<div class="src-consensus-main"><span class="src-consensus-badge ${cls}">${esc(summary)}</span></div><div class="src-vote-row">${chips}</div><span class="src-sub">All 4 sources shown · ${eligible.length} comparable ATS vote${eligible.length===1?'':'s'}${excluded?` · ${excluded} context / no-take`:''}</span>`;
+  }
 
   function patchSourceCompare(){
-    const table=[...document.querySelectorAll('table')].find(t=>{const h=t.querySelector('thead')?.innerText||'';return h.includes('SportsLine')&&h.includes('Gridiron');});
-    if(!table)return;
+    const table=getSourceTable(); if(!table)return;
+    ensureConsensusAfterLucas(table);
     const hr=table.querySelector('thead tr'); if(!hr)return;
     const heads=[...hr.cells].map(c=>(c.textContent||'').trim());
-    const is=heads.findIndex(h=>/SportsLine/i.test(h)), ig=heads.findIndex(h=>/Gridiron/i.test(h));
+    const io=heads.findIndex(h=>/Our Model/i.test(h)),is=heads.findIndex(h=>/SportsLine/i.test(h)),ig=heads.findIndex(h=>/Gridiron/i.test(h)),il=heads.findIndex(h=>/^Lucas$/i.test(h)),ic=heads.findIndex(h=>/Cross-source|Consensus/i.test(h));
     [...table.querySelectorAll('tbody tr')].forEach(r=>{
       const g=gameFrom(r.cells[0]?.innerText||r.innerText); if(!g)return;
       const d=DATA[g];
-      if(is>=0&&r.cells[is])r.cells[is].innerHTML=`<b>${esc(d.sl.rec)}</b><span class="src-sub">${esc(d.sl.type)} · grade ${esc(d.sl.grade)} · ${d.sl.picks} SportsLine picks<br>Projected ${esc(d.sl.proj)}<br>Open ${esc(d.sl.open)} · Current ${esc(d.sl.current)}<br>User-supplied SportsLine screenshot</span>`;
-      if(ig>=0&&r.cells[ig])r.cells[ig].innerHTML=`<b>${esc(stronger(g))}</b><span class="src-sub">${esc(d.ga.away)} ${d.ga.awayPct}% · ${esc(d.ga.home)} ${d.ga.homePct}%<br>Reference ${esc(d.ga.ref)} · ${d.ga.exact?'same Sly spread':'DIFFERENT reference spread'}<br>User-supplied GridironAI screenshot</span>`;
+      if(is>=0&&r.cells[is])r.cells[is].innerHTML=sportsHTML(d.sl);
+      if(ig>=0&&r.cells[ig])r.cells[ig].innerHTML=gridHTML(g);
+      if(il>=0&&r.cells[il])r.cells[il].innerHTML=lucasHTML(g);
+      if(ic>=0&&r.cells[ic])r.cells[ic].innerHTML=consensusHTML(g,io>=0&&r.cells[io]?r.cells[io].innerText:'');
     });
   }
 
@@ -56,7 +137,7 @@
     p.innerHTML=`<div class="eyebrow">Screenshot-verified source data</div><div class="source-card-grid"><div class="source-card"><small>SportsLine</small><strong>${esc(d.sl.rec)}</strong><span>${esc(d.sl.grade)} · ${esc(d.sl.type)} · ${d.sl.picks} picks</span><span>Projected ${esc(d.sl.proj)}</span><span>Current ${esc(d.sl.current)}</span></div><div class="source-card"><small>Gridiron AI</small><strong>${esc(stronger(g))}</strong><span>${esc(d.ga.away)} ${d.ga.awayPct}% · ${esc(d.ga.home)} ${d.ga.homePct}%</span><span>Ref ${esc(d.ga.ref)} · ${d.ga.exact?'same Sly spread':'different reference spread'}</span></div><div class="source-card"><small>Lucas</small><strong>${lp?esc(lp.side):'NO TAKE'}</strong><span>${lp?esc(lp.signal):'—'}</span></div></div>`;
   }
 
-  function apply(){patchSourceCompare();patchGameCards();patchDetail();window.screenshotSourceQA={games:Object.keys(DATA).length};}
+  function apply(){patchSourceCompare();patchGameCards();patchDetail();window.screenshotSourceQA={games:Object.keys(DATA).length,consensusUsesAllFour:true};}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,120));else setTimeout(apply,120);
   setTimeout(apply,700);
   document.addEventListener('click',e=>{if(e.target.closest('[data-view="games"],[data-game]'))setTimeout(apply,150);});
