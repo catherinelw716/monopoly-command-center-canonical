@@ -1,0 +1,30 @@
+{
+  "season": 2026,
+  "week": 3,
+  "status": "LEGACY_V1_HEURISTIC_COMPARATOR",
+  "provenance": "Preserved from the pre-V2 Week 3 Command Center household portfolio recommendation. This is a benchmark comparator, not a claim that these wagers were submitted.",
+  "entry_balances": {
+    "Catherine": 11400,
+    "Amanda": 10300
+  },
+  "portfolios": {
+    "Catherine": [
+      {"game": "CAR @ CLE", "side_team": "CAR", "side": "away", "sly_spread": -2.5, "amount": 1000},
+      {"game": "LAR @ DEN", "side_team": "DEN", "side": "home", "sly_spread": 2.5, "amount": 900},
+      {"game": "TEN @ NYG", "side_team": "TEN", "side": "away", "sly_spread": 2.5, "amount": 800},
+      {"game": "NYJ @ DET", "side_team": "DET", "side": "home", "sly_spread": -6.5, "amount": 700},
+      {"game": "LV @ NO", "side_team": "NO", "side": "home", "sly_spread": -3.0, "amount": 600}
+    ],
+    "Amanda": [
+      {"game": "KC @ MIA", "side_team": "KC", "side": "away", "sly_spread": -10.5, "amount": 1100},
+      {"game": "LAC @ BUF", "side_team": "BUF", "side": "home", "sly_spread": -7.0, "amount": 900},
+      {"game": "CAR @ CLE", "side_team": "CAR", "side": "away", "sly_spread": -2.5, "amount": 800},
+      {"game": "SEA @ WAS", "side_team": "SEA", "side": "away", "sly_spread": -7.5, "amount": 600},
+      {"game": "MIN @ TB", "side_team": "MIN", "side": "away", "sly_spread": -1.5, "amount": 500}
+    ]
+  },
+  "household_total_outlay": 7900,
+  "shared_game": "CAR @ CLE",
+  "shared_game_household_exposure": 1800,
+  "note": "Evaluate this fixed portfolio under the same probability inputs and field scenarios as V2 benchmarks once a valid Week 3 V2 probability snapshot exists. Do not derive a generic V1 policy formula from one slate."
+}
