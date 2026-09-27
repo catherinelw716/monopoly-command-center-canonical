@@ -10,6 +10,7 @@ from benchmark_strategies import BenchmarkPortfolio
 from monopoly_simulator import Bet, GameProbability, load_regular_rules
 from monopoly_tournament_optimizer import (
     OptimizerConfig,
+    build_joint_candidate,
     default_field_scenarios,
     evaluate_benchmark_set,
     evaluate_portfolio_across_scenarios,
@@ -20,6 +21,9 @@ from monopoly_tournament_optimizer import (
 from shadow_model import ShadowModel
 
 ROOT = Path(__file__).resolve().parents[1]
+SEARCH_FRACTIONS = (0.20, 0.35, 0.50, 0.65, 0.80)
+SEARCH_GAME_COUNTS = (4, 5, 6)
+SEARCH_OVERLAP_MODES = ("shared", "hybrid", "split")
 
 
 def load_week3_probabilities(proxy_path: Path, model_path: Path):
@@ -119,8 +123,27 @@ def main():
         state,
         scenarios=scenarios,
         cfg=cfg,
+        fractions=SEARCH_FRACTIONS,
+        game_counts=SEARCH_GAME_COUNTS,
+        overlap_modes=SEARCH_OVERLAP_MODES,
     )
     opt_bets = optimizer["bets_by_entry"]
+
+    # Post-hoc adversarial controls. These do not replace the frozen preregistered
+    # benchmark set; they test whether the apparent optimizer gain is merely a simple
+    # higher-deployment/concentration rule missing from the original controls.
+    posthoc_controls = []
+    for frac in (0.50, 0.65, 0.80):
+        for mode in SEARCH_OVERLAP_MODES:
+            bets = build_joint_candidate(balances, probs, rules, frac, frac, 4, 4, mode)
+            mm = evaluate_portfolio_across_scenarios(
+                balances, bets, probs, rules, state, scenarios=scenarios, cfg=cfg
+            )
+            posthoc_controls.append({
+                "strategy": f"posthoc_{mode}_4games_{int(frac * 100)}pct",
+                **compact_metrics(mm),
+            })
+    posthoc_controls.sort(key=lambda x: x["expected_household_prize_share"], reverse=True)
 
     stresses = []
     scenario_sets = {
@@ -151,7 +174,7 @@ def main():
             lower_tail_floor=floor,
         )
         stresses.append({"stress": f"lower_tail_floor:{floor}", **compact_metrics(mm)})
-    for shrink in (0.50, 0.75, 1.00):
+    for shrink in (0.25, 0.50, 0.75, 1.00):
         mm = evaluate_portfolio_across_scenarios(
             balances,
             opt_bets,
@@ -163,19 +186,39 @@ def main():
         )
         stresses.append({"stress": f"probability_edge_multiplier:{shrink:.2f}", **compact_metrics(mm)})
 
+    opt_share = optimizer["metrics"]["weighted"]["expected_household_prize_share"]
+    best_frozen = benchmarks[0]["weighted"]["expected_household_prize_share"]
+    best_posthoc = posthoc_controls[0]["expected_household_prize_share"]
+    params = optimizer["parameters"]
+    boundary_flags = {
+        "c_fraction_at_upper_search_bound": params["c_fraction"] == max(SEARCH_FRACTIONS),
+        "a_fraction_at_upper_search_bound": params["a_fraction"] == max(SEARCH_FRACTIONS),
+        "c_games_at_search_boundary": params["c_games"] in {min(SEARCH_GAME_COUNTS), max(SEARCH_GAME_COUNTS)},
+        "a_games_at_search_boundary": params["a_games"] in {min(SEARCH_GAME_COUNTS), max(SEARCH_GAME_COUNTS)},
+    }
+
     result = {
         "status": "V2-0009_MILESTONE_EXECUTION",
         "evidence_quality": "optimizer mechanics evaluation; Week-3 market input is explicitly proxy-only, not production/prospective evidence",
         "simulations_per_scenario": args.simulations,
+        "search_space": {
+            "fractions": list(SEARCH_FRACTIONS),
+            "game_counts": list(SEARCH_GAME_COUNTS),
+            "overlap_modes": list(SEARCH_OVERLAP_MODES),
+        },
         "field_scenarios": [s.__dict__ for s in scenarios],
         "week3_proxy_metadata": {k: v for k, v in proxy.items() if k != "games"},
         "benchmark_ranking": [
             {"strategy": r["strategy"], **compact_metrics(r)} for r in benchmarks
         ],
+        "posthoc_red_team_controls": posthoc_controls,
         "optimizer": {
             "evaluated_candidates": optimizer["evaluated_candidates"],
-            "parameters": optimizer["parameters"],
+            "parameters": params,
             "bets_by_entry": serialize_bets(opt_bets),
+            "delta_vs_best_frozen_benchmark": opt_share - best_frozen,
+            "delta_vs_best_posthoc_simple_control": opt_share - best_posthoc,
+            "search_boundary_flags": boundary_flags,
             **compact_metrics(optimizer["metrics"]),
         },
         "robustness_red_team": stresses,
@@ -183,7 +226,8 @@ def main():
             "Do not treat proxy execution results as a Week-3 wager recommendation.",
             "Do not promote V2 prediction layer from this optimizer run.",
             "Opponent individual balances/policies remain scenario-modeled, not reconstructed facts.",
-            "Primary optimizer objective is expected household prize share; scenario/worst-case diagnostics remain visible."
+            "Post-hoc red-team controls are adversarial diagnostics, not retroactively preregistered benchmarks.",
+            "Any optimizer solution at the upper deployment search boundary is unresolved until the boundary is widened again or a principled risk/uncertainty constraint is specified.",
         ],
     }
     out = ROOT / args.output
