@@ -179,21 +179,30 @@ def simulate_household_week(
     rng = random.Random(seed)
     ending_by_entry: Dict[str, list[int]] = {e: [] for e in bets_by_entry}
     household_endings: list[int] = []
+    any_entry_increase = 0
+    both_entries_increase = 0
 
     used_games = sorted({b.game_id for bets in bets_by_entry.values() for b in bets})
+    entries = list(bets_by_entry)
     for _ in range(simulations):
         outcomes = {
             gid: sample_home_outcome(game_probabilities[gid], rng)
             for gid in used_games
         }
         household_total = 0
+        entry_increased: list[bool] = []
         for entry, bets in bets_by_entry.items():
             result = settle_week(int(balances[entry]), bets, outcomes, rules)
             ending_by_entry[entry].append(result.ending_balance)
             household_total += result.ending_balance
+            entry_increased.append(result.ending_balance > int(balances[entry]))
         household_endings.append(household_total)
+        if any(entry_increased):
+            any_entry_increase += 1
+        if len(entries) == 2 and all(entry_increased):
+            both_entries_increase += 1
 
-    def summary(values: Iterable[int]) -> Dict[str, float]:
+    def summary(values: Iterable[int], starting_value: int) -> Dict[str, float]:
         vals = sorted(values)
         n = len(vals)
         mean = sum(vals) / n
@@ -202,12 +211,24 @@ def simulate_household_week(
             "p05": float(vals[max(0, int(0.05 * n) - 1)]),
             "p50": float(vals[int(0.50 * (n - 1))]),
             "p95": float(vals[min(n - 1, int(0.95 * n))]),
+            "p_increase": sum(v > starting_value for v in vals) / n,
+            "p_decrease": sum(v < starting_value for v in vals) / n,
+            "p_unchanged": sum(v == starting_value for v in vals) / n,
+            "p_zero": sum(v == 0 for v in vals) / n,
         }
 
+    household_start = sum(int(balances[e]) for e in bets_by_entry)
     return {
         "simulations": simulations,
         "seed": seed,
-        "entries": {entry: summary(vals) for entry, vals in ending_by_entry.items()},
-        "household": summary(household_endings),
+        "entries": {
+            entry: summary(vals, int(balances[entry]))
+            for entry, vals in ending_by_entry.items()
+        },
+        "household": summary(household_endings, household_start),
+        "p_any_entry_increase": any_entry_increase / simulations,
+        "p_both_entries_increase": (
+            both_entries_increase / simulations if len(entries) == 2 else None
+        ),
         "shared_game_outcomes": True,
     }
