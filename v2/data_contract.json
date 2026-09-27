@@ -1,8 +1,10 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "sign_conventions": {
     "home_margin": "home_score - away_score; positive means home team won",
-    "home_spread": "sportsbook handicap from home-team perspective; negative means home favorite",
+    "nflverse_spread_line": "source-native nflverse convention: positive means the home team is favored by that many points; negative means the away team is favored",
+    "home_spread": "normalized sportsbook handicap from home-team perspective; negative means home favorite",
+    "nflverse_to_home_spread": "home_spread = -1 * nflverse_spread_line",
     "sly_home_spread": "Sly handicap normalized to home-team perspective; negative means home favorite",
     "ats_margin_home": "home_margin + sly_home_spread",
     "home_cover": "ats_margin_home > 0",
