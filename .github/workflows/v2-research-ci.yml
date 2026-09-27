@@ -128,7 +128,7 @@ jobs:
           python -m json.tool v2/season_2026/week_03_optimizer_proxy.json > /dev/null
           python -m json.tool v2/season_2026/week_03_current_market_2026-09-27_1100ET.json > /dev/null
           python -m json.tool v2/season_2026/week_03_current_market_2026-09-27_1120ET.json > /dev/null
-          python -m json.tool v2/season_2026/week_03_context_tiebreak.json > /dev/null
+          python -m json.tool v2/season_2026/week_03_context_tiebreak_2026-09-27.json > /dev/null
           python -m json.tool v2/season_2026/week_03_v1_heuristic_portfolio.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
