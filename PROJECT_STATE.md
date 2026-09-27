@@ -4,226 +4,143 @@ Read this file first when continuing the project in a new conversation.
 
 **Repo:** `catherinelw716/monopoly-command-center-canonical`  
 **Live Command Center:** https://monopoly-command-center-canonical.onrender.com/  
-**V2 research is isolated from production.**  
+**V1 production and V2 research remain separate.**  
 **Last updated:** 2026-09-27
 
-## Working rules
-- When Catherine says **Proceed**, execute the agreed next step.
-- Keep V1 production behavior separate from V2 research.
-- Never treat a successful Render deploy as proof that UI behavior or model logic is correct; inspect actual output/QA.
-- Avoid broad UI changes for targeted fixes.
-- Preserve source data when rolling back UI regressions.
-- Do not use the word **ticket** in pool UX.
-- Use `DECISIONS_LOG.md` for durable rationale and `v2/experiment_registry.csv` for model-research status.
+## North star
+Build the best possible NFL probability engine for **Sly's exact frozen spread**, validate it rigorously, then use those probabilities in a **Monopoly-specific joint Catherine/Amanda tournament optimizer**.
+
+Do not let UI work, shadow-ledger plumbing, or rule-edge-case auditing displace the highest-priority unfinished model layer.
+
+Before any substantial V2 task, check:
+1. Does this advance prediction quality, prospective validation, source validation, or Monopoly optimization?
+2. Is it the highest-priority unfinished layer?
+3. Are we solving the model problem rather than polishing supporting infrastructure?
 
 ## Core pool rules
+- Every entry started **Week 1 with $10,000**.
 - Weekly ATS using Sly's frozen spreads.
 - Cover = net +1x wager; loss = -1x; push = 0.
-- Minimum 4 games per entry/week; minimum $100/game.
+- Minimum 4 games per entry/week; minimum $100/game; $100 increments.
 - TNF is optional and issued separately Thursday; remaining lines arrive Friday.
-- Payout structure: 1st 56%, 2nd 25%, 3rd 10%, 4th 2%, 5th 1%, commissioner 6%.
+- Non-Thursday wagers are submitted together after Friday lines; bets can be changed before kickoff.
+- Payouts: 1st 56%, 2nd 25%, 3rd 10%, 4th 2%, 5th 1%, commissioner 6%.
 
-Before the final season simulator, reconfirm any additional playoff qualification, escalating minimum, elimination, and end-of-season rules.
+Confirmed later-season constraints exist but should **not dominate early-season optimization**:
+- Week 18 qualification threshold: $3,000 remaining balance.
+- Wild Card: 6 games x $500 minimum each.
+- Divisional: 4 games x $750 minimum each.
+- Conference Championship: 2 games x $1,500 minimum each.
+- Super Bowl: $3,000 minimum.
+- Only balance entering a playoff weekend is available to wager during that weekend.
+
+See `v2/MONOPOLY_RULE_AUDIT.md`. Minor administrative edge cases remain parameterized until they become decision-relevant.
 
 ## Current household state after Week 2
-- Catherine: $11,400, rank #30.
-- Amanda: $10,300, rank #44.
-- Combined: $21,700.
-- Week 2 top-10 floor: $16,665; top-5 floor: $19,400.
+- Catherine: **$11,400**, rank **#30**.
+- Amanda: **$10,300**, rank **#44**.
+- Household: **$21,700**.
+- Week 2 active field: 125 entries; 2 eliminated.
+- Week 2 median: $9,500; top-10 floor $16,665; top-5 floor $19,400; leader $31,300.
 - Week 1 household outlay: $6,100.
 - Week 2 household outlay: $7,800.
-- Week 2 household overlap rose to roughly 73%; do not interpret that as a rule against overlap. Require stronger evidence for shared exposure.
+- Week 2 household overlap was roughly 73%; this is not a rule against overlap. Shared exposure should require strong enough edge to justify concentration.
 
-## Source rules
-### SportsLine
-Preserve exact recommendation, grade, timestamp, and reference line. Total/ML outputs are not ATS votes.
+## Prediction layer — current V2 status
+**V1 remains production champion. V2 remains challenger/research.**
 
-### Gridiron
-Preserve exact probability and reference spread. **50/50 = NO TAKE.** A different reference spread is not an exact Sly-line vote.
+Prediction and allocation are hard-separated:
+1. estimate P(cover/push/loss) at Sly's frozen spread;
+2. separately optimize Monopoly allocation for Catherine/Amanda.
 
-### Lucas
-Independent source with LIKE / LEAN / NO TAKE.
+Standings never change NFL cover probabilities.
 
-### Cross-source table
-Show **Our Model, SportsLine, Gridiron, Lucas** explicitly. V2 must not mathematically assume those are independent votes.
-
-The exact Week 3 screenshot transcription is preserved in `source-screenshot-data-patch.html`; read that file before changing source data.
-
-## UI guardrails
-Do not reintroduce whole-document MutationObservers, repeating rewrite intervals, replacement Decision Boards, or broad mobile table rewrites. Preserve original interactive navigation/cards. Lucas should appear beside the other sources, deep dives should be visually structured, and cross-source consensus should appear after Lucas.
-
-## V1 / V2 model status
-**V1 remains production champion. V2 is research-only.**
-
-V2 prediction and allocation remain hard-separated:
-1. estimate P(cover/push/loss) at Sly's frozen spread
-2. use those probabilities in the separate Monopoly tournament optimizer for Catherine/Amanda
-
-Standings must never change the NFL cover probability itself.
-
-### Current leading V2 historical probability architecture
-The historically supported challenger is now:
+### Frozen V2 historical probability challenger
+Current supported architecture:
 
 **market-anchored normal cover/loss distribution + global empirical exact-margin push correction on integer spreads**
 
-Rules:
-- market remains the fair-margin anchor
-- half-point spreads remain the normal market-based distribution
-- on integer target spreads, estimate exact signed final-margin push probability from historical outcomes with shrinkage toward the normal push estimate
-- retain the normal model's relative cover/loss odds and rescale them around the corrected push mass
-- no rolling PBP football residual adjustment
-- no spread-conditioning in the push layer
-- no total input in the push layer
-- no SportsLine/Gridiron/Lucas mathematical weight yet
+- rolling PBP residual Ridge features were tested and rejected;
+- compact roll4/roll8/passing/EPA variants also failed to beat market;
+- full discrete replacement was rejected;
+- targeted integer push correction passed modern held-out testing and independent older-era replication;
+- no SportsLine/Gridiron/Lucas mathematical weight yet.
 
-This architecture is frozen for prospective validation unless a separately registered QA problem appears.
+Frozen artifact: `v2/model_artifacts/v2_global_hybrid_2016_2025.json`  
+Model version: `V2-0006C-global-hybrid-r1`  
+Artifact hash: `da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026`
 
-## V2 research sequence / evidence
+For detailed evidence read `v2/experiment_registry.csv`, `DECISIONS_LOG.md`, and the 0006 result files.
 
-### V2-0001 / 0002 — market vs football residual — COMPLETE
-Historical seasons 2016–2025; held-out 2020–2025; 1,615 games.
-- Market margin MAE: **9.764**
-- Ridge football-residual MAE: **9.831**
-- Market RMSE: **12.637**
-- Ridge RMSE: **12.710**
-- preliminary market ATS Brier: **0.2500**
-- preliminary Ridge Brier: **0.2516**
-- Ridge selected-side hit: **51.01%**
-- market-minus-Ridge MAE delta: **-0.0665**, 95% CI **[-0.1733,+0.0313]**
+## V2-0010 prospective shadow — ACTIVE IN PARALLEL
+Prospective validation infrastructure is implemented and QA-passed. It is supporting evidence collection, **not the primary development workstream**.
 
-Decision: market-only remains fair-margin research champion; reject first Ridge specification.
+- FRIDAY_FREEZE and PRE_KICK_FINAL are separate immutable snapshots.
+- Week 3 Sly Friday lines are preserved in `v2/season_2026/week_03_sly_freeze.json`.
+- Do not fabricate a Friday market snapshot using later odds.
+- Promotion guardrail remains >=100 settled prospective snapshots across >=6 distinct weeks plus calibration/integrity checks.
 
-### V2-0003 — compact football-feature ablation — COMPLETE
-No tested roll4/roll8/passing/EPA-success variant beat closing market on average. Best `roll8_all` still worsened MAE by 0.0366; 95% CI [-0.1159,+0.0366].
+Do not spend substantial development time polishing the ledger unless a real QA defect appears.
 
-Post-hoc Weeks 1–5 / home-favorite / 3–3.5 patterns are diagnostic only and must not be used as model rules without preregistered untouched validation.
+## V2-0009 Monopoly tournament optimizer — PRIMARY WORKSTREAM / ACTIVE
+This is now the highest-priority unfinished V2 layer.
 
-Decision: defer Bayesian/boosting complexity on the same feature family.
+Implemented:
+- `v2/MONOPOLY_RULE_AUDIT.md` — focused contest-rule audit.
+- `v2/monopoly_contract.json` — machine-readable contest contract.
+- `v2/monopoly_simulator.py` — weekly bankroll transitions and shared-game Catherine/Amanda simulation.
+- `v2/monopoly_simulator_qa.py` — wager-rule, settlement, and same-game correlation tests.
+- `v2/historical_replay_wk1_wk2.json` — compact audited historical fixture.
+- `v2/monopoly_historical_replay_qa.py` — replays actual Weeks 1–2 ledger math while preserving known commissioner reconciliation differences.
+- GitHub V2 CI passes these tests.
 
-### V2-0006A — residual empirical discrete model — INVALID QA
-Residual recentering washed out absolute key-number mass. At exact spread 3 it predicted only ~2.25% pushes versus 9.61% observed.
+Historical accounting guardrail:
+- Catherine reconciles exactly in Weeks 1 and 2.
+- Amanda's user-supplied wager ledger differs from commissioner authoritative balances by +$500 after Week 1 and +$100 after Week 2; keep those discrepancies explicit/quarantined rather than rewriting history.
 
-Decision: do not use 0006A as promotion evidence; correct the model form.
+### Immediate next V2-0009 steps
+1. represent the Week 2 official field state and observed field volatility;
+2. build conservative / median / aggressive field-policy scenarios without pretending opponent behavior is known exactly;
+3. extend the simulator from one-week bankroll transitions to season trajectories with future viability constraints;
+4. simulate Catherine and Amanda jointly with shared NFL outcomes;
+5. benchmark simple policies: minimum/flat, fixed 20/30/40%, independent-entry allocation, legacy V1 heuristic;
+6. optimize number of games, $100-increment wagers, total deployment, and overlap for expected household final prize value;
+7. report P(any cash), P(top3), P(1st), P(both cash), future-minimum failure risk, ending-balance distribution, and household correlation.
 
-### V2-0006B — full absolute discrete model — COMPLETE
-The corrected absolute-margin model represented 3/7 much better but full replacement of the normal cover/loss distribution worsened aggregate Brier.
+Do not impose a fixed weekly game count or bankroll percentage. Those are optimizer outputs.
 
-- Normal per-game Brier: **0.515859**
-- spread-conditioned full discrete: **0.517467**
-- normal-minus-discrete: **-0.001606**, 95% CI **[-0.003717,+0.000573]**
-- integer push predicted: normal **3.103%**, discrete **3.778%**, observed **4.020%**
-- exact 3 push: normal **3.108%**, discrete **8.079%**, observed **9.613%**
-- exact 7 push: normal **3.105%**, discrete **5.662%**, observed **4.825%**
+## Source handling rules
+### SportsLine
+Preserve exact recommendation, grade/type, timestamp, and reference line. Total/ML outputs are not ATS votes.
 
-Decision: reject full discrete replacement but retain the key-number signal; test a targeted hybrid.
+### Gridiron
+Preserve probability and native spread. **50/50 = NO TAKE.** A different reference spread is not an exact Sly-line vote.
 
-### V2-0006C — targeted hybrid key-number model — COMPLETE / PASS
-The hybrid changes only integer-line push mass and preserves normal conditional cover/loss odds.
+### Lucas
+Independent external source: LIKE / LEAN / NO TAKE.
 
-Global hybrid vs normal:
-- integer-line Brier improvement: **+0.000711**
-- season-bootstrap 95% CI: **[+0.000289,+0.001098]**
-- broader all-offset metric also improved
-- five of six held-out 2020–2025 seasons improved
+### Cross-source display
+Show Our Model, SportsLine, Gridiron, and Lucas explicitly, but do not mathematically treat correlated sources as independent votes.
 
-Spread-conditioned hybrid was numerically similar but did not robustly beat global (direct CI crossed zero).
-
-Decision: prefer simpler **global hybrid**.
-
-### V2-0006D — independent older-era robustness replication — COMPLETE / PASS
-Architecture frozen from 0006C. Data 2006–2019 only; outer held-out 2010–2019; 2,560 games; offsets expanded to ±3 points.
-
-- integer-line Brier improvement: **+0.000627**
-- season-bootstrap 95% CI: **[+0.000390,+0.000876]**
-- positive held-out seasons: **10/10**
-- all-offset improvement: **+0.000319**
-- all-offset 95% CI: **[+0.000198,+0.000450]**
-- exact spread 3 push: normal **2.895%**, hybrid **7.391%**, observed **8.586%**
-
-Decision: historical replication passed. Freeze the global hybrid architecture and stop retrospective model-form tuning on this component.
-
-Relevant result files:
-- `v2/EXPERIMENT_001_002_RESULTS.md`
-- `v2/DIAGNOSTIC_ABLATION_RESULTS.md`
-- `v2/EXPERIMENT_0006_DESIGN.md`
-- `v2/EXPERIMENT_0006B_DESIGN.md`
-- `v2/EXPERIMENT_0006B_RESULTS.md`
-- `v2/EXPERIMENT_0006C_DESIGN.md`
-- `v2/EXPERIMENT_0006C_RESULTS.md`
-- `v2/EXPERIMENT_0006D_DESIGN.md`
-- `v2/EXPERIMENT_0006D_RESULTS.md`
-
-## V2-0010 prospective shadow — ACTIVE
-The prospective infrastructure is now implemented and QA-passed.
-
-### Frozen model artifact
-`v2/model_artifacts/v2_global_hybrid_2016_2025.json`
-
-- model version: `V2-0006C-global-hybrid-r1`
-- artifact hash: `da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026`
-- training seasons: 2016–2025
-- training games: 2,639
-- residual mean: 0.0375142099
-- residual sigma: 12.7173713390
-- selected global push shrink: 75
-
-The artifact was independently regenerated on Render and the logged artifact hash matched the committed artifact.
-
-### Shadow infrastructure
-- `v2/SHADOW_VALIDATION_PROTOCOL.md`
-- `v2/shadow_model.py`
-- `v2/fit_shadow_model.py`
-- `v2/shadow_ledger.py`
-- `v2/capture_shadow_snapshot.py`
-- `v2/validate_shadow_ledger.py`
-- `v2/settle_shadow_results.py`
-- `v2/score_shadow_ledger.py`
-- `v2/shadow_pipeline_qa.py`
-- `v2/shadow_event_schema.json`
-- `v2/shadow_snapshot_template.json`
-- `v2/shadow/README.md`
-
-The ledger is append-only JSONL with a SHA-256 hash chain. Prediction events are rejected at/after kickoff. FRIDAY_FREEZE and PRE_KICK_FINAL are unique per-game snapshot keys. Results are separate settlement events. CI verifies probability integrity, timing rejection, duplicate rejection, and tamper detection.
-
-### Week 3 Sly freeze is already preserved
-The Week 3 Sly Friday lines were already known before V2-0010 activation and are now durably stored in `v2/season_2026/week_03_sly_freeze.json`.
-
-All 15 frozen target lines are preserved using conventional home-team spread signs. These are valid target-line inputs for Week 3 shadow evaluation.
-
-Important distinction: having Sly's frozen Friday line does **not by itself** create a valid retrospective FRIDAY_FREEZE V2 prediction. The strict protocol also needs a contemporaneous Friday market observation/timestamp. Do not substitute a later Sunday/current market for that missing Friday observation. If a Friday market snapshot can be verified from previously captured project evidence, it may be used; otherwise Week 3's Sly freeze remains valid and the first fully prospective model snapshot can be PRE_KICK_FINAL.
-
-### Promotion guardrail
-Do not consider replacing V1's probability layer before at least:
-- **100 settled prospective snapshots**, and
-- **6 distinct NFL weeks**, and
-- intact ledger integrity, and
-- hybrid Brier improvement over the frozen normal baseline without material log-loss/calibration deterioration.
-
-This floor is not a guarantee of power; continue shadowing if uncertainty remains.
-
-## Immediate next V2 operating step
-For Week 3 / subsequent slates:
-1. use the already-preserved Week 3 Sly frozen spreads as the immutable target line
-2. search prior project evidence for a genuinely contemporaneous Friday market snapshot; use it only if its timing/provenance can be verified
-3. before each remaining kickoff, capture a **PRE_KICK_FINAL** snapshot at the unchanged Sly spread and latest verified market line
-4. for future weeks, capture both FRIDAY_FREEZE and PRE_KICK_FINAL prospectively
-5. append results only after games are final
-6. run `score_shadow_ledger.py`; do not retune architecture from individual results
-
-This is now an operating evidence-collection phase, not another retrospective model-search phase.
+## UI guardrails
+- Do not reintroduce broad MutationObservers/repeating rewrite intervals or replacement Decision Boards.
+- Preserve original navigation/cards.
+- Avoid broad UI changes for targeted fixes.
+- Never claim Render deployment proves rendered browser behavior.
+- Do not use the word `ticket` in pool UX.
 
 ## Future reminders
-1. **Historical intra-week odds:** revisit paid timestamped history when rigorous Friday-Sly-freeze to Sunday-market testing is reached. Do not fabricate this from opener/close data.
-2. **Full pool-rule audit:** revisit playoff/minimum/elimination/end-of-season details before the final Catherine/Amanda tournament simulator.
+1. **Historical intra-week odds access:** revisit paid timestamped odds when rigorous retrospective Friday-Sly-freeze -> Sunday-market testing becomes worth the cost. Do not reconstruct it from opener/close alone.
+2. Minor playoff administrative edge cases should be confirmed only when they become material to optimizer output; do not let them derail current development.
 
-## New-conversation bootstrap
-Catherine can say:
-> **Continue NFL Monopoly. Load the canonical project state from the GitHub repo first.**
-
-Then read, in order:
+## Durable context files
+Read in this order in a new chat:
 1. `PROJECT_STATE.md`
 2. `DECISIONS_LOG.md`
-3. `V2_MODEL_SPEC.md` for architecture/background
+3. `V2_MODEL_SPEC.md`
 4. `v2/experiment_registry.csv`
-5. latest relevant V2 result/design file or `v2/SHADOW_VALIDATION_PROTOCOL.md`
-6. relevant UI/source files for app changes
+5. `v2/MONOPOLY_RULE_AUDIT.md` for optimizer work, or `v2/SHADOW_VALIDATION_PROTOCOL.md` for shadow work
+6. latest relevant result/design/source files
+
+Catherine can bootstrap a new conversation with:
+> **Continue NFL Monopoly. Load the canonical project state from the GitHub repo first.**
