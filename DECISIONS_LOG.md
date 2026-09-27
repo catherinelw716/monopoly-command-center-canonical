@@ -77,3 +77,12 @@ Evidence: 1,615 held-out regular-season games across 2020–2025. Market mean ma
 Why: The football-residual feature set did not beat the market out of sample. This supports the market-anchored design and the rule that plausible football variables receive no weight until they demonstrate stable incremental value.
 
 Next consequence: run registered roll-window/feature-family ablations before adding Bayesian or boosting complexity. If those also fail, keep the core more market-centric and focus V2 research on exact Sly price/key-number/discrete-margin value rather than trying to forecast final margin better than the closing market.
+
+## 2026-09-27 — Compact football-feature ablations also rejected
+Decision: Keep the market-only fair-margin model as the V2 research champion. Do not advance Bayesian or gradient-boosting complexity on the same rolling PBP feature family. Prioritize discrete empirical margin/key-number probability modeling next.
+
+Evidence: Six compact Ridge variants were tested under the same walk-forward framework. The best was `roll8_all`, but it still worsened average margin MAE by 0.0366 points versus market (season-bootstrap 95% CI [-0.1159,+0.0366]); selected-side ATS hit was 52.09%. Passing-only, roll4-only, combined roll4+8, and EPA/success variants all also failed to beat market on average.
+
+Diagnostic-only observations: the best variant showed positive post-hoc MAE gains in Weeks 1–5 (+0.0619), home-favorite games (+0.0589), and closing spreads 3–3.5 (+0.0524), with corresponding selected-side hit rates of 55.19%, 53.55%, and 55.76%. These were discovered after inspecting the data and are explicitly not model-tuning evidence.
+
+Why: Searching for more complexity after simpler versions fail would invite overfitting. V2's more promising structural advantage is likely accurate exact-line probability/value—especially around key numbers and Sly's frozen number—rather than generic attempts to out-predict the closing market on final margin.
