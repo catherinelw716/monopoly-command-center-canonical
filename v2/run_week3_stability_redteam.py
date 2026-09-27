@@ -23,7 +23,7 @@ SNAPSHOT = ROOT / "v2/season_2026/week_03_current_market_2026-09-27_1120ET.json"
 MODEL = ROOT / "v2/model_artifacts/v2_global_hybrid_2016_2025.json"
 STATE = ROOT / "v2/season_2026/week_02_field_state.json"
 RULES = ROOT / "v2/monopoly_contract.json"
-CONTEXT = ROOT / "v2/season_2026/week_03_context_tiebreak.json"
+CONTEXT = ROOT / "v2/season_2026/week_03_context_tiebreak_2026-09-27.json"
 OUTPUT = ROOT / "v2/results/week3_sunday_stability_redteam.json"
 
 SEEDS = (716, 1716, 2716, 3716, 4716)
@@ -34,24 +34,13 @@ MATERIAL_EDGE_THRESHOLD = 0.01
 def perturb_context(base: dict, delta: float, run_index: int) -> dict:
     """Deterministically nudge contextual scores while preserving side labels."""
     out = deepcopy(base)
-    rows = sorted(out["games"], key=lambda x: x["game_id"])
-    for i, row in enumerate(rows):
+    games = out["games"]
+    for i, gid in enumerate(sorted(games)):
+        row = games[gid]
         sign = 1 if ((i + run_index) % 2 == 0) else -1
         row["context_score"] = float(row.get("context_score", 0.0)) + sign * delta
-    out["games"] = rows
     out["perturbation"] = delta
     return out
-
-
-def context_map(doc: dict) -> dict:
-    return {
-        row["game_id"]: {
-            "side": row["preferred_side"],
-            "score": float(row.get("context_score", 0.0)),
-            "weather_flag": row.get("weather_flag", "unknown"),
-        }
-        for row in doc["games"]
-    }
 
 
 def main() -> None:
@@ -78,7 +67,6 @@ def main() -> None:
     for seed in SEEDS:
         for delta in PERTURBATIONS:
             perturbed = perturb_context(base_context, delta, run_index)
-            cmap = context_map(perturbed)
             cfg = OptimizerConfig(simulations=250, seed=seed)
             opt = optimize_robust_household(
                 balances,
@@ -89,8 +77,8 @@ def main() -> None:
                 fractions=(0.10, 0.20, 0.35),
                 game_counts=(4, 5, 6),
                 current_week_cvar_alpha=0.10,
-                context_preferences=cmap,
-                contextual_edge_threshold=MATERIAL_EDGE_THRESHOLD,
+                contextual_preferences=perturbed["games"],
+                material_edge_threshold=MATERIAL_EDGE_THRESHOLD,
             )
             bets = serialize_bets(opt["bets_by_entry"])
             base = opt["base_metrics"]
