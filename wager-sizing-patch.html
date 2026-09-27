@@ -1,0 +1,47 @@
+<style id="field-aware-sizing-style">
+.sizing-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.sizing-note>div{border:1px solid rgba(148,163,184,.16);border-radius:11px;padding:10px;background:rgba(15,23,42,.24)}.sizing-note small{display:block;color:#94a3b8;font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}.sizing-note b{font-size:14px}.sizing-note span{display:block;color:#9db3aa;font-size:10px;line-height:1.35;margin-top:3px}@media(max-width:760px){.sizing-note{grid-template-columns:1fr}.sizing-note>div{padding:9px}}
+</style>
+<script id="field-aware-sizing-layer">
+(function(){
+  const C_BANK=11400,A_BANK=10300;
+  const plan={
+    'LAC @ BUF':{catherine:700,amanda:0},
+    'CAR @ CLE':{catherine:1000,amanda:800},
+    'NYJ @ DET':{catherine:0,amanda:0},
+    'HOU @ IND':{catherine:0,amanda:0},
+    'NE @ JAX':{catherine:0,amanda:0},
+    'KC @ MIA':{catherine:0,amanda:1100},
+    'TEN @ NYG':{catherine:800,amanda:0},
+    'CIN @ PIT':{catherine:0,amanda:0},
+    'SEA @ WAS':{catherine:0,amanda:700},
+    'ARI @ SF':{catherine:0,amanda:0},
+    'MIN @ TB':{catherine:0,amanda:700},
+    'BAL @ DAL':{catherine:0,amanda:0},
+    'LV @ NO':{catherine:0,amanda:0},
+    'LAR @ DEN':{catherine:900,amanda:0},
+    'PHI @ CHI':{catherine:0,amanda:0}
+  };
+  const C_TOTAL=3400,A_TOTAL=3300,H_TOTAL=6700,SHARED=1800;
+  const pct=(n,d)=>(100*n/d).toFixed(1)+'%';
+  function applyGameData(){
+    if(!Array.isArray(window.games)) return;
+    window.games.forEach(g=>{const p=plan[g.game];if(p){g.catherine=p.catherine;g.amanda=p.amanda;}});
+    try{if(typeof window.renderBoards==='function')window.renderBoards();else if(typeof renderBoards==='function')renderBoards();}catch(e){}
+  }
+  function today(){
+    const t=document.getElementById('today');if(!t)return;
+    const k=t.querySelector('.kpis');if(k)k.innerHTML=`<div class="kpi"><small>Catherine</small><b>$11,400</b><span>#30 after W2 · ${pct(C_TOTAL,C_BANK)} deployed</span></div><div class="kpi"><small>Amanda</small><b>$10,300</b><span>#44 after W2 · ${pct(A_TOTAL,A_BANK)} deployed</span></div><div class="kpi"><small>Household outlay</small><b>$6,700</b><span>${pct(H_TOTAL,C_BANK+A_BANK)} of bankroll</span></div><div class="kpi"><small>Shared exposure</small><b>CAR only</b><span>$1,800 · ${pct(SHARED,H_TOTAL)} of outlay</span></div>`;
+  }
+  function portfolio(){
+    const p=document.getElementById('portfolio');if(!p)return;
+    const fp=p.querySelector('.section-head + .panel');if(fp)fp.innerHTML=`<div class="eyebrow">Field-aware Week 3 allocation</div><b style="display:block;font-size:18px;margin-top:3px">$6,700 household · Catherine $3,400 · Amanda $3,300</b><p style="font-size:10px;color:#9db3aa;margin:5px 0 0">Targeting ~30–31% of each bankroll: aggressive enough to create meaningful upward mobility without repeating Week 2's 73% household overlap.</p><div class="sizing-note"><div><small>Catherine target</small><b>${pct(C_TOTAL,C_BANK)} bankroll</b><span>A perfect card would move $11.4K to roughly $18.2K under the pool's +2× cover scoring.</span></div><div><small>Amanda target</small><b>${pct(A_TOTAL,A_BANK)} bankroll</b><span>A perfect card would move $10.3K to roughly $16.9K — just above the current Week 2 top-10 floor.</span></div><div><small>Household correlation</small><b>${pct(SHARED,H_TOTAL)} shared</b><span>Only CAR is duplicated because it has the strongest four-source convergence.</span></div></div>`;
+    const pg=p.querySelector('.portfolio-grid');if(pg)pg.innerHTML=`<div class="panel entry-card"><div class="eyebrow">Catherine · #30 · $11,400 bankroll</div><h3>$3,400 · ${pct(C_TOTAL,C_BANK)} deployed</h3><div class="wager-list"><div class="wager"><b>CAR -2.5</b><span>$1,000</span></div><div class="wager"><b>DEN +2.5</b><span>$900</span></div><div class="wager"><b>TEN +2.5</b><span>$800</span></div><div class="wager"><b>BUF -7</b><span>$700</span></div></div></div><div class="panel entry-card"><div class="eyebrow">Amanda · #44 · $10,300 bankroll</div><h3>$3,300 · ${pct(A_TOTAL,A_BANK)} deployed</h3><div class="wager-list"><div class="wager"><b>KC -10.5</b><span>$1,100</span></div><div class="wager"><b>CAR -2.5</b><span>$800</span></div><div class="wager"><b>SEA -7.5</b><span>$700</span></div><div class="wager"><b>MIN -1.5</b><span>$700</span></div></div></div>`;
+    const pk=p.querySelector('.portfolio-grid + .kpis');if(pk)pk.innerHTML=`<div class="kpi"><small>Combined bankroll</small><b>$21,700</b><span>After Week 2</span></div><div class="kpi"><small>Week 3 outlay</small><b>${pct(H_TOTAL,C_BANK+A_BANK)}</b><span>$6,700 household</span></div><div class="kpi"><small>Unique games</small><b>7</b><span>across 8 positions</span></div><div class="kpi"><small>Shared exposure</small><b>${pct(SHARED,H_TOTAL)}</b><span>CAR only · $1,800</span></div>`;
+    const after=pk?.nextElementSibling;if(after&&after.classList.contains('panel'))after.innerHTML=`<div class="eyebrow">Why this sizing changed</div><div class="alerts"><div class="alert green"><span class="dot"></span><div><b>Current $4,900 deployment was too passive for the standings.</b><br/>Catherine and Amanda are above the median but still $5.3K and $6.4K below the current top-10 floor.</div></div><div class="alert green"><span class="dot"></span><div><b>Shared exposure moved from DEN to CAR.</b><br/>CAR is the only duplicated position because Our Model, SportsLine, Gridiron and Lucas all support Carolina. DEN remains Catherine-only because Lucas is on LAR.</div></div><div class="alert yellow"><span class="dot"></span><div><b>Line/source quality now affects dollars, not just rank.</b><br/>KC gets Amanda's largest wager because SportsLine grades it A and Gridiron supported KC at a worse -11.5 reference; TEN is promoted because Gridiron had TEN 57% at PK while Sly gives +2.5.</div></div></div>`;
+  }
+  function apply(){applyGameData();today();portfolio();window.fieldAwareSizingQA={catherine:C_TOTAL,amanda:A_TOTAL,household:H_TOTAL,shared:SHARED,cPct:pct(C_TOTAL,C_BANK),aPct:pct(A_TOTAL,A_BANK)};}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,180));else setTimeout(apply,180);
+  setTimeout(apply,900);
+  document.addEventListener('click',e=>{if(e.target.closest('[data-view="today"],[data-view="portfolio"]'))setTimeout(apply,120);});
+})();
+</script>
