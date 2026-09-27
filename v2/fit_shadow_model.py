@@ -48,6 +48,9 @@ def main() -> None:
         "selected_push_shrink": artifact["push_shrink"],
         "tuning": tuning,
     }, indent=2))
+    # Full canonical artifact is emitted as a single audit line so a build log
+    # can be independently compared with the committed frozen artifact.
+    print("SHADOW_MODEL_ARTIFACT=" + json.dumps(artifact, sort_keys=True, separators=(",", ":")))
 
 
 if __name__ == "__main__":
