@@ -86,3 +86,33 @@ Evidence: Six compact Ridge variants were tested under the same walk-forward fra
 Diagnostic-only observations: the best variant showed positive post-hoc MAE gains in Weeks 1–5 (+0.0619), home-favorite games (+0.0589), and closing spreads 3–3.5 (+0.0524), with corresponding selected-side hit rates of 55.19%, 53.55%, and 55.76%. These were discovered after inspecting the data and are explicitly not model-tuning evidence.
 
 Why: Searching for more complexity after simpler versions fail would invite overfitting. V2's more promising structural advantage is likely accurate exact-line probability/value—especially around key numbers and Sly's frozen number—rather than generic attempts to out-predict the closing market on final margin.
+
+## 2026-09-27 — Residual-based discrete-margin implementation rejected by QA
+Decision: Mark V2-0006A invalid for promotion evidence rather than interpreting its failure as evidence that NFL discreteness is unhelpful.
+
+Why: 0006A modeled recentered market residuals, which washed out absolute final-margin mass at key numbers. At exact spread 3 it predicted only about 2.25% pushes versus 9.61% observed. That violated the structural purpose of the experiment.
+
+Consequence: rerun the registered question using actual integer final margins, not recentered residual mass.
+
+## 2026-09-27 — Full empirical discrete replacement rejected; key-number signal retained
+Decision: Do not replace the normal market-based cover/loss distribution with the full empirical discrete distribution. Preserve the evidence that exact integer scoring-margin mass improves push calibration.
+
+Evidence: V2-0006B normal per-game Brier was 0.515859 versus 0.517467 for spread-conditioned discrete. Normal-minus-discrete difference -0.001606 with 95% CI [-0.003717,+0.000573]. However integer push calibration improved from 3.103% to 3.778% versus 4.020% observed; exact spread 3 improved from 3.108% predicted push to 8.079% versus 9.613% observed, and exact 7 from 3.105% to 5.662% versus 4.825% observed.
+
+Consequence: test a narrow hybrid that changes only integer-line push mass while preserving normal conditional cover/loss odds.
+
+## 2026-09-27 — Global hybrid key-number correction advances
+Decision: The leading V2 historical probability architecture is now **market-based normal cover/loss plus a global empirical exact-margin correction to push probability on integer spreads**. Half-point spreads remain normal. Do not add spread-conditioning or total to this layer.
+
+Evidence: V2-0006C global hybrid improved integer-line Brier versus normal by +0.000711 with season-bootstrap 95% CI [+0.000289,+0.001098], and improved the all-offset safety metric. The spread-conditioned version was numerically similar, but its direct advantage over global had a CI crossing zero; complexity was not earned. Five of six held-out 2020–2025 seasons improved.
+
+Why: This targets the one structural defect that consistently showed evidence—NFL exact-margin/key-number mass—without degrading the market's stronger cover/loss information.
+
+## 2026-09-27 — Global hybrid passes independent-era robustness replication
+Decision: Freeze the global hybrid architecture for prospective 2026 shadow validation. Stop retrospective architecture tinkering on this component unless a preregistered QA problem emerges.
+
+Evidence: V2-0006D evaluated 2,560 held-out games across 2010–2019 using no 2020+ outcomes and a wider ±3-point target range. Normal-minus-hybrid integer Brier improvement was +0.000627 with 95% CI [+0.000390,+0.000876]; all 10 held-out seasons improved. The all-offset improvement was +0.000319 with 95% CI [+0.000198,+0.000450].
+
+Why: The same narrow mechanism replicated across a distinct historical era and larger line-offset range. Further retrospective tuning now risks converting validation into optimization.
+
+Next consequence: V2-0010 is prospective-only. Freeze predictions before outcomes, capture Sly Friday and pre-kick market snapshots separately, and evaluate without retroactive model edits. V1 remains production champion.
