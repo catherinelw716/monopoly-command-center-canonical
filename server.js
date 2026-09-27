@@ -6,6 +6,7 @@ const BASE_URL = process.env.BASE_URL || 'https://monopoly-command-center-v67.fl
 const patch = fs.readFileSync('canonical-patch.html', 'utf8');
 const lucasTablePatch = fs.readFileSync('lucas-table-patch.html', 'utf8');
 const uxConsensusPatch = fs.readFileSync('ux-consensus-patch.html', 'utf8');
+const consistencyPatch = fs.readFileSync('consistency-patch.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
 
@@ -15,7 +16,7 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
-  const combinedPatch = `${patch}\n${lucasTablePatch}\n${uxConsensusPatch}`;
+  const combinedPatch = `${patch}\n${lucasTablePatch}\n${uxConsensusPatch}\n${consistencyPatch}`;
   cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
 }
