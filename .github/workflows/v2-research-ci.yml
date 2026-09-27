@@ -43,8 +43,19 @@ jobs:
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
 
-      - name: Validate JSON contract
-        run: python -m json.tool v2/data_contract.json > /dev/null
+      - name: Validate JSON contracts and frozen model artifact
+        run: |
+          python -m json.tool v2/data_contract.json > /dev/null
+          python -m json.tool v2/shadow_event_schema.json > /dev/null
+          python - <<'PY'
+          from v2.shadow_model import ShadowModel
+          p='v2/model_artifacts/v2_global_hybrid_2016_2025.json'
+          model=ShadowModel.load(p)
+          assert model.artifact_hash == 'da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026'
+          assert model.n_training_games == 2639
+          assert model.push_shrink == 75.0
+          print(f'Frozen shadow model verified: {model.model_version} {model.artifact_hash}')
+          PY
 
       - name: Smoke-test nflverse schedule API and spread normalization
         run: |
