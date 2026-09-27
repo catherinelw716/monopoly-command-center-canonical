@@ -1,0 +1,27 @@
+{
+  "season": 2026,
+  "week": 3,
+  "freeze_type": "SLY_FRIDAY_FREEZE_INPUT",
+  "freeze_date_local": "2026-09-25",
+  "exact_freeze_timestamp": null,
+  "provenance": "User-provided Sly Friday lines already captured in the NFL Monopoly project before V2-0010 shadow protocol activation.",
+  "use_policy": "These are verified frozen target lines and may be used prospectively as the Sly comparison line. Do not infer or fabricate a Friday market observation timestamp from this file, and do not label retrospectively generated V2 probabilities as a Friday-frozen prospective prediction unless a contemporaneous Friday market snapshot is independently verified.",
+  "spread_convention": "home-team conventional sportsbook spread: negative=favorite, positive=underdog",
+  "games": [
+    {"game": "LAC @ BUF", "away": "LAC", "home": "BUF", "sly_pick_display": "BUF -7", "sly_home_spread": -7.0},
+    {"game": "CAR @ CLE", "away": "CAR", "home": "CLE", "sly_pick_display": "CAR -2.5", "sly_home_spread": 2.5},
+    {"game": "NYJ @ DET", "away": "NYJ", "home": "DET", "sly_pick_display": "DET -6.5", "sly_home_spread": -6.5},
+    {"game": "HOU @ IND", "away": "HOU", "home": "IND", "sly_pick_display": "HOU -1.5", "sly_home_spread": 1.5},
+    {"game": "NE @ JAX", "away": "NE", "home": "JAX", "sly_pick_display": "NE +3", "sly_home_spread": -3.0},
+    {"game": "KC @ MIA", "away": "KC", "home": "MIA", "sly_pick_display": "KC -10.5", "sly_home_spread": 10.5},
+    {"game": "TEN @ NYG", "away": "TEN", "home": "NYG", "sly_pick_display": "TEN +2.5", "sly_home_spread": -2.5},
+    {"game": "CIN @ PIT", "away": "CIN", "home": "PIT", "sly_pick_display": "CIN -3.5", "sly_home_spread": 3.5},
+    {"game": "SEA @ WAS", "away": "SEA", "home": "WAS", "sly_pick_display": "SEA -7.5", "sly_home_spread": 7.5},
+    {"game": "ARI @ SF", "away": "ARI", "home": "SF", "sly_pick_display": "ARI +8.5", "sly_home_spread": -8.5},
+    {"game": "MIN @ TB", "away": "MIN", "home": "TB", "sly_pick_display": "MIN -1.5", "sly_home_spread": 1.5},
+    {"game": "BAL @ DAL", "away": "BAL", "home": "DAL", "sly_pick_display": "BAL -3.5", "sly_home_spread": 3.5},
+    {"game": "LV @ NO", "away": "LV", "home": "NO", "sly_pick_display": "NO -3", "sly_home_spread": -3.0},
+    {"game": "LAR @ DEN", "away": "LAR", "home": "DEN", "sly_pick_display": "DEN +2.5", "sly_home_spread": 2.5},
+    {"game": "PHI @ CHI", "away": "PHI", "home": "CHI", "sly_pick_display": "PHI -4.5", "sly_home_spread": 4.5}
+  ]
+}
