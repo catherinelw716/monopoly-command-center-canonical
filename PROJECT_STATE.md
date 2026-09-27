@@ -82,32 +82,55 @@ Prospective validation infrastructure is implemented and QA-passed. It is suppor
 
 Do not spend substantial development time polishing the ledger unless a real QA defect appears.
 
-## V2-0009 Monopoly tournament optimizer — PRIMARY WORKSTREAM / ACTIVE
-This is now the highest-priority unfinished V2 layer.
+## V2-0009 Monopoly tournament optimizer — PRIMARY WORKSTREAM / RED-TEAM DECISION POINT
+The agreed field-scenario -> benchmark -> joint optimizer -> robustness milestone is implemented and CI-passing. The next blocker is a **real objective/uncertainty design decision**, not unfinished search range.
 
 Implemented:
 - `v2/MONOPOLY_RULE_AUDIT.md` — focused contest-rule audit.
 - `v2/monopoly_contract.json` — machine-readable contest contract.
-- `v2/monopoly_simulator.py` — weekly bankroll transitions and shared-game Catherine/Amanda simulation.
-- `v2/monopoly_simulator_qa.py` — wager-rule, settlement, and same-game correlation tests.
-- `v2/historical_replay_wk1_wk2.json` — compact audited historical fixture.
-- `v2/monopoly_historical_replay_qa.py` — replays actual Weeks 1–2 ledger math while preserving known commissioner reconciliation differences.
-- GitHub V2 CI passes these tests.
+- `v2/monopoly_simulator.py` / QA — weekly bankroll transitions and shared-game household outcomes.
+- `v2/historical_replay_wk1_wk2.json` / QA — audited historical replay.
+- `v2/BENCHMARK_HARNESS_DESIGN.md` and `v2/benchmark_strategies.py` / QA — frozen simple controls.
+- `v2/season_2026/week_02_field_state.json` — official aggregate Week-2 field anchors plus explicit unobserved-field assumptions.
+- `v2/monopoly_tournament_optimizer.py` — conservative/median/aggressive field ensemble, season trajectories, future-minimum viability, rank/prize calculation, joint Catherine/Amanda optimizer.
+- `v2/monopoly_tournament_optimizer_qa.py` — deterministic field/optimizer QA.
+- `v2/run_v2_0009_milestone.py` — benchmark, optimization, and robustness/red-team execution harness.
+- `v2/V2_0009_FIELD_OPTIMIZER_REVIEW.md` — milestone findings and decision point.
+- GitHub V2 CI passes all optimizer and pre-existing research checks.
 
 Historical accounting guardrail:
 - Catherine reconciles exactly in Weeks 1 and 2.
 - Amanda's user-supplied wager ledger differs from commissioner authoritative balances by +$500 after Week 1 and +$100 after Week 2; keep those discrepancies explicit/quarantined rather than rewriting history.
 
-### Immediate next V2-0009 steps
-1. represent the Week 2 official field state and observed field volatility;
-2. build conservative / median / aggressive field-policy scenarios without pretending opponent behavior is known exactly;
-3. extend the simulator from one-week bankroll transitions to season trajectories with future viability constraints;
-4. simulate Catherine and Amanda jointly with shared NFL outcomes;
-5. benchmark simple policies: minimum/flat, fixed 20/30/40%, independent-entry allocation, legacy V1 heuristic;
-6. optimize number of games, $100-increment wagers, total deployment, and overlap for expected household final prize value;
-7. report P(any cash), P(top3), P(1st), P(both cash), future-minimum failure risk, ending-balance distribution, and household correlation.
+### Field model policy
+- Do **not** pretend the individual 125-entry Week-2 commissioner ledger is known when only aggregate anchors are preserved.
+- Interpolate a rank-preserving opponent envelope from the official anchors only for simulation.
+- Default field-policy ensemble is conservative / median / aggressive and equally weighted until more weekly balance transitions are observed.
+- Field behavior changes tournament risk/allocation, never NFL probabilities.
 
-Do not impose a fixed weekly game count or bankroll percentage. Those are optimizer outputs.
+### Red-team proxy finding
+A mechanics-only Week-3 execution proxy was created from the already-canonical current-line snapshot because no valid contemporaneous robust multi-book V2 market-fair snapshot exists for this exercise. It is **not prospective evidence and not a Week-3 recommendation**.
+
+The optimizer was adversarially widened from a 50% deployment ceiling to 80%, then to the actual 100% contest boundary. At every widening it selected the upper boundary. At the full boundary, the 600-simulation-per-scenario proxy run selected:
+- Catherine: 100% deployment, 4 games;
+- Amanda: 100% deployment, 4 games;
+- household overlap mode: shared;
+- expected household prize share ~0.0355;
+- P(any cash) ~0.166;
+- future-minimum failure risk ~0.472.
+
+The strongest frozen benchmark in that same low-resolution proxy run was `diversified_pair_30pct` at ~0.01249 expected household prize share. However, a post-hoc simple 100%-deployment/shared/top-4 control is contained inside the optimizer search and collapses to the same corner. Therefore this proxy does **not** demonstrate that optimizer complexity has earned promotion; it demonstrates that the current pure expected-prize objective rewards extreme variance under the current uncertainty treatment.
+
+The proxy concentration is driven heavily by PHI @ CHI because the single-source current-line proxy is CHI +3.5 while Sly is CHI +4.5. Do not copy the proxy stakes into the Command Center.
+
+### Genuine V2-0009 decision point
+Do not keep widening search or invent an arbitrary bankroll cap. The next design choice must be explicit:
+1. preserve pure expected household prize value as the sole optimization objective, knowingly allowing high future-viability/ruin risk when modeled tail upside compensates; **or**
+2. make robustness/uncertainty decision-relevant inside the optimizer (for example robust/lower-confidence prize value or an explicit future-minimum failure constraint), while retaining expected household prize value as the headline metric.
+
+Actual Week-3 optimizer recommendations additionally require a valid point-in-time V2 probability input; the mechanics proxy is insufficient.
+
+Do not impose a fixed weekly game count or bankroll percentage. Those remain optimizer outputs unless a future explicit risk/robustness policy constrains them.
 
 ## Source handling rules
 ### SportsLine
@@ -139,8 +162,9 @@ Read in this order in a new chat:
 2. `DECISIONS_LOG.md`
 3. `V2_MODEL_SPEC.md`
 4. `v2/experiment_registry.csv`
-5. `v2/MONOPOLY_RULE_AUDIT.md` for optimizer work, or `v2/SHADOW_VALIDATION_PROTOCOL.md` for shadow work
-6. latest relevant result/design/source files
+5. `v2/V2_0009_FIELD_OPTIMIZER_REVIEW.md` for the active optimizer decision point
+6. `v2/MONOPOLY_RULE_AUDIT.md` for rules, or `v2/SHADOW_VALIDATION_PROTOCOL.md` for shadow work
+7. latest relevant result/design/source files
 
 Catherine can bootstrap a new conversation with:
 > **Continue NFL Monopoly. Load the canonical project state from the GitHub repo first.**
