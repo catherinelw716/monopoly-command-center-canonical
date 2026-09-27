@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "season_start": {
+    "starting_bankroll_per_entry": 10000
+  },
+  "weekly_regular_season": {
+    "minimum_games_per_entry": 4,
+    "minimum_wager_per_game": 100,
+    "wager_increment": 100,
+    "cover_net_multiplier": 1.0,
+    "loss_net_multiplier": -1.0,
+    "push_net_multiplier": 0.0,
+    "thursday_optional": true,
+    "non_thursday_submitted_together_after_friday_lines": true,
+    "bets_changeable_before_kickoff": true
+  },
+  "payouts": {
+    "first": 0.56,
+    "second": 0.25,
+    "third": 0.10,
+    "fourth": 0.02,
+    "fifth": 0.01,
+    "commissioner": 0.06
+  },
+  "later_season_constraints": {
+    "week_18_minimum_balance_to_qualify": 3000,
+    "wild_card": {"games": 6, "minimum_wager_per_game": 500},
+    "divisional": {"games": 4, "minimum_wager_per_game": 750},
+    "conference_championship": {"games": 2, "minimum_wager_per_game": 1500},
+    "super_bowl": {"minimum_total_wager": 3000},
+    "round_wagering_limited_to_balance_entering_round": true
+  },
+  "optimizer": {
+    "household_entries": ["Catherine", "Amanda"],
+    "primary_objective": "expected_household_final_prize_value",
+    "secondary_metrics": [
+      "p_any_cash",
+      "p_top_3",
+      "p_first",
+      "p_both_cash",
+      "future_minimum_failure_risk",
+      "ending_balance_distribution",
+      "household_overlap_and_correlation"
+    ],
+    "fixed_game_count": false,
+    "fixed_bankroll_percentage": false,
+    "standings_may_change_probability_model": false
+  }
+}
