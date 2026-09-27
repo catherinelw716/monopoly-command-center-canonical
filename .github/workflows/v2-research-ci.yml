@@ -44,6 +44,9 @@ jobs:
           v2/monopoly_historical_replay_qa.py
           v2/benchmark_strategies.py
           v2/benchmark_strategies_qa.py
+          v2/monopoly_tournament_optimizer.py
+          v2/monopoly_tournament_optimizer_qa.py
+          v2/run_v2_0009_milestone.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
@@ -57,11 +60,33 @@ jobs:
       - name: Run benchmark strategy QA
         run: python v2/benchmark_strategies_qa.py
 
+      - name: Run V2-0009 tournament optimizer QA
+        run: python v2/monopoly_tournament_optimizer_qa.py
+
+      - name: Execute V2-0009 milestone proxy evaluation
+        run: |
+          python v2/run_v2_0009_milestone.py --simulations 600 --output /tmp/v2_0009_milestone_results.json > /tmp/v2_0009_stdout.json
+          python - <<'PY'
+          import json
+          p='/tmp/v2_0009_milestone_results.json'
+          d=json.load(open(p))
+          print('V2-0009 optimizer parameters:', d['optimizer']['parameters'])
+          print('V2-0009 optimizer expected household prize share:', round(d['optimizer']['expected_household_prize_share'], 6))
+          print('V2-0009 optimizer P(any cash):', round(d['optimizer']['p_any_cash'], 6))
+          print('V2-0009 optimizer future-minimum failure risk:', round(d['optimizer']['future_minimum_failure_risk'], 6))
+          print('Best benchmark:', d['benchmark_ranking'][0]['strategy'], round(d['benchmark_ranking'][0]['expected_household_prize_share'], 6))
+          print('Optimizer bets:', d['optimizer']['bets_by_entry'])
+          for x in d['robustness_red_team']:
+              print('STRESS', x['stress'], round(x['expected_household_prize_share'], 6), round(x['p_any_cash'], 6), round(x['future_minimum_failure_risk'], 6))
+          PY
+
       - name: Validate JSON contracts and frozen model artifact
         run: |
           python -m json.tool v2/data_contract.json > /dev/null
           python -m json.tool v2/monopoly_contract.json > /dev/null
           python -m json.tool v2/historical_replay_wk1_wk2.json > /dev/null
+          python -m json.tool v2/season_2026/week_02_field_state.json > /dev/null
+          python -m json.tool v2/season_2026/week_03_optimizer_proxy.json > /dev/null
           python -m json.tool v2/season_2026/week_03_v1_heuristic_portfolio.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
