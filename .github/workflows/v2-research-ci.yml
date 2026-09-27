@@ -1,0 +1,73 @@
+name: V2 Research CI
+
+on:
+  push:
+    paths:
+      - 'v2/**'
+      - 'V2_MODEL_SPEC.md'
+      - 'V2_DATA_FEASIBILITY.md'
+      - '.github/workflows/v2-research-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  v2-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install V2 dependencies
+        run: pip install nflreadpy polars pyarrow
+
+      - name: Compile research scripts
+        run: python -m py_compile v2/build_historical_dataset.py v2/build_baseline_features.py v2/qa_checks.py
+
+      - name: Validate JSON contract
+        run: python -m json.tool v2/data_contract.json > /dev/null
+
+      - name: Smoke-test nflverse schedule API and spread normalization
+        run: |
+          python - <<'PY'
+          import nflreadpy as nfl
+          import polars as pl
+          from v2.build_historical_dataset import normalize_schedule_core
+
+          schedules = nfl.load_schedules([2024])
+          assert schedules.height > 250, schedules.height
+          core = normalize_schedule_core(schedules)
+          assert 'nflverse_spread_line_source' in core.columns
+          assert 'home_spread_closing' in core.columns
+
+          check = core.filter(pl.col('nflverse_spread_line_source').is_not_null()).select(
+              (pl.col('home_spread_closing') + pl.col('nflverse_spread_line_source')).abs().max().alias('max_error')
+          ).item()
+          assert check == 0, check
+          print(f'Schedule smoke passed: {core.height} games; spread sign max error={check}')
+          PY
+
+      - name: Build one-season raw sample
+        run: python v2/build_historical_dataset.py --start-season 2024 --end-season 2024 --output-dir /tmp/v2-data
+
+      - name: Run staging QA
+        run: python v2/qa_checks.py --data-dir /tmp/v2-data --report /tmp/v2-data/qa_report.json
+
+      - name: Build leakage-safe baseline features
+        run: python v2/build_baseline_features.py --data-dir /tmp/v2-data
+
+      - name: Verify baseline artifact
+        run: |
+          python - <<'PY'
+          import polars as pl
+          p='/tmp/v2-data/gold/baseline_games.parquet'
+          df=pl.read_parquet(p)
+          assert df.height > 200, df.height
+          assert 'home_margin' in df.columns
+          assert any(c.startswith('diff_') for c in df.columns)
+          print(f'Baseline feature smoke passed: {df.height} game rows, {df.width} columns')
+          PY
