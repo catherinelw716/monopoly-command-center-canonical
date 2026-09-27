@@ -1,133 +1,46 @@
 <style id="canonical-mobile-ux-style">
 @media (max-width: 760px) {
-  html, body { overflow-x: hidden !important; }
-  body { padding-bottom: 76px !important; }
-  .panel { border-radius: 14px !important; padding: 14px !important; }
-  .panel h2 { font-size: 20px !important; line-height: 1.15 !important; }
-  .panel h3 { font-size: 16px !important; }
-  .eyebrow { font-size: 10px !important; line-height: 1.3 !important; }
+  html,body{max-width:100%;overflow-x:hidden!important}
+  body{padding-bottom:72px!important}
+  .panel{border-radius:14px!important;padding:13px!important}
+  .panel h2{font-size:20px!important;line-height:1.2!important}
+  .panel h3{font-size:16px!important}
+  .eyebrow{font-size:10px!important;line-height:1.3!important}
 
-  #today .kpis { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 8px !important; }
-  #today .kpi { min-width: 0 !important; padding: 10px !important; }
-  #today .kpi b { font-size: 18px !important; }
-  #today .kpi span, #today .kpi small { font-size: 10px !important; }
-  #today .alerts { display: grid !important; grid-template-columns: 1fr !important; gap: 8px !important; }
-  #today .alert { padding: 11px !important; align-items: flex-start !important; }
-  #today .alert b { font-size: 13px !important; }
-  #today .alert div { font-size: 11px !important; line-height: 1.4 !important; }
+  #today .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  #today .kpi{min-width:0!important;padding:10px!important}
+  #today .kpi b{font-size:18px!important}
+  #today .kpi span,#today .kpi small{font-size:10px!important}
+  #today .alerts{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
+  #today .alert{padding:11px!important;align-items:flex-start!important}
+  #today .alert b{font-size:13px!important}
+  #today .alert div{font-size:11px!important;line-height:1.4!important}
 
-  /* Mobile slate board becomes stacked cards instead of a wide desktop table. */
-  #robustSlateDecisionBoard { padding: 12px !important; }
-  #robustSlateDecisionBoard > p { font-size: 11px !important; line-height: 1.45 !important; }
-  #robustSlateDecisionBoard .robust-board { overflow: visible !important; border: 0 !important; border-radius: 0 !important; }
-  #robustSlateDecisionBoard table,
-  #robustSlateDecisionBoard thead,
-  #robustSlateDecisionBoard tbody,
-  #robustSlateDecisionBoard tr,
-  #robustSlateDecisionBoard th,
-  #robustSlateDecisionBoard td { display: block !important; width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
-  #robustSlateDecisionBoard thead { display: none !important; }
-  #robustSlateDecisionBoard tbody { display: grid !important; gap: 10px !important; }
-  #robustSlateDecisionBoard tr[data-game] {
-    padding: 12px !important;
-    border: 1px solid rgba(148,163,184,.18) !important;
-    border-radius: 12px !important;
-    background: rgba(15,23,42,.36) !important;
-  }
-  #robustSlateDecisionBoard td { border: 0 !important; padding: 0 !important; }
-  #robustSlateDecisionBoard td:nth-child(1) {
-    font-size: 15px !important;
-    margin-bottom: 8px !important;
-  }
-  #robustSlateDecisionBoard td:nth-child(2) {
-    padding: 8px 0 !important;
-    border-top: 1px solid rgba(148,163,184,.12) !important;
-    font-size: 12px !important;
-  }
-  #robustSlateDecisionBoard td:nth-child(2)::before {
-    content: 'Our model'; display: block; color: #94a3b8; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
-  }
-  #robustSlateDecisionBoard td:nth-child(3) {
-    padding: 8px 0 !important;
-    border-top: 1px solid rgba(148,163,184,.12) !important;
-  }
-  #robustSlateDecisionBoard td:nth-child(3)::before {
-    content: 'External consensus'; display: block; color: #94a3b8; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px;
-  }
-  #robustSlateDecisionBoard td:nth-child(4) {
-    padding-top: 8px !important;
-    border-top: 1px solid rgba(148,163,184,.12) !important;
-  }
-  #robustSlateDecisionBoard td:nth-child(4)::before {
-    content: 'State'; display: inline-block; color: #94a3b8; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-right: 8px;
-  }
-  #robustSlateDecisionBoard .robust-pill {
-    white-space: normal !important;
-    line-height: 1.25 !important;
-    max-width: 100% !important;
-  }
-  #robustSlateDecisionBoard .robust-sub {
-    font-size: 10px !important;
-    line-height: 1.45 !important;
-    margin-top: 6px !important;
-  }
+  /* Preserve the app's original Decision Board controls/cards. Only make them fit. */
+  #recommendedPlays{width:100%!important;max-width:100%!important}
+  #recommendedPlays .play-card,#recommendedPlays .recommended-card,#recommendedPlays [data-game]{max-width:100%!important;box-sizing:border-box!important}
+  #recommendedPlays button,#recommendedPlays .btn,#recommendedPlays .badge{min-height:32px;touch-action:manipulation}
 
-  /* Multi-source comparison: each game becomes a readable source card. */
-  #sourceCompare .source-table { min-width: 0 !important; width: 100% !important; }
-  #sourceCompare .source-table thead { display: none !important; }
-  #sourceCompare .source-table,
-  #sourceCompare .source-table tbody,
-  #sourceCompare .source-table tr,
-  #sourceCompare .source-table td { display: block !important; width: 100% !important; box-sizing: border-box !important; }
-  #sourceCompare .source-table tbody { display: grid !important; gap: 10px !important; }
-  #sourceCompare .source-table tr {
-    border: 1px solid rgba(148,163,184,.18) !important;
-    border-radius: 12px !important;
-    padding: 11px !important;
-    background: rgba(15,23,42,.30) !important;
-  }
-  #sourceCompare .source-table td { border: 0 !important; padding: 7px 0 !important; }
-  #sourceCompare .source-table td + td { border-top: 1px solid rgba(148,163,184,.10) !important; }
-  #sourceCompare .source-table td:nth-child(1) { padding-top: 0 !important; font-size: 14px !important; }
-  #sourceCompare .source-table td:nth-child(2)::before { content: 'Our model'; }
-  #sourceCompare .source-table td:nth-child(3)::before { content: 'SportsLine'; }
-  #sourceCompare .source-table td:nth-child(4)::before { content: 'Gridiron AI'; }
-  #sourceCompare .source-table td:nth-child(5)::before { content: 'Lucas'; }
-  #sourceCompare .source-table td:nth-child(6)::before { content: 'Cross-source read'; }
-  #sourceCompare .source-table td:nth-child(n+2)::before {
-    display: block; color: #94a3b8; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
-  }
-  #sourceCompare .src-sub { font-size: 10px !important; line-height: 1.4 !important; }
-  #sourceTopGrid { grid-template-columns: 1fr !important; gap: 10px !important; }
+  /* Keep source tiles readable without changing their semantics or DOM structure. */
+  .vg-sources{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .source-mini{min-width:0!important;padding:8px!important}
+  .source-mini small{font-size:9px!important}
+  .source-mini b{font-size:12px!important}
+  .source-mini span{font-size:9px!important;overflow-wrap:anywhere!important}
 
-  /* Game cards and source tiles should not squeeze into four columns. */
-  .vg-sources { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 7px !important; }
-  .source-mini { min-width: 0 !important; padding: 8px !important; }
-  .source-mini small { font-size: 9px !important; }
-  .source-mini b { font-size: 12px !important; }
-  .source-mini span { font-size: 9px !important; overflow-wrap: anywhere !important; }
+  /* Existing source comparison remains the existing component; allow horizontal swipe if needed. */
+  #sourceCompare{max-width:100%!important;overflow:hidden!important}
+  #sourceCompare .source-table{display:table!important;min-width:760px!important}
+  #sourceCompare .source-table-wrap,#sourceCompare .table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
 
-  .grid3, .grid4 { grid-template-columns: 1fr !important; }
-  .primary-nav { overflow-x: auto !important; white-space: nowrap !important; -webkit-overflow-scrolling: touch; }
-  .primary-nav .nav-btn { flex: 0 0 auto !important; }
-  .mobile-nav { grid-template-columns: repeat(5,minmax(0,1fr)) !important; }
-  .mobile-nav button { font-size: 9px !important; padding: 8px 2px !important; }
+  .grid3,.grid4{grid-template-columns:1fr!important}
+  .primary-nav{overflow-x:auto!important;white-space:nowrap!important;-webkit-overflow-scrolling:touch!important}
+  .primary-nav .nav-btn{flex:0 0 auto!important;touch-action:manipulation!important}
+  .mobile-nav{z-index:1000!important;pointer-events:auto!important}
+  .mobile-nav button,.mobile-nav a{font-size:10px!important;padding:9px 3px!important;pointer-events:auto!important;touch-action:manipulation!important}
 }
-
-@media (max-width: 390px) {
-  #today .kpis { grid-template-columns: 1fr 1fr !important; }
-  .panel { padding: 12px !important; }
-  #robustSlateDecisionBoard tr[data-game], #sourceCompare .source-table tr { padding: 10px !important; }
+@media (max-width:390px){
+  .panel{padding:11px!important}
+  #today .kpis{grid-template-columns:1fr 1fr!important}
 }
 </style>
-<script id="canonical-mobile-ux-script">
-(function(){
-  function mark(){
-    document.documentElement.classList.add('canonical-mobile-ready');
-    window.commandCenterMobileQA={viewport:window.innerWidth,mobile:window.innerWidth<=760,boardCards:document.querySelectorAll('#robustSlateDecisionBoard tbody tr').length,sourceRows:document.querySelectorAll('#sourceCompare .source-table tbody tr').length};
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mark); else mark();
-  window.addEventListener('resize',mark);
-  setTimeout(mark,500);
-})();
-</script>
