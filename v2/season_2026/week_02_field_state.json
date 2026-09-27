@@ -1,0 +1,29 @@
+{
+  "season": 2026,
+  "as_of_week": 2,
+  "status": "AGGREGATE_OFFICIAL_FIELD_STATE",
+  "active_entries": 125,
+  "eliminated_entries": 2,
+  "starting_bankroll_per_entry": 10000,
+  "observed_anchors": {
+    "median_balance": 9500,
+    "top10_floor": 16665,
+    "top5_floor": 19400,
+    "leader_balance": 31300
+  },
+  "household": {
+    "Catherine": {"balance": 11400, "rank": 30},
+    "Amanda": {"balance": 10300, "rank": 44}
+  },
+  "observed_household_outlay": {
+    "week_1": 6100,
+    "week_2": 7800
+  },
+  "explicit_assumptions": {
+    "lower_tail_floor_assumption": 400,
+    "scenario_weights": "equal across conservative/median/aggressive until more field transitions are observed",
+    "individual_opponent_balances": "not reconstructed; interpolation between official aggregate anchors is simulation-only",
+    "tie_break": "unknown; optimizer uses tiny symmetric jitter and must stress-test if ties become material"
+  },
+  "provenance": "Canonical PROJECT_STATE.md Week-2 handoff values. This file preserves only values already confirmed in project state and labels unobserved field detail as assumptions rather than fabricating a commissioner ledger."
+}
