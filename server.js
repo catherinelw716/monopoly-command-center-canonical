@@ -9,7 +9,6 @@ const uxConsensusPatch = fs.readFileSync('ux-consensus-patch.html', 'utf8');
 const consistencyPatch = fs.readFileSync('consistency-patch.html', 'utf8');
 const robustDomPatch = fs.readFileSync('robust-dom-patch.html', 'utf8');
 const mobilePatch = fs.readFileSync('mobile-patch.html', 'utf8');
-const sourceScreenshotPatch = fs.readFileSync('source-screenshot-data-patch.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
 
@@ -19,7 +18,7 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
-  const combinedPatch = `${patch}\n${lucasTablePatch}\n${uxConsensusPatch}\n${consistencyPatch}\n${robustDomPatch}\n${mobilePatch}\n${sourceScreenshotPatch}`;
+  const combinedPatch = `${patch}\n${lucasTablePatch}\n${uxConsensusPatch}\n${consistencyPatch}\n${robustDomPatch}\n${mobilePatch}`;
   cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
 }
@@ -29,7 +28,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const html = await loadApp();
       res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
-      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3-mobile-screenshot-sources'}));
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3-mobile-stable'}));
     } catch (err) {
       loadError = String(err && err.message ? err.message : err);
       res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
@@ -54,7 +53,7 @@ server.listen(port, '0.0.0.0', async () => {
   console.log(`Command Center listening on ${port}`);
   try {
     const html = await loadApp();
-    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; mobile + screenshot source patches included`);
+    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; stable mobile layer included`);
   } catch (err) {
     console.error('Initial canonical app load failed:', err);
   }
