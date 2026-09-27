@@ -49,7 +49,7 @@ def main():
     state = load_field_state(ROOT / "v2/season_2026/week_02_field_state.json")
     rules = load_regular_rules(ROOT / "v2/monopoly_contract.json")
     snapshot, probs, ranking = load_probs(
-        ROOT / "v2/season_2026/week_03_current_market_2026-09-27_1100ET.json",
+        ROOT / "v2/season_2026/week_03_current_market_2026-09-27_1120ET.json",
         ROOT / "v2/model_artifacts/v2_global_hybrid_2016_2025.json",
     )
     balances = {"Catherine": state.catherine_balance, "Amanda": state.amanda_balance}
