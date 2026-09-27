@@ -46,7 +46,9 @@ jobs:
           v2/benchmark_strategies_qa.py
           v2/monopoly_tournament_optimizer.py
           v2/monopoly_tournament_optimizer_qa.py
+          v2/monopoly_robust_optimizer.py
           v2/run_v2_0009_milestone.py
+          v2/run_week3_sunday_robust.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
@@ -80,6 +82,27 @@ jobs:
               print('STRESS', x['stress'], round(x['expected_household_prize_share'], 6), round(x['p_any_cash'], 6), round(x['future_minimum_failure_risk'], 6))
           PY
 
+      - name: Execute robust Week 3 Sunday evaluation
+        run: |
+          python v2/run_week3_sunday_robust.py --simulations 400 --output /tmp/week3_sunday_robust.json > /tmp/week3_sunday_robust_stdout.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/week3_sunday_robust.json'))
+          o=d['optimizer']
+          print('ROBUST objective:', o['objective'])
+          print('ROBUST parameters:', o['parameters'])
+          print('ROBUST household outlay:', o['household_outlay'])
+          print('ROBUST floor utility:', round(o['robust_floor_utility'], 6))
+          print('ROBUST average utility:', round(o['robust_average_utility'], 6))
+          print('ROBUST expected household prize share:', round(o['base_expected_household_prize_share'], 6))
+          print('ROBUST P(any cash):', round(o['base_p_any_cash'], 6))
+          print('ROBUST future-minimum failure risk:', round(o['base_future_minimum_failure_risk'], 6))
+          print('ROBUST bets:', o['bets_by_entry'])
+          print('Top probability edges:')
+          for x in d['probability_ranking'][:8]:
+              print(x['game_id'], x['suggested_side'], round(x['edge_per_dollar'],6), x['sly_home_spread'], x['market_home_spread'])
+          PY
+
       - name: Validate JSON contracts and frozen model artifact
         run: |
           python -m json.tool v2/data_contract.json > /dev/null
@@ -87,6 +110,7 @@ jobs:
           python -m json.tool v2/historical_replay_wk1_wk2.json > /dev/null
           python -m json.tool v2/season_2026/week_02_field_state.json > /dev/null
           python -m json.tool v2/season_2026/week_03_optimizer_proxy.json > /dev/null
+          python -m json.tool v2/season_2026/week_03_current_market_2026-09-27_1100ET.json > /dev/null
           python -m json.tool v2/season_2026/week_03_v1_heuristic_portfolio.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
