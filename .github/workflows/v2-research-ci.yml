@@ -50,6 +50,7 @@ jobs:
           v2/run_v2_0009_milestone.py
           v2/run_week3_sunday_robust.py
           v2/run_week3_stability_redteam.py
+          v2/run_week3_second_stage_sizing.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
@@ -71,16 +72,12 @@ jobs:
           python v2/run_v2_0009_milestone.py --simulations 600 --output /tmp/v2_0009_milestone_results.json > /tmp/v2_0009_stdout.json
           python - <<'PY'
           import json
-          p='/tmp/v2_0009_milestone_results.json'
-          d=json.load(open(p))
+          d=json.load(open('/tmp/v2_0009_milestone_results.json'))
           print('V2-0009 optimizer parameters:', d['optimizer']['parameters'])
           print('V2-0009 optimizer expected household prize share:', round(d['optimizer']['expected_household_prize_share'], 6))
           print('V2-0009 optimizer P(any cash):', round(d['optimizer']['p_any_cash'], 6))
           print('V2-0009 optimizer future-minimum failure risk:', round(d['optimizer']['future_minimum_failure_risk'], 6))
           print('Best benchmark:', d['benchmark_ranking'][0]['strategy'], round(d['benchmark_ranking'][0]['expected_household_prize_share'], 6))
-          print('Optimizer bets:', d['optimizer']['bets_by_entry'])
-          for x in d['robustness_red_team']:
-              print('STRESS', x['stress'], round(x['expected_household_prize_share'], 6), round(x['p_any_cash'], 6), round(x['future_minimum_failure_risk'], 6))
           PY
 
       - name: Execute robust Week 3 Sunday evaluation
@@ -90,18 +87,10 @@ jobs:
           import json
           d=json.load(open('/tmp/week3_sunday_robust.json'))
           o=d['optimizer']
-          print('ROBUST objective:', o['objective'])
           print('ROBUST parameters:', o['parameters'])
           print('ROBUST household outlay:', o['household_outlay'])
           print('ROBUST floor utility:', round(o['robust_floor_utility'], 6))
-          print('ROBUST average utility:', round(o['robust_average_utility'], 6))
-          print('ROBUST expected household prize share:', round(o['base_expected_household_prize_share'], 6))
-          print('ROBUST P(any cash):', round(o['base_p_any_cash'], 6))
-          print('ROBUST future-minimum failure risk:', round(o['base_future_minimum_failure_risk'], 6))
           print('ROBUST bets:', o['bets_by_entry'])
-          print('Top probability edges:')
-          for x in d['probability_ranking'][:8]:
-              print(x['game_id'], x['suggested_side'], round(x['edge_per_dollar'],6), x['sly_home_spread'], x['market_home_spread'])
           PY
 
       - name: Execute Week 3 stability red-team
@@ -113,10 +102,20 @@ jobs:
           print('STABILITY runs:', d['runs'])
           print('STABILITY top parameters:', d['parameter_frequency'][:5])
           print('STABILITY metrics:', d['metric_stability'])
-          print('STABILITY selections:')
-          for row in d['selection_stability']:
-              if row['selection_rate'] >= 0.40 or row['material_market_edge']:
-                  print(row)
+          PY
+
+      - name: Execute Week 3 second-stage game-count and sizing comparison
+        run: |
+          python v2/run_week3_second_stage_sizing.py > /tmp/week3_second_stage_stdout.json
+          python - <<'PY'
+          import json
+          d=json.load(open('v2/results/week3_second_stage_sizing.json'))
+          b=d['best_overall']
+          print('SECOND-STAGE best:', {k:b[k] for k in ['c_games','a_games','c_fraction','a_fraction','household_outlay','robust_floor_utility','robust_average_utility','base_expected_household_prize_share','base_p_any_cash','base_future_minimum_failure_risk']})
+          print('SECOND-STAGE bets:', b['bets_by_entry'])
+          print('SECOND-STAGE best by game-count pair:')
+          for x in d['best_by_game_count_pair']:
+              print(x['c_games'], x['a_games'], x['c_fraction'], x['a_fraction'], x['household_outlay'], round(x['robust_floor_utility'],6))
           PY
 
       - name: Validate JSON contracts and frozen model artifact
@@ -147,13 +146,11 @@ jobs:
           import nflreadpy as nfl
           import polars as pl
           from v2.build_historical_dataset import normalize_schedule_core
-
           schedules = nfl.load_schedules([2024])
           assert schedules.height > 250, schedules.height
           core = normalize_schedule_core(schedules)
           assert 'nflverse_spread_line_source' in core.columns
           assert 'home_spread_closing' in core.columns
-
           check = core.filter(pl.col('nflverse_spread_line_source').is_not_null()).select(
               (pl.col('home_spread_closing') + pl.col('nflverse_spread_line_source')).abs().max().alias('max_error')
           ).item()
