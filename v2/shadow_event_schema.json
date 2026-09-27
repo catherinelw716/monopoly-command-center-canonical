@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/nfl-monopoly/v2/shadow_event_schema.json",
+  "title": "NFL Monopoly V2 prospective shadow event",
+  "type": "object",
+  "required": ["schema_version", "event_id", "event_type", "captured_at_utc", "prev_hash", "row_hash"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {"enum": ["prediction_capture", "result_settlement", "correction"]},
+    "captured_at_utc": {"type": "string", "format": "date-time"},
+    "prev_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "row_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "prediction_capture"}}},
+      "then": {
+        "required": ["season", "week", "snapshot_type", "game", "lines", "market", "v2"],
+        "properties": {
+          "snapshot_type": {"enum": ["FRIDAY_FREEZE", "PRE_KICK_FINAL"]},
+          "game": {
+            "type": "object",
+            "required": ["game_id", "away_team", "home_team", "kickoff_utc"]
+          },
+          "lines": {
+            "type": "object",
+            "required": ["sly_home_spread", "market_home_spread", "home_line_advantage"]
+          },
+          "market": {
+            "type": "object",
+            "required": ["source", "observed_at_utc"]
+          },
+          "v2": {
+            "type": "object",
+            "required": ["model_version", "artifact_hash", "normal", "hybrid", "integer_sly_line"]
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "result_settlement"}}},
+      "then": {
+        "required": ["season", "week", "game_id", "result"],
+        "properties": {
+          "result": {
+            "type": "object",
+            "required": ["home_margin"]
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "correction"}}},
+      "then": {"required": ["supersedes_event_id", "reason"]}
+    }
+  ]
+}
