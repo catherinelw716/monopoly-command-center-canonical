@@ -31,7 +31,6 @@ STATE = ROOT / "v2/season_2026/week_02_field_state.json"
 RULES = ROOT / "v2/monopoly_contract.json"
 OUTPUT = ROOT / "v2/results/week3_second_stage_sizing.json"
 
-# Stability-tested order. First four are the stable core; fifth/sixth are marginal adds.
 CANDIDATES = {
     "Catherine": (
         ("LAC @ BUF", "home", "BUF -7", True),
@@ -51,7 +50,7 @@ CANDIDATES = {
     ),
 }
 
-DEPLOYMENT_FRACTIONS = (0.08, 0.10, 0.12, 0.15, 0.18, 0.20, 0.25, 0.30, 0.35)
+DEPLOYMENT_FRACTIONS = (0.08, 0.10, 0.12, 0.15, 0.18, 0.20, 0.25)
 GAME_COUNTS = (4, 5, 6)
 EDGE_SHRINK_FACTORS = (1.00, 0.75, 0.50, 0.25)
 
@@ -87,8 +86,7 @@ def main() -> None:
     balances = {"Catherine": state.catherine_balance, "Amanda": state.amanda_balance}
     scenarios = default_field_scenarios()
 
-    # Higher-resolution evaluation with common random numbers across every candidate.
-    cfg = OptimizerConfig(simulations=3000, seed=716)
+    cfg = OptimizerConfig(simulations=750, seed=716)
     prepared = prepare_field_paths(state, scenarios, cfg)
     prob_sets = {f: shrink_probabilities(probs, f) for f in EDGE_SHRINK_FACTORS}
 
