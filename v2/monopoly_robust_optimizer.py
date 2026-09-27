@@ -1,29 +1,41 @@
 """Robust V2-0009 household optimizer.
 
 This layer keeps expected household prize share as the headline tournament metric but
-makes uncertainty and future viability decision-relevant when choosing a portfolio.
-It does not impose an arbitrary bankroll cap.
+makes uncertainty, future viability, and immediate per-entry downside decision-relevant
+when choosing a portfolio. It does not impose an arbitrary bankroll cap.
 
 Candidate portfolios are evaluated under:
 - conservative / median / aggressive field-policy scenarios; and
 - progressively shrunken NFL probability edges (100%, 75%, 50%, 25%).
 
+For each edge-shrink state, the optimizer also simulates the current week and measures
+10% CVaR capital retention for Catherine and Amanda separately. The lower of the two
+entry-level retention ratios is used as the immediate downside score. This prevents the
+household objective from treating one entry as disposable merely because the other entry
+survives.
+
 The primary robust utility for a scenario is:
-    expected_household_prize_share * (1 - future_minimum_failure_risk)
+    expected_household_prize_share
+      * (1 - future_minimum_failure_risk)
+      * current_week_entry_cvar_retention
 
 The optimizer maximizes the worst such utility across field scenarios and probability
 shrink states, then uses average robust utility, base expected prize share, lower
-failure risk, and lower deployment as successive tie breakers.
+failure risk, stronger current-week capital retention, and lower deployment as
+successive tie breakers.
 """
 from __future__ import annotations
 
 from typing import Dict, Mapping, Sequence
+
+import numpy as np
 
 from monopoly_simulator import GameProbability, RegularSeasonRules
 from monopoly_tournament_optimizer import (
     FieldScenario,
     FieldState,
     OptimizerConfig,
+    _sample_household_current_week,
     build_joint_candidate,
     default_field_scenarios,
     evaluate_portfolio_across_scenarios,
@@ -34,7 +46,6 @@ from monopoly_tournament_optimizer import (
 def shrink_probabilities(
     probs: Mapping[str, GameProbability], factor: float
 ) -> Dict[str, GameProbability]:
-    """Shrink non-push directional edge toward 50/50 while preserving push mass."""
     factor = float(factor)
     if not 0.0 <= factor <= 1.0:
         raise ValueError("factor must be between 0 and 1")
@@ -55,9 +66,44 @@ def shrink_probabilities(
     return out
 
 
-def _scenario_utility(row: Mapping[str, float]) -> float:
-    return float(row["expected_household_prize_share"]) * (
-        1.0 - float(row["future_minimum_failure_risk"])
+def _entry_cvar_ratio(values: np.ndarray, starting_balance: int, alpha: float = 0.10) -> float:
+    if not 0.0 < alpha <= 0.5:
+        raise ValueError("alpha must be in (0, 0.5]")
+    arr = np.asarray(values, dtype=float)
+    cutoff = float(np.quantile(arr, alpha))
+    tail = arr[arr <= cutoff]
+    cvar = float(tail.mean()) if tail.size else cutoff
+    return max(0.0, min(1.0, cvar / float(starting_balance)))
+
+
+def _current_week_downside(
+    balances: Mapping[str, int],
+    bets_by_entry,
+    game_probabilities: Mapping[str, GameProbability],
+    rules: RegularSeasonRules,
+    cfg: OptimizerConfig,
+    seed: int,
+    alpha: float = 0.10,
+) -> Dict[str, object]:
+    endings = _sample_household_current_week(
+        balances, bets_by_entry, game_probabilities, rules, cfg.simulations, seed
+    )
+    ratios = {
+        entry: _entry_cvar_ratio(endings[entry], int(balances[entry]), alpha)
+        for entry in endings
+    }
+    return {
+        "alpha": float(alpha),
+        "entry_cvar_retention": ratios,
+        "minimum_entry_cvar_retention": min(ratios.values()),
+    }
+
+
+def _scenario_utility(row: Mapping[str, float], retention: float) -> float:
+    return (
+        float(row["expected_household_prize_share"])
+        * (1.0 - float(row["future_minimum_failure_risk"]))
+        * float(retention)
     )
 
 
@@ -72,95 +118,93 @@ def optimize_robust_household(
     game_counts: Sequence[int] = (4, 5, 6),
     overlap_modes: Sequence[str] = ("shared", "hybrid", "split"),
     edge_shrink_factors: Sequence[float] = (1.00, 0.75, 0.50, 0.25),
+    current_week_cvar_alpha: float = 0.10,
 ) -> Dict[str, object]:
     cfg = cfg or OptimizerConfig()
     scenarios = tuple(scenarios or default_field_scenarios())
     prepared = prepare_field_paths(field_state, scenarios, cfg)
     prob_sets = {float(f): shrink_probabilities(game_probabilities, float(f)) for f in edge_shrink_factors}
 
-    best: Dict[str, object] | None = None
+    best = None
     evaluated = 0
     for cf in fractions:
         for af in fractions:
             for cg in game_counts:
                 for ag in game_counts:
                     for mode in overlap_modes:
-                        bets = build_joint_candidate(
-                            balances, game_probabilities, rules, cf, af, cg, ag, mode
-                        )
-                        stress_metrics: Dict[str, object] = {}
-                        scenario_utilities: list[float] = []
-                        weighted_utilities: list[float] = []
+                        bets = build_joint_candidate(balances, game_probabilities, rules, cf, af, cg, ag, mode)
+                        stress_metrics = {}
+                        scenario_utilities = []
+                        weighted_utilities = []
                         base_metrics = None
-                        for factor in edge_shrink_factors:
-                            m = evaluate_portfolio_across_scenarios(
-                                balances,
-                                bets,
-                                prob_sets[float(factor)],
-                                rules,
-                                field_state,
-                                scenarios,
-                                cfg,
-                                prepared_field_paths=prepared,
+                        base_downside = None
+                        for idx, factor in enumerate(edge_shrink_factors):
+                            factor = float(factor)
+                            downside = _current_week_downside(
+                                balances, bets, prob_sets[factor], rules, cfg,
+                                seed=cfg.seed + 5000 + idx * 100,
+                                alpha=current_week_cvar_alpha,
                             )
-                            if float(factor) == 1.0:
+                            retention = float(downside["minimum_entry_cvar_retention"])
+                            m = evaluate_portfolio_across_scenarios(
+                                balances, bets, prob_sets[factor], rules, field_state,
+                                scenarios, cfg, prepared_field_paths=prepared,
+                            )
+                            if factor == 1.0:
                                 base_metrics = m
+                                base_downside = downside
                             weighted = m["weighted"]
-                            weighted_utility = _scenario_utility(weighted)
+                            weighted_utility = _scenario_utility(weighted, retention)
                             weighted_utilities.append(weighted_utility)
                             per_scenario = {
                                 name: {
                                     **row,
-                                    "viability_adjusted_prize_utility": _scenario_utility(row),
+                                    "current_week_entry_cvar_retention": retention,
+                                    "robust_prize_utility": _scenario_utility(row, retention),
                                 }
                                 for name, row in m["by_scenario"].items()
                             }
-                            scenario_utilities.extend(
-                                x["viability_adjusted_prize_utility"] for x in per_scenario.values()
-                            )
-                            stress_metrics[f"edge_{float(factor):.2f}"] = {
-                                "weighted": {
-                                    **weighted,
-                                    "viability_adjusted_prize_utility": weighted_utility,
-                                },
+                            scenario_utilities.extend(x["robust_prize_utility"] for x in per_scenario.values())
+                            stress_metrics[f"edge_{factor:.2f}"] = {
+                                "current_week_downside": downside,
+                                "weighted": {**weighted, "current_week_entry_cvar_retention": retention, "robust_prize_utility": weighted_utility},
                                 "by_scenario": per_scenario,
                             }
 
-                        assert base_metrics is not None
+                        assert base_metrics is not None and base_downside is not None
                         evaluated += 1
                         robust_floor = min(scenario_utilities)
                         robust_average = sum(weighted_utilities) / len(weighted_utilities)
                         base_prize = base_metrics["weighted"]["expected_household_prize_share"]
                         base_failure = base_metrics["weighted"]["future_minimum_failure_risk"]
+                        base_retention = float(base_downside["minimum_entry_cvar_retention"])
                         key = (
                             robust_floor,
                             robust_average,
                             base_prize,
                             -base_failure,
+                            base_retention,
                             -base_metrics["household_outlay"],
                         )
                         if best is None or key > best["_key"]:
                             best = {
                                 "_key": key,
                                 "bets_by_entry": bets,
-                                "parameters": {
-                                    "c_fraction": cf,
-                                    "a_fraction": af,
-                                    "c_games": cg,
-                                    "a_games": ag,
-                                    "overlap_mode": mode,
-                                },
+                                "parameters": {"c_fraction": cf, "a_fraction": af, "c_games": cg, "a_games": ag, "overlap_mode": mode},
                                 "robust_floor_utility": robust_floor,
                                 "robust_average_utility": robust_average,
                                 "base_metrics": base_metrics,
+                                "base_current_week_downside": base_downside,
                                 "stress_metrics": stress_metrics,
                                 "edge_shrink_factors": list(edge_shrink_factors),
+                                "current_week_cvar_alpha": float(current_week_cvar_alpha),
                             }
     assert best is not None
     best.pop("_key", None)
     best["evaluated_candidates"] = evaluated
     best["objective"] = (
         "maximize worst-case expected household prize share multiplied by probability "
-        "of avoiding future-minimum failure across field scenarios and edge-shrink states"
+        "of avoiding future-minimum failure and by minimum per-entry current-week "
+        "10% CVaR capital retention across field scenarios and edge-shrink states"
     )
     return best
