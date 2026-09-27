@@ -68,3 +68,12 @@ Why: Opening/closing lines cannot faithfully reconstruct the information set tha
 Decision: `PROJECT_STATE.md` is the canonical new-chat bootstrap and should be updated after material changes. `DECISIONS_LOG.md` records major rationale.
 
 Why: Conversation context can truncate or change across chats; repository-backed context is explicit, durable, and auditable.
+
+## 2026-09-27 — First Ridge football-residual challenger rejected
+Decision: Keep the closing-market model as the research champion baseline. Reject the first Ridge specification (lagged roll4/roll8 PBP efficiency + basic context) as evidence of incremental predictive value.
+
+Evidence: 1,615 held-out regular-season games across 2020–2025. Market mean margin MAE 9.764 vs Ridge 9.831; market RMSE 12.637 vs Ridge 12.710; preliminary Brier 0.2500 vs Ridge 0.2516. Market-minus-Ridge MAE delta -0.0665 with season-bootstrap 95% interval [-0.1733,+0.0313]. Ridge selected-side hit rate was 51.01%.
+
+Why: The football-residual feature set did not beat the market out of sample. This supports the market-anchored design and the rule that plausible football variables receive no weight until they demonstrate stable incremental value.
+
+Next consequence: run registered roll-window/feature-family ablations before adding Bayesian or boosting complexity. If those also fail, keep the core more market-centric and focus V2 research on exact Sly price/key-number/discrete-margin value rather than trying to forecast final margin better than the closing market.
