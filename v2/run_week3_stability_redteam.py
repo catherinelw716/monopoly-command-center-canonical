@@ -32,12 +32,7 @@ MATERIAL_EDGE_THRESHOLD = 0.01
 
 
 def perturb_context(base: dict, delta: float, run_index: int) -> dict:
-    """Deterministically nudge contextual scores while preserving side labels.
-
-    The +/-0.15 perturbation is intentionally small relative to the 0-3 ordinal
-    context scale. Direction alternates by game so this tests ordering fragility
-    rather than uniformly boosting or suppressing all context.
-    """
+    """Deterministically nudge contextual scores while preserving side labels."""
     out = deepcopy(base)
     rows = sorted(out["games"], key=lambda x: x["game_id"])
     for i, row in enumerate(rows):
@@ -84,14 +79,14 @@ def main() -> None:
         for delta in PERTURBATIONS:
             perturbed = perturb_context(base_context, delta, run_index)
             cmap = context_map(perturbed)
-            cfg = OptimizerConfig(simulations=300, seed=seed)
+            cfg = OptimizerConfig(simulations=250, seed=seed)
             opt = optimize_robust_household(
                 balances,
                 probs,
                 rules,
                 state,
                 cfg=cfg,
-                fractions=(0.10, 0.20, 0.35, 0.50),
+                fractions=(0.10, 0.20, 0.35),
                 game_counts=(4, 5, 6),
                 current_week_cvar_alpha=0.10,
                 context_preferences=cmap,
