@@ -1,0 +1,25 @@
+{
+  "season": 2026,
+  "week": 3,
+  "snapshot_type": "SUNDAY_CURRENT_MARKET_RESEARCH",
+  "captured_at_local": "2026-09-27T11:20:00-04:00",
+  "market_source": "Action Network current odds pages/public board cross-check",
+  "use_policy": "Research/decision snapshot for V2-0009 Sunday allocation. This is not a V2-0010 FRIDAY_FREEZE snapshot and must not be relabeled as one.",
+  "spread_convention": "home-team conventional sportsbook spread: negative=favorite, positive=underdog",
+  "games": [
+    {"game_id":"LAC @ BUF","away_team":"LAC","home_team":"BUF","sly_home_spread":-7.0,"market_home_spread":-7.5,"market_note":"Action live/current pages show BUF around -7 to -7.5; use -7.5 conservative comparison"},
+    {"game_id":"CAR @ CLE","away_team":"CAR","home_team":"CLE","sly_home_spread":2.5,"market_home_spread":2.5,"market_note":"CAR -2.5"},
+    {"game_id":"NYJ @ DET","away_team":"NYJ","home_team":"DET","sly_home_spread":-6.5,"market_home_spread":-6.5,"market_note":"DET -6.5"},
+    {"game_id":"HOU @ IND","away_team":"HOU","home_team":"IND","sly_home_spread":1.5,"market_home_spread":1.5,"market_note":"HOU -1.5"},
+    {"game_id":"NE @ JAX","away_team":"NE","home_team":"JAX","sly_home_spread":-3.0,"market_home_spread":-2.5,"market_note":"Current Action board shows JAX about -2.5, creating a half-point advantage to NE +3 at Sly"},
+    {"game_id":"KC @ MIA","away_team":"KC","home_team":"MIA","sly_home_spread":10.5,"market_home_spread":10.5,"market_note":"KC -10.5"},
+    {"game_id":"TEN @ NYG","away_team":"TEN","home_team":"NYG","sly_home_spread":-2.5,"market_home_spread":-2.5,"market_note":"NYG -2.5"},
+    {"game_id":"CIN @ PIT","away_team":"CIN","home_team":"PIT","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"CIN -3.5"},
+    {"game_id":"SEA @ WAS","away_team":"SEA","home_team":"WAS","sly_home_spread":7.5,"market_home_spread":7.5,"market_note":"SEA -7.5"},
+    {"game_id":"ARI @ SF","away_team":"ARI","home_team":"SF","sly_home_spread":-8.5,"market_home_spread":-8.5,"market_note":"SF -8.5"},
+    {"game_id":"MIN @ TB","away_team":"MIN","home_team":"TB","sly_home_spread":1.5,"market_home_spread":1.5,"market_note":"MIN -1.5"},
+    {"game_id":"BAL @ DAL","away_team":"BAL","home_team":"DAL","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"BAL -3.5"},
+    {"game_id":"LV @ NO","away_team":"LV","home_team":"NO","sly_home_spread":-3.0,"market_home_spread":-3.0,"market_note":"Action 9:59 AM ET article lists NO -3"},
+    {"game_id":"LAR @ DEN","away_team":"LAR","home_team":"DEN","sly_home_spread":2.5,"market_home_spread":2.5,"market_note":"LAR -2.5"}
+  ]
+}
