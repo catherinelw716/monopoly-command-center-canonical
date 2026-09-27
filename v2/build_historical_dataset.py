@@ -63,10 +63,17 @@ def add_build_metadata(df: pl.DataFrame, build_timestamp: str) -> pl.DataFrame:
 
 
 def normalize_schedule_core(schedules: pl.DataFrame) -> pl.DataFrame:
-    """Create a canonical game/result table while preserving raw source columns elsewhere.
+    """Create canonical game/result fields while preserving raw source columns.
 
-    nflverse schedule schemas can evolve, so this only selects columns that are
-    present and derives targets defensively.
+    nflverse `spread_line` uses a source-native convention where a positive
+    number means the HOME team is favored. V2's normalized `home_spread_closing`
+    uses ordinary handicap notation from the home perspective, so a home
+    favorite is negative. Therefore:
+
+        home_spread_closing = -nflverse spread_line
+
+    The raw source value is retained alongside the normalized value so sign
+    handling remains auditable.
     """
     wanted = [
         "game_id",
@@ -88,22 +95,32 @@ def normalize_schedule_core(schedules: pl.DataFrame) -> pl.DataFrame:
         "away_rest",
         "home_rest",
         "spread_line",
+        "away_spread_odds",
+        "home_spread_odds",
         "away_moneyline",
         "home_moneyline",
         "total_line",
+        "under_odds",
+        "over_odds",
         "result",
         "total",
     ]
     present = [c for c in wanted if c in schedules.columns]
     out = schedules.select(present)
 
+    expressions: list[pl.Expr] = []
     if {"home_score", "away_score"}.issubset(out.columns):
-        out = out.with_columns(
-            (pl.col("home_score") - pl.col("away_score")).alias("home_margin")
+        expressions.append((pl.col("home_score") - pl.col("away_score")).alias("home_margin"))
+    if "spread_line" in out.columns:
+        expressions.extend(
+            [
+                pl.col("spread_line").alias("nflverse_spread_line_source"),
+                (-pl.col("spread_line")).alias("home_spread_closing"),
+            ]
         )
+    if expressions:
+        out = out.with_columns(expressions)
 
-    # nflverse spread_line semantics should be validated in QA before using this
-    # column as the V2 normalized home spread. We keep it source-native here.
     return out
 
 
@@ -132,7 +149,7 @@ def build_raw_tables(seasons: list[int], output_dir: Path) -> dict:
         loaders["participation"] = lambda: nfl.load_participation(participation_seasons)
 
     manifest: dict = {
-        "schema_version": "0.1.0",
+        "schema_version": "0.1.1",
         "build_timestamp_utc": build_ts,
         "seasons": seasons,
         "sources": {},
@@ -140,7 +157,8 @@ def build_raw_tables(seasons: list[int], output_dir: Path) -> dict:
         "notes": [
             "Raw tables are source-native plus retrieval timestamp.",
             "No historical point-in-time market path is fabricated here.",
-            "Closing/schedule line fields are baseline research inputs only until sign semantics pass QA.",
+            "nflverse spread_line is retained source-native and normalized to home_spread_closing = -spread_line in games_core.",
+            "Closing schedule lines are research baselines only; they cannot be used in historical Friday predictions unless they were known at that timestamp.",
         ],
     }
 
