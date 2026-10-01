@@ -1,0 +1,76 @@
+{
+  "season": 2026,
+  "week": 3,
+  "status": "SETTLED_POSTMORTEM",
+  "model_snapshot": {
+    "timestamp": "2026-09-27T12:01:00-04:00",
+    "label": "authoritative pre-lock V2 current-market layer",
+    "eligible_games": 14,
+    "record": {"wins": 11, "losses": 3, "pushes": 0},
+    "cover_rate": 0.7857142857,
+    "top_5_record": {"wins": 4, "losses": 1, "pushes": 0},
+    "a_or_a_minus_record": {"wins": 4, "losses": 0, "pushes": 0},
+    "locked_excluded": {"game": "PHI @ CHI", "pick": "PHI -4.5", "result": "LOSS"}
+  },
+  "model_game_results": [
+    {"rank":1,"game":"MIN @ TB","pick":"MIN -1.5","grade":"A","result":"WIN"},
+    {"rank":2,"game":"CAR @ CLE","pick":"CLE +2.5","grade":"A-","result":"WIN"},
+    {"rank":3,"game":"SEA @ WAS","pick":"WAS +7.5","grade":"A-","result":"WIN"},
+    {"rank":4,"game":"LAC @ BUF","pick":"BUF -7","grade":"A-","result":"WIN","note":"User final wager screenshot shows BUF -6; both lines covered because BUF won by 8. Preserve this line discrepancy for audit."},
+    {"rank":5,"game":"NE @ JAX","pick":"NE +3","grade":"B+","result":"LOSS"},
+    {"rank":6,"game":"KC @ MIA","pick":"KC -10.5","grade":"B","result":"WIN"},
+    {"rank":7,"game":"ARI @ SF","pick":"ARI +8.5","grade":"B","result":"WIN"},
+    {"rank":8,"game":"LAR @ DEN","pick":"DEN +2.5","grade":"B","result":"WIN"},
+    {"rank":9,"game":"CIN @ PIT","pick":"PIT +3.5","grade":"B-","result":"WIN"},
+    {"rank":10,"game":"BAL @ DAL","pick":"DAL +3.5","grade":"B-","result":"WIN"},
+    {"rank":11,"game":"HOU @ IND","pick":"IND +1.5","grade":"B-","result":"WIN"},
+    {"rank":12,"game":"NYJ @ DET","pick":"DET -6.5","grade":"C+","result":"WIN"},
+    {"rank":13,"game":"TEN @ NYG","pick":"TEN +2.5","grade":"C+","result":"LOSS"},
+    {"rank":14,"game":"LV @ NO","pick":"NO -3","grade":"C+","result":"LOSS"}
+  ],
+  "external_source_scorecards": {
+    "SportsLine_exact_ATS_recommendations": {"wins":4,"losses":4,"pushes":0,"note":"Only captured recommendations typed ATS are counted; totals and moneyline recommendations are excluded."},
+    "Gridiron_exact_Sly_directional_non_50_50": {"wins":4,"losses":4,"pushes":0,"note":"Only exact-Sly-line, non-50/50 directional takes are counted."},
+    "Lucas_all_takes": {"wins":2,"losses":5,"pushes":0,"like_record":{"wins":1,"losses":3},"lean_record":{"wins":1,"losses":2}}
+  },
+  "actual_household_portfolio": {
+    "outlay": 6600,
+    "net": -2200,
+    "ending_balance": 19500,
+    "entry_bet_record": {"wins":4,"losses":9,"pushes":0},
+    "aligned_with_prelock_model": {
+      "outlay": 2900,
+      "net": 1500,
+      "entry_bet_record": {"wins":4,"losses":1,"pushes":0},
+      "bets": ["Catherine MIN -1.5 $1000","Catherine DET -6.5 $200","Amanda TEN +2.5 $700","Amanda BUF -6 $500","Amanda KC -10.5 $500"]
+    },
+    "opposed_to_prelock_model": {
+      "outlay": 3700,
+      "net": -3700,
+      "entry_bet_record": {"wins":0,"losses":8,"pushes":0},
+      "unique_sides": ["CAR -2.5","SEA -7.5","CIN -3.5","BAL -3.5","LAR -2.5"]
+    }
+  },
+  "same_stakes_model_side_counterfactual": {
+    "description": "Keep every actual Week 3 wager amount fixed; where the submitted side opposed the authoritative 12:01 PM ET pre-lock model side, flip only the side.",
+    "net": 5200,
+    "ending_household_balance": 26900,
+    "delta_vs_actual_net": 7400,
+    "note": "This is an ex-ante operational counterfactual using a timestamped pre-lock model snapshot, but one week is not sufficient evidence to retune or promote a model. Do not chase the realized outcome." 
+  },
+  "red_team_findings": [
+    "The dominant Week 3 issue was decision-layer override, not failure of the final pre-lock model snapshot: all eight entry wagers placed opposite the model lost.",
+    "The four A/A- model sides all covered, but this is a one-week sample and should not cause confidence inflation or stake escalation by itself.",
+    "Earlier external/context convergence on CAR -2.5 and the earlier SEA -7.5 view conflicted with the final pre-lock V2 layer; the system needs a hard final-decision reconciliation step so stale earlier views cannot silently override the latest authoritative model state.",
+    "SportsLine exact ATS and Gridiron exact-line directional takes were each 4-4; Lucas was 2-5. Week 3 does not justify mathematically weighting these sources into V2 probabilities.",
+    "Stake sizing remains a separate concern. The result supports improving final signal reconciliation before changing the optimizer's risk objective or increasing deployment.",
+    "BUF line provenance requires cleanup: the pre-lock model layer stored BUF -7 while the user's final wager screenshot records BUF -6. The result covered both, so settlement is unaffected, but the frozen Sly-line source of truth must be singular going forward."
+  ],
+  "week4_actions": [
+    "Make the final pre-lock model snapshot the explicit decision baseline, with any override requiring a recorded reason and source timestamp.",
+    "Add an automatic model-vs-submitted-side reconciliation check before wagers are finalized.",
+    "Continue prospective shadow scoring without retraining from Week 3 alone.",
+    "Keep external sources contextual until sufficient prospective evidence supports weighting them.",
+    "Resolve frozen-line provenance before Week 4 recommendations, especially when a submitted line differs from the canonical model snapshot."
+  ]
+}
