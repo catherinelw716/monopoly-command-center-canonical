@@ -5,7 +5,7 @@ Read this file first when continuing the project in a new conversation.
 **Repo:** `catherinelw716/monopoly-command-center-canonical`  
 **Live Command Center:** https://monopoly-command-center-canonical.onrender.com/  
 **V1 production and V2 research remain separate.**  
-**Last updated:** 2026-09-27
+**Last updated:** 2026-10-01
 
 ## North star
 Build the best possible NFL probability engine for **Sly's exact frozen spread**, validate it rigorously, then use those probabilities in a **Monopoly-specific joint Catherine/Amanda tournament optimizer**.
@@ -36,15 +36,21 @@ Confirmed later-season constraints exist but should **not dominate early-season 
 
 See `v2/MONOPOLY_RULE_AUDIT.md`. Minor administrative edge cases remain parameterized until they become decision-relevant.
 
-## Current household state after Week 2
-- Catherine: **$11,400**, rank **#30**.
-- Amanda: **$10,300**, rank **#44**.
-- Household: **$21,700**.
-- Week 2 active field: 125 entries; 2 eliminated.
-- Week 2 median: $9,500; top-10 floor $16,665; top-5 floor $19,400; leader $31,300.
+## Current household state after Week 3
+- Catherine: **$10,800**, rank **#28**.
+- Amanda: **$8,700**, rank **#65**.
+- Household: **$19,500**.
+- Week 3 household outlay: **$6,600**.
+- Week 3 household net: **-$2,200**.
+- Week 3 entry-bet record: **4-9 ATS**.
+- Commissioner Week 3 leader: **$26,700**.
+- Visible Week 3 top-5 floor: **$19,000**; visible top-10 floor: **$14,900**.
+- Do not fabricate a complete Week 3 opponent ledger or active-entry count from the supplied screenshot. The optimizer may continue using the existing explicit field-scenario assumptions until a clean full-field replacement is available.
+
+Historical outlay:
 - Week 1 household outlay: $6,100.
 - Week 2 household outlay: $7,800.
-- Week 2 household overlap was roughly 73%; this is not a rule against overlap. Shared exposure should require strong enough edge to justify concentration.
+- Week 3 household outlay: $6,600.
 
 ## Prediction layer — current V2 status
 **V1 remains production champion. V2 remains challenger/research.**
@@ -72,6 +78,40 @@ Artifact hash: `da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026
 
 For detailed evidence read `v2/experiment_registry.csv`, `DECISIONS_LOG.md`, and the 0006 result files.
 
+## Week 3 postmortem — SETTLED
+See `v2/WEEK_03_POSTMORTEM.md` and `v2/results/week_03_postmortem.json`.
+
+The authoritative Sep 27 12:01 PM ET pre-lock V2 decision layer finished **11-3 ATS** on 14 decision-eligible games. The top five finished **4-1** and the A/A- group finished **4-0**. This is one prospective week and is **not** sufficient to retrain, promote, inflate confidence, or escalate stakes.
+
+The dominant failure was decision-state inconsistency:
+- $2,900 of household outlay aligned with the final model and went 4-1 for +$1,500.
+- $3,700 opposed the final model and went 0-8 for -$3,700.
+- Opposite-side submitted positions were CAR -2.5, SEA -7.5, CIN -3.5, BAL -3.5, and LAR -2.5; the final model preferred CLE +2.5, WAS +7.5, PIT +3.5, DAL +3.5, and DEN +2.5.
+- A same-stakes side-flip counterfactual using the timestamped final model would have produced +$5,200, a $7,400 swing versus actual Week 3. Treat this as an operational reconciliation lesson, not an outcome-chasing model claim.
+
+External source Week 3 scorecards did not justify mathematical weighting:
+- SportsLine exact ATS: 4-4.
+- Gridiron exact-Sly directional takes, excluding 50/50: 4-4.
+- Lucas: 2-5.
+
+Frozen-line provenance defect preserved for audit: Amanda's submitted record shows **BUF -6** while the canonical Week 3 Sly/model freeze stores **BUF -7**. Both covered; settlement is unaffected. Week 4 must use a singular frozen-line source of truth.
+
+## Week 4 execution controls — IMPLEMENTED
+See `v2/WEEK_04_EXECUTION_PROTOCOL.md`.
+
+New guardrail artifacts:
+- `v2/pre_submit_reconciliation.py`
+- `v2/pre_submit_reconciliation_qa.py`
+- `.github/workflows/v2-pre-submit-reconciliation.yml`
+
+Policy:
+- one canonical committed Week 4 Sly freeze is the source of truth for all downstream layers;
+- final authoritative model side is the decision baseline;
+- proposed Catherine/Amanda wagers are marked `ALIGNED` or `OVERRIDE`;
+- any opposite-side wager requires `override_reason` + `override_timestamp`;
+- a conflicting frozen Sly line is a blocking `LINE_MISMATCH`;
+- this control does not alter NFL probabilities or automatically increase/decrease stakes.
+
 ## V2-0010 prospective shadow — ACTIVE IN PARALLEL
 Prospective validation infrastructure is implemented and QA-passed. It is supporting evidence collection, **not the primary development workstream**.
 
@@ -79,6 +119,7 @@ Prospective validation infrastructure is implemented and QA-passed. It is suppor
 - Week 3 Sly Friday lines are preserved in `v2/season_2026/week_03_sly_freeze.json`.
 - Do not fabricate a Friday market snapshot using later odds.
 - Promotion guardrail remains >=100 settled prospective snapshots across >=6 distinct weeks plus calibration/integrity checks.
+- Continue Week 4 shadow scoring unchanged; do not tune the architecture from Week 3 outcomes.
 
 Do not spend substantial development time polishing the ledger unless a real QA defect appears.
 
@@ -105,9 +146,9 @@ Historical accounting guardrail:
 - Amanda's user-supplied wager ledger differs from commissioner authoritative balances by +$500 after Week 1 and +$100 after Week 2; keep those discrepancies explicit/quarantined rather than rewriting history.
 
 ### Field model policy
-- Do **not** pretend the individual 125-entry Week-2 commissioner ledger is known when only aggregate anchors are preserved.
-- Interpolate a rank-preserving opponent envelope from the official anchors only for simulation.
-- Default field-policy ensemble is conservative / median / aggressive and equally weighted until more weekly balance transitions are observed.
+- Do **not** pretend the individual opponent ledger is known when only aggregate anchors are preserved.
+- Interpolate a rank-preserving opponent envelope from official anchors only for simulation.
+- Default field-policy ensemble is conservative / median / aggressive and equally weighted until more field transitions are observed.
 - Field behavior changes tournament risk/allocation, never NFL probabilities.
 
 ### Robust objective decision — implemented
@@ -117,43 +158,9 @@ The robust optimizer evaluates every candidate across:
 - conservative / median / aggressive field scenarios; and
 - 100% / 75% / 50% / 25% retained NFL directional edge.
 
-For each stress state it uses viability-adjusted prize utility:
-`expected household prize share × (1 - future-minimum failure risk)`
+For each stress state it uses viability-adjusted prize utility and entry-level current-week CVaR retention. It maximizes the worst stress-state utility, then uses average robust utility, base prize value, lower failure risk, stronger current-week capital retention, and lower deployment as tie-breakers.
 
-It maximizes the worst stress-state utility, then uses average robust utility, base prize value, lower failure risk, and lower deployment as tie-breakers.
-
-### Week 3 Sunday current-market research result
-Current Sunday market snapshot is preserved separately in `v2/season_2026/week_03_current_market_2026-09-27_1100ET.json`. It is **not** a reconstructed Friday freeze.
-
-Key price finding:
-- BUF: Sly **BUF -7** vs Sunday market about **BUF -7.5** — the only meaningful stale-price edge in the corrected current snapshot.
-- NO: freshest Sunday source has **NO -3**, matching Sly; an older -3.5 observation must not be used as an edge.
-- Most remaining Sunday Sly spreads are at/near the current market; their frozen-model directional edge is effectively neutral.
-
-The corrected 400-simulation-per-scenario robust CI run selected:
-- Catherine: 100% deployment, 5 games, dominated by BUF -7;
-- Amanda: 50% deployment, 5 games;
-- overlap mode: split;
-- household outlay $16,500;
-- expected household prize share ~0.0241;
-- P(any cash) ~0.1183;
-- future-minimum failure risk ~0.4833.
-
-This **still fails a practical red-team sanity check for stake sizing**. The robust objective reduced symmetric all-in behavior but still permits extreme single-entry concentration because the tournament tail reward dominates the current uncertainty/viability penalty. Therefore:
-- do not copy the optimizer's Week 3 stake amounts into production;
-- use it for relative side/portfolio diagnostics only;
-- the next optimizer design step is to improve the uncertainty/risk objective itself (e.g. stronger lower-tail/ruin treatment or confidence-distribution integration), not to invent a fixed deployment percentage.
-
-### Week 3 Sunday side interpretation
-The frozen V2 market model identifies **BUF -7** as the only clearly material current-price edge. Market-equal games should not be promoted merely because the model's tiny residual mean creates a ~0.2% directional bias.
-
-Secondary Sunday choices should therefore come from the already-canonical external/context layer rather than pretending those neutral V2 probabilities are meaningful edge:
-- CAR -2.5 — strongest earlier four-source convergence;
-- SEA -7.5 — earlier PLAY; Seattle QB status resolved while Washington QB situation is adverse;
-- KC -10.5 — strong earlier internal/SportsLine support, but no Sunday stale-price edge;
-- MIN -1.5 / DEN +2.5 remain lower-tier alternatives depending final context.
-
-Avoid treating NE +3, HOU -1.5, TEN +2.5, BAL -3.5, NO -3, or other market-equal sides as V2 price edges without additional evidence.
+Stake sizing remains a separate unresolved design problem. Week 3 strengthens the case for better final decision reconciliation; it does not by itself justify higher deployment.
 
 ## Source handling rules
 ### SportsLine
@@ -178,16 +185,19 @@ Show Our Model, SportsLine, Gridiron, and Lucas explicitly, but do not mathemati
 ## Future reminders
 1. **Historical intra-week odds access:** revisit paid timestamped odds when rigorous retrospective Friday-Sly-freeze -> Sunday-market testing becomes worth the cost. Do not reconstruct it from opener/close alone.
 2. Minor playoff administrative edge cases should be confirmed only when they become material to optimizer output; do not let them derail current development.
+3. When Week 4 Sly lines arrive, create the canonical `week_04_sly_freeze.json` first, then run model/optimizer/reconciliation from that single source.
 
 ## Durable context files
 Read in this order in a new chat:
 1. `PROJECT_STATE.md`
 2. `DECISIONS_LOG.md`
 3. `V2_MODEL_SPEC.md`
-4. `v2/experiment_registry.csv`
-5. `v2/V2_0009_FIELD_OPTIMIZER_REVIEW.md`
-6. `v2/MONOPOLY_RULE_AUDIT.md` for rules, or `v2/SHADOW_VALIDATION_PROTOCOL.md` for shadow work
-7. latest relevant result/design/source files
+4. `v2/WEEK_03_POSTMORTEM.md`
+5. `v2/WEEK_04_EXECUTION_PROTOCOL.md`
+6. `v2/experiment_registry.csv`
+7. `v2/V2_0009_FIELD_OPTIMIZER_REVIEW.md`
+8. `v2/MONOPOLY_RULE_AUDIT.md` for rules, or `v2/SHADOW_VALIDATION_PROTOCOL.md` for shadow work
+9. latest relevant result/design/source files
 
 Catherine can bootstrap a new conversation with:
 > **Continue NFL Monopoly. Load the canonical project state from the GitHub repo first.**
