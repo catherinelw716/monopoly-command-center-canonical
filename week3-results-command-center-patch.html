@@ -1,0 +1,50 @@
+<style id="week3-results-style">
+.w3-final-banner{margin:10px 0;padding:10px 12px;border:1px solid rgba(148,163,184,.28);background:rgba(148,163,184,.08);border-radius:12px;font-size:11px;line-height:1.45}.w3-final-banner b{color:#f8fafc}.result-win{color:#86efac}.result-loss{color:#fca5a5}.w3-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.w3-entry{padding:12px;border:1px solid rgba(148,163,184,.18);border-radius:12px;background:rgba(15,23,42,.35)}.w3-entry h3{margin:0 0 7px;font-size:14px}.w3-entry .meta{font-size:10px;color:#9db3aa;margin-bottom:8px}.w3-wager{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px solid rgba(148,163,184,.1);font-size:10px}.w3-wager:first-of-type{border-top:0}.w3-net{font-weight:800}@media(max-width:720px){.w3-summary-grid{grid-template-columns:1fr}}
+</style>
+<script id="week3-results-layer">
+(function(){
+ const TS='Week 3 final · Sep 29, 2026';
+ const finals={
+  'MIN @ TB':{score:'MIN 23, TB 16',c:1000,cr:'WIN',a:0,ar:null},
+  'SEA @ WAS':{score:'WAS 33, SEA 31',c:500,cr:'LOSS',a:200,ar:'LOSS'},
+  'CAR @ CLE':{score:'CLE 21, CAR 18',c:500,cr:'LOSS',a:1000,ar:'LOSS'},
+  'BAL @ DAL':{score:'BAL 34, DAL 31',c:500,cr:'LOSS',a:0,ar:null},
+  'CIN @ PIT':{score:'PIT 30, CIN 27',c:300,cr:'LOSS',a:500,ar:'LOSS'},
+  'NYJ @ DET':{score:'DET 31, NYJ 24',c:200,cr:'WIN',a:0,ar:null},
+  'TEN @ NYG':{score:'NYG 12, TEN 7',c:0,cr:null,a:700,ar:'LOSS'},
+  'LAC @ BUF':{score:'BUF 24, LAC 16',c:0,cr:null,a:500,ar:'WIN'},
+  'KC @ MIA':{score:'KC 24, MIA 10',c:0,cr:null,a:500,ar:'WIN'},
+  'LAR @ DEN':{score:'DEN 30, LAR 26',c:0,cr:null,a:200,ar:'LOSS'}
+ };
+ const cW=[['MIN -1.5',1000,'WIN',1000],['SEA -7.5',500,'LOSS',-500],['CAR -2.5',500,'LOSS',-500],['BAL -3.5',500,'LOSS',-500],['CIN -3.5',300,'LOSS',-300],['DET -6.5',200,'WIN',200]];
+ const aW=[['CAR -2.5',1000,'LOSS',-1000],['TEN +2.5',700,'LOSS',-700],['CIN -3.5',500,'LOSS',-500],['BUF -6',500,'WIN',500],['KC -10.5',500,'WIN',500],['SEA -7.5',200,'LOSS',-200],['LAR -2.5',200,'LOSS',-200]];
+ function money(n){return (n<0?'−$':'$')+Math.abs(n).toLocaleString();}
+ function wagerRows(list){return list.map(x=>`<div class="w3-wager"><span><b>${x[0]}</b> · $${x[1].toLocaleString()}</span><span class="${x[2]==='WIN'?'result-win':'result-loss'}">${x[2]} · ${money(x[3])}</span></div>`).join('');}
+ function applyGames(){
+  if(Array.isArray(window.games)){
+   window.games.forEach(g=>{const x=finals[g.game];if(!x)return;g.finalScore=x.score;g.gameStatus='FINAL';g.catherine=x.c;g.amanda=x.a;g.catherineResult=x.cr;g.amandaResult=x.ar;});
+   try{if(typeof window.renderBoards==='function')window.renderBoards();else if(typeof renderBoards==='function')renderBoards();}catch(e){}
+  }
+ }
+ function today(){
+  const t=document.getElementById('today');if(!t)return;
+  const old=document.getElementById('prelockFreshness');if(old)old.remove();
+  let b=document.getElementById('week3FinalBanner');if(!b){b=document.createElement('div');b.id='week3FinalBanner';b.className='w3-final-banner';const first=t.querySelector('.panel');(first||t).prepend(b);}b.innerHTML=`<b>${TS}</b><br>Actual submitted wagers are settled against official NFL Week 3 final scores. Commissioner standings are now the authoritative bankroll/rank state.`;
+  const k=t.querySelector('.kpis');if(k)k.innerHTML=`<div class="kpi"><small>Catherine</small><b>$10,800</b><span>#28 · Week 3: 2–4 ATS · −$600</span></div><div class="kpi"><small>Amanda</small><b>$8,700</b><span>#65 · Week 3: 2–5 ATS · −$1,600</span></div><div class="kpi"><small>Household</small><b>$19,500</b><span>Week 3 net −$2,200 · 4–9 entry-bet record</span></div><div class="kpi"><small>Field leader</small><b>$26,700</b><span>Logan Couture · commissioner Week 3 standings</span></div>`;
+  const a=t.querySelector('.alerts');if(a)a.innerHTML=`<div class="alert green"><span class="dot"></span><div><b>Week 3 covers:</b> Catherine — MIN -1.5, DET -6.5. Amanda — BUF -6, KC -10.5.</div></div><div class="alert yellow"><span class="dot"></span><div><b>Largest household drawdown:</b> CAR -2.5 was a shared loss (−$1,500 combined).</div></div><div class="alert yellow"><span class="dot"></span><div><b>Close-number lesson:</b> BAL won by 3 but did not cover Catherine's -3.5; DET won by 7 and covered -6.5 by half a point.</div></div>`;
+ }
+ function portfolio(){
+  const p=document.getElementById('portfolio');if(!p)return;
+  const fp=p.querySelector('.section-head + .panel');if(fp)fp.innerHTML=`<div class="eyebrow">Week 3 final · actual submissions</div><b style="display:block;font-size:18px;margin-top:3px">Household closed Week 3 at $19,500</b><p style="font-size:10px;color:#9db3aa;margin:5px 0 0">Catherine: $10,800 (#28). Amanda: $8,700 (#65). Week 3 household P/L: −$2,200.</p>`;
+  const pg=p.querySelector('.portfolio-grid');if(pg)pg.innerHTML=`<div class="panel entry-card"><div class="eyebrow">Catherine · #28 · $10,800</div><h3>$3,000 wagered · 2–4 ATS · <span class="result-loss">−$600</span></h3><div class="wager-list">${wagerRows(cW)}</div></div><div class="panel entry-card"><div class="eyebrow">Amanda · #65 · $8,700</div><h3>$3,600 wagered · 2–5 ATS · <span class="result-loss">−$1,600</span></h3><div class="wager-list">${wagerRows(aW)}</div></div>`;
+ }
+ function analysis(){
+  const s=document.getElementById('analysis');if(!s)return;
+  const first=s.querySelector('.panel');if(first)first.innerHTML=`<div class="eyebrow">Week 3 postmortem</div><h2>Actual Results</h2><p><b>Household result:</b> 4 wins, 9 losses across 13 entry bets; −$2,200 net, taking combined bankroll from $21,700 to $19,500.</p><div class="w3-final-banner"><b>What mattered most</b><br>The biggest negative exposure was the shared CAR -2.5 position (−$1,500). SEA -7.5 and CIN -3.5 were also duplicated losses. The winning sides were MIN -1.5, DET -6.5, BUF -6 and KC -10.5. Treat this week as outcome evidence for the historical replay and optimizer calibration—not as a reason to retroactively rewrite pregame probabilities.</div>`;
+ }
+ function apply(){applyGames();today();portfolio();analysis();window.week3Final={status:'FINAL',catherine:{balance:10800,rank:28,net:-600,wins:2,losses:4},amanda:{balance:8700,rank:65,net:-1600,wins:2,losses:5},household:{balance:19500,net:-2200,wins:4,losses:9},source:'v2/season_2026/week_03_actual_results.json'};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,450));else setTimeout(apply,450);
+ setTimeout(apply,1400);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-view="today"],[data-view="portfolio"],[data-view="analysis"],[data-view="games"]'))setTimeout(apply,220);});
+})();
+</script>
