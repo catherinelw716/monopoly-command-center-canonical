@@ -1,0 +1,1 @@
+Render auto-deploy retrigger requested 2026-10-01 after Week 3 results and postmortem updates.
