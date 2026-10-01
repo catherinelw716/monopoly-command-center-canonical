@@ -1,0 +1,25 @@
+name: V2 Pre-Submit Reconciliation QA
+
+on:
+  push:
+    paths:
+      - 'v2/pre_submit_reconciliation.py'
+      - 'v2/pre_submit_reconciliation_qa.py'
+      - 'v2/WEEK_04_EXECUTION_PROTOCOL.md'
+      - '.github/workflows/v2-pre-submit-reconciliation.yml'
+  workflow_dispatch:
+
+jobs:
+  reconciliation-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile reconciliation scripts
+        run: python -m py_compile v2/pre_submit_reconciliation.py v2/pre_submit_reconciliation_qa.py
+      - name: Run reconciliation QA
+        run: python v2/pre_submit_reconciliation_qa.py
