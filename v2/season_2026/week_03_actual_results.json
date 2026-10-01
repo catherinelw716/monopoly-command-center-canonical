@@ -1,0 +1,57 @@
+{
+  "week": 3,
+  "season": 2026,
+  "status": "FINAL",
+  "settled_at": "2026-09-29",
+  "pool_accounting": "cover = net +1x wager; loss = -1x; push = 0",
+  "sources": {
+    "game_results": "https://www.nfl.com/scores/2026/week-3",
+    "standings": "commissioner Week 3 standings screenshot supplied by user",
+    "wagers": "user Week 3 final wagers screenshot"
+  },
+  "entries": {
+    "Catherine": {
+      "starting_balance": 11400,
+      "ending_balance": 10800,
+      "rank": 28,
+      "rank_delta": 2,
+      "week_net": -600,
+      "record": {"wins": 2, "losses": 4, "pushes": 0},
+      "wagers": [
+        {"game":"MIN @ TB","pick":"MIN -1.5","wager":1000,"final":"MIN 23, TB 16","result":"WIN","net":1000},
+        {"game":"SEA @ WAS","pick":"SEA -7.5","wager":500,"final":"WAS 33, SEA 31","result":"LOSS","net":-500},
+        {"game":"CAR @ CLE","pick":"CAR -2.5","wager":500,"final":"CLE 21, CAR 18","result":"LOSS","net":-500},
+        {"game":"BAL @ DAL","pick":"BAL -3.5","wager":500,"final":"BAL 34, DAL 31","result":"LOSS","net":-500},
+        {"game":"CIN @ PIT","pick":"CIN -3.5","wager":300,"final":"PIT 30, CIN 27","result":"LOSS","net":-300},
+        {"game":"NYJ @ DET","pick":"DET -6.5","wager":200,"final":"DET 31, NYJ 24","result":"WIN","net":200}
+      ]
+    },
+    "Amanda": {
+      "starting_balance": 10300,
+      "ending_balance": 8700,
+      "rank": 65,
+      "rank_delta": -21,
+      "week_net": -1600,
+      "record": {"wins": 2, "losses": 5, "pushes": 0},
+      "wagers": [
+        {"game":"CAR @ CLE","pick":"CAR -2.5","wager":1000,"final":"CLE 21, CAR 18","result":"LOSS","net":-1000},
+        {"game":"TEN @ NYG","pick":"TEN +2.5","wager":700,"final":"NYG 12, TEN 7","result":"LOSS","net":-700},
+        {"game":"CIN @ PIT","pick":"CIN -3.5","wager":500,"final":"PIT 30, CIN 27","result":"LOSS","net":-500},
+        {"game":"LAC @ BUF","pick":"BUF -6","wager":500,"final":"BUF 24, LAC 16","result":"WIN","net":500},
+        {"game":"KC @ MIA","pick":"KC -10.5","wager":500,"final":"KC 24, MIA 10","result":"WIN","net":500},
+        {"game":"SEA @ WAS","pick":"SEA -7.5","wager":200,"final":"WAS 33, SEA 31","result":"LOSS","net":-200},
+        {"game":"LAR @ DEN","pick":"LAR -2.5","wager":200,"final":"DEN 30, LAR 26","result":"LOSS","net":-200}
+      ]
+    }
+  },
+  "household": {
+    "starting_balance": 21700,
+    "ending_balance": 19500,
+    "week_net": -2200,
+    "week_return_on_starting_bankroll": -0.1013824885,
+    "entry_bets": 13,
+    "entry_bet_record": {"wins": 4, "losses": 9, "pushes": 0},
+    "unique_sides": 10,
+    "unique_side_record": {"wins": 4, "losses": 6, "pushes": 0}
+  }
+}
