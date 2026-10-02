@@ -1,0 +1,43 @@
+{
+  "season": 2026,
+  "week": 4,
+  "status": "FRIDAY_MODEL_SNAPSHOT",
+  "captured_at_local": "2026-10-02T13:03:00-04:00",
+  "model_version": "V2-0006C-global-hybrid-r1",
+  "artifact_hash": "da2b587b06a91d05834a92ed5d2dc6cc42ba7d38069d8d0e7f73b94a71617026",
+  "inputs": {
+    "sly_freeze": "v2/season_2026/week_04_sly_freeze.json",
+    "market_snapshot": "v2/season_2026/week_04_current_market_2026-10-02_1303ET_action.json"
+  },
+  "material_edge_threshold": 0.01,
+  "summary": {
+    "eligible_games": 15,
+    "material_edges": 4,
+    "material_edge_order": ["SEA -7","HOU -3","NE +7","DEN +3"],
+    "note": "Using the live Action Network line set, four Sly prices are materially better than market: SEA -7 vs -7.5, HOU -3 vs -3.5, NE +7 vs +6.5, and DEN +3 vs +2.5. IND -3.5 is neutral on Action despite appearing +1 better than the 12:30 VegasInsider consensus; preserve the disagreement and do not treat IND as a robust stale-price edge yet."
+  },
+  "games": [
+    {"game":"LAC @ SEA","rank":1,"sly_home_spread":-7.0,"market_home_spread":-7.5,"model_pick":"SEA -7","p_win":0.4944319567043431,"p_push":0.04434492409658538,"p_loss":0.46122311919907154,"edge_per_dollar":0.03320883750527155,"material":true},
+    {"game":"DAL @ HOU","rank":2,"sly_home_spread":-3.0,"market_home_spread":-3.5,"model_pick":"HOU -3","p_win":0.47786526349989765,"p_push":0.07640092999194278,"p_loss":0.44573380650815954,"edge_per_dollar":0.03213145699173811,"material":true},
+    {"game":"NE @ BUF","rank":3,"sly_home_spread":-7.0,"market_home_spread":-6.5,"model_pick":"NE +7","p_win":0.4921420879506326,"p_push":0.04434492409658538,"p_loss":0.463512987952782,"edge_per_dollar":0.02862909999785057,"material":true},
+    {"game":"DEN @ SF","rank":4,"sly_home_spread":-3.0,"market_home_spread":-2.5,"model_pick":"DEN +3","p_win":0.4755964154076916,"p_push":0.07640092999194278,"p_loss":0.4480026546003656,"edge_per_dollar":0.027593760807326,"material":true},
+    {"game":"ARI @ NYG","rank":5,"sly_home_spread":2.5,"market_home_spread":2.5,"model_pick":"NYG +2.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"ATL @ NO","rank":6,"sly_home_spread":-2.5,"market_home_spread":-2.5,"model_pick":"NO -2.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"TEN @ BAL","rank":7,"sly_home_spread":-11.5,"market_home_spread":-11.5,"model_pick":"BAL -11.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"DET @ CAR","rank":8,"sly_home_spread":3.5,"market_home_spread":3.5,"model_pick":"CAR +3.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"NYJ @ CHI","rank":9,"sly_home_spread":-3.5,"market_home_spread":-3.5,"model_pick":"CHI -3.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"JAX @ CIN","rank":10,"sly_home_spread":-2.5,"market_home_spread":-2.5,"model_pick":"CIN -2.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"GB @ TB","rank":11,"sly_home_spread":3.5,"market_home_spread":3.5,"model_pick":"TB +3.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"IND @ WAS","rank":12,"sly_home_spread":3.5,"market_home_spread":3.5,"model_pick":"WAS +3.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"KC @ LV","rank":13,"sly_home_spread":4.5,"market_home_spread":4.5,"model_pick":"LV +4.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"LAR @ PHI","rank":14,"sly_home_spread":3.5,"market_home_spread":3.5,"model_pick":"PHI +3.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false},
+    {"game":"MIA @ MIN","rank":15,"sly_home_spread":-10.5,"market_home_spread":-10.5,"model_pick":"MIN -10.5","p_win":0.5011768141664408,"p_push":0.0,"p_loss":0.4988231858335592,"edge_per_dollar":0.002353628332881552,"material":false}
+  ],
+  "guardrails": [
+    "Treat market-source disagreement as uncertainty, not as extra edge.",
+    "Do not promote market-equal ~0.2% directional residuals as meaningful edges.",
+    "Do not use Week 3 outcomes to alter this frozen probability architecture.",
+    "External/context sources may rank neutral games but do not mathematically change V2 probabilities.",
+    "Capture PRE_KICK_FINAL separately before kickoff; never overwrite this Friday snapshot."
+  ]
+}
