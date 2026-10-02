@@ -15,6 +15,22 @@ const consensusModelFix = fs.readFileSync('consensus-model-fix.html', 'utf8');
 const week4DataRefreshPatch = fs.readFileSync('week4-data-refresh-patch.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
+let diagnosticsLogged = false;
+
+function logBaseDiagnostics(base) {
+  if (diagnosticsLogged) return;
+  diagnosticsLogged = true;
+  const needles = ['const games', 'let games', 'var games', 'window.games', 'function renderBoards', 'const sourceData', 'let sourceData', 'window.sourceData', 'id="games"', 'id="portfolio"', 'id="analysis"'];
+  for (const needle of needles) {
+    const i = base.indexOf(needle);
+    if (i >= 0) {
+      const snippet = base.slice(Math.max(0, i - 180), Math.min(base.length, i + 1200)).replace(/\s+/g, ' ');
+      console.log(`[BASE_DIAG:${needle}] ${snippet}`);
+    } else {
+      console.log(`[BASE_DIAG:${needle}] NOT_FOUND`);
+    }
+  }
+}
 
 async function loadApp() {
   if (cachedHtml) return cachedHtml;
@@ -22,10 +38,8 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
+  logBaseDiagnostics(base);
 
-  // Preserve the established Command Center UX/component layers. Week 3-specific
-  // late-stage data overlays are intentionally omitted; Week 4 updates the existing
-  // components in place rather than replacing whole views.
   const combinedPatch = `${patch}\n${lucasTablePatch}\n${sourceScreenshotPatch}\n${gameDetailUiPatch}\n${consistencyPatch}\n${mobilePatch}\n${mobileNavFix}\n${wagerSizingPatch}\n${consensusModelFix}\n${week4DataRefreshPatch}`;
   cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
@@ -36,7 +50,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const html = await loadApp();
       res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
-      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week4-existing-ux-data-refresh'}));
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week4-existing-ux-data-refresh-diag'}));
     } catch (err) {
       loadError = String(err && err.message ? err.message : err);
       res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
