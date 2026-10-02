@@ -103,6 +103,16 @@
   - [x] Compare against simple benchmark portfolios
   - [x] Report current-week CVaR retention and future-minimum failure risk
   - [x] Persist provisional Friday optimizer artifact and pass dedicated CI
+
+- [x] Task 8B: Red-team and recalibrate stake sizing
+  - [x] Compare fixed 10%, 15%, 20%, 25%, 30%, and 35% per-entry deployment bands
+  - [x] Preserve HOU/SEA as the only Friday sizing edges; keep no-edge fillers at minimum wager in the base-state allocation
+  - [x] Re-run all bands under zero-edge stress
+  - [x] Compare marginal tournament upside against CVaR retention and future-minimum risk
+  - [x] Identify $2,900–$3,800 as the defensible Friday calibration region
+  - [x] Set $3,800 / ~19.5% household deployment as the current working Sunday target, subject to fresh PRE_KICK_FINAL evidence
+  - [x] Pass dedicated Week 4 Sizing Calibration CI
+
 - [ ] Task 9: Run pre-submit reconciliation gate
 
 ## Checkpoint B
