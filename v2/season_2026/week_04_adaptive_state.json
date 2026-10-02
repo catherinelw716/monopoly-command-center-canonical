@@ -1,0 +1,119 @@
+{
+  "season": 2026,
+  "week": 4,
+  "status": "STEP_4_ADAPTIVE_STATE",
+  "generated_from": [
+    "v2/historical_replay_wk1_wk2.json",
+    "v2/season_2026/week_03_actual_results.json",
+    "v2/results/week_03_postmortem.json",
+    "v2/season_2026/week_04_market_history_2026-10-02_1433ET.json",
+    "v2/season_2026/week_04_model_output_2026-10-02.json"
+  ],
+  "probability_model_policy": {
+    "frozen_model_version": "V2-0006C-global-hybrid-r1",
+    "retrain_for_week4": false,
+    "week3_11_3_used_as_retuning_signal": false,
+    "rule": "Weeks 1-3 outcomes update evaluation, execution controls and optimizer stress behavior, but do not change frozen V2 probability coefficients before Week 4."
+  },
+  "prospective_evidence": {
+    "week3_v2": {
+      "eligible_record": {"wins": 11, "losses": 3, "pushes": 0},
+      "top5_record": {"wins": 4, "losses": 1, "pushes": 0},
+      "a_or_a_minus_record": {"wins": 4, "losses": 0, "pushes": 0},
+      "interpretation": "Positive one-week evidence only; insufficient for promotion, confidence inflation, coefficient changes or stake escalation."
+    },
+    "external_sources": {
+      "sportsline_exact_ats": {"weeks_available": [3], "wins": 4, "losses": 4, "pushes": 0, "prediction_weight": 0.0},
+      "gridiron_exact_sly_directional_non_50_50": {"weeks_available": [3], "wins": 4, "losses": 4, "pushes": 0, "prediction_weight": 0.0},
+      "lucas_all_takes": {"weeks_available": [3], "wins": 2, "losses": 5, "pushes": 0, "prediction_weight": 0.0},
+      "weeks1_2_note": "No canonical exact-line prospective external-source ledger is available for Weeks 1-2; do not retrospectively manufacture one from final outcomes."
+    }
+  },
+  "household_execution_history": {
+    "week1": {
+      "catherine_outlay": 3000,
+      "amanda_outlay": 3100,
+      "household_outlay": 6100,
+      "same_side_shared_exposure": 2600,
+      "shared_exposure_fraction": 0.4262295082,
+      "shared_games": ["ATL @ PIT", "WAS @ PHI"],
+      "accounting_note": "Amanda's replay ledger and commissioner ending balance differ by $500; use commissioner balance as pool state and do not use the discrepancy to infer strategy performance."
+    },
+    "week2": {
+      "catherine_outlay": 3600,
+      "amanda_outlay": 4200,
+      "household_outlay": 7800,
+      "same_side_shared_exposure": 5700,
+      "shared_exposure_fraction": 0.7307692308,
+      "shared_games": ["SEA @ ARI", "NO @ BAL", "GB @ NYJ"],
+      "accounting_note": "Amanda's replay ledger and commissioner ending balance differ by $100; use commissioner balance as pool state."
+    },
+    "week3": {
+      "catherine_outlay": 3000,
+      "amanda_outlay": 3600,
+      "household_outlay": 6600,
+      "same_side_shared_exposure": 3000,
+      "shared_exposure_fraction": 0.4545454545,
+      "shared_games": ["CAR @ CLE", "CIN @ PIT", "SEA @ WAS"],
+      "actual_net": -2200,
+      "aligned_with_final_model": {"outlay": 2900, "record": "4-1", "net": 1500},
+      "opposed_to_final_model": {"outlay": 3700, "record": "0-8", "net": -3700}
+    },
+    "adaptive_interpretation": [
+      "Historical deployment and overlap are diagnostics, not fixed Week 4 targets.",
+      "Do not infer that more or less overlap is universally better from three weeks.",
+      "Require the optimizer to report overlap concentration and compare materially different overlap structures when expected value is close.",
+      "Do not increase Week 4 deployment merely because the final Week 3 V2 slate performed well."
+    ]
+  },
+  "market_edge_policy": {
+    "diff_definition": "current_home_spread - sly_home_spread",
+    "classes": {
+      "CROSS_SOURCE_CONFIRMED": "At least two preserved current-market sources imply value on the same Sly side and none imply the opposite side.",
+      "SOURCE_SENSITIVE": "One preserved source implies Sly value while another is market-equal; retain the side as a candidate but stress its edge to zero.",
+      "SOURCE_DISPUTED": "Preserved current sources imply different preferred Sly sides; do not treat as an authoritative edge until later market refresh resolves or the portfolio deliberately overrides with explicit rationale.",
+      "MARKET_EQUAL": "Preserved current sources are effectively equal to Sly; frozen model residual direction near 50% is not promoted into a betting edge."
+    },
+    "week4_step3_mapping": {
+      "SOURCE_SENSITIVE": ["DAL @ HOU", "LAC @ SEA"],
+      "SOURCE_DISPUTED": ["NE @ BUF", "DEN @ SF", "IND @ WAS"],
+      "MARKET_EQUAL": ["ARI @ NYG", "ATL @ NO", "TEN @ BAL", "DET @ CAR", "NYJ @ CHI", "JAX @ CIN", "GB @ TB", "KC @ LV", "LAR @ PHI", "MIA @ MIN"]
+    },
+    "rule": "Never average conflicting live lines into a synthetic edge solely to make a game actionable."
+  },
+  "decision_reconciliation_policy": {
+    "authoritative_baseline": "latest timestamped model snapshot available before submission",
+    "statuses": ["ALIGNED", "OVERRIDE", "LINE_MISMATCH"],
+    "override_requirements": ["reason", "source_or_evidence", "timestamp"],
+    "blocking_error": "LINE_MISMATCH",
+    "week3_learning": "Earlier CAR/SEA context remained influential after the final model changed sides; Week 4 must make divergence visible before wagers are finalized."
+  },
+  "optimizer_adaptation": {
+    "primary_objective_unchanged": "maximize expected household prize value under actual Monopoly rules",
+    "probability_stress_factors": [1.0, 0.75, 0.5, 0.25],
+    "additional_week4_stress_tests": [
+      "Set every SOURCE_SENSITIVE price edge to zero while retaining market-equal probabilities.",
+      "Evaluate SOURCE_DISPUTED games under each preserved source separately rather than averaging them.",
+      "Compare portfolio utility with and without high household overlap when alternatives are near-tied.",
+      "Report current-week downside/CVaR retention and future-minimum failure risk for each finalist portfolio."
+    ],
+    "sizing_rules": [
+      "No arbitrary fixed bankroll percentage becomes the Week 4 policy from Weeks 1-3 history.",
+      "No stake escalation from Week 3 hit rate alone.",
+      "Supporting/no-edge games may remain at minimum wager when required by contest constraints; incremental dollars require a defensible edge that survives stress testing.",
+      "Catherine and Amanda are optimized jointly but retain entry-specific bets and risk diagnostics."
+    ]
+  },
+  "legacy_heuristic_policy": {
+    "v1_week4_rebuild_status": "NOT_REPRODUCIBLE_FROM_REPO",
+    "m1_m5_week4_rebuild_status": "NOT_REPRODUCIBLE_FROM_REPO",
+    "rule": "Do not invent Week 4 V1/M1-M5 numerical outputs from hard-coded Week 3 UI grades. Preserve them as legacy comparators only until their formulas/data contracts are recovered or explicitly redesigned."
+  },
+  "step4_guardrails": [
+    "Standings and bankroll affect portfolio optimization only, never NFL cover probabilities.",
+    "External sources remain context/benchmark evidence with zero hard-coded prediction weight.",
+    "Weather and injuries remain separate contextual layers until validated incrementally; Step 5 will refresh them.",
+    "Week 3 outcome evidence may improve process controls without contaminating Week 4 prediction probabilities.",
+    "All source disagreement and accounting discrepancies remain visible rather than silently reconciled."
+  ]
+}
