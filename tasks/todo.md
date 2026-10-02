@@ -22,9 +22,22 @@
 ## Checkpoint: Task 2
 - [x] 15/15 eligible games have complete Step-2 market-history records
 - [x] Week 4 Market History QA workflow passes
-- [ ] User reviews Task 2 before Task 3 begins
+- [x] User reviews Task 2 before Task 3 begins
 
-- [ ] Task 3: Refresh football probability/model layer
+- [x] Task 3: Refresh football probability/model layer
+  - [x] Run frozen V2 against all 15 Sly lines using VegasInsider current market
+  - [x] Run source-sensitivity pass using Action Network current market
+  - [x] Preserve opening-line model output as movement diagnostic only
+  - [x] Preserve empirical push correction on integer Sly lines
+  - [x] Classify MARKET_EQUAL, SOURCE_SENSITIVE_SAME_DIRECTION, and SOURCE_DISPUTED_DIRECTION states
+  - [x] Add reproducible runner, checked-in result database, deterministic QA, and dedicated CI
+  - [x] Audit legacy V1/M1-M5 reproducibility and explicitly refuse to fabricate missing Week-4 model outputs
+
+## Checkpoint: Task 3
+- [x] 15/15 eligible games have fresh Week-4 model rows
+- [x] Week 4 Model Layer QA workflow passes
+- [ ] User reviews Task 3 before Task 4 begins
+
 - [ ] Task 4: Apply Weeks 1–3 learnings to adaptive layers
 - [ ] Task 5: Complete external/context research
 - [ ] Task 6: Generate four-source/contradiction layer
