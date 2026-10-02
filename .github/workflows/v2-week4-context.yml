@@ -1,0 +1,23 @@
+name: Week 4 External Context QA
+
+on:
+  push:
+    paths:
+      - 'v2/season_2026/week_04_context_research_2026-10-02_1551ET.json'
+      - 'v2/week4_context_qa.py'
+      - 'v2/season_2026/week_04_sly_freeze.json'
+      - '.github/workflows/v2-week4-context.yml'
+  workflow_dispatch:
+
+jobs:
+  week4-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Week 4 external context
+        run: python v2/week4_context_qa.py
