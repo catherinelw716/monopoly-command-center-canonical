@@ -77,7 +77,7 @@
 
 ## Checkpoint: Task 6
 - [x] 15/15 eligible games have a four-source/contradiction row
-- [ ] Week 4 Four Source QA workflow passes
+- [x] Week 4 Four Source QA workflow passes
 - [ ] User reviews Task 6 before Task 7 begins
 
 - [ ] Task 7: Run adversarial model review
