@@ -63,10 +63,23 @@
 
 ## Checkpoint: Task 5
 - [x] 15/15 eligible games have injury, QB, and weather context
-- [ ] Week 4 External Context QA workflow passes
-- [ ] User reviews Task 5 before Task 6 begins
+- [x] Week 4 External Context QA workflow passes
+- [x] User reviews Task 5 before Task 6 begins
 
-- [ ] Task 6: Generate four-source/contradiction layer
+- [x] Task 6: Generate four-source/contradiction layer
+  - [x] Build 15-game Our Model / SportsLine / Gridiron / Lucas source table
+  - [x] Count only verified ATS sides at known reference lines as source votes
+  - [x] Preserve inaccessible SportsLine, unverified Gridiron, and unavailable Lucas as missing rather than NO TAKE votes
+  - [x] Treat MARKET_EQUAL and SOURCE_DISPUTED model states as NO ROBUST TAKE
+  - [x] Surface model-vs-market and context-vs-market contradictions without converting context into a fifth vote
+  - [x] Preserve HOU -3 and SEA -7 as the only current robust model directions, both source-sensitive
+  - [x] Add deterministic no-fake-consensus QA and dedicated CI
+
+## Checkpoint: Task 6
+- [x] 15/15 eligible games have a four-source/contradiction row
+- [ ] Week 4 Four Source QA workflow passes
+- [ ] User reviews Task 6 before Task 7 begins
+
 - [ ] Task 7: Run adversarial model review
 
 ## Checkpoint A
