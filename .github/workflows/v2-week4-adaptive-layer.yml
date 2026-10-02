@@ -1,0 +1,25 @@
+name: Week 4 Adaptive Layer QA
+
+on:
+  push:
+    paths:
+      - 'v2/season_2026/week_04_adaptive_state.json'
+      - 'v2/week4_adaptive_layer_qa.py'
+      - 'v2/WEEK_04_ADAPTIVE_LAYER.md'
+      - '.github/workflows/v2-week4-adaptive-layer.yml'
+  workflow_dispatch:
+
+jobs:
+  adaptive-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate JSON
+        run: python -m json.tool v2/season_2026/week_04_adaptive_state.json > /dev/null
+      - name: Run Week 4 adaptive-layer QA
+        run: python v2/week4_adaptive_layer_qa.py
