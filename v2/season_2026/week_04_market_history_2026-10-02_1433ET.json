@@ -1,0 +1,213 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_MARKET_HISTORY",
+  "captured_at_local": "2026-10-02T14:33:00-04:00",
+  "status": "STEP_2_COMPLETE_INPUT",
+  "spread_convention": "home-team conventional sportsbook spread: negative=favorite, positive=underdog",
+  "diff_definition": "current_home_spread - sly_home_spread",
+  "key_numbers_tracked": [3, 7, 10],
+  "sources": {
+    "sly": {
+      "artifact": "v2/season_2026/week_04_sly_freeze.json",
+      "provenance": "user-supplied official Sly Week 4 sheet"
+    },
+    "vegasinsider": {
+      "url": "https://www.vegasinsider.com/nfl/matchups/",
+      "role": "primary opening line, opening total, Friday consensus spread and Friday consensus total",
+      "captured_note": "Week 4 matchup table observed during Step 2 on 2026-10-02. The table reports Open and Consensus values for the full slate."
+    },
+    "action_network": {
+      "artifact": "v2/season_2026/week_04_current_market_2026-10-02_1303ET_action.json",
+      "urls": ["https://www.actionnetwork.com/nfl/odds", "https://www.actionnetwork.com/nfl/public-betting"],
+      "role": "secondary live-market cross-check preserved separately because several lines differ from VegasInsider consensus"
+    }
+  },
+  "policy": {
+    "opening_line": "Use the VegasInsider Week 4 matchup-table Open value as the canonical Step-2 market opener, while retaining any source-level opening discrepancy as an audit note rather than silently replacing it.",
+    "current_line": "Preserve source-specific current lines. Do not collapse VegasInsider and Action into one synthetic number when they disagree.",
+    "missing_data": "Missing source-specific fields remain null or explicitly noted; they are not imputed."
+  },
+  "games": [
+    {
+      "game_id": "ARI @ NYG", "away_team": "ARI", "home_team": "NYG",
+      "open_home_spread": -7.0, "sly_home_spread": 2.5,
+      "vi_current_home_spread": 2.5, "action_current_home_spread": 2.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 9.5,
+      "open_total": 45.5, "vi_current_total": 44.5,
+      "key_number_event": "favorite flipped from NYG -7 to ARI -2.5; crossed 7, 3, and pick'em",
+      "market_disagreement": false,
+      "book_sample_note": "VegasInsider book board showed ARI -2.5 broadly across listed books."
+    },
+    {
+      "game_id": "ATL @ NO", "away_team": "ATL", "home_team": "NO",
+      "open_home_spread": -2.5, "sly_home_spread": -2.5,
+      "vi_current_home_spread": -2.5, "action_current_home_spread": -2.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 0.0,
+      "open_total": 45.5, "vi_current_total": 47.5,
+      "key_number_event": "none",
+      "market_disagreement": false,
+      "book_sample_note": "No material spread disagreement identified in preserved Friday sources."
+    },
+    {
+      "game_id": "TEN @ BAL", "away_team": "TEN", "home_team": "BAL",
+      "open_home_spread": -8.5, "sly_home_spread": -11.5,
+      "vi_current_home_spread": -11.5, "action_current_home_spread": -11.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": -3.0,
+      "open_total": 47.5, "vi_current_total": 42.5,
+      "key_number_event": "moved through 10 to BAL -11.5",
+      "market_disagreement": false,
+      "book_sample_note": "VegasInsider listed books were concentrated at BAL -11.5."
+    },
+    {
+      "game_id": "NE @ BUF", "away_team": "NE", "home_team": "BUF",
+      "open_home_spread": -3.0, "sly_home_spread": -7.0,
+      "vi_current_home_spread": -7.0, "action_current_home_spread": -6.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.5,
+      "home_spread_move_open_to_vi_current": -4.0,
+      "open_total": 49.5, "vi_current_total": 48.5,
+      "key_number_event": "moved from BUF -3 to -7; traversed the interval between key 3 and key 7 and landed on 7",
+      "market_disagreement": true,
+      "book_sample_note": "Friday sources disagree between BUF -6.5 and -7; Sly NE +7 may be 0.5 better than some live markets."
+    },
+    {
+      "game_id": "DET @ CAR", "away_team": "DET", "home_team": "CAR",
+      "open_home_spread": 3.0, "sly_home_spread": 3.5,
+      "vi_current_home_spread": 3.5, "action_current_home_spread": 3.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 0.5,
+      "open_total": 47.5, "vi_current_total": 50.5,
+      "key_number_event": "moved off CAR +3 to +3.5",
+      "market_disagreement": false,
+      "book_sample_note": "VegasInsider board showed DET -3.5 broadly, with some books at DET -4."
+    },
+    {
+      "game_id": "NYJ @ CHI", "away_team": "NYJ", "home_team": "CHI",
+      "open_home_spread": -8.5, "sly_home_spread": -3.5,
+      "vi_current_home_spread": -3.5, "action_current_home_spread": -3.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 5.0,
+      "open_total": 45.5, "vi_current_total": 43.5,
+      "key_number_event": "large move toward NYJ; crossed key 7 and approached key 3",
+      "market_disagreement": false,
+      "book_sample_note": "VegasInsider board was centered on CHI -3.5 with at least one listed book at -3."
+    },
+    {
+      "game_id": "JAX @ CIN", "away_team": "JAX", "home_team": "CIN",
+      "open_home_spread": -2.5, "sly_home_spread": -2.5,
+      "vi_current_home_spread": -2.5, "action_current_home_spread": -2.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 0.0,
+      "open_total": 51.5, "vi_current_total": 51.5,
+      "key_number_event": "none",
+      "market_disagreement": false,
+      "book_sample_note": "VegasInsider current book board was broadly CIN -2.5."
+    },
+    {
+      "game_id": "DAL @ HOU", "away_team": "DAL", "home_team": "HOU",
+      "open_home_spread": -2.5, "sly_home_spread": -3.0,
+      "vi_current_home_spread": -3.0, "action_current_home_spread": -3.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": -0.5,
+      "home_spread_move_open_to_vi_current": -0.5,
+      "open_total": 47.5, "vi_current_total": 48.5,
+      "key_number_event": "VegasInsider landed on key HOU -3; Action had moved through 3 to -3.5",
+      "market_disagreement": true,
+      "book_sample_note": "VegasInsider listed books ranged roughly HOU -2.5 to -3 while Action was HOU -3.5."
+    },
+    {
+      "game_id": "DEN @ SF", "away_team": "DEN", "home_team": "SF",
+      "open_home_spread": -2.5, "sly_home_spread": -3.0,
+      "vi_current_home_spread": -3.0, "action_current_home_spread": -2.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.5,
+      "home_spread_move_open_to_vi_current": -0.5,
+      "open_total": 46.5, "vi_current_total": 47.5,
+      "key_number_event": "VegasInsider landed on key SF -3; Action remained SF -2.5",
+      "market_disagreement": true,
+      "book_sample_note": "Source split around SF -2.5/-3 makes Sly DEN +3 potentially valuable but not cross-source unanimous."
+    },
+    {
+      "game_id": "GB @ TB", "away_team": "GB", "home_team": "TB",
+      "open_home_spread": 1.5, "sly_home_spread": 3.5,
+      "vi_current_home_spread": 3.5, "action_current_home_spread": 3.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 2.0,
+      "open_total": 47.5, "vi_current_total": 38.5,
+      "key_number_event": "moved through TB +3 to +3.5",
+      "market_disagreement": false,
+      "opening_audit_note": "VegasInsider matchup table reports GB -1.5 as Open. A separate VegasInsider Week-4 narrative also references a different early/opening sequence around the Baker Mayfield injury; preserve the matchup-table Open as canonical Step-2 opener and flag the discrepancy rather than rewriting it.",
+      "book_sample_note": "Friday market broadly GB -3.5 in preserved sources."
+    },
+    {
+      "game_id": "IND @ WAS", "away_team": "IND", "home_team": "WAS",
+      "open_home_spread": -1.5, "sly_home_spread": 3.5,
+      "vi_current_home_spread": 4.5, "action_current_home_spread": 3.5,
+      "vi_diff_vs_sly": 1.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 6.0,
+      "open_total": 48.5, "vi_current_total": 48.5,
+      "key_number_event": "favorite flipped from WAS -1.5 to IND favored; crossed pick'em and key 3",
+      "market_disagreement": true,
+      "book_sample_note": "VegasInsider consensus was IND -4.5 while Action was IND -3.5; Sly IND -3.5 is either market-equal or 1 point better depending source."
+    },
+    {
+      "game_id": "KC @ LV", "away_team": "KC", "home_team": "LV",
+      "open_home_spread": 5.5, "sly_home_spread": 4.5,
+      "vi_current_home_spread": 4.5, "action_current_home_spread": 4.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": -1.0,
+      "open_total": 43.5, "vi_current_total": 47.5,
+      "key_number_event": "none across 3/7; market shortened KC from -5.5 to -4.5",
+      "market_disagreement": false,
+      "book_sample_note": "No material Friday spread disagreement in preserved sources."
+    },
+    {
+      "game_id": "LAC @ SEA", "away_team": "LAC", "home_team": "SEA",
+      "open_home_spread": -3.0, "sly_home_spread": -7.0,
+      "vi_current_home_spread": -7.0, "action_current_home_spread": -7.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": -0.5,
+      "home_spread_move_open_to_vi_current": -4.0,
+      "open_total": 45.5, "vi_current_total": 42.5,
+      "key_number_event": "moved from key SEA -3 to key -7; Action had moved through 7 to -7.5",
+      "market_disagreement": true,
+      "book_sample_note": "VegasInsider listed books showed SEA -7 and -7.5; Action was SEA -7.5."
+    },
+    {
+      "game_id": "LAR @ PHI", "away_team": "LAR", "home_team": "PHI",
+      "open_home_spread": 1.5, "sly_home_spread": 3.5,
+      "vi_current_home_spread": 3.5, "action_current_home_spread": 3.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": 2.0,
+      "open_total": 47.5, "vi_current_total": 42.5,
+      "key_number_event": "moved through PHI +3 to +3.5",
+      "market_disagreement": false,
+      "market_timing_note": "An earlier VegasInsider matchup crawl displayed LAR -3; the later full matchup table displayed LAR -3.5. Step 2 retains the later Friday consensus and preserves the earlier observation as movement evidence.",
+      "book_sample_note": "Friday pricing was clustered around LAR -3 to -3.5."
+    },
+    {
+      "game_id": "MIA @ MIN", "away_team": "MIA", "home_team": "MIN",
+      "open_home_spread": -7.5, "sly_home_spread": -10.5,
+      "vi_current_home_spread": -10.5, "action_current_home_spread": -10.5,
+      "vi_diff_vs_sly": 0.0, "action_diff_vs_sly": 0.0,
+      "home_spread_move_open_to_vi_current": -3.0,
+      "open_total": 43.5, "vi_current_total": 38.5,
+      "key_number_event": "moved through 10 to MIN -10.5",
+      "market_disagreement": false,
+      "book_sample_note": "No material Friday spread disagreement in preserved sources."
+    }
+  ],
+  "completeness": {
+    "eligible_sly_games": 15,
+    "games_with_open_spread": 15,
+    "games_with_sly_spread": 15,
+    "games_with_vi_current_spread": 15,
+    "games_with_action_current_spread": 15,
+    "games_with_open_total": 15,
+    "games_with_vi_current_total": 15,
+    "games_with_explicit_market_disagreement_flag": 15,
+    "excluded": [
+      {"game_id": "PIT @ CLE", "reason": "No Sly Friday spread; Thursday game excluded from Week 4 Sly evaluation."}
+    ]
+  }
+}
