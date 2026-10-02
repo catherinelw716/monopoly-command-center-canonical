@@ -1,0 +1,29 @@
+name: Week 4 Market History QA
+
+on:
+  push:
+    paths:
+      - 'v2/season_2026/week_04_market_history_2026-10-02_1433ET.json'
+      - 'v2/season_2026/week_04_sly_freeze.json'
+      - 'v2/week4_market_history_qa.py'
+      - '.github/workflows/v2-week4-market-history.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-market-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate JSON
+        run: python -m json.tool v2/season_2026/week_04_market_history_2026-10-02_1433ET.json > /dev/null
+
+      - name: Run Week 4 market-history QA
+        run: python v2/week4_market_history_qa.py
