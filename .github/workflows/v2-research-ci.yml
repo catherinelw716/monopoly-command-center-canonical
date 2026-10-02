@@ -51,6 +51,11 @@ jobs:
           v2/run_week3_sunday_robust.py
           v2/run_week3_stability_redteam.py
           v2/run_week3_second_stage_sizing.py
+          v2/sly_freeze.py
+          v2/week4_sly_freeze_qa.py
+
+      - name: Validate official Week 4 Sly freeze
+        run: python v2/week4_sly_freeze_qa.py
 
       - name: Run deterministic shadow-ledger QA
         run: python v2/shadow_pipeline_qa.py
@@ -129,6 +134,7 @@ jobs:
           python -m json.tool v2/season_2026/week_03_current_market_2026-09-27_1120ET.json > /dev/null
           python -m json.tool v2/season_2026/week_03_context_tiebreak_2026-09-27.json > /dev/null
           python -m json.tool v2/season_2026/week_03_v1_heuristic_portfolio.json > /dev/null
+          python -m json.tool v2/season_2026/week_04_sly_freeze.json > /dev/null
           python -m json.tool v2/shadow_event_schema.json > /dev/null
           python - <<'PY'
           from v2.shadow_model import ShadowModel
