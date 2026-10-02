@@ -1,0 +1,30 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_CALIBRATED_PORTFOLIO_FOR_RECONCILIATION",
+  "status": "PROVISIONAL_NOT_SUBMISSION_READY",
+  "source": "Step 8B 20% calibration working target",
+  "household_outlay": 3800,
+  "entries": {
+    "Catherine": [
+      {"game":"LAC @ SEA","pick":"SEA -7","amount":900,"sly_home_spread":-7.0,"decision_role":"conditional_source_sensitive_edge"},
+      {"game":"DAL @ HOU","pick":"HOU -3","amount":900,"sly_home_spread":-3.0,"decision_role":"conditional_source_sensitive_edge"},
+      {"game":"ATL @ NO","pick":"NO -2.5","amount":100,"sly_home_spread":-2.5,"decision_role":"minimum_wager_filler_no_validated_edge"},
+      {"game":"JAX @ CIN","pick":"CIN -2.5","amount":100,"sly_home_spread":-2.5,"decision_role":"minimum_wager_filler_no_validated_edge"},
+      {"game":"KC @ LV","pick":"LV +4.5","amount":100,"sly_home_spread":4.5,"decision_role":"minimum_wager_filler_no_validated_edge"}
+    ],
+    "Amanda": [
+      {"game":"LAC @ SEA","pick":"SEA -7","amount":700,"sly_home_spread":-7.0,"decision_role":"conditional_source_sensitive_edge"},
+      {"game":"DAL @ HOU","pick":"HOU -3","amount":700,"sly_home_spread":-3.0,"decision_role":"conditional_source_sensitive_edge"},
+      {"game":"ATL @ NO","pick":"NO -2.5","amount":100,"sly_home_spread":-2.5,"decision_role":"minimum_wager_filler_no_validated_edge"},
+      {"game":"JAX @ CIN","pick":"CIN -2.5","amount":100,"sly_home_spread":-2.5,"decision_role":"minimum_wager_filler_no_validated_edge"},
+      {"game":"KC @ LV","pick":"LV +4.5","amount":100,"sly_home_spread":4.5,"decision_role":"minimum_wager_filler_no_validated_edge"}
+    ]
+  },
+  "notes": [
+    "Only HOU -3 and SEA -7 are sized above the minimum because they are the only Friday robust model directions.",
+    "NO -2.5, CIN -2.5 and LV +4.5 are explicitly tagged $100 minimum fillers on MARKET_EQUAL games; they are not validated ATS edges.",
+    "No source-disputed game is included in the Friday calibrated portfolio.",
+    "Sunday PRE_KICK_FINAL may change sides, amounts, overlap, and total deployment before submission."
+  ]
+}
