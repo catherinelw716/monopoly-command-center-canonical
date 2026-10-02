@@ -1,0 +1,50 @@
+name: Week 4 Sizing Calibration
+
+on:
+  push:
+    paths:
+      - 'v2/run_week4_sizing_calibration.py'
+      - 'v2/run_week4_friday_optimizer.py'
+      - 'v2/results/week_04_friday_model_layer.json'
+      - 'v2/season_2026/week_03_field_state.json'
+      - 'v2/season_2026/week_04_sly_freeze.json'
+      - 'v2/monopoly_robust_optimizer.py'
+      - 'v2/monopoly_tournament_optimizer.py'
+      - 'v2/benchmark_strategies.py'
+      - 'v2/monopoly_simulator.py'
+      - '.github/workflows/v2-week4-sizing-calibration.yml'
+  workflow_dispatch:
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy
+      - name: Run sizing calibration
+        run: python v2/run_week4_sizing_calibration.py
+      - name: Validate sizing artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('v2/results/week_04_sizing_calibration.json')
+          d = json.loads(p.read_text())
+          assert d['status'] == 'STEP_8B_COMPLETE_PROVISIONAL_NOT_SUBMISSION'
+          assert d['deployment_bands'] == [0.1,0.15,0.2,0.25,0.3,0.35]
+          assert len(d['base_state_band_comparison']) == 6
+          assert len(d['zero_edge_band_comparison']) == 6
+          outlays = [x['household_outlay'] for x in d['base_state_band_comparison']]
+          assert outlays == sorted(outlays)
+          for row in d['base_state_band_comparison']:
+              for entry, bets in row['bets_by_entry'].items():
+                  assert len(bets) in (4,5)
+                  assert all(int(b['amount']) >= 100 and int(b['amount']) % 100 == 0 for b in bets)
+          print('Week 4 sizing calibration QA passed.')
+          PY
