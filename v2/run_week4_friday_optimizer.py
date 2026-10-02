@@ -1,13 +1,12 @@
 """Week 4 Friday Catherine/Amanda optimizer.
 
-Uses the frozen Week 4 probability layer and Step-7 red-team controls.  It does not
-change NFL probabilities.  Friday output is provisional: source-sensitive edges are
+Uses the frozen Week 4 probability layer and Step-7 red-team controls. It does not
+change NFL probabilities. Friday output is provisional: source-sensitive edges are
 stress-tested to zero and source-disputed games are not promoted into sizing edges.
 """
 from __future__ import annotations
 
 import json
-from dataclasses import asdict
 from pathlib import Path
 
 from benchmark_strategies import portfolio_overlap
@@ -20,10 +19,7 @@ from monopoly_tournament_optimizer import (
     load_field_state,
     serialize_bets,
 )
-from monopoly_robust_optimizer import (
-    _current_week_downside,
-    optimize_robust_household,
-)
+from monopoly_robust_optimizer import _current_week_downside, optimize_robust_household
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = ROOT / "v2/results/week_04_friday_model_layer.json"
@@ -32,8 +28,6 @@ FIELD = ROOT / "v2/season_2026/week_03_field_state.json"
 RULES = ROOT / "v2/monopoly_contract.json"
 OUT = ROOT / "v2/results/week_04_friday_optimizer.json"
 
-# Friday pass/hold games may be used only as $100 contest-minimum fillers.  These
-# scores rank lower-uncertainty fillers; they do not create probability edge.
 CONTEXTUAL_PREFERENCES = {
     "ATL @ NO": {"preferred_side": "home", "context_score": 0.30},
     "JAX @ CIN": {"preferred_side": "home", "context_score": 0.29},
@@ -45,11 +39,9 @@ CONTEXTUAL_PREFERENCES = {
     "NYJ @ CHI": {"preferred_side": "home", "context_score": 0.03},
     "GB @ TB": {"preferred_side": "away", "context_score": 0.02},
     "MIA @ MIN": {"preferred_side": "home", "context_score": 0.01},
-    # Explicit Friday holds: deliberately ranked below market-equal fillers.
     "IND @ WAS": {"preferred_side": "away", "context_score": -0.50},
     "DEN @ SF": {"preferred_side": "away", "context_score": -0.60},
     "NE @ BUF": {"preferred_side": "away", "context_score": -0.70},
-    # Material source-sensitive games; preferred side is ignored above threshold.
     "DAL @ HOU": {"preferred_side": "home", "context_score": 1.00},
     "LAC @ SEA": {"preferred_side": "home", "context_score": 1.00},
 }
@@ -63,7 +55,11 @@ def side_to_home_probs(row: dict, source: str) -> GameProbability:
         ph, pl = float(r["p_cover"]), float(r["p_loss"])
     else:
         ph, pl = float(r["p_loss"]), float(r["p_cover"])
-    return GameProbability(gid, ph, float(r["p_push"]), pl)
+    pp = float(r["p_push"])
+    # Checked-in model rows are rounded to six decimals, so normalize the tiny
+    # serialization drift before sending them into the strict simulator contract.
+    total = ph + pp + pl
+    return GameProbability(gid, ph / total, pp / total, pl / total)
 
 
 def neutralize(gp: GameProbability) -> GameProbability:
@@ -71,20 +67,15 @@ def neutralize(gp: GameProbability) -> GameProbability:
     return GameProbability(gp.game_id, nonpush / 2.0, gp.p_push, nonpush / 2.0)
 
 
-def load_probability_states() -> tuple[dict[str, GameProbability], dict[str, GameProbability], dict[str, GameProbability], dict[str, GameProbability]]:
+def load_probability_states():
     d = json.loads(MODEL.read_text(encoding="utf-8"))
-    vi = {}
-    action = {}
-    base = {}
-    zero = {}
+    vi, action, base, zero = {}, {}, {}, {}
     for row in d["games"]:
         gid = row["game_id"]
         vi_gp = side_to_home_probs(row, "vi")
         action_gp = side_to_home_probs(row, "action")
         vi[gid] = vi_gp
         action[gid] = action_gp
-        # Friday optimizer gives sizing edge only to the two Step-7 conditional
-        # candidates; everything else is neutral unless Sunday resolves it.
         if row["state"] == "SOURCE_SENSITIVE_SAME_DIRECTION":
             base[gid] = action_gp
         else:
@@ -150,33 +141,37 @@ def main() -> None:
     )
     serialized = serialize_bets(best["bets_by_entry"])
 
-    # Explicit Step-4/7 stress states for the selected portfolio.
-    states = {"base_action_edge": base, "zero_edge": zero, "vegasinsider_full": vi, "action_full": action}
+    states = {
+        "base_action_edge": base,
+        "zero_edge": zero,
+        "vegasinsider_full": vi,
+        "action_full": action,
+    }
     stress = {}
     for i, (name, probs) in enumerate(states.items()):
         m = evaluate_portfolio_across_scenarios(
             balances, best["bets_by_entry"], probs, rules, state, scenarios, cfg
         )
         downside = _current_week_downside(
-            balances, best["bets_by_entry"], probs, rules, cfg,
-            seed=cfg.seed + 9100 + i * 100, alpha=0.10,
+            balances,
+            best["bets_by_entry"],
+            probs,
+            rules,
+            cfg,
+            seed=cfg.seed + 9100 + i * 100,
+            alpha=0.10,
         )
-        stress[name] = {
-            **compact_metrics(m),
-            "current_week_cvar": downside,
-        }
+        stress[name] = {**compact_metrics(m), "current_week_cvar": downside}
 
     benchmarks_raw = evaluate_benchmark_set(
-        balances, base, rules, state, scenarios=scenarios,
+        balances,
+        base,
+        rules,
+        state,
+        scenarios=scenarios,
         cfg=OptimizerConfig(simulations=600, seed=716),
     )
-    benchmarks = [
-        {
-            "strategy": r["strategy"],
-            **compact_metrics(r),
-        }
-        for r in benchmarks_raw
-    ]
+    benchmarks = [{"strategy": r["strategy"], **compact_metrics(r)} for r in benchmarks_raw]
 
     result = {
         "season": 2026,
@@ -188,9 +183,13 @@ def main() -> None:
         "probability_policy": {
             "frozen_model": "V2-0006C-global-hybrid-r1",
             "sizing_edges": ["HOU -3", "SEA -7"],
-            "source_sensitive_zero_edge_stress": true,
-            "source_disputed_games_neutralized_for_friday_candidate_generation": ["NE @ BUF", "DEN @ SF", "IND @ WAS"],
-            "source_disputed_full_states_still_evaluated": ["vegasinsider_full", "action_full"],
+            "source_sensitive_zero_edge_stress": True,
+            "source_disputed_games_neutralized_for_friday_candidate_generation": [
+                "NE @ BUF", "DEN @ SF", "IND @ WAS"
+            ],
+            "source_disputed_full_states_still_evaluated": [
+                "vegasinsider_full", "action_full"
+            ],
             "market_equal_fillers": "minimum-wager only unless Sunday creates a validated edge",
         },
         "optimizer_grid": {
