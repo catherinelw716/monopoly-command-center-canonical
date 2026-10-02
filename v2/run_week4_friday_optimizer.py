@@ -46,6 +46,11 @@ CONTEXTUAL_PREFERENCES = {
     "LAC @ SEA": {"preferred_side": "home", "context_score": 1.00},
 }
 
+FRACTIONS = (0.08, 0.10, 0.12, 0.15, 0.18)
+GAME_COUNTS = (4, 5)
+OVERLAP_MODES = ("shared", "hybrid", "split")
+EDGE_SHRINK_FACTORS = (1.00, 0.75, 0.50, 0.25, 0.00)
+
 
 def side_to_home_probs(row: dict, source: str) -> GameProbability:
     gid = row["game_id"]
@@ -114,6 +119,38 @@ def compact_metrics(m: dict) -> dict:
     }
 
 
+def run_optimizer(balances, base, rules, state, scenarios, cfg, overlap_modes):
+    return optimize_robust_household(
+        balances,
+        base,
+        rules,
+        state,
+        scenarios=scenarios,
+        cfg=cfg,
+        fractions=FRACTIONS,
+        game_counts=GAME_COUNTS,
+        overlap_modes=overlap_modes,
+        edge_shrink_factors=EDGE_SHRINK_FACTORS,
+        current_week_cvar_alpha=0.10,
+        contextual_preferences=CONTEXTUAL_PREFERENCES,
+        material_edge_threshold=0.01,
+    )
+
+
+def summarize_best(best: dict) -> dict:
+    serialized = serialize_bets(best["bets_by_entry"])
+    return {
+        "parameters": best["parameters"],
+        "bets_by_entry": label_bets(serialized),
+        "robust_floor_utility": best["robust_floor_utility"],
+        "robust_average_utility": best["robust_average_utility"],
+        "base_metrics": compact_metrics(best["base_metrics"]),
+        "base_current_week_downside": best["base_current_week_downside"],
+        "evaluated_candidates": best["evaluated_candidates"],
+        "overlap": portfolio_overlap(best["bets_by_entry"]),
+    }
+
+
 def main() -> None:
     base, zero, vi, action = load_probability_states()
     state = load_field_state(FIELD)
@@ -122,23 +159,12 @@ def main() -> None:
     scenarios = default_field_scenarios()
     cfg = OptimizerConfig(simulations=600, seed=716)
 
-    fractions = (0.08, 0.10, 0.12, 0.15, 0.18)
-    best = optimize_robust_household(
-        balances,
-        base,
-        rules,
-        state,
-        scenarios=scenarios,
-        cfg=cfg,
-        fractions=fractions,
-        game_counts=(4, 5),
-        overlap_modes=("shared", "hybrid", "split"),
-        edge_shrink_factors=(1.00, 0.75, 0.50, 0.25, 0.00),
-        current_week_cvar_alpha=0.10,
-        contextual_preferences=CONTEXTUAL_PREFERENCES,
-        material_edge_threshold=0.01,
-    )
-    serialized = serialize_bets(best["bets_by_entry"])
+    best = run_optimizer(balances, base, rules, state, scenarios, cfg, OVERLAP_MODES)
+
+    overlap_mode_comparison = {}
+    for mode in OVERLAP_MODES:
+        mode_best = run_optimizer(balances, base, rules, state, scenarios, cfg, (mode,))
+        overlap_mode_comparison[mode] = summarize_best(mode_best)
 
     states = {
         "base_action_edge": base,
@@ -193,21 +219,13 @@ def main() -> None:
         },
         "optimizer_grid": {
             "simulations": cfg.simulations,
-            "fractions": list(fractions),
-            "game_counts": [4, 5],
-            "overlap_modes": ["shared", "hybrid", "split"],
-            "edge_shrink_factors": [1.0, 0.75, 0.5, 0.25, 0.0],
+            "fractions": list(FRACTIONS),
+            "game_counts": list(GAME_COUNTS),
+            "overlap_modes": list(OVERLAP_MODES),
+            "edge_shrink_factors": list(EDGE_SHRINK_FACTORS),
         },
-        "provisional_best": {
-            "parameters": best["parameters"],
-            "bets_by_entry": label_bets(serialized),
-            "robust_floor_utility": best["robust_floor_utility"],
-            "robust_average_utility": best["robust_average_utility"],
-            "base_metrics": compact_metrics(best["base_metrics"]),
-            "base_current_week_downside": best["base_current_week_downside"],
-            "evaluated_candidates": best["evaluated_candidates"],
-            "overlap": portfolio_overlap(best["bets_by_entry"]),
-        },
+        "provisional_best": summarize_best(best),
+        "overlap_mode_comparison": overlap_mode_comparison,
         "explicit_selected_portfolio_stress": stress,
         "benchmark_comparison": benchmarks,
         "guardrails": [
