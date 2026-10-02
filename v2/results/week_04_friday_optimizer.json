@@ -1,0 +1,161 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_PROVISIONAL_HOUSEHOLD_OPTIMIZER",
+  "status": "STEP_8_COMPLETE_PROVISIONAL_NOT_SUBMISSION",
+  "generated_from_commit": "083660e3dde928df0364ee77f81b30b002f5428a",
+  "workflow_run_id": 37065086153,
+  "balances": {
+    "Catherine": 10800,
+    "Amanda": 8700
+  },
+  "household_balance": 19500,
+  "field_state_source": "v2/season_2026/week_03_field_state.json",
+  "model_version": "V2-0006C-global-hybrid-r1",
+  "optimizer_grid": {
+    "simulations": 600,
+    "seed": 716,
+    "fractions": [0.08, 0.10, 0.12, 0.15, 0.18],
+    "game_counts": [4, 5],
+    "overlap_modes": ["shared", "hybrid", "split"],
+    "edge_shrink_factors": [1.0, 0.75, 0.5, 0.25, 0.0],
+    "current_week_cvar_alpha": 0.10,
+    "evaluated_candidates": 300
+  },
+  "probability_policy": {
+    "sizing_edges": ["HOU -3", "SEA -7"],
+    "source_sensitive_zero_edge_stress": true,
+    "source_disputed_games_neutralized_for_friday_candidate_generation": ["NE @ BUF", "DEN @ SF", "IND @ WAS"],
+    "source_disputed_full_states_evaluated": ["vegasinsider_full", "action_full"],
+    "market_equal_fillers": "minimum-wager only unless Sunday creates a validated edge"
+  },
+  "provisional_best": {
+    "parameters": {
+      "c_fraction": 0.08,
+      "a_fraction": 0.08,
+      "c_games": 4,
+      "a_games": 5,
+      "overlap_mode": "shared"
+    },
+    "bets_by_entry": {
+      "Catherine": [
+        {"game_id": "LAC @ SEA", "side": "home", "label": "SEA -7", "amount": 300, "edge_role": "conditional_source_sensitive_edge"},
+        {"game_id": "DAL @ HOU", "side": "home", "label": "HOU -3", "amount": 300, "edge_role": "conditional_source_sensitive_edge"},
+        {"game_id": "ATL @ NO", "side": "home", "label": "NO -2.5", "amount": 100, "edge_role": "minimum_wager_filler_no_validated_edge"},
+        {"game_id": "JAX @ CIN", "side": "home", "label": "CIN -2.5", "amount": 100, "edge_role": "minimum_wager_filler_no_validated_edge"}
+      ],
+      "Amanda": [
+        {"game_id": "LAC @ SEA", "side": "home", "label": "SEA -7", "amount": 200, "edge_role": "conditional_source_sensitive_edge"},
+        {"game_id": "DAL @ HOU", "side": "home", "label": "HOU -3", "amount": 100, "edge_role": "conditional_source_sensitive_edge"},
+        {"game_id": "ATL @ NO", "side": "home", "label": "NO -2.5", "amount": 100, "edge_role": "minimum_wager_filler_no_validated_edge"},
+        {"game_id": "JAX @ CIN", "side": "home", "label": "CIN -2.5", "amount": 100, "edge_role": "minimum_wager_filler_no_validated_edge"},
+        {"game_id": "KC @ LV", "side": "home", "label": "LV +4.5", "amount": 100, "edge_role": "minimum_wager_filler_no_validated_edge"}
+      ]
+    },
+    "outlay_by_entry": {"Catherine": 800, "Amanda": 600},
+    "household_outlay": 1400,
+    "household_deployment_fraction": 0.0717948718,
+    "overlap": {"game_overlap_share": 0.9285714286, "same_side_share": 0.9285714286},
+    "robust_floor_utility": 0.0037984518,
+    "robust_average_utility": 0.0075714262,
+    "base_metrics": {
+      "expected_household_prize_share": 0.01135,
+      "p_any_cash": 0.0688888889,
+      "p_top3": 0.0383333333,
+      "p_first": 0.0111111111,
+      "p_both_cash": 0.0005555556,
+      "future_minimum_failure_risk": 0.2883333333
+    },
+    "base_current_week_downside": {
+      "alpha": 0.10,
+      "entry_cvar_retention": {"Catherine": 0.9384773663, "Amanda": 0.9496580824},
+      "minimum_entry_cvar_retention": 0.9384773663
+    }
+  },
+  "overlap_mode_comparison": {
+    "shared": {
+      "household_outlay": 1400,
+      "overlap_share": 0.9285714286,
+      "robust_floor_utility": 0.0037984518,
+      "robust_average_utility": 0.0075714262,
+      "expected_household_prize_share": 0.01135,
+      "future_minimum_failure_risk": 0.2883333333,
+      "minimum_entry_cvar_retention": 0.9384773663
+    },
+    "hybrid": {
+      "household_outlay": 1400,
+      "overlap_share": 0.3571428571,
+      "robust_floor_utility": 0.0037745893,
+      "robust_average_utility": 0.0074214344,
+      "expected_household_prize_share": 0.0111166667,
+      "future_minimum_failure_risk": 0.2861111111,
+      "minimum_entry_cvar_retention": 0.9367816092,
+      "note": "Nearly ties shared robust floor while materially reducing household overlap; retain as a meaningful alternative for Sunday rerun."
+    },
+    "split": {
+      "household_outlay": 1600,
+      "overlap_share": 0.0,
+      "robust_floor_utility": 0.0029840849,
+      "robust_average_utility": 0.0068911176,
+      "expected_household_prize_share": 0.0105555556,
+      "future_minimum_failure_risk": 0.2861111111,
+      "minimum_entry_cvar_retention": 0.9251132010
+    }
+  },
+  "selected_portfolio_stress": {
+    "base_action_edge": {
+      "expected_household_prize_share": 0.01135,
+      "p_any_cash": 0.0688888889,
+      "p_top3": 0.0383333333,
+      "p_first": 0.0111111111,
+      "future_minimum_failure_risk": 0.2883333333,
+      "minimum_entry_cvar_retention": 0.9378167641
+    },
+    "zero_edge": {
+      "expected_household_prize_share": 0.01130,
+      "p_any_cash": 0.0688888889,
+      "p_top3": 0.0377777778,
+      "p_first": 0.0111111111,
+      "future_minimum_failure_risk": 0.2883333333,
+      "minimum_entry_cvar_retention": 0.9371304077
+    },
+    "vegasinsider_full": {
+      "expected_household_prize_share": 0.01130,
+      "p_any_cash": 0.0688888889,
+      "p_top3": 0.0377777778,
+      "p_first": 0.0111111111,
+      "future_minimum_failure_risk": 0.2877777778,
+      "minimum_entry_cvar_retention": 0.9370791246
+    },
+    "action_full": {
+      "expected_household_prize_share": 0.01135,
+      "p_any_cash": 0.0688888889,
+      "p_top3": 0.0383333333,
+      "p_first": 0.0111111111,
+      "future_minimum_failure_risk": 0.2877777778,
+      "minimum_entry_cvar_retention": 0.9391272461
+    }
+  },
+  "benchmark_summary": [
+    {"strategy": "minimum_4x100", "household_outlay": 800, "expected_household_prize_share": 0.0107944444, "future_minimum_failure_risk": 0.2866666667},
+    {"strategy": "flat_20pct_positive", "household_outlay": 3800, "expected_household_prize_share": 0.0109777778, "future_minimum_failure_risk": 0.2933333333},
+    {"strategy": "equal_top4_30pct", "household_outlay": 5800, "expected_household_prize_share": 0.0119277778, "future_minimum_failure_risk": 0.3011111111},
+    {"strategy": "diversified_pair_30pct", "household_outlay": 5800, "expected_household_prize_share": 0.0108555556, "future_minimum_failure_risk": 0.2994444444},
+    {"strategy": "flat_40pct_positive", "household_outlay": 7700, "expected_household_prize_share": 0.0119111111, "future_minimum_failure_risk": 0.3088888889}
+  ],
+  "interpretation": [
+    "The optimizer selects the lowest tested 8% per-entry deployment band; Friday evidence does not support aggressive sizing.",
+    "The zero-edge stress produces only a very small change in simulated prize metrics, reinforcing that HOU/SEA Friday edge evidence is weak and source-sensitive rather than a basis for concentration.",
+    "Shared overlap wins the current robust objective, but hybrid is very close in robust-floor utility while reducing overlap from about 92.9% to 35.7%; Sunday inputs could easily change that ordering.",
+    "Higher-deployment simple benchmarks can show higher raw expected prize share in 600 simulations, but they also use much more bankroll and carry greater future-minimum failure risk. Raw expected prize share alone is not the selection objective.",
+    "Simulation estimates are diagnostic at 600 trials and should not be treated as precise probabilities."
+  ],
+  "guardrails": [
+    "Friday provisional only; not submission-ready.",
+    "No stake escalation from Week 3's 11-3 model result.",
+    "HOU and SEA are conditional source-sensitive edges and must be refreshed Sunday.",
+    "NE-BUF, DEN-SF and IND-WAS remain Friday holds and are not sizing edges.",
+    "NO, CIN and LV positions are minimum-wager fillers, not validated ATS edges.",
+    "Step 9 pre-submit reconciliation remains mandatory before any portfolio can be treated as submission-ready."
+  ]
+}
