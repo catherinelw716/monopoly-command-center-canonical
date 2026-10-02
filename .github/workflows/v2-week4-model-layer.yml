@@ -1,0 +1,25 @@
+name: Week 4 Model Layer QA
+
+on:
+  push:
+    paths:
+      - 'v2/run_week4_friday_model_layer.py'
+      - 'v2/week4_friday_model_layer_qa.py'
+      - 'v2/results/week_04_friday_model_layer.json'
+      - 'v2/season_2026/week_04_market_history_2026-10-02_1433ET.json'
+      - 'v2/model_artifacts/v2_global_hybrid_2016_2025.json'
+      - '.github/workflows/v2-week4-model-layer.yml'
+  workflow_dispatch:
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy
+      - name: Reproduce and validate Week 4 Friday model layer
+        run: python v2/week4_friday_model_layer_qa.py
