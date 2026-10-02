@@ -1,0 +1,34 @@
+{
+  "season": 2026,
+  "week": 4,
+  "freeze_type": "SLY_FRIDAY_FREEZE_INPUT",
+  "freeze_date_local": "2026-10-02",
+  "exact_freeze_timestamp": null,
+  "provenance": "User-provided official Sly Week 4 spread sheet image supplied in ChatGPT on 2026-10-02. The sheet was received by the user Friday morning; no exact Sly issuance timestamp was shown in the image.",
+  "source_image": "IMG_0896.jpeg",
+  "use_policy": "This file is the canonical immutable Sly target-line source for Week 4 Friday/Sunday/Monday games. Downstream model, optimizer, reconciliation, Games, Analysis, and Portfolio layers must read from this freeze rather than carrying independent copies. Do not infer a Sly spread for a game where the sheet is blank.",
+  "spread_convention": "home-team conventional sportsbook spread: negative=favorite, positive=underdog",
+  "excluded_or_missing": [
+    {
+      "game": "PIT @ CLE",
+      "reason": "Thursday game row was present in the supplied Friday sheet but Official Spread was blank; no Sly line is inferred."
+    }
+  ],
+  "games": [
+    {"game":"ARI @ NYG","away":"ARI","home":"NYG","sly_pick_display":"ARI -2.5","sly_home_spread":2.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"ATL @ NO","away":"ATL","home":"NO","sly_pick_display":"ATL +2.5","sly_home_spread":-2.5,"game_time_et":"MON 8:15PM"},
+    {"game":"TEN @ BAL","away":"TEN","home":"BAL","sly_pick_display":"BAL -11.5","sly_home_spread":-11.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"NE @ BUF","away":"NE","home":"BUF","sly_pick_display":"BUF -7","sly_home_spread":-7.0,"game_time_et":"SUN 1:00PM"},
+    {"game":"DET @ CAR","away":"DET","home":"CAR","sly_pick_display":"DET -3.5","sly_home_spread":3.5,"game_time_et":"SUN 8:20PM"},
+    {"game":"NYJ @ CHI","away":"NYJ","home":"CHI","sly_pick_display":"CHI -3.5","sly_home_spread":-3.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"JAX @ CIN","away":"JAX","home":"CIN","sly_pick_display":"CIN -2.5","sly_home_spread":-2.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"DAL @ HOU","away":"DAL","home":"HOU","sly_pick_display":"DAL +3","sly_home_spread":-3.0,"game_time_et":"SUN 1:00PM"},
+    {"game":"DEN @ SF","away":"DEN","home":"SF","sly_pick_display":"DEN +3","sly_home_spread":-3.0,"game_time_et":"SUN 4:25PM"},
+    {"game":"GB @ TB","away":"GB","home":"TB","sly_pick_display":"GB -3.5","sly_home_spread":3.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"IND @ WAS","away":"IND","home":"WAS","sly_pick_display":"IND -3.5","sly_home_spread":3.5,"game_time_et":"SUN 9:30AM"},
+    {"game":"KC @ LV","away":"KC","home":"LV","sly_pick_display":"KC -4.5","sly_home_spread":4.5,"game_time_et":"SUN 4:25PM"},
+    {"game":"LAC @ SEA","away":"LAC","home":"SEA","sly_pick_display":"LAC +7","sly_home_spread":-7.0,"game_time_et":"SUN 4:25PM"},
+    {"game":"LAR @ PHI","away":"LAR","home":"PHI","sly_pick_display":"LAR -3.5","sly_home_spread":3.5,"game_time_et":"SUN 1:00PM"},
+    {"game":"MIA @ MIN","away":"MIA","home":"MIN","sly_pick_display":"MIA +10.5","sly_home_spread":-10.5,"game_time_et":"SUN 4:05PM"}
+  ]
+}
