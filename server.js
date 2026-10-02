@@ -20,14 +20,14 @@ let diagnosticsLogged = false;
 function logBaseDiagnostics(base) {
   if (diagnosticsLogged) return;
   diagnosticsLogged = true;
-  const needles = ['const games', 'let games', 'var games', 'window.games', 'function renderBoards', 'const sourceData', 'let sourceData', 'window.sourceData', 'id="games"', 'id="portfolio"', 'id="analysis"'];
+  const needles = ['const games', 'function gameRowHTML', 'function playCardHTML', 'function renderBoards', 'function renderGame', 'function pane', 'gamePanes', 'const sourceData', 'function renderSourceComparison', 'sourceCompareBody', 'id="games"', 'id="portfolio"', 'id="lab"'];
   for (const needle of needles) {
     const i = base.indexOf(needle);
     if (i >= 0) {
-      const snippet = base.slice(Math.max(0, i - 180), Math.min(base.length, i + 1200)).replace(/\s+/g, ' ');
-      console.log(`[BASE_DIAG:${needle}] ${snippet}`);
+      const snippet = base.slice(Math.max(0, i - 250), Math.min(base.length, i + 3500)).replace(/\s+/g, ' ');
+      console.log(`[BASE_DIAG2:${needle}] ${snippet}`);
     } else {
-      console.log(`[BASE_DIAG:${needle}] NOT_FOUND`);
+      console.log(`[BASE_DIAG2:${needle}] NOT_FOUND`);
     }
   }
 }
@@ -50,7 +50,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const html = await loadApp();
       res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
-      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week4-existing-ux-data-refresh-diag'}));
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week4-existing-ux-data-refresh-diag2'}));
     } catch (err) {
       loadError = String(err && err.message ? err.message : err);
       res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
@@ -59,10 +59,7 @@ const server = http.createServer(async (req, res) => {
   }
   try {
     const html = await loadApp();
-    res.writeHead(200, {
-      'content-type':'text/html; charset=utf-8',
-      'cache-control':'no-store, max-age=0'
-    });
+    res.writeHead(200, {'content-type':'text/html; charset=utf-8','cache-control':'no-store, max-age=0'});
     res.end(html);
   } catch (err) {
     loadError = String(err && err.message ? err.message : err);
