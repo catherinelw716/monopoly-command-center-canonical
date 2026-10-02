@@ -9,6 +9,8 @@ def base_freeze():
         "games": [
             {"game": "AAA @ BBB", "sly_pick_display": "BBB -3", "sly_home_spread": -3.0},
             {"game": "CCC @ DDD", "sly_pick_display": "CCC +2.5", "sly_home_spread": -2.5},
+            {"game": "EEE @ FFF", "sly_pick_display": "FFF -1.5", "sly_home_spread": -1.5},
+            {"game": "GGG @ HHH", "sly_pick_display": "HHH -4", "sly_home_spread": -4.0},
         ],
     }
 
@@ -18,6 +20,8 @@ def base_model():
         "recommendations": [
             {"game": "AAA @ BBB", "pick": "BBB -3", "rank": 1, "grade": "A"},
             {"game": "CCC @ DDD", "pick": "DDD -2.5", "rank": 2, "grade": "B+"},
+            {"game": "EEE @ FFF", "robust_side": None, "state": "MARKET_EQUAL"},
+            {"game": "GGG @ HHH", "robust_side": None, "state": "SOURCE_DISPUTED_DIRECTION"},
         ]
     }
 
@@ -51,9 +55,48 @@ def test_line_mismatch_blocks():
 
 
 def test_unknown_game_blocks():
-    p = {"entries": {"Catherine": [{"game": "EEE @ FFF", "pick": "EEE +3", "amount": 100}]}}
+    p = {"entries": {"Catherine": [{"game": "ZZZ @ YYY", "pick": "ZZZ +3", "amount": 100}]}}
     r = reconcile(base_freeze(), base_model(), p)
     assert r["status"] == "BLOCK"
+
+
+def test_market_equal_minimum_filler_passes():
+    p = {"entries": {"Catherine": [{
+        "game": "EEE @ FFF",
+        "pick": "FFF -1.5",
+        "amount": 100,
+        "sly_home_spread": -1.5,
+        "decision_role": "minimum_wager_filler_no_validated_edge",
+    }]}}
+    r = reconcile(base_freeze(), base_model(), p)
+    assert r["status"] == "PASS"
+    assert r["summary"]["neutral_minimum_fillers"] == 1
+    assert r["rows"][0]["status"] == "NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER"
+
+
+def test_market_equal_sized_filler_blocks():
+    p = {"entries": {"Catherine": [{
+        "game": "EEE @ FFF",
+        "pick": "FFF -1.5",
+        "amount": 200,
+        "sly_home_spread": -1.5,
+        "decision_role": "minimum_wager_filler_no_validated_edge",
+    }]}}
+    r = reconcile(base_freeze(), base_model(), p)
+    assert r["status"] == "BLOCK"
+
+
+def test_source_disputed_without_override_blocks():
+    p = {"entries": {"Amanda": [{
+        "game": "GGG @ HHH",
+        "pick": "HHH -4",
+        "amount": 100,
+        "sly_home_spread": -4.0,
+        "decision_role": "minimum_wager_filler_no_validated_edge",
+    }]}}
+    r = reconcile(base_freeze(), base_model(), p)
+    assert r["status"] == "BLOCK"
+    assert r["summary"]["overrides"] == 1
 
 
 if __name__ == "__main__":
