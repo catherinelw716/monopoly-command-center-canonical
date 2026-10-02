@@ -1,0 +1,43 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_CALIBRATED_PORTFOLIO_RECONCILIATION",
+  "status": "PASS",
+  "workflow_run_id": 37067494463,
+  "portfolio_source": "v2/results/week_04_friday_calibrated_portfolio.json",
+  "model_source": "v2/results/week_04_friday_model_layer.json",
+  "sly_freeze_source": "v2/season_2026/week_04_sly_freeze.json",
+  "summary": {
+    "wagers": 10,
+    "aligned": 4,
+    "neutral_minimum_fillers": 6,
+    "overrides": 0,
+    "line_mismatches": 0,
+    "hard_errors": 0,
+    "household_outlay": 3800
+  },
+  "entries": {
+    "Catherine": [
+      {"game":"LAC @ SEA","proposed_pick":"SEA -7","amount":900,"model_pick":"SEA","model_state":"SOURCE_SENSITIVE_SAME_DIRECTION","status":"ALIGNED","line_status":"CANONICAL","canonical_sly_home_spread":-7.0},
+      {"game":"DAL @ HOU","proposed_pick":"HOU -3","amount":900,"model_pick":"HOU","model_state":"SOURCE_SENSITIVE_SAME_DIRECTION","status":"ALIGNED","line_status":"CANONICAL","canonical_sly_home_spread":-3.0},
+      {"game":"ATL @ NO","proposed_pick":"NO -2.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":-2.5},
+      {"game":"JAX @ CIN","proposed_pick":"CIN -2.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":-2.5},
+      {"game":"KC @ LV","proposed_pick":"LV +4.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":4.5}
+    ],
+    "Amanda": [
+      {"game":"LAC @ SEA","proposed_pick":"SEA -7","amount":700,"model_pick":"SEA","model_state":"SOURCE_SENSITIVE_SAME_DIRECTION","status":"ALIGNED","line_status":"CANONICAL","canonical_sly_home_spread":-7.0},
+      {"game":"DAL @ HOU","proposed_pick":"HOU -3","amount":700,"model_pick":"HOU","model_state":"SOURCE_SENSITIVE_SAME_DIRECTION","status":"ALIGNED","line_status":"CANONICAL","canonical_sly_home_spread":-3.0},
+      {"game":"ATL @ NO","proposed_pick":"NO -2.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":-2.5},
+      {"game":"JAX @ CIN","proposed_pick":"CIN -2.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":-2.5},
+      {"game":"KC @ LV","proposed_pick":"LV +4.5","amount":100,"model_pick":null,"model_state":"MARKET_EQUAL","status":"NO_ROBUST_MODEL_SIDE_MINIMUM_FILLER","line_status":"CANONICAL","canonical_sly_home_spread":4.5}
+    ]
+  },
+  "guardrails": [
+    "All ten wagers carry explicit Sly home spreads and match the canonical Week 4 freeze.",
+    "HOU and SEA align with the only Friday robust model directions.",
+    "NO, CIN and LV are allowed only as explicitly tagged $100 MARKET_EQUAL fillers and are not model endorsements.",
+    "No source-disputed game is present in the Friday calibrated portfolio.",
+    "No override is active. Any Sunday side change against a robust model direction requires a reason and timestamp.",
+    "This PASS validates internal consistency only; the portfolio remains Friday provisional until Sunday PRE_KICK_FINAL."
+  ]
+}
