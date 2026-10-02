@@ -1,0 +1,105 @@
+<style id="week4-native-integration-style">
+.week4-status-banner,.week4-history-panel,.week4-source-panel,.week4-context-panel{margin:10px 0;padding:12px;border:1px solid rgba(148,163,184,.18);border-radius:14px;background:rgba(15,23,42,.32)}
+.week4-status-banner{border-color:rgba(34,197,94,.28);background:rgba(34,197,94,.07)}
+.week4-status-banner b{color:#dcfce7}.week4-small{font-size:10px;color:#9db3aa;line-height:1.5}.week4-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:9px}.week4-stat{padding:9px;border:1px solid rgba(148,163,184,.13);border-radius:10px;background:rgba(2,6,23,.22)}.week4-stat small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase;letter-spacing:.06em}.week4-stat b{display:block;font-size:14px;margin-top:3px}.week4-source-status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:9px}.week4-source-status>div{padding:9px;border:1px solid rgba(148,163,184,.13);border-radius:10px;background:rgba(2,6,23,.22)}.week4-source-status small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase}.week4-source-status b{font-size:11px}.week4-history-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:9px}.week4-history-grid>div{padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,.13);background:rgba(2,6,23,.22)}.week4-history-grid small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase}.week4-history-grid b{display:block;font-size:16px;margin-top:2px}.week4-source-table-note{display:block;font-size:9px;color:#94a3b8;margin-top:3px;line-height:1.35}
+@media(max-width:760px){.week4-stats,.week4-source-status{grid-template-columns:repeat(2,minmax(0,1fr))}.week4-history-grid{grid-template-columns:1fr}}
+</style>
+<script id="week4-native-integration-layer">
+(function(){
+ const SNAP='Week 4 Friday · Oct 2, 2026 · source snapshots through 3:51 PM ET';
+ const CTX={
+  'ARI @ NYG':{weather:'~66F; shower risk increases after 2 PM',market:'Sly ARI -2.5 · VI ARI -2.5 · Action ARI -2.5',trigger:'Revisit only on material multi-book divergence or new QB/personnel news.'},
+  'ATL @ NO':{weather:'Indoor',market:'Sly/VI/Action NO -2.5',trigger:'Meaningful injury-driven line divergence.'},
+  'TEN @ BAL':{weather:'Showers likely; roughly 70% rain risk',market:'Sly/VI/Action BAL -11.5',trigger:'Weather escalation or line movement away from -11.5.'},
+  'NE @ BUF':{weather:'Mostly sunny; light wind',market:'Sly BUF -7 · VI BUF -7 · Action BUF -6.5',trigger:'Broad market share at 6.5 vs 7 plus final New England defensive/OL statuses.'},
+  'DET @ CAR':{weather:'~69F; high rain risk',market:'Sly/VI/Action DET -3.5',trigger:'Final weather severity and any spread move off 3.5.'},
+  'NYJ @ CHI':{weather:'Sunny ~70F; modest wind',market:'Sly/VI/Action CHI -3.5',trigger:'Confirmed Chicago starting QB and final OL/skill statuses.'},
+  'JAX @ CIN':{weather:'Mostly sunny ~74F',market:'Sly/VI/Action CIN -2.5',trigger:'Material injury or market move.'},
+  'DAL @ HOU':{weather:'Retractable roof; roof status to confirm',market:'Sly HOU -3 · VI HOU -3 · Action HOU -3.5',trigger:'Upgrade price confidence if the broader market consolidates HOU -3.5 or worse; downgrade if it centers -3.'},
+  'DEN @ SF':{weather:'Hot; upper 80s; heat advisory',market:'Sly/VI SF -3 · Action SF -2.5',trigger:'Multi-book share at SF -2.5 vs -3 plus final San Francisco inactive list.'},
+  'GB @ TB':{weather:'Near 90F; storm risk',market:'Sly/VI/Action GB -3.5',trigger:'QB/status reversal or renewed market divergence from GB -3.5.'},
+  'IND @ WAS':{weather:'London ~72F; dry',market:'Sly IND -3.5 · VI IND -4.5 · Action IND -3.5',trigger:'Upgrade only if the broad market is IND -4/-4.5+ while Sly stays -3.5.'},
+  'KC @ LV':{weather:'Indoor',market:'Sly/VI/Action KC -4.5',trigger:'Material line or QB/OL status movement.'},
+  'LAC @ SEA':{weather:'Mostly sunny ~68–70F',market:'Sly SEA -7 · VI SEA -7 · Action SEA -7.5',trigger:'Upgrade price confidence if the broader market consolidates SEA -7.5 or worse; downgrade if it centers -7.'},
+  'LAR @ PHI':{weather:'Cool/cloudy; precipitation timing needs Sunday refresh',market:'Sly/VI/Action LAR -3.5',trigger:'Final injury designations, wind/precipitation, and market -3 vs -3.5.'},
+  'MIA @ MIN':{weather:'Indoor',market:'Sly/VI/Action MIN -10.5',trigger:'Material move away from MIN -10.5 or new skill-position news.'}
+ };
+ const SOURCE={
+  'DAL @ HOU':['HOU -3','PLAY'], 'LAC @ SEA':['SEA -7','PLAY'], 'IND @ WAS':['NO ROBUST TAKE','WATCH'], 'DEN @ SF':['NO ROBUST TAKE','WATCH'], 'NE @ BUF':['NO ROBUST TAKE','WATCH'],
+  'ARI @ NYG':['NO ROBUST TAKE','PASS'], 'ATL @ NO':['NO ROBUST TAKE','WATCH'], 'TEN @ BAL':['NO ROBUST TAKE','PASS'], 'DET @ CAR':['NO ROBUST TAKE','PASS'], 'NYJ @ CHI':['NO ROBUST TAKE','PASS'],
+  'JAX @ CIN':['NO ROBUST TAKE','WATCH'], 'GB @ TB':['NO ROBUST TAKE','PASS'], 'KC @ LV':['NO ROBUST TAKE','WATCH'], 'LAR @ PHI':['NO ROBUST TAKE','PASS'], 'MIA @ MIN':['NO ROBUST TAKE','PASS']
+ };
+ function activate(view){
+   try{if(typeof window.switchView==='function'){window.switchView(view);return;}}catch(e){}
+   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===view));
+   document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+   window.scrollTo(0,0);
+ }
+ function ensureAnalysisNav(){
+   const primary=document.querySelector('.primary-nav');
+   if(primary&&!primary.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.className='nav-btn';b.dataset.view='analysis';b.textContent='Analysis';const games=primary.querySelector('[data-view="games"]');primary.insertBefore(b,games||null);b.onclick=()=>activate('analysis');}
+   const mobile=document.querySelector('.mobile-nav');
+   if(mobile&&!mobile.querySelector('[data-view="analysis"]')){const b=document.createElement('button');b.dataset.view='analysis';b.textContent='Analysis';const games=mobile.querySelector('[data-view="games"]');mobile.insertBefore(b,games||null);mobile.style.gridTemplateColumns='repeat(5,1fr)';b.onclick=()=>activate('analysis');}
+ }
+ function ensureAnalysis(){
+   if(document.getElementById('analysis'))return;
+   const s=document.createElement('section');s.id='analysis';s.className='view';
+   s.innerHTML=`<div class="section-head"><div><div class="eyebrow">Week 4 decision synthesis</div><h2>Analysis</h2><p>Friday market/model state, adversarial review, and Week 3 process lessons.</p></div></div>
+   <div class="panel"><div class="eyebrow">${SNAP}</div><h2>Current board</h2><p><b>Conditional sizing candidates:</b> HOU -3 and SEA -7. <b>Highest-priority watch:</b> IND -3.5. <b>Source-disputed holds:</b> NE/BUF and DEN/SF. Remaining games are passes or minimum fillers.</p></div>
+   <div class="grid3" style="margin-top:12px"><div class="panel"><h3>HOU -3</h3><p>Frozen V2 and Dallas personnel context align, but the edge is source-sensitive: VI is HOU -3 while Action was -3.5.</p></div><div class="panel"><h3>SEA -7</h3><p>Chargers injury context and Seattle health trend align, but the price edge is source-sensitive: VI -7 vs Action -7.5.</p></div><div class="panel"><h3>IND -3.5 watch</h3><p>Washington QB/OL news favors Indianapolis contextually. VI was IND -4.5 while Action remained -3.5, so Sunday broad-market confirmation matters.</p></div></div>
+   <div class="panel" style="margin-top:12px"><div class="eyebrow">Week 3 postmortem</div><h3>Use the result as process evidence, not a reason to chase.</h3><p>Final pre-lock V2 finished <b>11–3 ATS</b> on 14 decision-eligible games. Actual model-aligned entry wagers were <b>4–1 / +$1,500</b>; model-opposed entry wagers were <b>0–8 / −$3,700</b>. Week 4 therefore keeps the frozen model unchanged and makes final-model reconciliation mandatory before submission.</p></div>
+   <div class="panel" style="margin-top:12px"><div class="eyebrow">Source honesty</div><h3>No manufactured four-source consensus</h3><p>SportsLine's complete Week 4 ATS slate is not publicly verified, no authoritative Week 4 Gridiron pick table was verified, and Lucas Week 4 was not supplied. Missing evidence remains missing rather than becoming a vote.</p></div>`;
+   const lab=document.getElementById('lab');lab?.parentNode?.insertBefore(s,lab);
+ }
+ function updateToday(){
+   const t=document.getElementById('today');if(!t)return;
+   let banner=document.getElementById('week4NativeStatus');if(!banner){banner=document.createElement('div');banner.id='week4NativeStatus';banner.className='week4-status-banner';const first=t.querySelector('.panel');(first||t).prepend(banner);}
+   banner.innerHTML=`<b>${SNAP}</b><div class="week4-small">Native Command Center components are now using the Week 4 slate. Sunday PRE_KICK_FINAL remains required before submission.</div>`;
+   const fresh=t.querySelector('.news-freshness');if(fresh)fresh.innerHTML='Week 4 Friday snapshot · Oct 2<br><b>Sunday inactives / late market movement remain</b>';
+   const ks=[...t.querySelectorAll('.kpis .kpi')];const vals=[['Catherine','$10,800','#28 · Week 4 provisional outlay $2,100'],['Amanda','$8,700','#65 · Week 4 provisional outlay $1,700'],['Household','$19,500','Week 4 provisional outlay $3,800'],['Friday board','HOU / SEA','Only conditional sizing edges · IND watch']];
+   ks.slice(0,4).forEach((k,i)=>{if(!vals[i])return;const a=k.querySelector('small'),b=k.querySelector('b'),c=k.querySelector('span');if(a)a.textContent=vals[i][0];if(b)b.textContent=vals[i][1];if(c)c.textContent=vals[i][2];});
+   const alerts=t.querySelector('.alerts');if(alerts)alerts.innerHTML=`<div class="alert green"><span class="dot"></span><div><b>HOU -3 and SEA -7 are the only Friday wagers sized above minimum.</b><br>Both remain source-sensitive rather than broad-market confirmed.</div></div><div class="alert yellow"><span class="dot"></span><div><b>IND -3.5 is the highest-priority Sunday watch.</b><br>Jayden Daniels is out; VI was IND -4.5 while Action was -3.5.</div></div><div class="alert yellow"><span class="dot"></span><div><b>External ATS evidence is incomplete.</b><br>No legitimate 2/4, 3/4 or 4/4 Week 4 consensus is claimed.</div></div>`;
+   let hist=document.getElementById('week3FinalHistory');if(!hist){hist=document.createElement('div');hist.id='week3FinalHistory';hist.className='week4-history-panel';const anchor=document.getElementById('todayGameList')||alerts;anchor?.insertAdjacentElement('beforebegin',hist);}
+   hist.innerHTML=`<div class="eyebrow">Week 3 final results</div><h3>Settled household state entering Week 4</h3><div class="week4-history-grid"><div><small>Catherine</small><b>$10,800 · #28</b><span class="week4-small">2–4 ATS · −$600 Week 3</span></div><div><small>Amanda</small><b>$8,700 · #65</b><span class="week4-small">2–5 ATS · −$1,600 Week 3</span></div><div><small>Household</small><b>$19,500</b><span class="week4-small">Week 3 net −$2,200 · 4–9 entry-bet record</span></div></div>`;
+   const intel=document.getElementById('todayNewsIntel');if(intel)intel.innerHTML=`<div class="week4-source-panel"><div class="eyebrow">Week 4 source status</div><div class="week4-source-status"><div><small>Our Model</small><b>15/15 modeled</b></div><div><small>SportsLine</small><b>Full ATS unverified</b></div><div><small>Gridiron</small><b>Week 4 unverified</b></div><div><small>Lucas</small><b>Not supplied</b></div></div></div>`;
+ }
+ function updateGames(){
+   const g=document.getElementById('games');if(!g)return;
+   const p=g.querySelector('.section-head p');if(p)p.textContent='Week 4 Sly, opener, current market, model state, allocation, and source evidence in the existing decision board.';
+   g.querySelectorAll('[data-source-view="compare"]').forEach(b=>b.textContent='All 4 Sources');
+   const note=g.querySelector('.source-note');if(note)note.innerHTML='<b>Week 4 source rule:</b> only verified ATS sides at a known reference line count as votes. SportsLine full ATS, Gridiron Week 4, and Lucas Week 4 are currently unverified/unavailable.';
+   const tbody=document.getElementById('sourceCompareBody');const table=tbody?.closest('table');if(tbody&&table){const hr=table.querySelector('thead tr');if(hr){hr.innerHTML='<th>Game</th><th>Our Model</th><th>SportsLine</th><th>Gridiron AI</th><th>Lucas</th><th>Cross-source read</th>';}
+     tbody.innerHTML=[...document.querySelectorAll('#gamesList .game-row')].map(r=>{const game=r.dataset.game,x=SOURCE[game]||['NO ROBUST TAKE','PASS'];return `<tr><td><b>${game}</b><span class="week4-source-table-note">${CTX[game]?.market||''}</span></td><td><b>${x[0]}</b><span class="week4-source-table-note">${x[1]}</span></td><td><b>UNVERIFIED</b><span class="week4-source-table-note">Full public ATS slate not verified</span></td><td><b>UNVERIFIED</b><span class="week4-source-table-note">No authoritative Week 4 table verified</span></td><td><b>UNVERIFIED</b><span class="week4-source-table-note">No Week 4 pickset supplied</span></td><td><b>Incomplete evidence</b><span class="week4-source-table-note">No legitimate multi-source ATS consensus</span></td></tr>`;}).join('');
+   }
+   const top=document.getElementById('sourceTopGrid');if(top)top.innerHTML=`<div class="source-top-card"><div class="src-label">Our Model · Week 4</div><h3>HOU -3 · SEA -7</h3><span class="src-sub">Only robust directions; both source-sensitive</span></div><div class="source-top-card"><div class="src-label">SportsLine</div><h3>Full ATS slate unverified</h3><span class="src-sub">Do not infer paywalled picks</span></div><div class="source-top-card"><div class="src-label">Gridiron AI</div><h3>Week 4 unverified</h3><span class="src-sub">No authoritative public table captured</span></div><div class="source-top-card"><div class="src-label">Lucas</div><h3>Week 4 unavailable</h3><span class="src-sub">No supplied/verified pickset</span></div>`;
+ }
+ function updatePortfolio(){
+   const p=document.getElementById('portfolio');if(!p)return;
+   const sub=p.querySelector('.section-head p');if(sub)sub.textContent='Week 4 Friday sizing · two entries, one coordinated risk picture. Sunday PRE_KICK_FINAL can still change sides or amounts.';
+   const direct=[...p.children].filter(x=>x.classList?.contains('panel'))[0]||p.querySelector('.panel');if(direct){const eye=direct.querySelector('.eyebrow'),b=direct.querySelector('b'),q=direct.querySelector('p');if(eye)eye.textContent='Week 4 reconciled provisional sizing';if(b)b.textContent='$3,800 household · 19.5% of bankroll';if(q)q.textContent='Catherine $2,100 · Amanda $1,700. Only HOU -3 and SEA -7 are sized above the minimum.';}
+   const cards=[...p.querySelectorAll('.portfolio-grid .entry-card')];const specs=[['Catherine','$2,100 · 5 games',[['SEA -7','$900'],['HOU -3','$900'],['NO -2.5','$100 · filler'],['CIN -2.5','$100 · filler'],['LV +4.5','$100 · filler']]],['Amanda','$1,700 · 5 games',[['SEA -7','$700'],['HOU -3','$700'],['NO -2.5','$100 · filler'],['CIN -2.5','$100 · filler'],['LV +4.5','$100 · filler']]]];
+   cards.slice(0,2).forEach((c,i)=>{const s=specs[i];if(!s)return;const e=c.querySelector('.eyebrow'),h=c.querySelector('h3'),w=c.querySelector('.wager-list');if(e)e.textContent=s[0]+(i===0?' · #28 · $10,800':' · #65 · $8,700');if(h)h.textContent=s[1];if(w)w.innerHTML=s[2].map(x=>`<div class="wager"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');});
+   const k=[...p.querySelectorAll(':scope > .kpis .kpi')];const vals=[['Combined bankroll','$19,500','After Week 3'],['Provisional outlay','19.5%','$3,800 household'],['Games represented','5','per entry'],['Sized edges','2','HOU + SEA; fillers remain $100']];k.slice(0,4).forEach((x,i)=>{if(!vals[i])return;const a=x.querySelector('small'),b=x.querySelector('b'),c=x.querySelector('span');if(a)a.textContent=vals[i][0];if(b)b.textContent=vals[i][1];if(c)c.textContent=vals[i][2];});
+   const panels=[...p.querySelectorAll(':scope > .panel')];const last=panels[panels.length-1];if(last&&last!==direct){const eye=last.querySelector('.eyebrow'),a=last.querySelector('.alerts');if(eye)eye.textContent='What matters before Sunday lock';if(a)a.innerHTML=`<div class="alert green"><span class="dot"></span><div><b>HOU -3 and SEA -7 survived Friday red-team review.</b><br>They are still conditional because their advantage is source-sensitive.</div></div><div class="alert yellow"><span class="dot"></span><div><b>IND -3.5 remains a watch, not a Friday wager.</b><br>Require broad-market confirmation.</div></div><div class="alert"><span class="dot"></span><div><b>NO, CIN and LV are $100 fillers.</b><br>They are not being represented as validated ATS edges.</div></div>`;}
+ }
+ function updateLab(){
+   const l=document.getElementById('lab');if(!l)return;
+   let cur=document.getElementById('week4LabCurrent');if(!cur){cur=document.createElement('div');cur.id='week4LabCurrent';cur.className='week4-source-panel';const head=l.querySelector('.section-head');head?.insertAdjacentElement('afterend',cur);}
+   cur.innerHTML=`<div class="eyebrow">Week 4 current-state audit</div><h3>Current data provenance</h3><div class="week4-source-status"><div><small>Sly + market</small><b>15/15 eligible games</b></div><div><small>News / QB / injury</small><b>15/15 Friday context</b></div><div><small>Weather</small><b>15/15 Friday context</b></div><div><small>External ATS</small><b>Incomplete / unverified</b></div></div><p class="week4-small">Frozen V2 is unchanged. HOU/SEA are source-sensitive; NE/BUF, DEN/SF and IND/WAS remain source-disputed. Sunday final inactives and late market movement are pending.</p>`;
+   let hist=document.getElementById('week3LabFinal');if(!hist){hist=document.createElement('div');hist.id='week3LabFinal';hist.className='week4-history-panel';cur.insertAdjacentElement('afterend',hist);}
+   hist.innerHTML=`<div class="eyebrow">Week 3 settled evidence</div><h3>Final model vs actual execution</h3><div class="week4-history-grid"><div><small>Final pre-lock V2</small><b>11–3 ATS</b><span class="week4-small">14 decision-eligible games</span></div><div><small>Aligned wagers</small><b>+$1,500</b><span class="week4-small">$2,900 outlay · 4–1</span></div><div><small>Opposed wagers</small><b>−$3,700</b><span class="week4-small">$3,700 outlay · 0–8</span></div></div>`;
+   l.querySelectorAll('details summary').forEach(s=>{if(/Week 3/i.test(s.textContent)&&!/Archive/i.test(s.textContent))s.textContent='Week 3 Archive · '+s.textContent;});
+ }
+ function detailSupplement(){
+   const hero=document.getElementById('gameHero');if(!hero)return;const txt=hero.textContent||'';const game=Object.keys(CTX).find(g=>txt.includes(g));if(!game)return;document.getElementById('week4GameContext')?.remove();const c=CTX[game];const box=document.createElement('div');box.id='week4GameContext';box.className='week4-context-panel';box.innerHTML=`<div class="eyebrow">Week 4 Friday context · ${SNAP}</div><div class="week4-stats"><div class="week4-stat"><small>Market snapshot</small><b>${c.market}</b></div><div class="week4-stat"><small>Weather</small><b>${c.weather}</b></div><div class="week4-stat"><small>External ATS</small><b>Incomplete / unverified</b></div><div class="week4-stat"><small>Sunday trigger</small><b>${c.trigger}</b></div></div>`;hero.insertAdjacentElement('afterend',box);
+ }
+ function refresh(){
+   try{if(typeof window.renderBoards==='function')window.renderBoards();}catch(e){}
+   ensureAnalysis();ensureAnalysisNav();updateToday();updateGames();updatePortfolio();updateLab();detailSupplement();
+   window.week4NativeIntegrationQA={version:'2026-10-02-native-v1',week4Rows:document.querySelectorAll('#gamesList .game-row').length,hou:!!document.querySelector('#gamesList [data-game="DAL @ HOU"]'),sea:!!document.querySelector('#gamesList [data-game="LAC @ SEA"]'),week3Results:!!document.getElementById('week3FinalHistory'),analysis:!!document.getElementById('analysis')};
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(refresh,150));else setTimeout(refresh,150);
+ setTimeout(refresh,650);setTimeout(refresh,1600);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-source-view],[data-game]'))setTimeout(refresh,120);},true);
+})();
+</script>
