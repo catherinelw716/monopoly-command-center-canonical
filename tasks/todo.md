@@ -113,7 +113,14 @@
   - [x] Set $3,800 / ~19.5% household deployment as the current working Sunday target, subject to fresh PRE_KICK_FINAL evidence
   - [x] Pass dedicated Week 4 Sizing Calibration CI
 
-- [ ] Task 9: Run pre-submit reconciliation gate
+- [x] Task 9: Run pre-submit reconciliation gate
+  - [x] Materialize the approved $3,800 calibrated Friday portfolio with explicit canonical Sly lines on every wager
+  - [x] Reconcile HOU/SEA against the Friday robust model direction
+  - [x] Permit only explicitly tagged $100 fillers on MARKET_EQUAL/no-robust-side games
+  - [x] Block source-disputed games unless they carry a documented timestamped override
+  - [x] Confirm 10/10 wagers match the canonical Sly freeze with zero line mismatches
+  - [x] Confirm 4 robust-side wagers aligned, 6 minimum fillers, 0 overrides, and 0 hard errors
+  - [x] Pass the dedicated V2 Pre-Submit Reconciliation QA workflow
 
 ## Checkpoint B
 - [ ] Portfolio and sizing reviewed
