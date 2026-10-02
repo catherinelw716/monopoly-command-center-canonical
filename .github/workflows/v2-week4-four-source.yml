@@ -1,0 +1,22 @@
+name: Week 4 Four Source QA
+
+on:
+  push:
+    paths:
+      - 'v2/results/week_04_four_source_contradiction_layer.json'
+      - 'v2/week4_four_source_qa.py'
+      - '.github/workflows/v2-week4-four-source.yml'
+  workflow_dispatch:
+
+jobs:
+  week4-four-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Week 4 four-source layer
+        run: python v2/week4_four_source_qa.py
