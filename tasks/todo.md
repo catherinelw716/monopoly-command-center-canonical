@@ -50,9 +50,22 @@
 
 ## Checkpoint: Task 4
 - [x] Weeks 1–3 learnings encoded without contaminating frozen Week 4 probabilities
-- [ ] User reviews Task 4 before Task 5 begins
+- [x] User reviews Task 4 before Task 5 begins
 
-- [ ] Task 5: Complete external/context research
+- [x] Task 5: Complete external/context research
+  - [x] Capture official injury/QB context for all 15 eligible games
+  - [x] Capture weather context/materiality for all 15 eligible games
+  - [x] Preserve major Friday statuses including Daniels out, Jets skill/OL absences, Panthers starters out, 49ers injury volume, and Jefferson out
+  - [x] Audit SportsLine public Week 4 access without inferring paywalled ATS picks
+  - [x] Mark Gridiron Week 4 pickset unverified where no authoritative public table was found
+  - [x] Mark Lucas Week 4 pickset unverified until supplied/verified
+  - [x] Add deterministic context completeness/source-honesty QA and dedicated CI
+
+## Checkpoint: Task 5
+- [x] 15/15 eligible games have injury, QB, and weather context
+- [ ] Week 4 External Context QA workflow passes
+- [ ] User reviews Task 5 before Task 6 begins
+
 - [ ] Task 6: Generate four-source/contradiction layer
 - [ ] Task 7: Run adversarial model review
 
