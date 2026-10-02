@@ -123,9 +123,16 @@
   - [x] Pass the dedicated V2 Pre-Submit Reconciliation QA workflow
 
 ## Checkpoint B
-- [ ] Portfolio and sizing reviewed
+- [x] Portfolio and sizing reviewed
 
-- [ ] Task 10: Refresh Command Center end-to-end
+- [x] Task 10: Refresh Command Center end-to-end
+  - [x] Replace Today with Week 4 bankroll, candidate/watch/hold state, working portfolio, and reconciliation status
+  - [x] Replace Games with the complete 15-game Sly/open/VI/Action/model/weather board
+  - [x] Add clickable game-detail reads with news, weather, market/model state, four-source availability, and Sunday trigger
+  - [x] Replace Analysis with adversarial-review synthesis and source-honesty state
+  - [x] Replace Portfolio with the $3,800 calibrated Catherine/Amanda working portfolio and sizing-band analysis
+  - [x] Add current Week 3 field anchors to Standings
+  - [x] Load the Week 4 layer last so stale Week 3 UI patches cannot remain authoritative
 - [ ] Task 11: QA Friday refresh
 
 ## Checkpoint C
