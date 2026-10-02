@@ -78,12 +78,20 @@
 ## Checkpoint: Task 6
 - [x] 15/15 eligible games have a four-source/contradiction row
 - [x] Week 4 Four Source QA workflow passes
-- [ ] User reviews Task 6 before Task 7 begins
+- [x] User reviews Task 6 before Task 7 begins
 
-- [ ] Task 7: Run adversarial model review
+- [x] Task 7: Run adversarial model review
+  - [x] Challenge the board from market-maker, quant, statistician, methodology, personnel, injury/news, and portfolio-risk lenses
+  - [x] Preserve frozen V2 probabilities and zero external-source weights
+  - [x] Stress-test HOU -3 and SEA -7 as source-sensitive rather than broad-market edges
+  - [x] Elevate IND -3.5 to high-priority Sunday market watch without converting context into a model vote
+  - [x] Preserve NE-BUF and DEN-SF as source-disputed holds
+  - [x] Define Sunday refresh triggers for all 15 games
+  - [x] Add deterministic adversarial-review QA and dedicated CI
 
 ## Checkpoint A
-- [ ] Full 15-game data/model board reviewed
+- [x] Full 15-game data/model board assembled and adversarially reviewed
+- [ ] User reviews Checkpoint A before Task 8 begins
 
 - [ ] Task 8: Run Catherine/Amanda Monopoly optimizer
 - [ ] Task 9: Run pre-submit reconciliation gate
