@@ -1,0 +1,30 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_CURRENT_MARKET_RESEARCH",
+  "captured_at_local": "2026-10-02T13:03:00-04:00",
+  "market_source": "Action Network live NFL public-betting / odds pages",
+  "source_urls": [
+    "https://www.actionnetwork.com/nfl/public-betting",
+    "https://www.actionnetwork.com/nfl/odds"
+  ],
+  "source_note": "Live Action Network lines observed during the Friday research refresh. These differ from the 12:30 PM VegasInsider consensus snapshot on several games, so both snapshots are preserved rather than overwritten.",
+  "spread_convention": "home-team conventional sportsbook spread: negative=favorite, positive=underdog",
+  "games": [
+    {"game_id":"ARI @ NYG","away_team":"ARI","home_team":"NYG","sly_home_spread":2.5,"market_home_spread":2.5,"market_note":"Action: ARI -2.5 / NYG +2.5"},
+    {"game_id":"ATL @ NO","away_team":"ATL","home_team":"NO","sly_home_spread":-2.5,"market_home_spread":-2.5,"market_note":"Action: NO -2.5 / ATL +2.5"},
+    {"game_id":"TEN @ BAL","away_team":"TEN","home_team":"BAL","sly_home_spread":-11.5,"market_home_spread":-11.5,"market_note":"Action: BAL -11.5 / TEN +11.5"},
+    {"game_id":"NE @ BUF","away_team":"NE","home_team":"BUF","sly_home_spread":-7.0,"market_home_spread":-6.5,"market_note":"Action: BUF -6.5 / NE +6.5; Sly NE +7 is 0.5 better for NE"},
+    {"game_id":"DET @ CAR","away_team":"DET","home_team":"CAR","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"Action: DET -3.5 / CAR +3.5"},
+    {"game_id":"NYJ @ CHI","away_team":"NYJ","home_team":"CHI","sly_home_spread":-3.5,"market_home_spread":-3.5,"market_note":"Action: CHI -3.5 / NYJ +3.5"},
+    {"game_id":"JAX @ CIN","away_team":"JAX","home_team":"CIN","sly_home_spread":-2.5,"market_home_spread":-2.5,"market_note":"Action: CIN -2.5 / JAX +2.5"},
+    {"game_id":"DAL @ HOU","away_team":"DAL","home_team":"HOU","sly_home_spread":-3.0,"market_home_spread":-3.5,"market_note":"Action: HOU -3.5 / DAL +3.5; Sly HOU -3 is 0.5 better for HOU"},
+    {"game_id":"DEN @ SF","away_team":"DEN","home_team":"SF","sly_home_spread":-3.0,"market_home_spread":-2.5,"market_note":"Action: SF -2.5 / DEN +2.5; Sly DEN +3 is 0.5 better for DEN"},
+    {"game_id":"GB @ TB","away_team":"GB","home_team":"TB","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"Action: GB -3.5 / TB +3.5"},
+    {"game_id":"IND @ WAS","away_team":"IND","home_team":"WAS","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"Action: IND -3.5 / WAS +3.5"},
+    {"game_id":"KC @ LV","away_team":"KC","home_team":"LV","sly_home_spread":4.5,"market_home_spread":4.5,"market_note":"Action: KC -4.5 / LV +4.5"},
+    {"game_id":"LAC @ SEA","away_team":"LAC","home_team":"SEA","sly_home_spread":-7.0,"market_home_spread":-7.5,"market_note":"Action: SEA -7.5 / LAC +7.5; Sly SEA -7 is 0.5 better for SEA"},
+    {"game_id":"LAR @ PHI","away_team":"LAR","home_team":"PHI","sly_home_spread":3.5,"market_home_spread":3.5,"market_note":"Action: LAR -3.5 / PHI +3.5"},
+    {"game_id":"MIA @ MIN","away_team":"MIA","home_team":"MIN","sly_home_spread":-10.5,"market_home_spread":-10.5,"market_note":"Action: MIN -10.5 / MIA +10.5"}
+  ]
+}
