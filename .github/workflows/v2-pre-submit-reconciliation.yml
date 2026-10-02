@@ -5,6 +5,9 @@ on:
     paths:
       - 'v2/pre_submit_reconciliation.py'
       - 'v2/pre_submit_reconciliation_qa.py'
+      - 'v2/results/week_04_friday_model_layer.json'
+      - 'v2/results/week_04_friday_calibrated_portfolio.json'
+      - 'v2/season_2026/week_04_sly_freeze.json'
       - 'v2/WEEK_04_EXECUTION_PROTOCOL.md'
       - '.github/workflows/v2-pre-submit-reconciliation.yml'
   workflow_dispatch:
@@ -21,5 +24,33 @@ jobs:
           python-version: '3.11'
       - name: Compile reconciliation scripts
         run: python -m py_compile v2/pre_submit_reconciliation.py v2/pre_submit_reconciliation_qa.py
-      - name: Run reconciliation QA
+      - name: Run reconciliation unit QA
         run: python v2/pre_submit_reconciliation_qa.py
+      - name: Reconcile Week 4 calibrated Friday portfolio
+        run: |
+          python v2/pre_submit_reconciliation.py \
+            --sly-freeze v2/season_2026/week_04_sly_freeze.json \
+            --model v2/results/week_04_friday_model_layer.json \
+            --portfolio v2/results/week_04_friday_calibrated_portfolio.json \
+            --output /tmp/week_04_friday_reconciliation.json
+      - name: Validate Week 4 reconciliation result
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/week_04_friday_reconciliation.json').read_text())
+          portfolio = json.loads(Path('v2/results/week_04_friday_calibrated_portfolio.json').read_text())
+          assert result['status'] == 'PASS'
+          assert result['summary'] == {
+              'wagers': 10,
+              'aligned': 4,
+              'neutral_minimum_fillers': 6,
+              'overrides': 0,
+              'line_mismatches': 0,
+              'hard_errors': 0,
+          }
+          for entry, bets in portfolio['entries'].items():
+              assert all('sly_home_spread' in bet for bet in bets), entry
+          assert sum(b['amount'] for bets in portfolio['entries'].values() for b in bets) == 3800
+          print('Week 4 calibrated portfolio reconciliation passed.')
+          PY
