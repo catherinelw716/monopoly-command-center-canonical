@@ -36,9 +36,22 @@
 ## Checkpoint: Task 3
 - [x] 15/15 eligible games have fresh Week-4 model rows
 - [x] Week 4 Model Layer QA workflow passes
-- [ ] User reviews Task 3 before Task 4 begins
+- [x] User reviews Task 3 before Task 4 begins
 
-- [ ] Task 4: Apply Weeks 1–3 learnings to adaptive layers
+- [x] Task 4: Apply Weeks 1–3 learnings to adaptive layers
+  - [x] Preserve V2 coefficients and calibration; Week 3 result does not trigger retraining or stake escalation
+  - [x] Record Week 3 prospective source scorecards with zero prediction weight
+  - [x] Encode Week 1–3 household deployment and overlap as diagnostics, not fixed targets
+  - [x] Add MARKET_EQUAL / SOURCE_SENSITIVE / SOURCE_DISPUTED interpretation policy
+  - [x] Make final-model reconciliation and explicit OVERRIDE metadata mandatory
+  - [x] Strengthen optimizer stress rules for source-sensitive/disputed edges, overlap, CVaR, and future-minimum risk
+  - [x] Preserve legacy V1/M1-M5 as non-reproducible diagnostics rather than fabricating Week 4 outputs
+  - [x] Add deterministic adaptive-state QA and dedicated CI
+
+## Checkpoint: Task 4
+- [x] Weeks 1–3 learnings encoded without contaminating frozen Week 4 probabilities
+- [ ] User reviews Task 4 before Task 5 begins
+
 - [ ] Task 5: Complete external/context research
 - [ ] Task 6: Generate four-source/contradiction layer
 - [ ] Task 7: Run adversarial model review
