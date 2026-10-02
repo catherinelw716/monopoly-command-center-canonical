@@ -1,0 +1,52 @@
+name: Week 4 Friday Optimizer
+
+on:
+  push:
+    paths:
+      - 'v2/run_week4_friday_optimizer.py'
+      - 'v2/results/week_04_friday_model_layer.json'
+      - 'v2/results/week_04_adversarial_review.json'
+      - 'v2/season_2026/week_03_field_state.json'
+      - 'v2/season_2026/week_04_adaptive_state.json'
+      - 'v2/season_2026/week_04_sly_freeze.json'
+      - 'v2/monopoly_robust_optimizer.py'
+      - 'v2/monopoly_tournament_optimizer.py'
+      - 'v2/benchmark_strategies.py'
+      - 'v2/monopoly_simulator.py'
+      - '.github/workflows/v2-week4-friday-optimizer.yml'
+  workflow_dispatch:
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy
+      - name: Run Week 4 Friday optimizer
+        run: python v2/run_week4_friday_optimizer.py
+      - name: Validate optimizer artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('v2/results/week_04_friday_optimizer.json')
+          d = json.loads(p.read_text())
+          assert d['status'] == 'STEP_8_COMPLETE_PROVISIONAL_NOT_SUBMISSION'
+          assert d['balances'] == {'Catherine': 10800, 'Amanda': 8700}
+          assert d['provisional_best']['evaluated_candidates'] == 300
+          for entry in ('Catherine','Amanda'):
+              bets = d['provisional_best']['bets_by_entry'][entry]
+              assert len(bets) in (4,5)
+              assert all(int(b['amount']) >= 100 and int(b['amount']) % 100 == 0 for b in bets)
+          assert 'zero_edge' in d['explicit_selected_portfolio_stress']
+          assert 'vegasinsider_full' in d['explicit_selected_portfolio_stress']
+          assert 'action_full' in d['explicit_selected_portfolio_stress']
+          assert len(d['benchmark_comparison']) >= 5
+          print('Week 4 Friday optimizer QA passed.')
+          PY
