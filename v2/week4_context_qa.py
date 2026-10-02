@@ -12,7 +12,7 @@ def main() -> None:
     ctx = json.loads(CTX.read_text(encoding='utf-8'))
     sly = json.loads(SLY.read_text(encoding='utf-8'))
     games = ctx['games']
-    sly_ids = {g['game_id'] for g in sly['games']}
+    sly_ids = {g['game'] for g in sly['games']}
     ctx_ids = {g['game_id'] for g in games}
     assert len(games) == 15
     assert ctx_ids == sly_ids
