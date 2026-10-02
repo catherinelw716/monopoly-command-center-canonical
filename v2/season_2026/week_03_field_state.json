@@ -1,0 +1,33 @@
+{
+  "season": 2026,
+  "as_of_week": 3,
+  "status": "PARTIAL_OFFICIAL_FIELD_STATE",
+  "active_entries": 125,
+  "active_entries_status": "carry-forward assumption from Week 2 because the supplied Week 3 screenshot does not show the full bottom of the field",
+  "eliminated_entries": 2,
+  "starting_bankroll_per_entry": 10000,
+  "observed_anchors": {
+    "median_balance": 8800,
+    "median_balance_status": "approximate from the visible rank-63 cluster in the commissioner Week 3 standings screenshot",
+    "top10_floor": 14900,
+    "top5_floor": 19000,
+    "leader_balance": 26700
+  },
+  "household": {
+    "Catherine": {"balance":10800,"rank":28},
+    "Amanda": {"balance":8700,"rank":65}
+  },
+  "observed_household_outlay": {
+    "week_1": 6100,
+    "week_2": 7800,
+    "week_3": 6600
+  },
+  "explicit_assumptions": {
+    "lower_tail_floor_assumption": 400,
+    "scenario_weights": "equal across conservative/median/aggressive pending a fuller Week 3 field-transition reconstruction",
+    "individual_opponent_balances": "not reconstructed beyond visible commissioner anchors; interpolation remains simulation-only",
+    "active_entry_count": "125 carried forward from Week 2; do not present as newly observed from the partial Week 3 screenshot",
+    "tie_break": "unknown; optimizer uses symmetric treatment unless ties become materially decision-relevant"
+  },
+  "provenance": "Commissioner Week 3 standings screenshot supplied by user plus explicitly labeled carry-forward assumptions for values not visible in the screenshot."
+}
