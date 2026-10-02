@@ -91,9 +91,18 @@
 
 ## Checkpoint A
 - [x] Full 15-game data/model board assembled and adversarially reviewed
-- [ ] User reviews Checkpoint A before Task 8 begins
+- [x] User reviews Checkpoint A before Task 8 begins
 
-- [ ] Task 8: Run Catherine/Amanda Monopoly optimizer
+- [x] Task 8: Run Catherine/Amanda Monopoly optimizer
+  - [x] Start from Catherine $10,800 / Amanda $8,700 and Week 3 field anchors
+  - [x] Limit Friday sizing edges to conditional HOU -3 and SEA -7
+  - [x] Stress HOU/SEA through a zero-edge case and 1.00/0.75/0.50/0.25/0.00 edge shrink
+  - [x] Keep NE-BUF, DEN-SF and IND-WAS source-disputed rather than promoting them to Friday sizing edges
+  - [x] Evaluate selected portfolio under VegasInsider-full and Action-full probability states
+  - [x] Compare shared, hybrid, and split household overlap structures
+  - [x] Compare against simple benchmark portfolios
+  - [x] Report current-week CVaR retention and future-minimum failure risk
+  - [x] Persist provisional Friday optimizer artifact and pass dedicated CI
 - [ ] Task 9: Run pre-submit reconciliation gate
 
 ## Checkpoint B
