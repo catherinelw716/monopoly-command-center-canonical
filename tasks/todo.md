@@ -1,14 +1,14 @@
 # Week 4 Refresh Tasks
 
-- [ ] Task 1: Freeze and audit official Sly slate
-  - [ ] Verify all 15 Sunday/Monday games against the supplied sheet
-  - [ ] Confirm home/away orientation, kickoff times, and spread signs
-  - [ ] Preserve PIT @ CLE as excluded because the Friday sheet has no spread
-  - [ ] Add canonical loader/validation so downstream work cannot silently substitute a different Sly line
-  - [ ] Add CI coverage for the canonical freeze
+- [x] Task 1: Freeze and audit official Sly slate
+  - [x] Verify all 15 Sunday/Monday games against the supplied sheet
+  - [x] Confirm home/away orientation, kickoff times, and spread signs
+  - [x] Preserve PIT @ CLE as excluded because the Friday sheet has no spread
+  - [x] Add canonical loader/validation so downstream work cannot silently substitute a different Sly line
+  - [x] Add CI coverage for the canonical freeze
 
 ## Checkpoint: Task 1
-- [ ] Canonical freeze validation passes
+- [x] Canonical freeze validation passes
 - [ ] User reviews Task 1 before Task 2 begins
 
 - [ ] Task 2: Build complete Week 4 market-history dataset
