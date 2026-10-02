@@ -17,7 +17,6 @@ const week3GamesAuthoritativePatch = fs.readFileSync('week3-games-authoritative-
 const week3FourSourceAuthoritativePatch = fs.readFileSync('week3-game-four-source-authoritative-patch.html', 'utf8');
 const week3ResultsPatch = fs.readFileSync('week3-results-command-center-patch.html', 'utf8');
 const week3PostmortemPatch = fs.readFileSync('week3-postmortem-command-center-patch.html', 'utf8');
-const week4FridayPatch = fs.readFileSync('week4-friday-command-center-patch.html', 'utf8');
 let cachedHtml = null;
 let loadError = null;
 
@@ -27,7 +26,7 @@ async function loadApp() {
   if (!response.ok) throw new Error(`Base app fetch failed: ${response.status} ${response.statusText}`);
   const base = await response.text();
   if (!base.includes('<html') && !base.includes('<!DOCTYPE')) throw new Error('Base app response is not HTML');
-  const combinedPatch = `${patch}\n${lucasTablePatch}\n${sourceScreenshotPatch}\n${gameDetailUiPatch}\n${consistencyPatch}\n${mobilePatch}\n${mobileNavFix}\n${wagerSizingPatch}\n${consensusModelFix}\n${week3PrelockPatch}\n${week3GamesAuthoritativePatch}\n${week3FourSourceAuthoritativePatch}\n${week3ResultsPatch}\n${week3PostmortemPatch}\n${week4FridayPatch}`;
+  const combinedPatch = `${patch}\n${lucasTablePatch}\n${sourceScreenshotPatch}\n${gameDetailUiPatch}\n${consistencyPatch}\n${mobilePatch}\n${mobileNavFix}\n${wagerSizingPatch}\n${consensusModelFix}\n${week3PrelockPatch}\n${week3GamesAuthoritativePatch}\n${week3FourSourceAuthoritativePatch}\n${week3ResultsPatch}\n${week3PostmortemPatch}`;
   cachedHtml = base.includes('</body>') ? base.replace('</body>', `${combinedPatch}\n</body>`) : `${base}\n${combinedPatch}`;
   return cachedHtml;
 }
@@ -37,7 +36,7 @@ const server = http.createServer(async (req, res) => {
     try {
       const html = await loadApp();
       res.writeHead(200, {'content-type':'application/json; charset=utf-8'});
-      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week4-friday-step10'}));
+      return res.end(JSON.stringify({status:'ok', bytes:Buffer.byteLength(html), source:'canonical-week3-postmortem-restored-after-week4-ui-regression'}));
     } catch (err) {
       loadError = String(err && err.message ? err.message : err);
       res.writeHead(503, {'content-type':'application/json; charset=utf-8'});
@@ -62,7 +61,7 @@ server.listen(port, '0.0.0.0', async () => {
   console.log(`Command Center listening on ${port}`);
   try {
     const html = await loadApp();
-    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; Week 4 Friday Step 10 layer included`);
+    console.log(`Canonical app loaded: ${Buffer.byteLength(html)} bytes; prior UX components restored`);
   } catch (err) {
     console.error('Initial canonical app load failed:', err);
   }
