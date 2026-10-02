@@ -1,0 +1,115 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_ADVERSARIAL_MODEL_REVIEW",
+  "generated_at_local": "2026-10-02T16:57:00-04:00",
+  "status": "STEP_7_COMPLETE_INPUT",
+  "inputs": {
+    "sly_freeze": "v2/season_2026/week_04_sly_freeze.json",
+    "market_history": "v2/season_2026/week_04_market_history_2026-10-02_1433ET.json",
+    "model_layer": "v2/results/week_04_friday_model_layer.json",
+    "context_layer": "v2/season_2026/week_04_context_research_2026-10-02_1551ET.json",
+    "four_source_layer": "v2/results/week_04_four_source_contradiction_layer.json",
+    "adaptive_policy": "v2/season_2026/week_04_adaptive_state.json"
+  },
+  "review_policy": {
+    "purpose": "Challenge data quality, market interpretation, model outputs, injury/news interpretation, and downstream portfolio implications before optimizer construction.",
+    "no_probability_mutation": true,
+    "no_external_source_weighting": true,
+    "no_week3_result_chasing": true,
+    "weather_context_only": true,
+    "latest_authoritative_snapshot_rule": "Later verified market/injury information supersedes earlier contextual conclusions; older conclusions may not silently remain authoritative."
+  },
+  "lenses": [
+    {
+      "lens": "professional_sports_bettor_market_maker",
+      "findings": [
+        "HOU -3 and SEA -7 are price-dependent opportunities rather than broad market disagreements: VegasInsider is market-equal while Action is 0.5 points worse for the favorite.",
+        "A half-point through 3 or 7 can matter, but one source showing the worse number is insufficient to call the Sly line a market-wide stale edge.",
+        "IND -3.5 deserves close Sunday monitoring because VegasInsider was IND -4.5 while Action was -3.5; if the broader market consolidates above -3.5, Sly's number becomes more defensible as price value.",
+        "NE +7 and DEN +3 sit exactly on key numbers with source disagreement; these are particularly sensitive to book mix and should not be resolved from a single headline consensus."
+      ]
+    },
+    {
+      "lens": "quantitative_betting_analyst",
+      "findings": [
+        "The frozen model's HOU -3 expected net per wager dollar ranges from approximately +0.22% on VegasInsider anchoring to +3.21% on Action anchoring.",
+        "The frozen model's SEA -7 expected net per wager dollar ranges from approximately +0.23% on VegasInsider anchoring to +3.32% on Action anchoring.",
+        "Those ranges are too source-sensitive to justify aggressive sizing before the Sunday market refresh.",
+        "MARKET_EQUAL games should not be ranked from the model's approximately 0.2% residual directional bias; that is explicitly below the material-edge threshold."
+      ]
+    },
+    {
+      "lens": "statistician_data_scientist",
+      "findings": [
+        "Week 3's 11-3 prospective result is a small sample and provides no basis for increasing Week 4 probability precision or confidence grades.",
+        "SportsLine 4-4, Gridiron 4-4, and Lucas 2-5 from Week 3 are too sparse for source-weight estimation; zero hard-coded external weight remains correct.",
+        "The model currently has only two same-direction source-sensitive candidates and three source-disputed games; claiming a broad Week 4 model edge would overstate the data.",
+        "Opening-line diagnostics are not predictive inputs at decision time and must not be mistaken for current edge estimates."
+      ]
+    },
+    {
+      "lens": "research_scientist_methodologist",
+      "findings": [
+        "The frozen V2 architecture must remain unchanged through Week 4 to preserve prospective validation integrity.",
+        "Context may explain market movement but cannot be used post hoc to retrofit model probabilities without a preregistered method.",
+        "The strongest methodological risk is double counting: e.g. Baker Mayfield's absence, Jayden Daniels' absence, and major injury clusters may already be embedded in current market prices.",
+        "Missing SportsLine/Gridiron/Lucas ATS picks are missing evidence, not negative votes and not grounds for lowering a model probability mechanically."
+      ]
+    },
+    {
+      "lens": "nfl_film_personnel_analyst",
+      "findings": [
+        "SEA's contextual case is cleaner than most because Chargers injury concerns and Seattle's improving health trend point in the same direction as the only robust model side, but the -7 key number makes the exact price critical.",
+        "HOU's case benefits from Dallas secondary/LB availability concerns, but matchup context alone does not validate laying a key -3 when one market source is still exactly -3.",
+        "IND context is materially favorable with Jayden Daniels out and Washington missing an OL starter, but the market has already flipped the favorite; the remaining question is price, not whether the news matters.",
+        "DEN receives contextual support from San Francisco's injury volume, but the source split between SF -2.5 and -3 means the wager thesis is primarily price-sensitive.",
+        "GB-TB, NYJ-CHI, DET-CAR and MIA-MIN contain major personnel/weather changes but are market-equal at Sly, making them poor candidates for a claim of unpriced information on Friday."
+      ]
+    },
+    {
+      "lens": "injury_news_verification_researcher",
+      "findings": [
+        "Several Friday statuses remain participation-based rather than final inactive lists; Sunday verification is mandatory before final recommendations.",
+        "Chicago's quarterback situation, Philadelphia/Rams injury uncertainty, roof status in Houston, and weather in Philadelphia/Charlotte/Baltimore require refreshes.",
+        "Do not elevate DNP labels without distinguishing injury severity, veteran rest, and final designation when available.",
+        "Any late quarterback or offensive-line status change must trigger a new timestamped context snapshot rather than editing Friday history in place."
+      ]
+    },
+    {
+      "lens": "risk_portfolio_manager",
+      "findings": [
+        "No Friday candidate currently supports concentration based solely on frozen V2 edge; HOU and SEA must be stress-tested at zero incremental edge because the advantage disappears on one preserved market source.",
+        "Source-disputed games should be evaluated under both source states in the optimizer rather than assigned a midpoint probability.",
+        "Household overlap should not be rewarded merely because two entries like the same side; overlap must earn its place through robust prize-equity improvement under stress.",
+        "Week 3's household loss came primarily from decision-layer overrides, so portfolio construction must preserve the final reconciliation gate even when contextual conviction is high."
+      ]
+    }
+  ],
+  "game_reviews": [
+    {"game_id":"ARI @ NYG","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal after an extreme favorite flip; opener is informative history, not current edge.","sunday_trigger":"Revisit only if Sly diverges materially from refreshed multi-book market or new QB/personnel news appears."},
+    {"game_id":"ATL @ NO","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal, indoor, no verified external ATS evidence.","sunday_trigger":"Meaningful injury-driven line divergence."},
+    {"game_id":"TEN @ BAL","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal after a large move through 10; rain and Lamar status appear substantially reflected in price.","sunday_trigger":"Weather escalation or line movement away from -11.5."},
+    {"game_id":"NE @ BUF","friday_disposition":"HOLD_SOURCE_DISPUTED","risk":"Sly NE +7 is valuable versus BUF -6.5 but equal versus -7; New England injury context points against the dog.","sunday_trigger":"Broad market distribution around 6.5/7 plus final NE defensive/OL statuses."},
+    {"game_id":"DET @ CAR","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal despite Carolina absences and heavy rain risk; context may add variance rather than side edge.","sunday_trigger":"Final weather severity and any spread move off 3.5."},
+    {"game_id":"NYJ @ CHI","friday_disposition":"PASS_FOR_NOW","risk":"Large open-to-current move with major uncertainty on both teams; current price already reflects a large information update.","sunday_trigger":"Confirmed Chicago starting QB and final offensive-line/skill statuses."},
+    {"game_id":"JAX @ CIN","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal with no verified source convergence.","sunday_trigger":"Material injury or market move."},
+    {"game_id":"DAL @ HOU","friday_disposition":"CONDITIONAL_CANDIDATE","risk":"Model and context align HOU, but edge is approximately flat on VegasInsider and positive only when current market is HOU -3.5.","sunday_trigger":"If multi-book market consolidates at HOU -3.5 or worse while Sly remains -3, upgrade price confidence; if market returns to -3 broadly, treat as near-zero edge."},
+    {"game_id":"DEN @ SF","friday_disposition":"HOLD_SOURCE_DISPUTED","risk":"Context supports DEN but Sly +3 is equal to one market and better than another; exact key-number distribution matters.","sunday_trigger":"Multi-book share at SF -2.5 versus -3 and final SF inactive list."},
+    {"game_id":"GB @ TB","friday_disposition":"PASS_FOR_NOW","risk":"Major QB news is already associated with a large spread/total adjustment; high double-counting risk.","sunday_trigger":"Unexpected QB/status reversal or renewed market divergence from GB -3.5."},
+    {"game_id":"IND @ WAS","friday_disposition":"HIGH_PRIORITY_WATCH","risk":"Context strongly supports IND but model direction is source-disputed because Sly -3.5 is equal to Action and one point better than VegasInsider.","sunday_trigger":"If broad market is IND -4/-4.5 or higher while Sly stays -3.5, this becomes a stronger stale-price candidate; if market centers -3.5, do not manufacture edge from Daniels news twice."},
+    {"game_id":"KC @ LV","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal; no verified external ATS evidence.","sunday_trigger":"Material line or QB/OL status movement."},
+    {"game_id":"LAC @ SEA","friday_disposition":"CONDITIONAL_CANDIDATE","risk":"Model and context align SEA, but -7 is market-equal on VegasInsider and only advantaged versus Action -7.5.","sunday_trigger":"If multi-book market consolidates at SEA -7.5 or worse while Sly remains -7, strengthen price confidence; if market centers -7, treat as near-zero edge."},
+    {"game_id":"LAR @ PHI","friday_disposition":"PASS_FOR_NOW","risk":"Market-equal with injury and weather uncertainty on both sides.","sunday_trigger":"Final injury designations, precipitation/wind, and whether market settles at LAR -3 or -3.5."},
+    {"game_id":"MIA @ MIN","friday_disposition":"PASS_FOR_NOW","risk":"Jefferson absence is major but Sly equals market after a large move; high risk of double counting known news.","sunday_trigger":"Material move away from MIN -10.5 or new Miami/Minnesota skill-position news."}
+  ],
+  "board_summary": {
+    "conditional_candidates": ["HOU -3", "SEA -7"],
+    "high_priority_watch": ["IND -3.5"],
+    "source_disputed_holds": ["NE +7 / BUF -7", "DEN +3 / SF -3"],
+    "pass_for_now_games": 10,
+    "aggressive_friday_stakes_supported": false,
+    "verified_multi_source_consensus_games": 0,
+    "key_conclusion": "The Friday board contains useful monitoring targets but no candidate with enough cross-source price confirmation to justify aggressive sizing before the Sunday refresh. HOU -3 and SEA -7 remain conditional candidates; IND -3.5 is the highest-priority market-watch because context is strong and one preserved market is already a full point worse than Sly."
+  }
+}
