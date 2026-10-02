@@ -56,8 +56,6 @@ def side_to_home_probs(row: dict, source: str) -> GameProbability:
     else:
         ph, pl = float(r["p_loss"]), float(r["p_cover"])
     pp = float(r["p_push"])
-    # Checked-in model rows are rounded to six decimals, so normalize the tiny
-    # serialization drift before sending them into the strict simulator contract.
     total = ph + pp + pl
     return GameProbability(gid, ph / total, pp / total, pl / total)
 
@@ -124,6 +122,7 @@ def main() -> None:
     scenarios = default_field_scenarios()
     cfg = OptimizerConfig(simulations=600, seed=716)
 
+    fractions = (0.08, 0.10, 0.12, 0.15, 0.18)
     best = optimize_robust_household(
         balances,
         base,
@@ -131,7 +130,7 @@ def main() -> None:
         state,
         scenarios=scenarios,
         cfg=cfg,
-        fractions=(0.05, 0.08, 0.10, 0.12, 0.15),
+        fractions=fractions,
         game_counts=(4, 5),
         overlap_modes=("shared", "hybrid", "split"),
         edge_shrink_factors=(1.00, 0.75, 0.50, 0.25, 0.00),
@@ -194,7 +193,7 @@ def main() -> None:
         },
         "optimizer_grid": {
             "simulations": cfg.simulations,
-            "fractions": [0.05, 0.08, 0.10, 0.12, 0.15],
+            "fractions": list(fractions),
             "game_counts": [4, 5],
             "overlap_modes": ["shared", "hybrid", "split"],
             "edge_shrink_factors": [1.0, 0.75, 0.5, 0.25, 0.0],
