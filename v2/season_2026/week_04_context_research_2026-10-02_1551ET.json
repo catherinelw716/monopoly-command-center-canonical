@@ -1,0 +1,229 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "FRIDAY_EXTERNAL_CONTEXT_RESEARCH",
+  "captured_at_local": "2026-10-02T15:51:00-04:00",
+  "status": "STEP_5_COMPLETE_INPUT",
+  "policy": {
+    "injury_truth": "NFL/team official reports first; preserve uncertainty when final game status is not yet posted.",
+    "weather": "Context only; do not alter frozen V2 cover probabilities in Step 5.",
+    "external_sources": "SportsLine, Gridiron and Lucas are benchmark/context inputs only. Do not fabricate inaccessible picks and do not assign prediction weights.",
+    "missing_data": "Use UNVERIFIED or NOT_PUBLICLY_AVAILABLE rather than infer a source pick."
+  },
+  "sources": {
+    "official_injuries": [
+      "https://www.nfl.com/injuries/",
+      "https://www.patriots.com/news/week-4-injury-report-patriots-at-bills2",
+      "https://www.seahawks.com/news/week-4-injury-report-seahawks-vs-chargers",
+      "https://www.commanders.com/news/commanders-colts-week-4-injury-report",
+      "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
+      "https://www.bengals.com/news/jaguars-bengals-injury-report-week-4-2026",
+      "https://www.raiders.com/news/las-vegas-raiders-kansas-city-chiefs-week-4-injury-report-2026-season-nfl"
+    ],
+    "official_news": [
+      "https://www.nfl.com/news/jayden-daniels-left-elbow-out-london-game-qb-marcus-mariota-start-colts",
+      "https://www.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-oct-2",
+      "https://www.nfl.com/news/bears-ben-johnson-week-4-starting-qb-looking-at-everything"
+    ],
+    "weather": [
+      "https://forecast.weather.gov/",
+      "https://weather.metoffice.gov.uk/forecast/gcpvwd6uv"
+    ],
+    "sportsline": [
+      "https://www.sportsline.com/insiders/2026-nfl-week-4-odds-score-predictions-sportsline-ai-reveals-picks-for-every-game/",
+      "https://www.sportsline.com/insiders/nfl-odds-lines-spreads-2026-week-4-picks-predictions-from-proven-model/"
+    ]
+  },
+  "external_source_availability": {
+    "SportsLine": {
+      "status": "PARTIAL_PUBLIC_ONLY",
+      "note": "Public article confirms SportsLine generated ATS/O-U/ML picks for every Week 4 game, but the full ATS table is behind membership. The public article exposes an ARI-NYG Under example, not a complete ATS slate. Do not infer missing ATS picks."
+    },
+    "Gridiron": {
+      "status": "UNVERIFIED_PUBLIC_WEEK4_PICKSET",
+      "note": "No authoritative public Week 4 Gridiron AI probability/pick table matching the previously used source was verified in this pass. Search results for Gridiron Games are an odds sheet, not the Gridiron AI source used previously."
+    },
+    "Lucas": {
+      "status": "NOT_PUBLICLY_AVAILABLE",
+      "note": "No Week 4 Lucas pickset was supplied by the user or verified publicly in this pass. Leave NO TAKE/UNVERIFIED until a source is provided."
+    }
+  },
+  "games": [
+    {
+      "game_id": "ARI @ NYG",
+      "qb_status": "No quarterback change flagged in official Friday research.",
+      "injury_context": "NYG OT Andrew Thomas DNP; RB Tyrone Tracy Jr. limited; CB Deonte Banks and S Tyler Nubin limited. Arizona had several front-seven/OL players limited but key veterans Budda Baker, Isaac Seumalo and Josh Sweat were full.",
+      "weather_context": "East Rutherford: around 66F Sunday; 40% chance of showers after 2 PM; east wind about 7-9 mph. 1 PM kickoff may see deteriorating conditions later in the game.",
+      "weather_materiality": "LOW_TO_MODERATE",
+      "context_flags": ["NYG_LEFT_TACKLE_DNP", "POSSIBLE_LATE_GAME_SHOWERS"],
+      "sportsline_public": "Under example only; no public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "ATL @ NO",
+      "qb_status": "No quarterback change flagged in official Friday research.",
+      "injury_context": "ATL DE Za'Darius Smith DNP; LB Divine Deablo and DE Samson Ebukam limited. NO had Kaden Elliss and Carl Granderson DNP with several others limited.",
+      "weather_context": "Caesars Superdome indoor game; outdoor New Orleans weather is not expected to materially affect play.",
+      "weather_materiality": "NONE_INDOORS",
+      "context_flags": ["INDOOR_GAME", "EDGE_DEFENDER_AVAILABILITY_TO_MONITOR"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "TEN @ BAL",
+      "qb_status": "Lamar Jackson progressed to full participation by Friday; no Titans QB change flagged.",
+      "injury_context": "TEN Tony Pollard full; Tyjae Spears limited. BAL carried several defensive/OL injuries during the week, while Lamar Jackson was full Friday.",
+      "weather_context": "Baltimore: showers likely Sunday, about 70% chance, cloudy near 66F with light east wind.",
+      "weather_materiality": "MODERATE",
+      "context_flags": ["RAIN_RISK", "LAMAR_FULL_FRIDAY"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "NE @ BUF",
+      "qb_status": "Drake Maye full with right-shoulder listing; no Bills QB concern flagged.",
+      "injury_context": "NE DT Christian Barmore, CB Christian Gonzalez and T Morgan Moses were DNP in the latest official report; Buffalo CB Christian Benford was also DNP earlier in the week.",
+      "weather_context": "Orchard Park: mostly sunny, roughly 66-68F, light south/southwest wind around 5-7 mph.",
+      "weather_materiality": "LOW",
+      "context_flags": ["NE_MULTIPLE_HIGH_VALUE_DNP", "BENIGN_WEATHER"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "DET @ CAR",
+      "qb_status": "No quarterback change flagged.",
+      "injury_context": "CAR ruled out WR Xavier Legette and LG Damien Lewis; WR Jalen Coker, DT Cam Jackson, DT Lee Hunter and RT Monroe Freeling were questionable. DET G Ben Bartch DNP; CB D.J. Reed limited.",
+      "weather_context": "Charlotte: showers expected Sunday, around 69F, 80% precipitation risk.",
+      "weather_materiality": "HIGH",
+      "context_flags": ["CAR_TWO_STARTERS_OUT", "HEAVY_RAIN_RISK"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "NYJ @ CHI",
+      "qb_status": "Chicago had not publicly named a Week 4 starter in the verified Friday research; Caleb Williams remained DNP with hamstring issue. Case Keenum and Tyson Bagent were the active alternatives under discussion.",
+      "injury_context": "NYJ ruled out RB Breece Hall, WR Adonai Mitchell, TE Mason Taylor, G Dylan Parham and LB Kiko Mauigoa. CHI also had multiple DNPs including Caleb Williams, D'Andre Swift, Braxton Jones, Joe Thuney and Grady Jarrett on the latest official listing.",
+      "weather_context": "Chicago: sunny near 70F, southwest wind 5-10 mph shifting northwest; gusts around 15 mph.",
+      "weather_materiality": "LOW",
+      "context_flags": ["NYJ_MULTIPLE_OFFENSIVE_STARTERS_OUT", "CHI_QB_UNCERTAINTY", "CHI_MULTIPLE_DNP"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "JAX @ CIN",
+      "qb_status": "No quarterback change flagged.",
+      "injury_context": "CIN S Kyle Dugger, DT B.J. Hill and G Dalton Risner were DNP; JAX had several limited participants including CB Christian Braswell, CB Montaric Brown, DT DaVon Hamilton, WR Jakobi Meyers and OL Cole Van Lanen.",
+      "weather_context": "Cincinnati: mostly sunny near 74F with calm wind.",
+      "weather_materiality": "LOW",
+      "context_flags": ["CIN_INTERIOR_DEFENSE_AND_OL_DNP", "BENIGN_WEATHER"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "DAL @ HOU",
+      "qb_status": "No quarterback change flagged.",
+      "injury_context": "DAL CB Cobie Durant, LB DeMarvion Overshown and CB Shavon Revel Jr. were DNP; HOU LB Azeez Al-Shaair DNP while Will Anderson Jr. was full and several defenders/OL were limited.",
+      "weather_context": "NRG Stadium has a retractable roof; outdoor Houston heat is secondary unless roof status changes.",
+      "weather_materiality": "LOW_ROOF_DEPENDENT",
+      "context_flags": ["DAL_SECONDARY_LB_AVAILABILITY", "ROOF_STATUS_TO_CONFIRM"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "DEN @ SF",
+      "qb_status": "No quarterback change flagged in the verified Friday research.",
+      "injury_context": "SF had Nick Bosa, Mike Evans, Dre Greenlaw, KhaDarel Hodge, James Thompson Jr. and Keion White DNP, with Trent Williams limited; Christian McCaffrey was full. DEN was comparatively healthier with several key players full.",
+      "weather_context": "Santa Clara: hot and mostly sunny, roughly upper-80s; NWS heat advisory active through Sunday evening.",
+      "weather_materiality": "MODERATE_TO_HIGH_HEAT",
+      "context_flags": ["SF_HEAVY_INJURY_VOLUME", "HEAT_ADVISORY"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "GB @ TB",
+      "qb_status": "Baker Mayfield is out; Tampa is expected to use rookie Jalon Daniels at quarterback per NFL news. Green Bay had no QB change flagged.",
+      "injury_context": "TB also had multiple defensive players limited/DNP during the week; GB had several OL/DL DNPs and limited players.",
+      "weather_context": "Tampa: near 90F with scattered showers/thunderstorms possible, around 45% precipitation risk.",
+      "weather_materiality": "MODERATE",
+      "context_flags": ["TB_BACKUP_QB", "THUNDERSTORM_RISK", "LARGE_TOTAL_MOVE_ALREADY_IN_MARKET"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "IND @ WAS",
+      "qb_status": "Jayden Daniels ruled out; Marcus Mariota will start for Washington. Indianapolis has no QB change flagged.",
+      "injury_context": "WAS also ruled out G Sam Cosmi and S Nick Cross. Colts RB Jonathan Taylor and CB Charvarius Ward progressed to full participation; Keenan Allen was DNP on the latest NFL listing.",
+      "weather_context": "Tottenham/London: fog early changing to sunny by late morning, near 22C/72F, less than 5% precipitation during the game window.",
+      "weather_materiality": "LOW",
+      "context_flags": ["WAS_STARTING_QB_OUT", "WAS_OL_STARTER_OUT", "INTERNATIONAL_GAME"],
+      "sportsline_public": "SportsLine public best-bet article identified this matchup as fitting a historical betting system, but the full proprietary selection is not reproduced here.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "KC @ LV",
+      "qb_status": "Patrick Mahomes full; Aidan O'Connell DNP for non-injury personal reason in the verified Thursday report.",
+      "injury_context": "KC T Josh Simmons DNP, while Chris Jones, Rashee Rice and most listed Chiefs were full; L'Jarius Sneed limited. LV G Jackson Powers-Johnson DNP while Ashton Jeanty was full.",
+      "weather_context": "Allegiant Stadium indoor game; outdoor Las Vegas heat is not expected to materially affect play.",
+      "weather_materiality": "NONE_INDOORS",
+      "context_flags": ["INDOOR_GAME", "KC_LT_DNP", "LV_INTERIOR_OL_DNP"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "LAC @ SEA",
+      "qb_status": "No starting-QB change flagged; Chargers backup Trey Lance was limited.",
+      "injury_context": "LAC WR Ladd McConkey and DT Dalvin Tomlinson were DNP on the latest NFL listing, with several other Chargers limited; SEA Jarran Reed, Rashid Shaheed, Leonard Williams and Grey Zabel were full, while Julian Love remained limited and Jadarian Price DNP.",
+      "weather_context": "Seattle: mostly sunny near 68-70F with light wind around 3-5 mph.",
+      "weather_materiality": "LOW",
+      "context_flags": ["LAC_KEY_WR_DNP", "SEA_HEALTH_TREND_IMPROVING", "BENIGN_WEATHER"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "LAR @ PHI",
+      "qb_status": "No quarterback change flagged.",
+      "injury_context": "NFL Friday listing showed Rams WR Puka Nacua limited, TE Colby Parkinson DNP and CB Jaylen Watson DNP; Philadelphia had Zack Baun, Marquise Brown, Dallas Goedert, Fred Johnson and DeVonta Smith DNP on the latest listing, with several others limited/full.",
+      "weather_context": "Philadelphia: cool and cloudy around mid-60s, light east/northeast wind; NWS guidance showed elevated precipitation probability by Sunday evening, so exact kickoff timing should be refreshed Sunday.",
+      "weather_materiality": "LOW_TO_MODERATE",
+      "context_flags": ["PHI_MULTIPLE_DNP", "LAR_SKILL_PLAYER_LIMITED", "WEATHER_REFRESH_NEEDED"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    },
+    {
+      "game_id": "MIA @ MIN",
+      "qb_status": "No quarterback change flagged.",
+      "injury_context": "MIN WR Justin Jefferson remained DNP and NFL news indicated he is out Sunday; Miami RB De'Von Achane is already out for the season from a prior ACL injury. Friday NFL news said RB Jaylen Wright and C Aaron Brewer are expected to play, while Caleb Douglas and Robert Beal Jr. are out.",
+      "weather_context": "U.S. Bank Stadium indoor game; outdoor Minneapolis weather does not materially affect play.",
+      "weather_materiality": "NONE_INDOORS",
+      "context_flags": ["MIN_JEFFERSON_OUT", "MIA_ACHANE_SEASON_OUT", "INDOOR_GAME"],
+      "sportsline_public": "No public ATS pick captured.",
+      "gridiron": "UNVERIFIED",
+      "lucas": "UNVERIFIED"
+    }
+  ],
+  "completeness": {
+    "eligible_games": 15,
+    "games_with_injury_context": 15,
+    "games_with_qb_status": 15,
+    "games_with_weather_context": 15,
+    "games_with_weather_materiality": 15,
+    "sportsline_full_ATS_publicly_verified": 0,
+    "gridiron_week4_pickset_publicly_verified": 0,
+    "lucas_week4_pickset_verified": 0
+  },
+  "step5_guardrail": "Step 5 context does not modify frozen Week 4 V2 probabilities. Step 6 may display source/context agreement and contradictions, but unverified external picks remain missing rather than inferred."
+}
