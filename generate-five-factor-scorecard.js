@@ -1,7 +1,8 @@
 'use strict';
 const fs=require('fs');
 const {scoreSlate,formatSpread}=require('./five-factor-scorecard-engine');
-const input=require('./five-factor-scorecard-data-week04.json');
+const loadInput=require('./load-five-factor-week04');
+const input=loadInput();
 const main=require('./v2/results/week_04_nfelo_optimizer_rerun_2026-10-03.json');
 const factorLabels={lineMovement:'Line movement',trends:'ATS trends',money:'Money',defense:'Defense',keyNumbers:'Key numbers'};
 function factorForLean(f,side){return f.scores[side];}
@@ -18,9 +19,10 @@ function enrich(g){
   const against=opposes.length?opposes.map(x=>`${x.label}: ${x.explanation}`).join(' '):neutral.length?`The remaining ${neutral.length} factor${neutral.length===1?' is':'s are'} neutral rather than additional confirmation.`:`No factor directly opposes the five-factor lean.`;
   return {...g,fiveFactor:{...g.fiveFactor,overall:{...o,pick,whyThisSide:why,whatArguesAgainst:against,mainSystem:{pick:mainRow?.pick||'NO TAKE',decision:mainRow?.decision||'UNKNOWN',comparison}}}};
 }
-const scored=scoreSlate(input).games.map(enrich).sort((a,b)=>Math.max(b.fiveFactor.overall.awayScore,b.fiveFactor.overall.homeScore)-Math.max(a.fiveFactor.overall.awayScore,a.fiveFactor.overall.homeScore)||a.game.localeCompare(b.game));
+const scoredBase=scoreSlate(input);
+const scored=scoredBase.games.map(enrich).sort((a,b)=>Math.max(b.fiveFactor.overall.awayScore,b.fiveFactor.overall.homeScore)-Math.max(a.fiveFactor.overall.awayScore,a.fiveFactor.overall.homeScore)||a.game.localeCompare(b.game));
 scored.forEach((g,i)=>g.fiveFactor.overall.scorecardRank=i+1);
-const output={season:input.season,week:input.week,status:'PRE_RESULT_FIVE_FACTOR_CHALLENGER',capturedAt:input.capturedAt,engineVersion:scoreSlate(input).engineVersion,challengerOnly:true,feedsV2:false,feedsOptimizer:false,correlationDisclosure:'Line Movement and Money are separate v1.0.1 factors for interpretability but both describe market behavior and are not independent evidence.',sourceInput:'five-factor-scorecard-data-week04.json',games:scored};
+const output={season:input.season,week:input.week,status:'PRE_RESULT_FIVE_FACTOR_CHALLENGER',capturedAt:input.capturedAt,engineVersion:scoredBase.engineVersion,challengerOnly:true,feedsV2:false,feedsOptimizer:false,correlationDisclosure:'Line Movement and Money are separate v1.0.1 factors for interpretability but both describe market behavior and are not independent evidence.',sourceInput:['five-factor-scorecard-data-week04.json','five-factor-scorecard-verified-overrides-week04.json'],verification:input.verification,games:scored};
 fs.writeFileSync('five-factor-scorecard-week04.json',JSON.stringify(output,null,2)+'\n');
 console.log('Generated five-factor-scorecard-week04.json');
 for(const g of scored){const o=g.fiveFactor.overall;console.log(`${o.scorecardRank}. ${g.game} | ${o.pick} | ${Math.max(o.awayScore,o.homeScore)} | ${o.displayGrade} | ${o.alignment.supports} support / ${o.alignment.opposes} oppose | ${o.mainSystem.comparison}`);}
