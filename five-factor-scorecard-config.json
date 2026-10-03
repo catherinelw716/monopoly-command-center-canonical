@@ -1,0 +1,78 @@
+{
+  "version": "1.0.1",
+  "status": "PREREGISTERED_BEFORE_WEEK4_OUTPUT",
+  "factor_max": 20,
+  "neutral": 10,
+  "factor_weights": {"lineMovement": 0.2, "trends": 0.2, "money": 0.2, "defense": 0.2, "keyNumbers": 0.2},
+  "lineMovement": {
+    "bands": [
+      {"maxExclusive": 0.5, "supported": 10},
+      {"maxExclusive": 1.0, "supported": 12},
+      {"maxExclusive": 1.5, "supported": 14},
+      {"maxExclusive": 2.0, "supported": 16},
+      {"maxExclusive": 3.0, "supported": 18},
+      {"maxExclusive": 999, "supported": 20}
+    ],
+    "crossSourceDirectionDisagreementCap": 14
+  },
+  "trends": {
+    "weights": {"h2h": 0.40, "season": 0.35, "recent": 0.25},
+    "rawRateBands": [
+      {"min": 0.70, "rating": 20}, {"min": 0.65, "rating": 18}, {"min": 0.60, "rating": 16},
+      {"min": 0.55, "rating": 14}, {"min": 0.52, "rating": 12}, {"min": 0.48, "rating": 10},
+      {"min": 0.45, "rating": 8}, {"min": 0.40, "rating": 6}, {"min": 0.35, "rating": 4},
+      {"min": 0.30, "rating": 2}, {"min": 0.00, "rating": 0}
+    ],
+    "sampleMultipliers": {"1": 0.25, "2": 0.40, "3": 0.60, "4": 0.80, "5plus": 1.0},
+    "h2hRecency": {"lte2": 1.0, "lte5": 0.75, "gt5": 0.50},
+    "diffBands": [
+      {"maxExclusive": 1, "supported": 10}, {"maxExclusive": 3, "supported": 12},
+      {"maxExclusive": 5, "supported": 14}, {"maxExclusive": 7, "supported": 16},
+      {"maxExclusive": 9, "supported": 18}, {"maxExclusive": 999, "supported": 20}
+    ],
+    "oneComponentCap": 14
+  },
+  "money": {
+    "allowedMetricTypes": ["handle", "money", "dollars"],
+    "bands": [
+      {"min": 0.70, "supported": 20}, {"min": 0.65, "supported": 18}, {"min": 0.60, "supported": 16},
+      {"min": 0.55, "supported": 14}, {"min": 0.51, "supported": 12}, {"min": 0.00, "supported": 10}
+    ],
+    "lineMismatchPoints": 1.0,
+    "referenceMismatchCap": 14,
+    "freshHours": 6,
+    "staleHours": 24,
+    "staleCap": 14
+  },
+  "defense": {
+    "rankTiers": [
+      {"min": 1, "max": 5, "value": 5}, {"min": 6, "max": 10, "value": 3},
+      {"min": 11, "max": 22, "value": 0}, {"min": 23, "max": 27, "value": -3},
+      {"min": 28, "max": 32, "value": -5}
+    ],
+    "spreadMultipliers": [
+      {"max": 2.5, "value": 0.5}, {"max": 6.5, "value": 1.0},
+      {"max": 9.5, "value": 1.5}, {"max": 99, "value": 2.0}
+    ],
+    "diffBands": [
+      {"maxExclusive": 1, "supported": 10}, {"maxExclusive": 3, "supported": 12},
+      {"maxExclusive": 5, "supported": 14}, {"maxExclusive": 7, "supported": 16},
+      {"maxExclusive": 9, "supported": 18}, {"maxExclusive": 999, "supported": 20}
+    ]
+  },
+  "keyNumbers": [
+    {"key": 3, "frequency": 0.15, "hookStrength": 6},
+    {"key": 7, "frequency": 0.09, "hookStrength": 5},
+    {"key": 6, "frequency": 0.08, "hookStrength": 4},
+    {"key": 10, "frequency": 0.05, "hookStrength": 3},
+    {"key": 14, "frequency": 0.05, "hookStrength": 3}
+  ],
+  "exactKeyMarketRelativeRule": "An exact Sly key is intrinsically neutral, but receives ceil(hookStrength/2) directional value when Sly improves the team's position from the worse side of that key versus current market. This is v1.0.1 clarification aligning the executable config with the approved spec's market-relative key-number requirement.",
+  "grades": [
+    {"min": 85, "grade": "A+"}, {"min": 80, "grade": "A"}, {"min": 75, "grade": "A-"},
+    {"min": 70, "grade": "B+"}, {"min": 65, "grade": "B"}, {"min": 60, "grade": "B-"},
+    {"min": 55, "grade": "C+"}, {"min": 51, "grade": "C"}, {"min": 50, "grade": "N"}
+  ],
+  "caps": {"moneyUnavailable": "B+", "verifiedLt4": "B", "verifiedLt3": "C+", "twoStrongOpposes": "B", "availableLte2": "INSUFFICIENT DATA"},
+  "alignment": {"supportsMin": 12, "neutralMin": 9, "neutralMax": 11, "opposesMax": 8, "strongOpposesMax": 6}
+}
