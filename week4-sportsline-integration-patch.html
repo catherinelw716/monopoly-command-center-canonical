@@ -1,6 +1,6 @@
 <style id="week4-sportsline-style">
-.sl-banner{margin:10px 0;padding:11px 12px;border:1px solid rgba(56,189,248,.28);background:rgba(56,189,248,.07);border-radius:12px;font-size:10px;line-height:1.5}.sl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.sl-card{padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:10px;background:rgba(15,23,42,.28)}.sl-card small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase}.sl-card b{display:block;margin-top:3px;font-size:11px}.sl-note{font-size:10px;color:#a7bac9;line-height:1.5}.src-sub{display:block;color:#94a3b8;font-size:9px;line-height:1.35;margin-top:3px}
-@media(max-width:760px){.sl-grid{grid-template-columns:1fr}.source-table{min-width:1040px!important}}
+.sl-banner{margin:10px 0;padding:11px 12px;border:1px solid rgba(56,189,248,.28);background:rgba(56,189,248,.07);border-radius:12px;font-size:10px;line-height:1.5}.sl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.sl-card{padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:10px;background:rgba(15,23,42,.28)}.sl-card small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase}.sl-card b{display:block;margin-top:3px;font-size:11px}.sl-note{font-size:10px;color:#a7bac9;line-height:1.5}.src-sub{display:block;color:#94a3b8;font-size:9px;line-height:1.35;margin-top:3px}.nfelo-chip{display:inline-flex;align-items:center;gap:5px;margin-top:5px;padding:4px 7px;border:1px solid rgba(34,197,94,.22);background:rgba(34,197,94,.08);border-radius:8px;color:#bbf7d0;font-size:9px;font-weight:800}
+@media(max-width:760px){.sl-grid{grid-template-columns:1fr}.source-table{min-width:1240px!important}}
 </style>
 <script id="week4-sportsline-layer">
 (function(){
@@ -8,25 +8,46 @@
  const G=window.WEEK4_CURRENT_PUBLIC||[];
  const S=window.WEEK4_SOURCE_PUBLIC||[];
  const byGame=Object.fromEntries(G.map(g=>[g.game,g]));
+ const NF={
+  'IND @ WAS':{away:'IND',home:'WAS',currentAway:-3.5,modelAway:-3.5,evAway:-4.5,currentHome:3.5,modelHome:3.5,evHome:-4.5},
+  'NYJ @ CHI':{away:'NYJ',home:'CHI',currentAway:3.5,modelAway:3.5,evAway:-4.5,currentHome:-3.5,modelHome:-3.5,evHome:-4.5},
+  'JAX @ CIN':{away:'JAX',home:'CIN',currentAway:2.5,modelAway:2.5,evAway:-4.5,currentHome:-2.5,modelHome:-2.5,evHome:-4.5},
+  'DAL @ HOU':{away:'DAL',home:'HOU',currentAway:3,modelAway:3,evAway:-4,currentHome:-3,modelHome:-3,evHome:-4},
+  'ARI @ NYG':{away:'ARI',home:'NYG',currentAway:-2.5,modelAway:-0.5,evAway:-12,currentHome:2.5,modelHome:0.5,evHome:2.5},
+  'LAR @ PHI':{away:'LAR',home:'PHI',currentAway:-3.5,modelAway:-2.5,evAway:-23,currentHome:3.5,modelHome:2.5,evHome:14},
+  'TEN @ BAL':{away:'TEN',home:'BAL',currentAway:11.5,modelAway:11.5,evAway:-4.5,currentHome:-11.5,modelHome:-11.5,evHome:-4.5},
+  'GB @ TB':{away:'GB',home:'TB',currentAway:-3.5,modelAway:-3.5,evAway:-4.5,currentHome:3.5,modelHome:3.5,evHome:-4.5},
+  'NE @ BUF':{away:'NE',home:'BUF',currentAway:6.5,modelAway:6.5,evAway:-4.5,currentHome:-6.5,modelHome:-6.5,evHome:-4.5},
+  'MIA @ MIN':{away:'MIA',home:'MIN',currentAway:10.5,modelAway:10.5,evAway:-4.5,currentHome:-10.5,modelHome:-10.5,evHome:-4.5},
+  'KC @ LV':{away:'KC',home:'LV',currentAway:-4.5,modelAway:-4.5,evAway:-4.5,currentHome:4.5,modelHome:4.5,evHome:-4.5},
+  'LAC @ SEA':{away:'LAC',home:'SEA',currentAway:7,modelAway:7,evAway:-4.2,currentHome:-7,modelHome:-7,evHome:-4.2},
+  'DEN @ SF':{away:'DEN',home:'SF',currentAway:2.5,modelAway:2.5,evAway:-4.5,currentHome:-2.5,modelHome:-2.5,evHome:-4.5},
+  'DET @ CAR':{away:'DET',home:'CAR',currentAway:-3.5,modelAway:-3,evAway:-15,currentHome:3.5,modelHome:3,evHome:5.9},
+  'ATL @ NO':{away:'ATL',home:'NO',currentAway:2.5,modelAway:2.5,evAway:-4.5,currentHome:-2.5,modelHome:-2.5,evHome:-4.5}
+ };
+ window.WEEK4_NFELO=NF;
  const money=n=>'$'+Number(n||0).toLocaleString();
  const sum=arr=>(arr||[]).reduce((a,x)=>a+Number(x.amount||0),0);
+ const sign=n=>n>0?'+'+n:String(n);
  function activate(view){try{if(typeof window.switchView==='function'){window.switchView(view);return;}}catch(e){}document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===view));window.scrollTo(0,0);}
  function ensureAnalysisNav(){for(const nav of [document.querySelector('.primary-nav'),document.querySelector('.mobile-nav')]){if(!nav||nav.querySelector('[data-view="analysis"]'))continue;const b=document.createElement('button');if(nav.classList.contains('primary-nav'))b.className='nav-btn';b.dataset.view='analysis';b.textContent='Analysis';b.onclick=()=>activate('analysis');const before=nav.querySelector('[data-view="games"]');before?nav.insertBefore(b,before):nav.appendChild(b);}}
  function moneyText(sl){const x=sl?.moneyPct||{};return Object.entries(x).map(([t,p])=>t+' '+p+'%').join(' · ')||'—';}
  function simPctText(sl){if(!sl?.simPct)return 'Not publicly exposed';const q=sl.simPct.qualifier==='approximately'?'≈':'';return q+sl.simPct.cover_pct+'% '+sl.simPct.team+' cover';}
- function gridText(g){const ga=g?.gridiron;if(!ga)return '—';return ga.bestSide==='NO TAKE'?'50/50':ga.grade+' · '+ga.bestSide+' '+ga.bestPct+'%';}
+ function gridText(g){const ga=g?.gridiron;if(!ga)return 'Unavailable';return ga.bestSide==='NO TAKE'?'N · 50/50 · no model edge':ga.grade+' · '+ga.bestSide+' '+ga.bestPct+'%';}
+ function nfeloBest(id){const n=NF[id];if(!n)return null;return n.evAway>n.evHome?{team:n.away,ev:n.evAway,current:n.currentAway,model:n.modelAway}:{team:n.home,ev:n.evHome,current:n.currentHome,model:n.modelHome};}
+ function nfeloText(id){const n=NF[id],b=nfeloBest(id);if(!n||!b)return 'Unavailable';const edge=(b.model-b.current);return b.team+' current '+sign(b.current)+' · model '+sign(b.model)+' · EV '+sign(b.ev)+'%'+(Math.abs(edge)>0.01?' · model gap '+sign(edge):' · model=market');}
  function updateToday(){
    const t=document.getElementById('today');if(!t)return;
    let b=document.getElementById('slCurrentBanner');if(!b){b=document.createElement('div');b.id='slCurrentBanner';b.className='sl-banner';(t.querySelector('.panel')||t).prepend(b);}
-   b.innerHTML='<b>'+META.snapshot_label+'</b><br>Current Action market, official NFL injury statuses, weather, SportsLine screenshot data and Gridiron screenshot data are reconciled into one Week 4 state. Sly lines remain immutable.';
+   b.innerHTML='<b>'+META.snapshot_label+'</b><br>Current Action market, official NFL injuries/weather, SportsLine, Gridiron and the 5:20 PM ET nfelo model snapshot are reconciled as separate evidence lanes. Sly lines remain immutable.';
    const p=META.working_portfolio||{};const ks=[...t.querySelectorAll('.kpi')];const top=G.slice(0,4).map(x=>x.lean).join(' / ');
-   const vals=[['Catherine','$10,800','#28 · working outlay '+money(sum(p.Catherine))],['Amanda','$8,700','#65 · working outlay '+money(sum(p.Amanda))],['Household','$19,500',money(p.household_outlay)+' working outlay'],['Top board',top,'Latest reconciled Week 4 ranking']];
+   const vals=[['Catherine','$10,800','#28 · working outlay '+money(sum(p.Catherine))],['Amanda','$8,700','#65 · working outlay '+money(sum(p.Amanda))],['Household','$19,500',money(p.household_outlay)+' working outlay'],['Top board',top,'Portfolio not re-optimized yet for nfelo']];
    ks.slice(0,4).forEach((k,i)=>{const v=vals[i];if(!v)return;const sm=k.querySelector('small'),bb=k.querySelector('b'),sp=k.querySelector('span');if(sm)sm.textContent=v[0];if(bb)bb.textContent=v[1];if(sp)sp.textContent=v[2];});
-   const alerts=t.querySelector('.alerts');if(alerts){alerts.innerHTML=G.slice(0,4).map((g,i)=>'<div class="alert '+(i<3?'green':'yellow')+'"><span class="dot"></span><div><b>#'+g.rank+' '+g.lean+' · '+g.decision+'</b><br>'+g.whyPlay+'</div></div>').join('');}
+   const alerts=t.querySelector('.alerts');if(alerts)alerts.innerHTML='<div class="alert green"><span class="dot"></span><div><b>nfelo materially strengthens PHI +3.5.</b><br>nfelo current LAR -3.5 but model LAR -2.5; Philadelphia shows +14% displayed EV.</div></div><div class="alert green"><span class="dot"></span><div><b>NYG +2.5 gains a second independent model case.</b><br>nfelo model is only ARI -0.5 versus current ARI -2.5; NYG +2.5 shows +2.5% EV.</div></div><div class="alert yellow"><span class="dot"></span><div><b>CAR +3.5 is now a legitimate watch.</b><br>nfelo model is DET -3 versus current -3.5 and Carolina shows +5.9% EV; Gridiron still slightly prefers Detroit.</div></div><div class="alert yellow"><span class="dot"></span><div><b>SEA and KC remain supported, but nfelo is neutral.</b><br>nfelo model exactly matches the current/Sly spread for both games, so it is not another independent edge vote.</div></div>';
  }
  function updatePortfolio(){
    const p=document.getElementById('portfolio');if(!p)return;const meta=META.working_portfolio||{};const first=p.querySelector('.section-head + .panel')||p.querySelector('.panel');
-   if(first){const e=first.querySelector('.eyebrow');if(e)e.textContent='Week 4 Saturday · full source reconciliation';const b=first.querySelector('b');if(b)b.textContent='Household working outlay: '+money(meta.household_outlay);const para=first.querySelector('p');if(para)para.textContent='Working portfolio after the latest market, SportsLine, Gridiron, official injury and weather reconciliation. It remains provisional until PRE_KICK_FINAL.';}
+   if(first){const e=first.querySelector('.eyebrow');if(e)e.textContent='Week 4 Saturday · nfelo integrated';const b=first.querySelector('b');if(b)b.textContent='Household working outlay: '+money(meta.household_outlay);const para=first.querySelector('p');if(para)para.textContent='Existing $3,800 working portfolio is preserved until the optimizer is explicitly rerun with nfelo. nfelo now informs the ranking/watch layer but does not silently change wager sizing.';}
    const cards=[...p.querySelectorAll('.portfolio-grid .entry-card')];for(const [i,name] of ['Catherine','Amanda'].entries()){const card=cards[i],arr=meta[name]||[];if(!card)continue;const eye=card.querySelector('.eyebrow');if(eye)eye.textContent=name+' · '+(name==='Catherine'?'#28 · $10,800':'#65 · $8,700');const h=card.querySelector('h3');if(h)h.textContent=money(sum(arr))+' · '+arr.length+' games';const list=card.querySelector('.wager-list');if(list)list.innerHTML=arr.map(x=>'<div class="wager"><b>'+x.pick+'</b><span>'+money(x.amount)+' · '+x.role+'</span></div>').join('');}
  }
  function renderSources(){
@@ -36,30 +57,37 @@
     '<td><b>'+d.ourPick+'</b><span class="src-sub">#'+d.ourRank+' · '+d.ourGrade+' · '+d.ourState+'</span></td>',
     '<td><b>'+(d.sportsPick||'—')+'</b><span class="src-sub">'+d.sportsGrade+' · '+d.sportsType+' · spread '+d.sportsCurrent+'<br>Money: '+d.sportsMoney+'<br>SIM %: '+d.sportsSimPct+'</span></td>',
     '<td><b><span class="gridiron-grade gridiron-grade-'+String(d.gridGrade||'N').toLowerCase()+'">'+(d.gridGrade||'N')+'</span> '+(d.gridPick||'—')+'</b><span class="src-sub">Gridiron '+d.gridLine+' · '+d.gridOther+'</span></td>',
+    '<td><b>'+nfeloText(d.game)+'</b><span class="src-sub">Public nfelo model/current spread and displayed side EV · captured 5:20 PM ET</span></td>',
     '<td><b>—</b><span class="src-sub">Week 4 Lucas pick not supplied/verified</span></td>',
-    '<td><b>'+d.agreement+'</b><span class="src-sub">Source-specific lines retained; non-ATS SportsLine SIMs are not ATS votes.</span></td>'
+    '<td><b>'+d.agreement+'</b><span class="src-sub">nfelo model gap is independent context; exact market matches are neutral, not extra confirmation.</span></td>'
    ].join('')+'</tr>').join('');
-   const th=document.querySelector('#sourceCompare .source-table thead tr');if(th)th.innerHTML='<th>Game</th><th>Our Decision</th><th>SportsLine · spread / money / SIM</th><th>Gridiron · grade / cover %</th><th>Lucas</th><th>Cross-source read</th>';document.querySelectorAll('[data-source-view="compare"]').forEach(b=>b.textContent='All Sources');
+   const th=document.querySelector('#sourceCompare .source-table thead tr');if(th)th.innerHTML='<th>Game</th><th>Our Decision</th><th>SportsLine · spread / money / SIM</th><th>Gridiron · grade / cover %</th><th>nfelo · current / model / EV</th><th>Lucas</th><th>Cross-source read</th>';document.querySelectorAll('[data-source-view="compare"]').forEach(b=>b.textContent='All Sources');
+ }
+ function patchDecisionBoard(){
+   const roots=[document.getElementById('games'),document.getElementById('recommendedPlays')].filter(Boolean);if(!roots.length)return;
+   function idFrom(text){const t=String(text||'').toUpperCase();return Object.keys(NF).find(id=>{const [a,h]=id.split(' @ ');return t.includes(a)&&t.includes(h);});}
+   roots.forEach(root=>root.querySelectorAll('[data-game],.game-card,.play-card,.recommended-card,.decision-card,.card,tr').forEach(el=>{const raw=el.getAttribute?.('data-game')||'';const id=NF[raw]?raw:idFrom(raw+' '+el.textContent);if(!id)return;let chip=el.querySelector(':scope > .nfelo-chip');if(!chip){chip=document.createElement('div');chip.className='nfelo-chip';el.appendChild(chip);}chip.textContent='nfelo · '+nfeloText(id);}));
  }
  function updateAnalysis(){
    let s=document.getElementById('analysis');if(!s){s=document.createElement('section');s.id='analysis';s.className='view';const lab=document.getElementById('lab');lab?.parentNode?.insertBefore(s,lab);}
-   const top=G.slice(0,8).map(g=>'<div class="sl-card"><small>#'+g.rank+' · '+g.decision+'</small><b>'+g.lean+'</b><p class="sl-note">'+g.whyPlay+'</p><p class="sl-note"><b>Gridiron:</b> '+gridText(g)+' · <b>SportsLine:</b> '+(g.sportsline?.grade||'—')+' '+(g.sportsline?.visiblePick||'—')+'</p></div>').join('');
-   s.innerHTML='<div class="panel"><div class="eyebrow">Full reconciliation · '+META.snapshot_label+'</div><h2>Overall Analysis</h2><p>The ranking below is generated from the current normalized Week 4 state. Market-price value, SportsLine evidence, Gridiron probabilities, official injuries and weather are displayed separately so one source cannot silently overwrite another.</p><div class="sl-grid">'+top+'</div></div><div class="panel" style="margin-top:12px"><h3>Current contradictions to keep visible</h3><p><b>DAL/HOU:</b> SportsLine backs Houston while Gridiron prefers Dallas at a shorter number. <b>JAX/CIN:</b> SportsLine backs Jacksonville while Gridiron slightly prefers Cincinnati. <b>NE/BUF:</b> Sly gives New England the key +7 versus Action +6.5, but Gridiron and the Patriots injury report push the other way. <b>MIN:</b> SportsLine A is at -9.5, one point better than Sly -10.5.</p></div>';
+   const top=G.slice(0,8).map(g=>'<div class="sl-card"><small>#'+g.rank+' · '+g.decision+'</small><b>'+g.lean+'</b><p class="sl-note">'+g.whyPlay+'</p><p class="sl-note"><b>Gridiron:</b> '+gridText(g)+'<br><b>SportsLine:</b> '+(g.sportsline?.grade||'—')+' '+(g.sportsline?.visiblePick||'—')+'<br><b>nfelo:</b> '+nfeloText(g.game)+'</p></div>').join('');
+   s.innerHTML='<div class="panel"><div class="eyebrow">nfelo integration · captured Oct 3 · 5:20 PM ET</div><h2>Overall Analysis</h2><p>nfelo is now treated as an independent model-spread/EV source, not a simple vote. Exact nfelo market/model matches are neutral. Meaningful nfelo model gaps can strengthen or weaken a side, but the current $3,800 portfolio has not yet been re-optimized.</p><div class="sl-grid">'+top+'</div></div><div class="panel" style="margin-top:12px"><h3>What nfelo changes</h3><p><b>PHI +3.5:</b> largest new positive signal — nfelo current PHI +3.5, model PHI +2.5, displayed EV +14%; this materially strengthens the existing key-number watch despite Philadelphia injuries. <b>NYG +2.5:</b> nfelo model NYG +0.5 versus current +2.5, EV +2.5%, independently reinforcing Gridiron’s NYG lean. <b>CAR +3.5:</b> nfelo model +3 versus current +3.5 and +5.9% EV moves Carolina from a pure pass into a contradiction watch; Gridiron still leans DET 51%. <b>SEA/KC:</b> nfelo exactly matches the market/Sly line, so it is neutral rather than additional confirmation.</p></div>';
  }
- function updateLab(){const lab=document.getElementById('lab');if(!lab)return;let p=document.getElementById('slLab');if(!p){p=document.createElement('div');p.id='slLab';p.className='panel';lab.querySelector('.section-head')?.insertAdjacentElement('afterend',p);}p.innerHTML='<div class="eyebrow">Current provenance · '+META.snapshot_label+'</div><h3>Normalized Week 4 source state</h3><p class="sl-note">Sly freeze is immutable. Action current market/weather is timestamped at 5:10 PM ET. Official NFL injury statuses are from the Oct 3 Week 4 report. SportsLine spread/money/SIM metadata is from the user-provided 4:11 PM screenshots. Gridiron spread/cover probabilities are from the user-provided Week 4 screenshot. Lucas remains unavailable rather than inferred.</p>';}
+ function updateLab(){const lab=document.getElementById('lab');if(!lab)return;let p=document.getElementById('slLab');if(!p){p=document.createElement('div');p.id='slLab';p.className='panel';lab.querySelector('.section-head')?.insertAdjacentElement('afterend',p);}p.innerHTML='<div class="eyebrow">Current provenance · '+META.snapshot_label+'</div><h3>Normalized Week 4 source state</h3><p class="sl-note">Sly freeze is immutable. Action market/weather: 5:10 PM ET. SportsLine screenshots: 4:11 PM ET. Gridiron: user-provided Week 4 screenshot. nfelo public Games model: captured 5:20 PM ET from nfeloapp.com/games, preserving current spread, model spread and displayed side EV. Lucas remains unavailable rather than inferred.</p>';}
  function addGameRead(){
-   const id=new URLSearchParams(location.search).get('game');if(!id)return;document.getElementById('slGameRead')?.remove();const hero=document.getElementById('gameHero');const x=byGame[id];if(!hero||!x)return;const sl=x.sportsline||{},ga=x.gridiron||{};const box=document.createElement('div');box.id='slGameRead';box.className='panel';box.style.margin='12px 0';
-   box.innerHTML='<div class="eyebrow">Latest source snapshot · '+META.snapshot_label+'</div><h3>'+id+' · '+x.lean+'</h3><div class="sl-grid">'+
+   const id=new URLSearchParams(location.search).get('game');if(!id)return;document.getElementById('slGameRead')?.remove();const hero=document.getElementById('gameHero');const x=byGame[id];if(!hero||!x)return;const sl=x.sportsline||{},ga=x.gridiron||{},nf=NF[id];const box=document.createElement('div');box.id='slGameRead';box.className='panel';box.style.margin='12px 0';
+   box.innerHTML='<div class="eyebrow">Latest source snapshot · nfelo added 5:20 PM ET</div><h3>'+id+' · '+x.lean+'</h3><div class="sl-grid">'+
     '<div><small>SportsLine spread</small><b>'+(sl.currentPrice||'—')+'</b><p class="sl-note">Open '+(sl.openPrice||'—')+' · Money '+moneyText(sl)+'</p></div>'+
     '<div><small>SportsLine SIM %</small><b>'+simPctText(sl)+'</b><p class="sl-note">Visible SIM '+(sl.grade||'—')+' · '+(sl.visiblePick||'—')+' ('+(sl.kind||'—')+')</p></div>'+
     '<div><small>Gridiron</small><b>'+gridText(x)+'</b><p class="sl-note">Reference '+(ga.line||'—')+' · '+(ga.away||'')+' '+(ga.awayPct??'—')+'% / '+(ga.home||'')+' '+(ga.homePct??'—')+'%</p></div>'+
+    '<div><small>nfelo</small><b>'+nfeloText(id)+'</b><p class="sl-note">'+(nf?nf.away+' model '+sign(nf.modelAway)+' / '+nf.home+' model '+sign(nf.modelHome):'Unavailable')+'. EV is nfelo’s displayed side EV, not our Monopoly EV.</p></div>'+
     '<div><small>Current market</small><b>'+(x.current||'—')+'</b><p class="sl-note">'+(x.marketNote||'')+'</p></div>'+
     '<div><small>Weather</small><b>'+(x.weather||'—')+'</b><p class="sl-note">Context only; not folded into frozen V2.</p></div>'+
     '<div><small>Decision</small><b>'+x.decision+' · '+x.lean+'</b><p class="sl-note">'+x.whyPlay+'</p></div></div>'+
     '<p class="sl-note"><b>Latest injuries:</b> '+(x.news?.[0]?.detail||'—')+'</p><p class="sl-note"><b>Main risk:</b> '+x.against+'</p>';
    hero.insertAdjacentElement('afterend',box);
  }
- function apply(){ensureAnalysisNav();updateToday();updatePortfolio();renderSources();updateAnalysis();updateLab();addGameRead();window.week4SourceQA={version:META.version,householdOutlay:META.working_portfolio?.household_outlay,top:G.slice(0,8).map(x=>x.lean),sourceRows:S.length};}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,250));else setTimeout(apply,250);[800,1500,2400].forEach(ms=>setTimeout(apply,ms));document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-source-view],[data-game],button'))setTimeout(apply,180);},true);
+ function apply(){ensureAnalysisNav();updateToday();updatePortfolio();renderSources();patchDecisionBoard();updateAnalysis();updateLab();addGameRead();window.week4SourceQA={version:META.version,householdOutlay:META.working_portfolio?.household_outlay,top:G.slice(0,8).map(x=>x.lean),sourceRows:S.length,nfeloGames:Object.keys(NF).length};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,250));else setTimeout(apply,250);[800,1500,2400].forEach(ms=>setTimeout(apply,ms));const obs=new MutationObserver(()=>setTimeout(()=>{renderSources();patchDecisionBoard();addGameRead();},80));setTimeout(()=>obs.observe(document.body,{childList:true,subtree:true}),350);document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-source-view],[data-game],button'))setTimeout(apply,180);},true);
 })();
 </script>
