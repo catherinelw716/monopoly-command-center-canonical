@@ -1,0 +1,21 @@
+{
+  "captured_at_local": "2026-10-03T16:11:00-04:00",
+  "source": "User-provided SportsLine screenshots",
+  "games": {
+    "IND @ WAS": {"projected":{"IND":29,"WAS":23},"open_spread":"WAS +3.5","current_spread":"WAS +4.5","open_total":47.5,"current_total":46.5,"sportsline_pick_count":7,"sim_grade":"C","sim_pick":"OVER 46.5","sim_type":"Total"},
+    "NE @ BUF": {"projected":{"NE":20,"BUF":27},"open_spread":"BUF -7","current_spread":"BUF -7","open_total":48.5,"current_total":49.5,"sportsline_pick_count":4,"sim_grade":"B","sim_pick":"NE +264","sim_type":"Moneyline"},
+    "TEN @ BAL": {"projected":{"TEN":18,"BAL":32},"open_spread":"BAL -11.5","current_spread":"BAL -11.5","open_total":43.5,"current_total":42.5,"sportsline_pick_count":7,"sim_grade":"B","sim_pick":"OVER 42.5","sim_type":"Total"},
+    "NYJ @ CHI": {"projected":{"NYJ":20,"CHI":30},"open_spread":"CHI -3.5","current_spread":"CHI -3.5","open_total":42.5,"current_total":43.5,"sportsline_pick_count":4,"sim_grade":"B","sim_pick":"OVER 43.5","sim_type":"Total"},
+    "JAX @ CIN": {"projected":{"JAX":28,"CIN":27},"open_spread":"CIN -2.5","current_spread":"CIN -2.5","open_total":51.5,"current_total":51.5,"sportsline_pick_count":12,"sim_grade":"B","sim_pick":"JAX +2.5","sim_type":"Spread"},
+    "DAL @ HOU": {"projected":{"DAL":23,"HOU":30},"open_spread":"HOU -2.5","current_spread":"HOU -3","open_total":47.5,"current_total":48.5,"sportsline_pick_count":8,"sim_grade":"B","sim_pick":"HOU -3","sim_type":"Spread"},
+    "ARI @ NYG": {"projected":{"ARI":25,"NYG":24},"open_spread":"NYG +1","current_spread":"NYG +2.5","open_total":44.5,"current_total":44.5,"sportsline_pick_count":6,"sim_grade":"C","sim_pick":"OVER 44.5","sim_type":"Total"},
+    "LAR @ PHI": {"projected":{"LAR":23,"PHI":20},"open_spread":"PHI +3.5","current_spread":"PHI +3.5","open_total":42.5,"current_total":42.5,"sportsline_pick_count":1,"sim_grade":"C","sim_pick":"PHI +160","sim_type":"Moneyline"},
+    "GB @ TB": {"projected":{"GB":23,"TB":22},"open_spread":"TB +3.5","current_spread":"TB +3","open_total":38.5,"current_total":39.5,"sportsline_pick_count":5,"sim_grade":"B","sim_pick":"TB +143","sim_type":"Moneyline"},
+    "MIA @ MIN": {"projected":{"MIA":15,"MIN":29},"open_spread":"MIN -10","current_spread":"MIN -9.5","open_total":38.5,"current_total":38.5,"sportsline_pick_count":1,"sim_grade":"A","sim_pick":"MIN -9.5","sim_type":"Spread"},
+    "KC @ LV": {"projected":{"KC":28,"LV":21},"open_spread":"LV +4.5","current_spread":"LV +4.5","open_total":47.5,"current_total":47.5,"sportsline_pick_count":3,"sim_grade":"B","sim_pick":"KC -4.5","sim_type":"Spread"},
+    "DEN @ SF": {"projected":{"DEN":21,"SF":23},"open_spread":"SF -2.5","current_spread":"SF -2.5","open_total":48,"current_total":48,"sportsline_pick_count":7,"sim_grade":"A","sim_pick":"UNDER 48","sim_type":"Total"},
+    "LAC @ SEA": {"projected":{"LAC":17,"SEA":27},"open_spread":"SEA -6.5","current_spread":"SEA -7","open_total":43.5,"current_total":42.5,"sportsline_pick_count":2,"sim_grade":"B","sim_pick":"SEA -7","sim_type":"Spread"},
+    "DET @ CAR": {"projected":{"DET":28,"CAR":27},"open_spread":"CAR +3.5","current_spread":"CAR +3.5","open_total":51,"current_total":50.5,"sportsline_pick_count":4,"sim_grade":"B","sim_pick":"CAR +163","sim_type":"Moneyline"},
+    "ATL @ NO": {"projected":{"ATL":24,"NO":25},"open_spread":"NO -2.5","current_spread":"NO -2.5","open_total":48.5,"current_total":47.5,"sportsline_pick_count":2,"sim_grade":"C","sim_pick":"ATL +2.5","sim_type":"Spread"}
+  }
+}
