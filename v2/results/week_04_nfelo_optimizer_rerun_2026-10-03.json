@@ -1,0 +1,61 @@
+{
+  "status": "SATURDAY_WORKING_NOT_SUBMISSION_FINAL",
+  "captured_at_local": "2026-10-03T17:20:00-04:00",
+  "inputs": {
+    "sly": "immutable Week 4 Sly freeze",
+    "market_context": "week4-live-market-context-2026-10-03-1710ET.json",
+    "sportsline": "week4-sportsline-2026-10-03-1611ET.json",
+    "gridiron": "week4-gridiron-2026-10-03.json",
+    "nfelo": "week4-nfelo-2026-10-03-1720ET.json",
+    "sizing_calibration": "v2/results/week_04_sizing_calibration_review.md"
+  },
+  "governance": {
+    "frozen_v2_unchanged": true,
+    "nfelo_is_independent_context_lane": true,
+    "nfelo_ev_not_monopoly_ev": true,
+    "neutral_nfelo_market_model_matches_do_not_count_as_confirmation": true,
+    "working_household_target": 3800
+  },
+  "red_team": {
+    "market_maker": "Do not count nfelo model=market rows as extra votes. Preserve Sly key-number advantages separately.",
+    "quant": "PHI and NYG gain the only meaningful positive nfelo model gaps among current contenders; CAR gains positive nfelo EV but conflicts with Gridiron.",
+    "methodologist": "nfelo is newly introduced and has not been calibrated to the Monopoly scoring objective, so it can change ranking/context but should not justify a deployment-band jump by itself.",
+    "injury_personnel": "PHI's nfelo edge is tempered by substantial Philadelphia absences; NE remains capped by New England injuries; IND retains Washington QB/OL context support.",
+    "portfolio": "Keep the validated 20% / $3,800 household calibration and diversify the two entries rather than putting both entries on every new model edge."
+  },
+  "ranking": [
+    {"rank":1,"game":"DEN @ SF","pick":"DEN +3","decision":"PLAY","reason":"Best Sly key-number price edge; nfelo neutral rather than contradictory."},
+    {"rank":2,"game":"KC @ LV","pick":"KC -4.5","decision":"PLAY","reason":"SportsLine B and Gridiron A/57% align at the exact Sly line; nfelo is neutral."},
+    {"rank":3,"game":"LAR @ PHI","pick":"PHI +3.5","decision":"PLAY","reason":"nfelo's strongest positive Week 4 signal: PHI +3.5 current vs +2.5 model, +14% displayed EV; Sly also preserves the hook through 3 versus Action."},
+    {"rank":4,"game":"ARI @ NYG","pick":"NYG +2.5","decision":"PLAY","reason":"Gridiron prefers NYG at +1.5 and nfelo model is NYG +0.5 vs current +2.5; two independent model-value lanes support the dog."},
+    {"rank":5,"game":"LAC @ SEA","pick":"SEA -7","decision":"PLAY","reason":"SportsLine B and approximately 60% public model cover support at exact Sly; Gridiron and nfelo are neutral."},
+    {"rank":6,"game":"IND @ WAS","pick":"IND -3.5","decision":"PLAY","reason":"One point better than SportsLine plus Washington QB/OL absences; Gridiron and nfelo neutral."},
+    {"rank":7,"game":"DET @ CAR","pick":"CAR +3.5","decision":"WATCH","reason":"nfelo model CAR +3 vs current +3.5 with +5.9% EV and SportsLine ML direction support Carolina, but Gridiron leans DET 51%."},
+    {"rank":8,"game":"TEN @ BAL","pick":"TEN +11.5","decision":"WATCH","reason":"Gridiron 52% at exact line; nfelo neutral and SportsLine side unavailable."},
+    {"rank":9,"game":"JAX @ CIN","pick":"JAX +2.5","decision":"WATCH","reason":"SportsLine B supports JAX while Gridiron slightly prefers CIN; nfelo neutral."},
+    {"rank":10,"game":"GB @ TB","pick":"TB +3.5","decision":"WATCH","reason":"Gridiron 51% TB and SportsLine moneyline direction point Tampa, but QB context is adverse and nfelo neutral."},
+    {"rank":11,"game":"NE @ BUF","pick":"NE +7","decision":"WATCH","reason":"Key-number value vs Action +6.5, but Gridiron BUF 51%, injuries, and nfelo neutrality prevent promotion."},
+    {"rank":12,"game":"ATL @ NO","pick":"ATL +2.5","decision":"WATCH","reason":"SportsLine C and Gridiron directional support, but Gridiron percentage is at +3 and nfelo is neutral."},
+    {"rank":13,"game":"DAL @ HOU","pick":"DAL +3","decision":"WATCH","reason":"SportsLine HOU conflicts with Gridiron DAL; nfelo is neutral at +3."},
+    {"rank":14,"game":"MIA @ MIN","pick":"MIN -10.5","decision":"PASS","reason":"Gridiron 52% at -10.5, but SportsLine A support is only at -9.5 and Jefferson is out; nfelo neutral."},
+    {"rank":15,"game":"NYJ @ CHI","pick":"NO TAKE","decision":"PASS","reason":"Gridiron CHI 52% but no price edge, SportsLine is total only, nfelo neutral, and injuries are messy."}
+  ],
+  "portfolio": {
+    "household_outlay": 3800,
+    "deployment_fraction": 0.1949,
+    "Catherine": [
+      {"pick":"DEN +3","amount":700,"role":"core key-number price value"},
+      {"pick":"NYG +2.5","amount":500,"role":"cross-model dog value"},
+      {"pick":"PHI +3.5","amount":500,"role":"nfelo model-gap value with injury cap"},
+      {"pick":"KC -4.5","amount":200,"role":"exact-line SportsLine + Gridiron alignment"}
+    ],
+    "Amanda": [
+      {"pick":"SEA -7","amount":700,"role":"SportsLine football-model core"},
+      {"pick":"KC -4.5","amount":600,"role":"exact-line SportsLine + Gridiron alignment"},
+      {"pick":"IND -3.5","amount":300,"role":"SportsLine price + injury context"},
+      {"pick":"DEN +3","amount":300,"role":"key-number price value"}
+    ]
+  },
+  "household_exposure": {"DEN +3":1000,"KC -4.5":800,"SEA -7":700,"NYG +2.5":500,"PHI +3.5":500,"IND -3.5":300},
+  "notes": "Working Saturday rerun only. Sunday PRE_KICK_FINAL must refresh market lines, inactives and weather before submission."
+}
