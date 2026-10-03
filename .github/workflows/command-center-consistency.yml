@@ -4,19 +4,19 @@ on:
   push:
     branches: [main]
     paths:
-      - 'server.js'
+      - 'server-v7.js'
+      - 'package.json'
       - 'week4-current-data.json'
       - 'week4-sportsline-2026-10-03-1611ET.json'
       - 'week4-gridiron-2026-10-03.json'
       - 'week4-nfelo-2026-10-03-1720ET.json'
       - 'week4-live-market-context-2026-10-03-1710ET.json'
+      - 'v2/results/week_04_nfelo_optimizer_rerun_2026-10-03.json'
       - 'week4-sportsline-integration-patch.html'
       - 'game-detail-ui-patch.html'
       - 'mobile-patch.html'
       - 'mobile-nav-fix.html'
-      - 'command-center-view-map.json'
-      - 'command-center-consistency-qa.js'
-      - 'COMMAND_CENTER_DATA_CONTRACT.md'
+      - 'command-center-v7-qa.js'
   workflow_dispatch:
 
 jobs:
@@ -27,5 +27,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run Command Center cross-view consistency and render-contract QA
-        run: node command-center-consistency-qa.js
+      - name: Run Week 4 nfelo optimizer runtime QA
+        run: node command-center-v7-qa.js
