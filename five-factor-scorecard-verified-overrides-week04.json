@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-10-03T18:55:00-04:00",
+  "verification": {
+    "money": "DraftKings Network Betting Splits spread % Handle. DraftKings explicitly defines Handle as total money wagered and Bets as number of wagers.",
+    "market": "Action Network game pages/opening lines with current spread cross-checks; DAL current set to +2.5 for Dallas because Action's page display was internally inconsistent while current HOU -2.5 was corroborated by matchup/current-odds context.",
+    "trends": "Covers matchup pages: current-season ATS, Record Last 10 ATS, and first five H2H rows converted to team ATS records.",
+    "defense": "Yards Per Pass / nflverse Defensive EPA/Play, 2026 through Week 4, updated Oct 3."
+  },
+  "games": {
+    "IND @ WAS": {"money":{"awayPct":69,"homePct":31,"referenceAway":-4.5}},
+    "TEN @ BAL": {"money":{"awayPct":33,"homePct":67,"referenceAway":11.5}},
+    "NE @ BUF": {"money":{"awayPct":11,"homePct":89,"referenceAway":7}},
+    "NYJ @ CHI": {"money":{"awayPct":53,"homePct":47,"referenceAway":3.5}},
+    "JAX @ CIN": {"money":{"awayPct":27,"homePct":73,"referenceAway":2.5}},
+    "DAL @ HOU": {"market":{"currentAway":2.5,"crossCheckDirectionDisagreement":true},"money":{"awayPct":64,"homePct":36,"referenceAway":3}},
+    "ARI @ NYG": {"money":{"awayPct":86,"homePct":14,"referenceAway":-2.5}},
+    "LAR @ PHI": {"money":{"awayPct":82,"homePct":18,"referenceAway":-3.5}},
+    "GB @ TB": {"money":{"awayPct":54,"homePct":46,"referenceAway":-3}},
+    "MIA @ MIN": {"money":{"awayPct":39,"homePct":61,"referenceAway":10}},
+    "KC @ LV": {"money":{"awayPct":43,"homePct":57,"referenceAway":-4.5}},
+    "LAC @ SEA": {"money":{"awayPct":18,"homePct":82,"referenceAway":7}},
+    "DEN @ SF": {"money":{"awayPct":66,"homePct":34,"referenceAway":3}},
+    "DET @ CAR": {"money":{"awayPct":69,"homePct":31,"referenceAway":-3.5},"trends":{"awaySeason":{"w":1,"l":2,"p":0}}},
+    "ATL @ NO": {"money":{"awayPct":34,"homePct":66,"referenceAway":2.5}}
+  }
+}
