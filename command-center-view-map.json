@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "views": {
+    "today": {"selector":"#today","required":["sly","market_summary","our_decision","portfolio_summary"]},
+    "decision_board_recommended": {"selector":"#recommendedPlays","required":["sly","current_market","our_decision","sportsline_summary","gridiron_spread","gridiron_cover_pct","gridiron_grade"]},
+    "decision_board_all_games": {"selector":"#games","required":["sly","current_market","diff","our_decision","sportsline_summary","gridiron_spread","gridiron_cover_pct","gridiron_grade"]},
+    "source_table": {"selector":"#sourceCompareBody","required":["sly","our_decision","sportsline_spread","sportsline_money_pct","sportsline_sim_pct","gridiron_spread","gridiron_cover_pct","gridiron_grade","lucas"]},
+    "game_deep_dive": {"selector":"#gameHero","required":["sly","current_market","our_decision","sportsline_spread","sportsline_money_pct","sportsline_sim_pct","gridiron_spread","gridiron_cover_pct","gridiron_grade","lucas","news","weather"]},
+    "analysis": {"selector":"#analysis","required":["sly","market_summary","our_decision","sportsline_summary","gridiron_summary","news_summary","portfolio_summary"]},
+    "portfolio": {"selector":"#portfolio","required":["our_decision","wager_amounts","bankrolls"]},
+    "lab": {"selector":"#lab","required":["source_provenance","timestamps","sly","sportsline_provenance","gridiron_provenance","lucas_provenance"]}
+  },
+  "grade_rules": {"A":"55+","B":"52-54","C":"51","N":"50"},
+  "canonical_files": {
+    "week4_state":"week4-current-data.json",
+    "sportsline":"week4-sportsline-2026-10-03-1611ET.json",
+    "gridiron":"week4-gridiron-2026-10-03.json",
+    "sly":"v2/season_2026/week_04_sly_freeze.json"
+  }
+}
