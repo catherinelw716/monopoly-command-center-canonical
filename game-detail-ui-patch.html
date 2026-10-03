@@ -14,8 +14,9 @@
 #gameDetail p,#gameAnalysis p,#game-detail p,.game-detail p{line-height:1.55!important}
 #gameDetail ul,#gameAnalysis ul,#game-detail ul,.game-detail ul{padding-left:18px!important;margin:8px 0!important}
 #gameDetail li,#gameAnalysis li,#game-detail li,.game-detail li{margin:5px 0!important;line-height:1.45!important}
+.sl-deep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.sl-deep-card{padding:11px;border:1px solid rgba(148,163,184,.18);border-radius:11px;background:rgba(15,23,42,.28)}.sl-deep-card small{display:block;color:#94a3b8;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.sl-deep-card b{display:block;font-size:14px;margin-top:4px;line-height:1.25}.sl-deep-card span{display:block;color:#9fb0bf;font-size:9px;line-height:1.4;margin-top:4px}.sl-deep-note{font-size:10px;color:#a7bac9;line-height:1.5;margin-top:9px}
 @media(max-width:760px){
- .source-card-grid{grid-template-columns:1fr!important;gap:8px!important}
+ .source-card-grid,.sl-deep-grid{grid-template-columns:1fr!important;gap:8px!important}
  .source-card{padding:11px!important}
  #gameHero{border-radius:12px!important}
  #gameDetail .panel,#gameAnalysis .panel,#game-detail .panel,.game-detail .panel{padding:12px!important;border-radius:12px!important}
@@ -38,5 +39,35 @@
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(polish,120));else setTimeout(polish,120);
  setTimeout(polish,700);
  document.addEventListener('click',e=>{if(e.target.closest('[data-game]'))setTimeout(polish,160);});
+})();
+</script>
+<script id="sportsline-deep-dive-metrics">
+(function(){
+ const MONEY={
+  'IND @ WAS':{IND:70,WAS:30},'NE @ BUF':{NE:6,BUF:94},'TEN @ BAL':{TEN:3,BAL:97},'NYJ @ CHI':{NYJ:13,CHI:87},
+  'JAX @ CIN':{JAX:38,CIN:62},'DAL @ HOU':{DAL:54,HOU:46},'ARI @ NYG':{ARI:62,NYG:38},'LAR @ PHI':{LAR:77,PHI:23},
+  'GB @ TB':{GB:76,TB:24},'MIA @ MIN':{MIA:4,MIN:96},'KC @ LV':{KC:91,LV:9},'DEN @ SF':{DEN:16,SF:84},
+  'LAC @ SEA':{LAC:6,SEA:94},'DET @ CAR':{DET:88,CAR:12},'ATL @ NO':{ATL:27,NO:73}
+ };
+ const SIM_PCT={'LAC @ SEA':{label:'≈60% SEA cover',note:'Verified in SportsLine public Week 4 model article'}};
+ function fmtMoney(id){const x=MONEY[id];if(!x)return '—';return Object.entries(x).map(([t,p])=>t+' '+p+'%').join(' · ');}
+ function render(){
+   const id=new URLSearchParams(location.search).get('game');if(!id)return;
+   const x=(window.WEEK4_CURRENT_PUBLIC||[]).find(g=>g.game===id);if(!x)return;
+   const sl=x.sportsline||{};
+   const existing=document.getElementById('slGameRead');if(!existing)return;
+   const sim=SIM_PCT[id];
+   const simValue=sim?sim.label:'Not publicly exposed';
+   const simSub=sim?sim.note:((sl.grade||sl.visiblePick)?('Visible SportsLine SIM: '+(sl.grade||'—')+' · '+(sl.visiblePick||sl.side||'—')):'No verified numeric SIM % available');
+   existing.innerHTML='<div class="eyebrow">SportsLine deep dive · latest captured data</div><h3>'+id+' · SportsLine</h3><div class="sl-deep-grid">'+
+    '<div class="sl-deep-card"><small>Spread</small><b>'+(sl.currentPrice||'—')+'</b><span>Open '+(sl.openPrice||'—')+'</span></div>'+
+    '<div class="sl-deep-card"><small>Money % · spread</small><b>'+fmtMoney(id)+'</b><span>SportsLine betting-money split; not ticket/public %.</span></div>'+
+    '<div class="sl-deep-card"><small>SIM %</small><b>'+simValue+'</b><span>'+simSub+'</span></div></div>'+
+    '<p class="sl-deep-note"><b>SportsLine model detail:</b> '+(sl.grade||'—')+' · '+(sl.visiblePick||sl.side||'—')+' ('+(sl.kind||'—')+')'+(sl.projectedScore?' · projected '+sl.projectedScore:'')+'.</p>'+
+    '<p class="sl-deep-note"><b>Our decision:</b> '+x.decision+' · '+x.whyPlay+'</p>';
+ }
+ function later(){setTimeout(render,420);setTimeout(render,1150);}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',later);else later();
+ document.addEventListener('click',e=>{if(e.target.closest('[data-game],[data-view]'))setTimeout(render,500);},true);
 })();
 </script>
