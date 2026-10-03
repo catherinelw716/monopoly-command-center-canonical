@@ -35,3 +35,93 @@
   window.mobileNavQA={ready:true};
 })();
 </script>
+<style id="gridiron-render-contract-style">
+.gridiron-canonical-read{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;font-size:9px;line-height:1.35;color:#cbd5e1}
+.gridiron-canonical-read b{font-size:10px;color:#f8fafc}.gridiron-canonical-read .gridiron-ref{color:#94a3b8}
+</style>
+<script id="gridiron-render-contract-guard">
+(function(){
+  const BAD=/\b(undefined|null|\[object Object\])\b/i;
+  const games=()=>window.WEEK4_CURRENT_PUBLIC||[];
+  function norm(s){return String(s||'').toUpperCase().replace(/JAC/g,'JAX').replace(/[^A-Z0-9.+-]+/g,' ').replace(/\s+/g,' ').trim();}
+  function identify(el){
+    if(!el)return null;
+    const raw=el.getAttribute?.('data-game');
+    if(raw){const exact=games().find(g=>g.game===raw);if(exact)return exact;}
+    const t=norm(el.textContent);
+    return games().find(g=>{const [a,h]=g.game.split(' @ ');return t.includes(a)&&t.includes(h);})||null;
+  }
+  function read(g){
+    const d=g&&(g.gridiron||(g.sources&&g.sources.gridiron));
+    if(!d||!Number.isFinite(Number(d.bestPct))||!d.line){return {grade:'—',primary:'Unavailable',secondary:'Gridiron source unavailable',pct:null};}
+    const pct=Number(d.bestPct), tie=d.bestSide==='NO TAKE'||pct===50;
+    const grade=d.grade||(pct>=55?'A':pct>=52?'B':pct>=51?'C':'N');
+    return {
+      grade,
+      primary: tie ? '50/50 · no model edge' : String(d.bestSide)+' '+pct+'% cover',
+      secondary:'Gridiron '+d.line+' · '+d.away+' '+d.awayPct+'% / '+d.home+' '+d.homePct+'%',
+      pct
+    };
+  }
+  function patchMini(root,g){
+    if(!root||!g)return;
+    root.querySelectorAll('.source-mini,.source-card,[data-source]').forEach(el=>{
+      const label=norm(el.querySelector('small')?.textContent||el.getAttribute('data-source')||el.textContent.slice(0,40));
+      if(!label.includes('GRIDIRON'))return;
+      const r=read(g);let b=el.querySelector('b,strong');if(!b){b=document.createElement('b');el.appendChild(b);}b.textContent=r.grade+' · '+r.primary;
+      let s=el.querySelector('span');if(!s){s=document.createElement('span');el.appendChild(s);}s.textContent=r.secondary;
+    });
+  }
+  function patchCard(el,g){
+    if(!el||!g)return;const r=read(g);
+    let chip=el.querySelector(':scope > .gridiron-games-chip, .gridiron-canonical-read');
+    if(!chip){chip=document.createElement('div');chip.className='gridiron-canonical-read';const host=el.querySelector('.vg-sources,.game-meta,.card-meta,.play-meta,.game-info,.matchup')||el;host.appendChild(chip);}
+    chip.classList.add('gridiron-canonical-read');
+    chip.innerHTML='<b>Gridiron '+r.grade+' · '+r.primary+'</b><span class="gridiron-ref">'+r.secondary+'</span>';
+    patchMini(el,g);
+  }
+  function patchBoards(){
+    const roots=[document.getElementById('games'),document.getElementById('recommendedPlays'),document.querySelector('[data-view-panel="games"]')].filter(Boolean);
+    roots.forEach(root=>{
+      root.querySelectorAll('[data-game],.game-card,.play-card,.recommended-card,.matchup-card,.game-row,.decision-row,.decision-card,tr').forEach(el=>{const g=identify(el);if(g)patchCard(el,g);});
+    });
+  }
+  function patchSourceTable(){
+    const tbody=document.getElementById('sourceCompareBody');if(!tbody)return;
+    [...tbody.rows].forEach(row=>{
+      if(!row.cells||row.cells.length<4)return;const g=identify(row.cells[0])||identify(row);if(!g)return;const r=read(g);
+      row.cells[3].innerHTML='<b>'+r.grade+' · '+r.primary+'</b><span class="src-sub">'+r.secondary+'</span>';
+    });
+    const th=document.querySelector('#sourceCompare .source-table thead tr');if(th&&th.cells[3])th.cells[3].textContent='Gridiron AI · grade / cover %';
+  }
+  function patchDeepDive(){
+    const id=new URLSearchParams(location.search).get('game');if(!id)return;const g=games().find(x=>x.game===id);if(!g)return;const r=read(g);
+    const box=document.getElementById('gridironGameRead');if(box&&BAD.test(box.textContent||'')){
+      const d=g.gridiron||g.sources?.gridiron;
+      box.innerHTML='<div class="eyebrow">Gridiron spread model · supplied Week 4 screenshot</div><h3>'+g.game+' · Gridiron AI</h3><div class="ga-deep-grid"><div class="ga-deep-card"><small>Spread</small><b>'+d.line+'</b><span>'+d.away+' '+d.awayPct+'% / '+d.home+' '+d.homePct+'%</span></div><div class="ga-deep-card"><small>Chance to cover</small><b>'+r.grade+' · '+r.primary+'</b><span>'+r.secondary+'. Percentages apply to the displayed Gridiron line.</span></div></div>';
+    }
+  }
+  function repairBadGridironText(){
+    const candidates=document.querySelectorAll('#games *,#recommendedPlays *,#sourceCompare *,#gameHero *,#gridironGameRead *');
+    candidates.forEach(el=>{
+      const txt=el.textContent||'';if(!BAD.test(txt)||!norm(txt).includes('GRIDIRON'))return;
+      const g=identify(el.closest('[data-game],tr,.game-card,.play-card,.recommended-card,.matchup-card,.game-row,.decision-row,.decision-card')||el);
+      if(g)patchCard(el.closest('[data-game],tr,.game-card,.play-card,.recommended-card,.matchup-card,.game-row,.decision-row,.decision-card')||el,g);
+    });
+  }
+  function scan(){
+    const visible=[...document.querySelectorAll('#games,#recommendedPlays,#sourceCompare,#gridironGameRead')].map(x=>x.textContent||'').join('\n');
+    const bad=(visible.match(/\b(?:undefined|null|\[object Object\])\b/gi)||[]);
+    const table=document.getElementById('sourceCompareBody');
+    const sourceRows=table?[...table.rows].filter(r=>r.cells&&r.cells.length>=4).length:0;
+    const sourceRowsValid=table?[...table.rows].filter(r=>r.cells&&r.cells.length>=4).every(r=>{const t=r.cells[3].textContent||'';return !BAD.test(t)&&/\d+%|50\/50/.test(t);}):true;
+    return {games:games().length,badTokens:bad.length,sourceRows,sourceRowsValid,ok:games().length===15&&bad.length===0&&sourceRowsValid};
+  }
+  function apply(){patchBoards();patchSourceTable();patchDeepDive();repairBadGridironText();window.week4GridironRenderQA=scan();}
+  let timer=null;function schedule(){clearTimeout(timer);timer=setTimeout(apply,80);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{apply();setTimeout(apply,350);setTimeout(apply,1200);});else{apply();setTimeout(apply,350);setTimeout(apply,1200);}
+  const obs=new MutationObserver(schedule);obs.observe(document.documentElement,{childList:true,subtree:true,characterData:true});
+  document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-game],[data-source-view],button'))setTimeout(apply,120);},true);
+  window.runGridironRenderContractQA=function(){apply();return scan();};
+})();
+</script>
