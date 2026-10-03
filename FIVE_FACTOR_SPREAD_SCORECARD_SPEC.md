@@ -1,6 +1,6 @@
 # Spec: Five-Factor Spread Scorecard
 
-**Status:** Draft for human review  
+**Status:** Approved for planning  
 **Feature:** Standalone challenger analysis page for every Monopoly-eligible NFL spread  
 **Proposed route:** `/spread-scorecard`
 
