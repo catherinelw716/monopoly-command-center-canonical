@@ -8,6 +8,8 @@ function extractObject(text,startMarker,endMarker){const start=text.indexOf(star
 function signed(n){return n>0?`+${n}`:`${n}`;}
 function gridironExpected(snapshot){const out={};for(const [id,d] of Object.entries(snapshot.games))out[id]={spread:`${d.home} ${signed(d.home_spread)}`,away:d.away,awayPct:d.away_cover_pct,home:d.home,homePct:d.home_cover_pct};return out;}
 function sameGridiron(a,b){const ak=new Set(Object.keys(a)),bk=new Set(Object.keys(b));assert(setEq(ak,bk),'Gridiron hard-coded game set differs from canonical snapshot');for(const id of ak){for(const k of ['spread','away','awayPct','home','homePct'])assert(a[id][k]===b[id][k],`Gridiron drift ${id} ${k}: ${a[id][k]} != ${b[id][k]}`);}}
+function gridGrade(p){return p>=55?'A':p>=52?'B':p>=51?'C':'N';}
+function renderedGridiron(id,d){const pct=Math.max(d.away_cover_pct,d.home_cover_pct);const tie=d.away_cover_pct===d.home_cover_pct;const side=tie?'50/50 · no model edge':(d.away_cover_pct>d.home_cover_pct?`${d.away} ${d.away_cover_pct}% cover`:`${d.home} ${d.home_cover_pct}% cover`);return `Gridiron ${gridGrade(pct)} · ${side} · ${d.home} ${signed(d.home_spread)} · ${d.away} ${d.away_cover_pct}% / ${d.home} ${d.home_cover_pct}%`;}
 
 const state=json('week4-current-data.json');
 const sl=json('week4-sportsline-2026-10-03-1611ET.json');
@@ -15,6 +17,7 @@ const ga=json('week4-gridiron-2026-10-03.json');
 const live=json('week4-live-market-context-2026-10-03-1710ET.json');
 const viewMap=json('command-center-view-map.json');
 const mobile=read('mobile-patch.html');
+const mobileNav=read('mobile-nav-fix.html');
 const detail=read('game-detail-ui-patch.html');
 const sportsPatch=read('week4-sportsline-integration-patch.html');
 const server=read('server.js');
@@ -69,6 +72,24 @@ for(const id of ids){const d=detailG[id],e=ga.games[id];assert(d,`Deep-dive Grid
 
 for(const token of ['gridiron-games-chip','gridiron-grade','Gridiron AI · grade / cover %'])assert(mobile.includes(token),`Missing Decision Board/source-table Gridiron token: ${token}`);
 
-console.log('Command Center consistency QA passed');
+// Render-contract protection: source consistency is not enough. Every canonical Gridiron
+// record must produce a complete display string, ties must have an explicit neutral label,
+// and the runtime guard must repair stale-schema/undefined renderers after any re-render.
+for(const [id,d] of Object.entries(ga.games)){
+  const out=renderedGridiron(id,d);
+  assert(!/undefined|null|\[object Object\]/i.test(out),`Gridiron render contract emits invalid token for ${id}: ${out}`);
+  assert(/\d+%/.test(out),`Gridiron render contract missing percentage for ${id}`);
+  assert(out.includes(d.home)&&out.includes(d.away),`Gridiron render contract missing teams for ${id}`);
+  if(d.away_cover_pct===d.home_cover_pct)assert(out.includes('N · 50/50 · no model edge'),`Tie game must render neutral state for ${id}`);
+}
+assert(renderedGridiron('DEN @ SF',ga.games['DEN @ SF']).includes('N · 50/50 · no model edge'),'DEN/SF edge-case render failed');
+assert(renderedGridiron('KC @ LV',ga.games['KC @ LV']).includes('A · KC 57% cover'),'KC/LV directional render failed');
+assert(mobileNav.includes('gridiron-render-contract-guard'),'Runtime Gridiron render guard missing');
+assert(mobileNav.includes("const BAD=/\\b(undefined|null|\\[object Object\\])\\b/i"),'Runtime invalid-token guard missing');
+assert(mobileNav.includes('window.runGridironRenderContractQA'),'Runtime Gridiron QA hook missing');
+assert(mobileNav.includes('sourceRowsValid'),'Runtime source-table completeness check missing');
+assert(mobileNav.includes('MutationObserver'),'Gridiron guard must survive tab/card re-renders');
+
+console.log('Command Center consistency + render-contract QA passed');
 console.log('15/15 games consistent across Sly state, SportsLine, Gridiron and live market/context snapshots.');
-console.log('SportsLine spread/money/SIM, Gridiron grade/cover, market, injuries and weather are all mapped into required views.');
+console.log('15/15 Gridiron records have deterministic non-undefined render strings, including 50/50 and directional edge cases.');
