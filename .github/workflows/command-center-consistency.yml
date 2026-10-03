@@ -8,6 +8,7 @@ on:
       - 'week4-current-data.json'
       - 'week4-sportsline-2026-10-03-1611ET.json'
       - 'week4-gridiron-2026-10-03.json'
+      - 'week4-live-market-context-2026-10-03-1710ET.json'
       - 'week4-sportsline-integration-patch.html'
       - 'game-detail-ui-patch.html'
       - 'mobile-patch.html'
