@@ -1,0 +1,25 @@
+{
+  "captured_at_local": "2026-10-03T17:20:00-04:00",
+  "source": "nfelo NFL Model Projections",
+  "source_url": "https://www.nfeloapp.com/games/",
+  "week": 4,
+  "season": 2026,
+  "notes": "Captured from the public nfelo Games page. Spreads are team-perspective values. EV is nfelo's displayed side EV at the current line. PIT @ CLE excluded because the Monopoly pool has no official Sly line for that game.",
+  "games": {
+    "IND @ WAS": {"away":"IND","home":"WAS","open_away":-3.5,"current_away":-3.5,"model_away":-3.5,"ev_away_pct":-4.5,"open_home":3.5,"current_home":3.5,"model_home":3.5,"ev_home_pct":-4.5},
+    "NYJ @ CHI": {"away":"NYJ","home":"CHI","open_away":3.5,"current_away":3.5,"model_away":3.5,"ev_away_pct":-4.5,"open_home":-3.5,"current_home":-3.5,"model_home":-3.5,"ev_home_pct":-4.5},
+    "JAX @ CIN": {"away":"JAX","home":"CIN","open_away":2.5,"current_away":2.5,"model_away":2.5,"ev_away_pct":-4.5,"open_home":-2.5,"current_home":-2.5,"model_home":-2.5,"ev_home_pct":-4.5},
+    "DAL @ HOU": {"away":"DAL","home":"HOU","open_away":2.5,"current_away":3.0,"model_away":3.0,"ev_away_pct":-4.0,"open_home":-2.5,"current_home":-3.0,"model_home":-3.0,"ev_home_pct":-4.0},
+    "ARI @ NYG": {"away":"ARI","home":"NYG","open_away":-1.5,"current_away":-2.5,"model_away":-0.5,"ev_away_pct":-12.0,"open_home":1.5,"current_home":2.5,"model_home":0.5,"ev_home_pct":2.5},
+    "LAR @ PHI": {"away":"LAR","home":"PHI","open_away":-2.5,"current_away":-3.5,"model_away":-2.5,"ev_away_pct":-23.0,"open_home":2.5,"current_home":3.5,"model_home":2.5,"ev_home_pct":14.0},
+    "TEN @ BAL": {"away":"TEN","home":"BAL","open_away":11.5,"current_away":11.5,"model_away":11.5,"ev_away_pct":-4.5,"open_home":-11.5,"current_home":-11.5,"model_home":-11.5,"ev_home_pct":-4.5},
+    "GB @ TB": {"away":"GB","home":"TB","open_away":-3.5,"current_away":-3.5,"model_away":-3.5,"ev_away_pct":-4.5,"open_home":3.5,"current_home":3.5,"model_home":3.5,"ev_home_pct":-4.5},
+    "NE @ BUF": {"away":"NE","home":"BUF","open_away":6.5,"current_away":6.5,"model_away":6.5,"ev_away_pct":-4.5,"open_home":-6.5,"current_home":-6.5,"model_home":-6.5,"ev_home_pct":-4.5},
+    "MIA @ MIN": {"away":"MIA","home":"MIN","open_away":10.5,"current_away":10.5,"model_away":10.5,"ev_away_pct":-4.5,"open_home":-10.5,"current_home":-10.5,"model_home":-10.5,"ev_home_pct":-4.5},
+    "KC @ LV": {"away":"KC","home":"LV","open_away":-4.5,"current_away":-4.5,"model_away":-4.5,"ev_away_pct":-4.5,"open_home":4.5,"current_home":4.5,"model_home":4.5,"ev_home_pct":-4.5,"source_team_label_home":"OAK"},
+    "LAC @ SEA": {"away":"LAC","home":"SEA","open_away":7.0,"current_away":7.0,"model_away":7.0,"ev_away_pct":-4.2,"open_home":-7.0,"current_home":-7.0,"model_home":-7.0,"ev_home_pct":-4.2},
+    "DEN @ SF": {"away":"DEN","home":"SF","open_away":3.0,"current_away":2.5,"model_away":2.5,"ev_away_pct":-4.5,"open_home":-3.0,"current_home":-2.5,"model_home":-2.5,"ev_home_pct":-4.5},
+    "DET @ CAR": {"away":"DET","home":"CAR","open_away":-3.5,"current_away":-3.5,"model_away":-3.0,"ev_away_pct":-15.0,"open_home":3.5,"current_home":3.5,"model_home":3.0,"ev_home_pct":5.9},
+    "ATL @ NO": {"away":"ATL","home":"NO","open_away":2.5,"current_away":2.5,"model_away":2.5,"ev_away_pct":-4.5,"open_home":-2.5,"current_home":-2.5,"model_home":-2.5,"ev_home_pct":-4.5}
+  }
+}
