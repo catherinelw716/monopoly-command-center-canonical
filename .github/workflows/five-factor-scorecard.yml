@@ -1,0 +1,33 @@
+name: Five-Factor Spread Scorecard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'five-factor-scorecard-*.js'
+      - 'five-factor-scorecard-*.json'
+      - 'generate-five-factor-scorecard.js'
+      - 'FIVE_FACTOR_SPREAD_SCORECARD_*.md'
+      - '.github/workflows/five-factor-scorecard.yml'
+  workflow_dispatch:
+
+jobs:
+  scorecard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Engine fixtures
+        run: node five-factor-scorecard-engine-qa.js
+      - name: Generate scorecard
+        run: node generate-five-factor-scorecard.js
+      - name: Scorecard QA
+        run: node five-factor-scorecard-qa.js
+      - name: Upload generated canonical candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: five-factor-scorecard-week04
+          path: five-factor-scorecard-week04.json
+          if-no-files-found: error
