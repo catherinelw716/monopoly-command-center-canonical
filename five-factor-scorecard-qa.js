@@ -2,7 +2,8 @@
 const assert=require('assert');
 const fs=require('fs');
 const {scoreSlate,config}=require('./five-factor-scorecard-engine');
-const input=require('./five-factor-scorecard-data-week04.json');
+const loadInput=require('./load-five-factor-week04');
+const input=loadInput();
 const sly=require('./v2/season_2026/week_04_sly_freeze.json');
 assert.equal(input.games.length,15,'expected 15 eligible games');
 const slyBy=Object.fromEntries(sly.games.map(g=>[g.game,g]));
