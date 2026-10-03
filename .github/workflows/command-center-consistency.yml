@@ -12,6 +12,7 @@ on:
       - 'week4-sportsline-integration-patch.html'
       - 'game-detail-ui-patch.html'
       - 'mobile-patch.html'
+      - 'mobile-nav-fix.html'
       - 'command-center-view-map.json'
       - 'command-center-consistency-qa.js'
       - 'COMMAND_CENTER_DATA_CONTRACT.md'
@@ -25,5 +26,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run Command Center cross-view consistency QA
+      - name: Run Command Center cross-view consistency and render-contract QA
         run: node command-center-consistency-qa.js
