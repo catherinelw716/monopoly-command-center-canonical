@@ -15,8 +15,9 @@
 #gameDetail ul,#gameAnalysis ul,#game-detail ul,.game-detail ul{padding-left:18px!important;margin:8px 0!important}
 #gameDetail li,#gameAnalysis li,#game-detail li,.game-detail li{margin:5px 0!important;line-height:1.45!important}
 .sl-deep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.sl-deep-card{padding:11px;border:1px solid rgba(148,163,184,.18);border-radius:11px;background:rgba(15,23,42,.28)}.sl-deep-card small{display:block;color:#94a3b8;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.sl-deep-card b{display:block;font-size:14px;margin-top:4px;line-height:1.25}.sl-deep-card span{display:block;color:#9fb0bf;font-size:9px;line-height:1.4;margin-top:4px}.sl-deep-note{font-size:10px;color:#a7bac9;line-height:1.5;margin-top:9px}
+.ga-deep-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}.ga-deep-card{padding:11px;border:1px solid rgba(148,163,184,.18);border-radius:11px;background:rgba(15,23,42,.28)}.ga-deep-card small{display:block;color:#94a3b8;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.06em}.ga-deep-card b{display:block;font-size:14px;margin-top:4px;line-height:1.25}.ga-deep-card span{display:block;color:#9fb0bf;font-size:9px;line-height:1.4;margin-top:4px}.ga-pct-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}.ga-pct{display:inline-flex;padding:4px 7px;border-radius:999px;border:1px solid rgba(148,163,184,.20);font-size:10px;font-weight:800;background:rgba(148,163,184,.08)}
 @media(max-width:760px){
- .source-card-grid,.sl-deep-grid{grid-template-columns:1fr!important;gap:8px!important}
+ .source-card-grid,.sl-deep-grid,.ga-deep-grid{grid-template-columns:1fr!important;gap:8px!important}
  .source-card{padding:11px!important}
  #gameHero{border-radius:12px!important}
  #gameDetail .panel,#gameAnalysis .panel,#game-detail .panel,.game-detail .panel{padding:12px!important;border-radius:12px!important}
@@ -69,5 +70,51 @@
  function later(){setTimeout(render,420);setTimeout(render,1150);}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',later);else later();
  document.addEventListener('click',e=>{if(e.target.closest('[data-game],[data-view]'))setTimeout(render,500);},true);
+})();
+</script>
+<script id="gridiron-week4-spread-data">
+(function(){
+ const DATA={
+  'IND @ WAS':{away:'IND',home:'WAS',homeSpread:3.5,awayPct:50,homePct:50},
+  'TEN @ BAL':{away:'TEN',home:'BAL',homeSpread:-11.5,awayPct:52,homePct:48},
+  'NE @ BUF':{away:'NE',home:'BUF',homeSpread:-7,awayPct:49,homePct:51},
+  'NYJ @ CHI':{away:'NYJ',home:'CHI',homeSpread:-3.5,awayPct:48,homePct:52},
+  'JAX @ CIN':{away:'JAX',home:'CIN',homeSpread:-2.5,awayPct:49,homePct:51},
+  'DAL @ HOU':{away:'DAL',home:'HOU',homeSpread:-2.5,awayPct:52,homePct:48},
+  'ARI @ NYG':{away:'ARI',home:'NYG',homeSpread:1.5,awayPct:48,homePct:52},
+  'LAR @ PHI':{away:'LAR',home:'PHI',homeSpread:2.5,awayPct:50,homePct:50},
+  'GB @ TB':{away:'GB',home:'TB',homeSpread:3.5,awayPct:49,homePct:51},
+  'MIA @ MIN':{away:'MIA',home:'MIN',homeSpread:-10.5,awayPct:48,homePct:52},
+  'KC @ LV':{away:'KC',home:'LV',homeSpread:4.5,awayPct:57,homePct:43},
+  'LAC @ SEA':{away:'LAC',home:'SEA',homeSpread:-7,awayPct:50,homePct:50},
+  'DEN @ SF':{away:'DEN',home:'SF',homeSpread:-3,awayPct:50,homePct:50},
+  'DET @ CAR':{away:'DET',home:'CAR',homeSpread:3.5,awayPct:51,homePct:49},
+  'ATL @ NO':{away:'ATL',home:'NO',homeSpread:-3,awayPct:51,homePct:49}
+ };
+ window.WEEK4_GRIDIRON_SPREADS=DATA;
+ const slyMap={'IND @ WAS':3.5,'TEN @ BAL':-11.5,'NE @ BUF':-7,'NYJ @ CHI':-3.5,'JAX @ CIN':-2.5,'DAL @ HOU':-3,'ARI @ NYG':2.5,'LAR @ PHI':3.5,'GB @ TB':3.5,'MIA @ MIN':-10.5,'KC @ LV':4.5,'LAC @ SEA':-7,'DEN @ SF':-3,'DET @ CAR':3.5,'ATL @ NO':-2.5};
+ const sign=n=>n>0?'+'+n:String(n);
+ function awaySpread(d){return -d.homeSpread;}
+ function pickText(d){if(d.awayPct===d.homePct)return '50/50 · NO TAKE';return d.awayPct>d.homePct?(d.away+' '+sign(awaySpread(d))+' · '+d.awayPct+'%'):(d.home+' '+sign(d.homeSpread)+' · '+d.homePct+'%');}
+ function exact(id,d){return slyMap[id]===d.homeSpread;}
+ function patchSourceTable(){
+   const tbody=document.getElementById('sourceCompareBody');if(!tbody)return;
+   [...tbody.rows].forEach(r=>{
+     const id=(r.cells[0]?.querySelector('b')?.textContent||'').trim();const d=DATA[id];if(!d||r.cells.length<4)return;
+     const x=exact(id,d);const ref=x?'Exact Sly line':'Reference-line mismatch';
+     r.cells[3].innerHTML='<b>'+pickText(d)+'</b><span class="src-sub">Gridiron line: '+d.home+' '+sign(d.homeSpread)+' · '+d.away+' '+d.awayPct+'% / '+d.home+' '+d.homePct+'% · '+ref+'</span>';
+   });
+   const th=document.querySelector('#sourceCompare .source-table thead tr');if(th&&th.cells[3])th.cells[3].textContent='Gridiron AI · spread model';
+ }
+ function renderDeepDive(){
+   const id=new URLSearchParams(location.search).get('game');const d=DATA[id];if(!id||!d)return;
+   let box=document.getElementById('gridironGameRead');if(!box){box=document.createElement('div');box.id='gridironGameRead';box.className='panel';box.style.margin='12px 0';const sl=document.getElementById('slGameRead');const hero=document.getElementById('gameHero');if(sl)sl.insertAdjacentElement('afterend',box);else if(hero)hero.insertAdjacentElement('afterend',box);else return;}
+   const x=exact(id,d);const delta=(slyMap[id]-d.homeSpread);const ref=x?'Exact match to Sly':'Gridiron reference differs from Sly by '+Math.abs(delta)+' point'+(Math.abs(delta)===1?'':'s');
+   box.innerHTML='<div class="eyebrow">Gridiron spread model · supplied Week 4 screenshot</div><h3>'+id+' · Gridiron AI</h3><div class="ga-deep-grid"><div class="ga-deep-card"><small>Spread</small><b>'+d.home+' '+sign(d.homeSpread)+'</b><span>Home-team spread shown by Gridiron · away side '+d.away+' '+sign(awaySpread(d))+'</span></div><div class="ga-deep-card"><small>Chance to cover</small><b>'+pickText(d)+'</b><div class="ga-pct-row"><span class="ga-pct">'+d.away+' '+d.awayPct+'%</span><span class="ga-pct">'+d.home+' '+d.homePct+'%</span></div><span>'+ref+'. Percentages apply to the Gridiron displayed line and are not mechanically transferred to a different Sly number.</span></div></div>';
+ }
+ function apply(){patchSourceTable();renderDeepDive();window.week4GridironQA={games:Object.keys(DATA).length,source:'user screenshot',excludedThursday:'PIT @ CLE'};}
+ function later(){setTimeout(apply,1350);setTimeout(apply,1900);}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',later);else later();
+ document.addEventListener('click',e=>{if(e.target.closest('[data-game],[data-view],[data-source-view]'))setTimeout(apply,450);},true);
 })();
 </script>
