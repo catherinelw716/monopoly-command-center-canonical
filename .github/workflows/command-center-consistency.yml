@@ -1,0 +1,28 @@
+name: Command Center Consistency
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server.js'
+      - 'week4-current-data.json'
+      - 'week4-sportsline-2026-10-03-1611ET.json'
+      - 'week4-gridiron-2026-10-03.json'
+      - 'week4-sportsline-integration-patch.html'
+      - 'game-detail-ui-patch.html'
+      - 'mobile-patch.html'
+      - 'command-center-view-map.json'
+      - 'command-center-consistency-qa.js'
+      - 'COMMAND_CENTER_DATA_CONTRACT.md'
+  workflow_dispatch:
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run Command Center cross-view consistency QA
+        run: node command-center-consistency-qa.js
