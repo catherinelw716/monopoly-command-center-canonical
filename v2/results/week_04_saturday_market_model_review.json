@@ -1,0 +1,54 @@
+{
+  "season": 2026,
+  "week": 4,
+  "snapshot_type": "SATURDAY_MARKET_MODEL_REVIEW",
+  "captured_at_local": "2026-10-03T14:52:00-04:00",
+  "status": "SATURDAY_WORKING_NOT_PRE_KICK_FINAL",
+  "sources": {
+    "primary_full_slate": "CBS Sports Week 4 odds article, published Oct. 3 2026 11:13 AM ET; DraftKings spreads",
+    "secondary_key_matchups": "Action Network matchup pages crawled Oct. 3 2026",
+    "injuries": "NFL official Week 4 injury report, updated Oct. 3 2026",
+    "sportsline_public": "CBS/SportsLine public Week 4 model article, updated Oct. 3 2026 11:58 AM ET"
+  },
+  "model": {
+    "version": "V2-0006C-global-hybrid-r1",
+    "role": "market-value / Sly-vs-market probability anchor",
+    "important_limit": "V2 does not model team strength, injuries, quarterback changes or weather directly. Those remain separate decision/context layers.",
+    "selection_change": "Do not rank games from V2 alone. Saturday ranking requires market-value evidence plus independent football-model/context review, with provenance retained."
+  },
+  "games": [
+    {"game":"IND @ WAS","sly":"IND -3.5","dk_current":"IND -3.5","action_current":"IND -3.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"context":"Jayden Daniels, Rachaad White, Sam Cosmi and Nick Cross OUT; Keenan Allen OUT for IND.","decision":"WATCH","rank":5},
+    {"game":"NE @ BUF","sly":"NE +7","dk_current":"NE +6.5","action_current":"NE +6.5","market_state":"BROAD_MARKET_PRICE_EDGE","v2_side":"NE +7","v2_p_cover":0.492127,"v2_p_push":0.044344,"v2_p_loss":0.463529,"v2_net_edge":0.028598,"context":"Price value is real, but NE has major injury conflict: Christian Barmore, Christian Gonzalez and Brenden Schooler OUT; Morgan Moses questionable.","decision":"PLAY_SMALL","rank":4},
+    {"game":"TEN @ BAL","sly":"BAL -11.5","dk_current":"BAL -11.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"decision":"PASS","rank":10},
+    {"game":"NYJ @ CHI","sly":"NYJ +3.5","dk_current":"NYJ +3","action_current":"NYJ +3.5","market_state":"SOURCE_SENSITIVE","v2_side":"NYJ +3.5 vs DK only","v2_net_edge_dk":0.029010,"context":"Caleb Williams OUT for Chicago; Jets also have Breece Hall, Adonai Mitchell, Dylan Parham, Mason Taylor and Kiko Mauigoa OUT.","decision":"WATCH","rank":7},
+    {"game":"JAX @ CIN","sly":"CIN -2.5","dk_current":"CIN -2.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"decision":"PASS","rank":11},
+    {"game":"DAL @ HOU","sly":"DAL +3","dk_current":"DAL +2.5","action_current":"DAL +3","market_state":"SOURCE_SENSITIVE","v2_side":"DAL +3 vs DK only","v2_net_edge_dk":0.027639,"context":"Dallas has DeMarvion Overshown and Cobie Durant OUT; Houston has Azeez Al-Shaair and M.J. Stewart OUT.","decision":"PASS","rank":8},
+    {"game":"ARI @ NYG","sly":"NYG +2.5","dk_current":"NYG +1","action_current":"NYG +2.5","market_state":"SOURCE_SENSITIVE_STRONG_DK_VALUE","v2_side":"NYG +2.5 vs DK only","v2_net_edge_dk":0.096229,"sportsline":"Verified public SportsLine ATS pick: NYG +2.5, model covers >50%.","context":"Giants have no Week 4 injury designations; Jameis Winston remains starting QB with Jaxson Dart on IR.","decision":"PLAY_SECONDARY","rank":3},
+    {"game":"LAR @ PHI","sly":"PHI +3.5","dk_current":"PHI +3","action_current":"PHI +3.5","market_state":"SOURCE_SENSITIVE","v2_side":"PHI +3.5 vs DK only","v2_net_edge_dk":0.033713,"decision":"WATCH","rank":9},
+    {"game":"GB @ TB","sly":"GB -3.5","dk_current":"GB -4","action_current":"GB -3.5","market_state":"SOURCE_SENSITIVE","v2_side":"GB -3.5 vs DK only","v2_net_edge_dk":0.029010,"context":"Baker Mayfield OUT for Tampa Bay; Green Bay also has several OL/DL absences.","decision":"PLAY_SMALL_CONTEXT","rank":6},
+    {"game":"MIA @ MIN","sly":"MIN -10.5","dk_current":"MIN -10.5","action_current":"MIN -10.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"context":"Justin Jefferson OUT for Minnesota.","decision":"PASS","rank":12},
+    {"game":"KC @ LV","sly":"KC -4.5","dk_current":"KC -4.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"decision":"PASS","rank":13},
+    {"game":"DEN @ SF","sly":"DEN +3","dk_current":"DEN +2.5","action_current":"DEN +2.5","market_state":"BROAD_MARKET_PRICE_EDGE","v2_side":"DEN +3","v2_p_cover":0.475619,"v2_p_push":0.076400,"v2_p_loss":0.447980,"v2_net_edge":0.027639,"context":"Strong context alignment: Nick Bosa, James Thompson Jr. and Mykel Williams OUT for SF; several additional 49ers questionable; Trent Williams full.","decision":"PLAY_CORE","rank":1},
+    {"game":"LAC @ SEA","sly":"SEA -7","dk_current":"SEA -7","action_current":"SEA -7","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL PRICE EDGE","v2_net_edge":0.002320,"sportsline":"Verified public SportsLine ATS pick: SEA -7; forecast to cover in nearly 60% of simulations.","context":"Independent football-model support is the reason to retain Seattle; it is no longer a stale-line/value play.","decision":"PLAY_CORE_FOOTBALL_MODEL","rank":2},
+    {"game":"DET @ CAR","sly":"DET -3.5","dk_current":"DET -3.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"context":"Carolina Xavier Legette and Damien Lewis OUT; Detroit Ben Bartch OUT.","decision":"PASS","rank":14},
+    {"game":"ATL @ NO","sly":"NO -2.5","dk_current":"NO -2.5","market_state":"MARKET_EQUAL","v2_side":"NO MATERIAL TAKE","v2_net_edge":0.002354,"decision":"PASS","rank":15}
+  ],
+  "recommended_board": [
+    {"rank":1,"pick":"DEN +3","role":"core","why":"Only Saturday game with broad-market Sly price value plus favorable injury/context alignment."},
+    {"rank":2,"pick":"SEA -7","role":"core_secondary","why":"No V2 price edge, but verified SportsLine model forecasts nearly 60% cover and this gives an independent football-model signal V2 cannot generate."},
+    {"rank":3,"pick":"NYG +2.5","role":"secondary","why":"Verified SportsLine ATS support; DraftKings is materially shorter than Sly while Action is equal, so price evidence is source-sensitive rather than broad."},
+    {"rank":4,"pick":"NE +7","role":"small_only","why":"Broad-market half-point/key-7 price advantage, but major Patriots injury burden conflicts with the line-value signal."},
+    {"rank":5,"pick":"IND -3.5","role":"watch","why":"Washington QB/OL absences strongly favor Indianapolis contextually, but both Action and DraftKings are currently equal to Sly; no confirmed price edge."},
+    {"rank":6,"pick":"GB -3.5","role":"small_context","why":"Baker Mayfield is out and DraftKings is -4, but Action is still -3.5; useful contextual candidate, not a broad-market V2 edge."}
+  ],
+  "removed_from_friday_core": [
+    {"pick":"HOU -3","reason":"Action is now HOU -3 and DraftKings is HOU -2.5; Friday favorite-side price edge is gone and DK actually makes DAL +3 the favorable Sly number."},
+    {"pick":"SEA -7","reason":"Removed specifically as a V2 price-edge thesis. Seattle remains on the board for a different reason: verified SportsLine football-model support."}
+  ],
+  "guardrails": [
+    "Saturday working state only; Sunday PRE_KICK_FINAL remains mandatory.",
+    "A one-book line difference is SOURCE_SENSITIVE and cannot be treated as a robust V2 edge when another current source equals Sly.",
+    "Context and SportsLine support can affect game selection/ranking but do not rewrite frozen V2 probabilities.",
+    "Do not transfer Friday HOU/SEA stake mechanically into DEN/NE; re-size from current evidence and tournament risk."
+  ]
+}
