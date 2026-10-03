@@ -1,0 +1,74 @@
+<style id="week4-saturday-style">
+.sat-banner{margin:10px 0;padding:11px 12px;border:1px solid rgba(56,189,248,.28);background:rgba(56,189,248,.07);border-radius:12px;font-size:10px;line-height:1.5}.sat-banner b{color:#dff6ff}.sat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.sat-card{padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:10px;background:rgba(15,23,42,.28)}.sat-card small{display:block;color:#94a3b8;font-size:8px;text-transform:uppercase;letter-spacing:.05em}.sat-card b{display:block;margin-top:3px;font-size:11px}.sat-note{font-size:10px;color:#a7bac9;line-height:1.5}.sat-model-lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.sat-model-lanes>div{padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:10px;background:rgba(15,23,42,.24)}
+@media(max-width:760px){.sat-grid,.sat-model-lanes{grid-template-columns:1fr}.source-table{min-width:900px!important}}
+</style>
+<script id="week4-saturday-layer">
+(function(){
+ const TS='Oct 3 · 2:52 PM ET';
+ const META=window.WEEK4_CURRENT_META||{};
+ const WX={
+  'DEN @ SF':'~89F, dry, light wind · heat remains a consideration',
+  'LAC @ SEA':'~67F, dry, light wind',
+  'ARI @ NYG':'~64F, dry, light wind',
+  'NE @ BUF':'~65F, dry, ~8 mph wind',
+  'IND @ WAS':'~67F in London, dry/light wind',
+  'GB @ TB':'~88F, low rain risk, light wind'
+ };
+ function money(n){return '$'+Number(n||0).toLocaleString();}
+ function ensureAnalysisNav(){
+   const add=(nav,beforeSel,label)=>{if(!nav||nav.querySelector('[data-view="analysis"]'))return;const b=document.createElement('button');b.className=nav.classList.contains('primary-nav')?'nav-btn':'';b.dataset.view='analysis';b.textContent=label;b.addEventListener('click',()=>{if(typeof window.switchView==='function')window.switchView('analysis');else{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('analysis')?.classList.add('active');}});const before=nav.querySelector(beforeSel);before?nav.insertBefore(b,before):nav.appendChild(b);};
+   add(document.querySelector('.primary-nav'),'[data-view="games"]','Overall Analysis');
+   add(document.querySelector('.mobile-nav'),'[data-view="games"]','Analysis');
+ }
+ function updateToday(){
+   const t=document.getElementById('today');if(!t)return;
+   let b=document.getElementById('saturdayCurrentBanner');
+   if(!b){b=document.createElement('div');b.id='saturdayCurrentBanner';b.className='sat-banner';const first=t.querySelector('.panel');(first||t).prepend(b);}
+   b.innerHTML='<b>Week 4 Saturday rerun · '+TS+'</b><br>Lines were rebuilt from the Oct. 3 DraftKings full slate and cross-checked on key games against Action. The Friday HOU/SEA price-edge thesis is retired: HOU is no longer a model play, while SEA remains only because SportsLine now provides verified football-model support.';
+   const ks=[...t.querySelectorAll('.kpi')];
+   const vals=[['Catherine','$10,800','#28 · Saturday working outlay $1,800'],['Amanda','$8,700','#65 · Saturday working outlay $1,400'],['Household','$19,500','$3,200 working outlay · 16.4%'],['Top Saturday board','DEN / SEA','DEN = broad price edge · SEA = football-model support']];
+   ks.slice(0,4).forEach((k,i)=>{if(!vals[i])return;const s=k.querySelector('small'),bb=k.querySelector('b'),sp=k.querySelector('span');if(s)s.textContent=vals[i][0];if(bb)bb.textContent=vals[i][1];if(sp)sp.textContent=vals[i][2];});
+   let alerts=t.querySelector('.alerts');if(!alerts){alerts=document.createElement('div');alerts.className='alerts';t.appendChild(alerts);}
+   alerts.innerHTML='<div class="alert green"><span class="dot"></span><div><b>DEN +3 is now the strongest combined play.</b><br>Action and DraftKings are both DEN +2.5 / SF -2.5, so Sly gives a real half-point through key 3. San Francisco’s defensive injuries align with the value side.</div></div><div class="alert green"><span class="dot"></span><div><b>SEA -7 stays, but the reason changed.</b><br>The market is now exactly -7, so V2 has no price edge. SportsLine publicly forecasts Seattle to cover in nearly 60% of simulations, giving us an independent football-model signal.</div></div><div class="alert yellow"><span class="dot"></span><div><b>NE +7 has value but is capped.</b><br>The market is +6.5 and Sly gives +7, but New England’s injury burden directly conflicts with the price signal.</div></div><div class="alert red"><span class="dot"></span><div><b>HOU -3 is removed from the core.</b><br>Action is now HOU -3 and DraftKings is HOU -2.5. Friday’s favorite-side stale-line advantage no longer exists.</div></div>';
+ }
+ function updatePortfolio(){
+   const p=document.getElementById('portfolio');if(!p)return;
+   const first=p.querySelector('.section-head + .panel')||p.querySelector('.panel');
+   if(first){const eye=first.querySelector('.eyebrow');if(eye)eye.textContent='Week 4 Saturday · rerun after latest market';const b=first.querySelector('b');if(b)b.textContent='Household working outlay: $3,200 · 16.4%';const para=first.querySelector('p');if(para)para.textContent='This is deliberately below the earlier 20% calibration because the current evidence is concentrated in one broad-market value play (DEN), one independent football-model play (SEA), and several smaller conditional/context plays. Sunday PRE_KICK_FINAL can still change it.';}
+   const cards=[...p.querySelectorAll('.portfolio-grid .entry-card')];
+   const specs=[
+    {name:'Catherine',meta:'#28 · $10,800',total:'$1,800 · 4 games',w:[['DEN +3','$900 · core'],['SEA -7','$400 · SportsLine model'],['NYG +2.5','$300 · secondary'],['NE +7','$200 · injury-capped']]},
+    {name:'Amanda',meta:'#65 · $8,700',total:'$1,400 · 4 games',w:[['SEA -7','$600 · SportsLine model'],['DEN +3','$400 · core'],['IND -3.5','$200 · context watch'],['GB -3.5','$200 · context/source-sensitive']]}
+   ];
+   cards.slice(0,2).forEach((card,i)=>{const s=specs[i];if(!s)return;const eye=card.querySelector('.eyebrow');if(eye)eye.textContent=s.name+' · '+s.meta;const h=card.querySelector('h3');if(h)h.textContent=s.total;const list=card.querySelector('.wager-list');if(list)list.innerHTML=s.w.map(x=>'<div class="wager"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('');});
+   const kpis=[...p.querySelectorAll(':scope > .kpis .kpi')];
+   const vals=[['Combined bankroll','$19,500','After Week 3'],['Working outlay','16.4%','$3,200 household'],['Games represented','6','Across both entries'],['Shared core','DEN + SEA','$2,300 total exposure']];
+   kpis.slice(0,4).forEach((k,i)=>{if(!vals[i])return;const sm=k.querySelector('small'),b=k.querySelector('b'),sp=k.querySelector('span');if(sm)sm.textContent=vals[i][0];if(b)b.textContent=vals[i][1];if(sp)sp.textContent=vals[i][2];});
+ }
+ function updateAnalysis(){
+   let s=document.getElementById('analysis');
+   if(!s){s=document.createElement('section');s.id='analysis';s.className='view';const lab=document.getElementById('lab');lab?.parentNode?.insertBefore(s,lab);}
+   s.innerHTML='<div class="panel"><div class="eyebrow">Saturday model audit · '+TS+'</div><h2>Overall Analysis</h2><p><b>The concern about the model was valid:</b> frozen V2 is principally a Sly-vs-market value model. It is good at detecting a better contest number, but it cannot by itself identify the best football matchup when Sly equals the market. Saturday decisions now keep three evidence lanes separate before producing a wager ranking.</p><div class="sat-model-lanes"><div><small>Lane 1 · Market value</small><b>Frozen V2</b><p class="sat-note">Finds Sly price advantages and key-number value. Current broad-market leaders: DEN +3 and NE +7.</p></div><div><small>Lane 2 · Football model</small><b>Independent matchup signal</b><p class="sat-note">SportsLine is now publicly verified on two ATS sides: SEA -7 (nearly 60% cover) and NYG +2.5 (>50%). This lane catches games V2 cannot.</p></div><div><small>Lane 3 · Adversarial context</small><b>Injuries / QB / source conflict</b><p class="sat-note">Used to cap or downgrade, not to rewrite V2. It boosts confidence in DEN, caps NE, and keeps IND/GB conditional.</p></div></div></div><div class="sat-grid"><div class="sat-card"><small>#1</small><b>DEN +3 · core</b><p class="sat-note">Broad price value across Action + DraftKings and context alignment. Best combined case.</p></div><div class="sat-card"><small>#2</small><b>SEA -7 · football-model core</b><p class="sat-note">Market equal, but SportsLine forecasts nearly 60% cover. This is not a V2 stale-line play anymore.</p></div><div class="sat-card"><small>#3</small><b>NYG +2.5 · secondary</b><p class="sat-note">SportsLine backs the exact Sly number; DK was shorter while Action was equal, so price evidence is source-sensitive.</p></div><div class="sat-card"><small>#4</small><b>NE +7 · small only</b><p class="sat-note">Real key-7 value, but Patriots injuries contradict the price model.</p></div><div class="sat-card"><small>#5</small><b>IND -3.5 · conditional</b><p class="sat-note">Daniels/OL absences favor Indy, but Action and DK currently match Sly. No V2 price edge.</p></div><div class="sat-card"><small>#6</small><b>GB -3.5 · conditional</b><p class="sat-note">Baker out; DK is -4 but Action -3.5. Useful end of range, not broad value.</p></div></div><div class="panel" style="margin-top:12px"><h3>What changed from Friday</h3><p>HOU -3 is removed as a core wager. DEN +3 and NE +7 are the only current broad-market price edges confirmed across both Action and DraftKings. SEA remains, but solely because the newly public SportsLine model supplies independent matchup support. The new board therefore does <b>not</b> simply promote whatever V2 ranks highest.</p></div>';
+ }
+ function renderSources(){
+   const tbody=document.getElementById('sourceCompareBody');if(!tbody||!Array.isArray(window.WEEK4_SOURCE_PUBLIC))return;
+   const D=window.WEEK4_SOURCE_PUBLIC;
+   tbody.innerHTML=D.map(d=>'<tr><td><b>'+d.game+'</b><span class="src-sub">'+d.time+' · Sly '+d.sly+'</span></td><td><b>'+d.ourPick+'</b><span class="src-sub">#'+d.ourRank+' · '+d.ourGrade+' · '+d.ourState+'</span></td><td><b>'+(d.sportsPick||'—')+'</b><span class="src-sub">'+(d.sportsType==='Spread'?(d.sportsScore||'verified public ATS'):'No verified public ATS pick')+'</span></td><td><b>—</b><span class="src-sub">Week 4 Gridiron ATS set not verified</span></td><td><b>—</b><span class="src-sub">Week 4 Lucas pick not supplied/verified</span></td><td><b>'+d.agreement+'</b><span class="src-sub">Only verified ATS evidence counts</span></td></tr>').join('');
+   const th=document.querySelector('#sourceCompare .source-table thead tr');if(th)th.innerHTML='<th>Game</th><th>Our Decision</th><th>SportsLine</th><th>Gridiron AI</th><th>Lucas</th><th>Cross-source read</th>';
+   document.querySelectorAll('[data-source-view="compare"]').forEach(b=>b.textContent='All 4 Sources');
+ }
+ function updateLab(){
+   const lab=document.getElementById('lab');if(!lab)return;
+   let p=document.getElementById('saturdayLabCurrent');
+   if(!p){p=document.createElement('div');p.id='saturdayLabCurrent';p.className='panel';const head=lab.querySelector('.section-head');head?.insertAdjacentElement('afterend',p);}
+   p.innerHTML='<div class="eyebrow">Current Week 4 model state · '+TS+'</div><h3>Frozen V2 retained; game-selection layer corrected</h3><p class="sat-note">V2-0006C remains frozen. We did not refit it after Week 3. The correction is architectural: do not mistake a market-value model for a complete football forecasting model. Saturday ranking uses separate market-value, independent football-model, and adversarial-context lanes while preserving provenance.</p>';
+ }
+ function addGameRead(){
+   const g=(new URLSearchParams(location.search)).get('game');if(!g)return;document.getElementById('saturdayGameRead')?.remove();const hero=document.getElementById('gameHero');if(!hero)return;const x=(window.WEEK4_CURRENT_PUBLIC||[]).find(z=>z.game===g);if(!x)return;const box=document.createElement('div');box.id='saturdayGameRead';box.className='panel';box.style.margin='12px 0';box.innerHTML='<div class="eyebrow">Saturday rerun · '+TS+'</div><h3>'+g+' · '+x.lean+'</h3><div class="sat-grid"><div><small>Market read</small><b>'+x.marketNote+'</b></div><div><small>Decision</small><b>'+x.decision+' · '+x.confidence+'</b></div><div><small>Weather</small><b>'+(WX[g]||'No new material Saturday flag; refresh pre-kick Sunday')+'</b></div></div><p class="sat-note"><b>Why:</b> '+x.whyPlay+'</p><p class="sat-note"><b>Main risk:</b> '+x.risk+'</p>';hero.insertAdjacentElement('afterend',box);
+ }
+ function apply(){ensureAnalysisNav();updateToday();updatePortfolio();updateAnalysis();renderSources();updateLab();addGameRead();window.week4SaturdayQA={timestamp:TS,top:['DEN +3','SEA -7','NYG +2.5','NE +7'],householdOutlay:3200,modelArchitecture:'V2 market-value + independent football model + adversarial context'};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,300));else setTimeout(apply,300);
+ setTimeout(apply,1000);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-source-view],[data-game]'))setTimeout(apply,250);},true);
+})();
+</script>
