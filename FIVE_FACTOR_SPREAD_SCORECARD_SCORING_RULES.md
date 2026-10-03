@@ -44,7 +44,7 @@ movementTowardTeam = openingSpread(T) - currentSpread(T)
 
 Examples:
 - `-2 -> -7`: `+5` = strong movement toward that favorite.
-- `+7 -> +2`: `+5` = strong movement toward that underdog/team becoming stronger in the market.
+- `+7 -> +2`: `+5` = strong movement toward that team.
 - `-7 -> -2`: `-5` = strong movement away from that favorite and therefore toward the opponent.
 - `+2 -> +7`: `-5` = strong movement away from that team.
 
@@ -56,12 +56,12 @@ Use the absolute movement of the team the market moved toward:
 
 | Absolute movement | Supported side | Opposite side |
 |---:|---:|---:|
-| < 0.5 | 10 | 10 |
-| 0.5 | 12 | 8 |
-| 1.0 | 14 | 6 |
-| 1.5 | 16 | 4 |
-| 2.0–2.5 | 18 | 2 |
-| >= 3.0 | 20 | 0 |
+| < 0.50 | 10 | 10 |
+| 0.50–0.99 | 12 | 8 |
+| 1.00–1.49 | 14 | 6 |
+| 1.50–1.99 | 16 | 4 |
+| 2.00–2.99 | 18 | 2 |
+| >= 3.00 | 20 | 0 |
 
 ### Source disagreement / missingness
 
@@ -280,49 +280,60 @@ The frequency values are heuristic configuration inputs supplied for this challe
 
 ### Intrinsic Sly hook value
 
-Only lines exactly 0.5 points from a configured key number receive intrinsic directional points.
+For a given team, inspect **every configured key number** that is exactly 0.5 points from the absolute Sly spread. This matters for overlapping cases such as 6.5, which sits halfway between keys 6 and 7.
+
+For each matching key:
 
 For a favorite:
-- `-(key - 0.5)` is favorable to favorite
-- `-(key + 0.5)` is favorable to underdog
+- `-(key - 0.5)` gives the favorite `+baseHookStrength`
+- `-(key + 0.5)` gives the favorite `-baseHookStrength`
 
 For an underdog:
-- `+(key + 0.5)` is favorable to underdog
-- `+(key - 0.5)` is favorable to favorite
+- `+(key + 0.5)` gives the underdog `+baseHookStrength`
+- `+(key - 0.5)` gives the underdog `-baseHookStrength`
 
-Exact key numbers (e.g. `-3/+3`, `-7/+7`) are **10/10 neutral** because both sides receive push protection but neither side has the hook advantage.
+Sum all signed hook strengths for that side, then cap the intrinsic advantage at +/-10.
 
-The favored side’s intrinsic Key score is:
+Example at 6.5 for a favorite:
+- relative to key 6, `-6.5` is unfavorable to the favorite: `-4`
+- relative to key 7, `-6.5` is favorable to the favorite: `+5`
+- net intrinsic advantage = `+1`, so the factor begins `11/9` for favorite/dog before any market-relative adjustment.
 
-```text
-10 + baseHookStrength
-```
-
-and the opponent receives:
-
-```text
-10 - baseHookStrength
-```
+Exact key numbers (e.g. `-3/+3`, `-7/+7`) contribute **0 directional advantage** for that key because both sides receive push protection but neither side has the hook advantage.
 
 ### Market-relative Sly boost
 
-If the current market line is worse for a team than Sly and the difference crosses the same key number that creates the Sly hook advantage, add:
+For each configured key number crossed between the Sly line and current market line for the same team, determine whether Sly is better or worse for that team.
+
+If Sly is better for the team across the key, add:
 
 ```text
-marketRelativeBoost = ceil(baseHookStrength / 2)
+ceil(baseHookStrength / 2)
 ```
 
-to that team’s directional advantage. If Sly is worse than current across that key, subtract the same amount.
+If Sly is worse for the team across the key, subtract the same amount.
 
-Final directional advantage is capped at +/-10, so factor scores remain 0–20 and complementary.
+Sum all applicable market-relative boosts with the intrinsic signed hook strengths. Cap final directional advantage at +/-10.
+
+Final factor score for the evaluated side:
+
+```text
+10 + finalDirectionalAdvantage
+```
+
+Opponent receives:
+
+```text
+10 - finalDirectionalAdvantage
+```
 
 Examples around 3:
 - Sly favorite `-2.5`, market `-3.5`: favorite receives intrinsic +6 plus market-relative +3 = 19/1.
 - Sly dog `+3.5`, market `+2.5`: dog receives 19/1.
-- Sly `-3/+3`: 10/10.
-- Sly favorite `-3.5`, market `-2.5`: dog receives the mirrored 19/1 advantage.
+- Sly `-3/+3`: intrinsic key effect is neutral 10/10 unless Sly-vs-market crosses another configured key.
+- Sly favorite `-3.5`, market `-2.5`: favorite receives intrinsic -6 plus market-relative -3 = 1/19, favoring the dog.
 
-If current market is unavailable, retain intrinsic Sly hook scoring but mark market-relative context unavailable.
+If current market is unavailable, retain intrinsic Sly hook scoring but mark the Key Numbers factor `degraded` because market-relative value cannot be assessed.
 
 ## Overall score and raw grade
 
@@ -363,7 +374,7 @@ Apply all applicable caps; the most restrictive cap wins.
 ### Factor verification status
 
 - `verified`: complete source-backed input meeting freshness/reference requirements.
-- `degraded`: real source-backed input is usable but subject to a configured cap/penalty (e.g. line-reference mismatch, stale-but-usable money, one-component Trends).
+- `degraded`: real source-backed input is usable but subject to a configured cap/penalty (e.g. line-reference mismatch, stale-but-usable money, one-component Trends, or Key Numbers without a current-market comparison).
 - `unavailable`: cannot be used as evidence; factor scores default to 10/10.
 
 `verified factor count` includes only `verified`. `available factor count` includes `verified + degraded`.
