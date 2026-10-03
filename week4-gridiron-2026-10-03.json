@@ -1,0 +1,30 @@
+{
+  "captured_date_local": "2026-10-03",
+  "source": "User-provided Gridiron NFL spread predictions screenshot (IMG_0907.jpeg)",
+  "semantics": "Screenshot states the line shown is the home team's spread and percentages are the model's chance each team covers the displayed spread.",
+  "excluded": {
+    "PIT @ CLE": {
+      "reason": "No official Sly Week 4 line; Thursday game excluded from contest analysis",
+      "home_spread": 2.5,
+      "away_cover_pct": 51,
+      "home_cover_pct": 49
+    }
+  },
+  "games": {
+    "IND @ WAS": {"home":"WAS","away":"IND","home_spread":3.5,"away_cover_pct":50,"home_cover_pct":50},
+    "TEN @ BAL": {"home":"BAL","away":"TEN","home_spread":-11.5,"away_cover_pct":52,"home_cover_pct":48},
+    "NE @ BUF": {"home":"BUF","away":"NE","home_spread":-7.0,"away_cover_pct":49,"home_cover_pct":51},
+    "NYJ @ CHI": {"home":"CHI","away":"NYJ","home_spread":-3.5,"away_cover_pct":48,"home_cover_pct":52},
+    "JAX @ CIN": {"home":"CIN","away":"JAX","home_spread":-2.5,"away_cover_pct":49,"home_cover_pct":51},
+    "DAL @ HOU": {"home":"HOU","away":"DAL","home_spread":-2.5,"away_cover_pct":52,"home_cover_pct":48},
+    "ARI @ NYG": {"home":"NYG","away":"ARI","home_spread":1.5,"away_cover_pct":48,"home_cover_pct":52},
+    "LAR @ PHI": {"home":"PHI","away":"LAR","home_spread":2.5,"away_cover_pct":50,"home_cover_pct":50},
+    "GB @ TB": {"home":"TB","away":"GB","home_spread":3.5,"away_cover_pct":49,"home_cover_pct":51},
+    "MIA @ MIN": {"home":"MIN","away":"MIA","home_spread":-10.5,"away_cover_pct":48,"home_cover_pct":52},
+    "KC @ LV": {"home":"LV","away":"KC","home_spread":4.5,"away_cover_pct":57,"home_cover_pct":43},
+    "LAC @ SEA": {"home":"SEA","away":"LAC","home_spread":-7.0,"away_cover_pct":50,"home_cover_pct":50},
+    "DEN @ SF": {"home":"SF","away":"DEN","home_spread":-3.0,"away_cover_pct":50,"home_cover_pct":50},
+    "DET @ CAR": {"home":"CAR","away":"DET","home_spread":3.5,"away_cover_pct":51,"home_cover_pct":49},
+    "ATL @ NO": {"home":"NO","away":"ATL","home_spread":-3.0,"away_cover_pct":51,"home_cover_pct":49}
+  }
+}
