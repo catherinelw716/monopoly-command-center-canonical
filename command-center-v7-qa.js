@@ -1,0 +1,10 @@
+const fs=require('fs');
+const j=p=>JSON.parse(fs.readFileSync(p,'utf8')),t=p=>fs.readFileSync(p,'utf8');
+const a=(x,m)=>{if(!x)throw Error(m)};
+const state=j('week4-current-data.json'),sl=j('week4-sportsline-2026-10-03-1611ET.json'),ga=j('week4-gridiron-2026-10-03.json'),nf=j('week4-nfelo-2026-10-03-1720ET.json'),live=j('week4-live-market-context-2026-10-03-1710ET.json'),opt=j('v2/results/week_04_nfelo_optimizer_rerun_2026-10-03.json'),server=t('server-v7.js'),pkg=j('package.json');
+const ids=new Set(state.games.map(g=>g.game)),same=o=>ids.size===Object.keys(o.games).length&&[...ids].every(x=>o.games[x]);
+a(ids.size===15,'must have 15 eligible games');a(same(sl)&&same(ga)&&same(nf)&&same(live),'all sources must cover the same 15 games');a(!ids.has('PIT @ CLE'),'PIT @ CLE must remain excluded');
+a(nf.games['LAR @ PHI'].ev_home_pct===14&&nf.games['LAR @ PHI'].model_home===2.5,'PHI nfelo signal changed');a(nf.games['ARI @ NYG'].ev_home_pct===2.5&&nf.games['ARI @ NYG'].model_home===0.5,'NYG nfelo signal changed');a(nf.games['DET @ CAR'].ev_home_pct===5.9,'CAR nfelo signal changed');
+a(opt.portfolio.household_outlay===3800,'household outlay must stay at calibrated $3,800');a(opt.portfolio.Catherine.length>=4&&opt.portfolio.Amanda.length>=4,'each entry needs at least four games');for(const e of ['Catherine','Amanda'])for(const w of opt.portfolio[e])a(w.amount>=100&&w.amount%100===0,`${e} wager invalid`);
+a(pkg.scripts.start==='node server-v7.js','Render must start server-v7.js');a(server.includes("week4-nfelo-2026-10-03-1720ET.json"),'runtime must load nfelo snapshot');a(server.includes("week_04_nfelo_optimizer_rerun_2026-10-03.json"),'runtime must load optimizer rerun');a(server.includes("week4-native-v7-nfelo-optimizer-2026-10-03-1720ET"),'runtime version stale');a(server.includes("'LAR @ PHI'" )&&server.includes("'ARI @ NYG'")&&server.includes("'KC @ LV'"),'top candidates missing from runtime');
+console.log('Week 4 v7 nfelo optimizer QA passed');console.log('15/15 source coverage; calibrated $3,800 household portfolio; four-game minimums satisfied.');
