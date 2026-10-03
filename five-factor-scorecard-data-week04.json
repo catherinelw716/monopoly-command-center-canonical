@@ -1,0 +1,128 @@
+{
+  "season": 2026,
+  "week": 4,
+  "capturedAt": "2026-10-03T18:55:00-04:00",
+  "status": "PRE_RESULT_CHALLENGER_INPUT",
+  "policy": {
+    "slyImmutable": true,
+    "moneyMustBeHandle": true,
+    "challengerOnly": true,
+    "doesNotFeedV2OrOptimizer": true
+  },
+  "sources": {
+    "sly": "v2/season_2026/week_04_sly_freeze.json",
+    "market": "Action Network matchup odds pages, captured 2026-10-03 evening ET; away-side opener/current normalized",
+    "seasonAts": "Action Network NFL ATS Standings, captured 2026-10-03",
+    "recentAts": "Covers matchup pages, current last-10 ATS records captured during Week 4 research",
+    "h2hAts": "Covers matchup-history rows; first five prior meetings independently converted to away/home ATS W-L-P",
+    "money": "DraftKings Network Betting Splits; Spread % Handle only. DK explicitly defines Handle as total money wagered and Bets as number of wagers.",
+    "defense": "Yards Per Pass / nflverse, 2026 Defensive EPA/Play, updated Oct 3 through Week 4"
+  },
+  "games": [
+    {
+      "game":"IND @ WAS","away":"IND","home":"WAS","slyAway":-3.5,
+      "market":{"openAway":1.5,"currentAway":-3.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":3,"l":1,"p":1,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":1,"p":0},"recent":{"w":5,"l":5,"p":0}},"home":{"h2h":{"w":1,"l":3,"p":1,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":1,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":70,"homePct":30,"referenceAway":-4.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":31,"homeRank":25,"awayEpa":0.154,"homeEpa":0.075,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"TEN @ BAL","away":"TEN","home":"BAL","slyAway":11.5,
+      "market":{"openAway":8.5,"currentAway":11.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":1,"l":2,"p":0},"recent":{"w":4,"l":6,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":1,"l":2,"p":0},"recent":{"w":3,"l":7,"p":0}}},
+      "money":{"metricType":"handle","awayPct":33,"homePct":67,"referenceAway":11.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":19,"homeRank":18,"awayEpa":0.019,"homeEpa":0.011,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"NE @ BUF","away":"NE","home":"BUF","slyAway":7,
+      "market":{"openAway":3,"currentAway":6.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":4,"l":1,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":2,"l":1,"p":0},"recent":{"w":7,"l":3,"p":0}},"home":{"h2h":{"w":1,"l":4,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":3,"l":0,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":11,"homePct":89,"referenceAway":7,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":12,"homeRank":25,"awayEpa":-0.040,"homeEpa":0.075,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"NYJ @ CHI","away":"NYJ","home":"CHI","slyAway":3.5,
+      "market":{"openAway":8.5,"currentAway":3.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":1,"l":4,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":0,"p":1},"recent":{"w":4,"l":6,"p":0}},"home":{"h2h":{"w":4,"l":1,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":1,"p":0},"recent":{"w":7,"l":2,"p":1}}},
+      "money":{"metricType":"handle","awayPct":52,"homePct":48,"referenceAway":3.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":11,"homeRank":10,"awayEpa":-0.041,"homeEpa":-0.044,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"JAX @ CIN","away":"JAX","home":"CIN","slyAway":2.5,
+      "market":{"openAway":2.5,"currentAway":2.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":1,"l":4,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":2,"l":1,"p":0},"recent":{"w":8,"l":2,"p":0}},"home":{"h2h":{"w":4,"l":1,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":2,"l":1,"p":0},"recent":{"w":7,"l":3,"p":0}}},
+      "money":{"metricType":"handle","awayPct":27,"homePct":73,"referenceAway":2.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":4,"homeRank":5,"awayEpa":-0.122,"homeEpa":-0.100,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"DAL @ HOU","away":"DAL","home":"HOU","slyAway":3,
+      "market":{"openAway":2.5,"currentAway":3,"source":"Action Network opener/current consensus","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":2},"season":{"w":2,"l":1,"p":0},"recent":{"w":4,"l":6,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":2},"season":{"w":0,"l":3,"p":0},"recent":{"w":4,"l":6,"p":0}}},
+      "money":{"metricType":"handle","awayPct":64,"homePct":36,"referenceAway":3,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":32,"homeRank":16,"awayEpa":0.174,"homeEpa":-0.003,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"ARI @ NYG","away":"ARI","home":"NYG","slyAway":-2.5,
+      "market":{"openAway":7,"currentAway":-2.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":5,"l":0,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":2,"l":1,"p":0},"recent":{"w":3,"l":7,"p":0}},"home":{"h2h":{"w":0,"l":5,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":2,"l":1,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":86,"homePct":14,"referenceAway":-2.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":28,"homeRank":27,"awayEpa":0.114,"homeEpa":0.089,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"LAR @ PHI","away":"LAR","home":"PHI","slyAway":-3.5,
+      "market":{"openAway":-1.5,"currentAway":-3.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":1,"l":2,"p":0},"recent":{"w":4,"l":6,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":1},"season":{"w":0,"l":3,"p":0},"recent":{"w":3,"l":7,"p":0}}},
+      "money":{"metricType":"handle","awayPct":82,"homePct":18,"referenceAway":-3.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":8,"homeRank":23,"awayEpa":-0.082,"homeEpa":0.057,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"GB @ TB","away":"GB","home":"TB","slyAway":-3.5,
+      "market":{"openAway":-1.5,"currentAway":-3.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":0,"l":3,"p":0},"recent":{"w":2,"l":7,"p":1}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":0,"l":3,"p":0},"recent":{"w":0,"l":10,"p":0}}},
+      "money":{"metricType":"handle","awayPct":54,"homePct":46,"referenceAway":-3,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":22,"homeRank":5,"awayEpa":0.054,"homeEpa":-0.100,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"MIA @ MIN","away":"MIA","home":"MIN","slyAway":10.5,
+      "market":{"openAway":7.5,"currentAway":10.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":0,"l":3,"p":0},"recent":{"w":3,"l":7,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":3,"l":0,"p":0},"recent":{"w":7,"l":3,"p":0}}},
+      "money":{"metricType":"handle","awayPct":39,"homePct":61,"referenceAway":10,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":30,"homeRank":1,"awayEpa":0.144,"homeEpa":-0.181,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"KC @ LV","away":"KC","home":"LV","slyAway":-4.5,
+      "market":{"openAway":-5.5,"currentAway":-4.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":1,"l":4,"p":0,"mostRecentSeasonsAgo":0},"season":{"w":2,"l":1,"p":0},"recent":{"w":3,"l":7,"p":0}},"home":{"h2h":{"w":4,"l":1,"p":0,"mostRecentSeasonsAgo":0},"season":{"w":3,"l":0,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":42,"homePct":58,"referenceAway":-4.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":7,"homeRank":2,"awayEpa":-0.092,"homeEpa":-0.177,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"LAC @ SEA","away":"LAC","home":"SEA","slyAway":7,
+      "market":{"openAway":3,"currentAway":7,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":0,"l":3,"p":0},"recent":{"w":4,"l":6,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":1,"l":2,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":17,"homePct":83,"referenceAway":7,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":14,"homeRank":3,"awayEpa":-0.012,"homeEpa":-0.164,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"DEN @ SF","away":"DEN","home":"SF","slyAway":3,
+      "market":{"openAway":2.5,"currentAway":2.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":1,"p":0},"recent":{"w":6,"l":4,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":4},"season":{"w":2,"l":1,"p":0},"recent":{"w":6,"l":4,"p":0}}},
+      "money":{"metricType":"handle","awayPct":70,"homePct":30,"referenceAway":3,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":21,"homeRank":15,"awayEpa":0.024,"homeEpa":-0.007,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"DET @ CAR","away":"DET","home":"CAR","slyAway":-3.5,
+      "market":{"openAway":-3,"currentAway":-3.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":2,"l":3,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":0,"l":2,"p":1},"recent":{"w":3,"l":7,"p":0}},"home":{"h2h":{"w":3,"l":2,"p":0,"mostRecentSeasonsAgo":3},"season":{"w":1,"l":2,"p":0},"recent":{"w":5,"l":5,"p":0}}},
+      "money":{"metricType":"handle","awayPct":65,"homePct":35,"referenceAway":-3.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":29,"homeRank":13,"awayEpa":0.135,"homeEpa":-0.027,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    },
+    {
+      "game":"ATL @ NO","away":"ATL","home":"NO","slyAway":2.5,
+      "market":{"openAway":2.5,"currentAway":2.5,"source":"Action Network","capturedAt":"2026-10-03T18:55:00-04:00","crossCheckDirectionDisagreement":false},
+      "trends":{"source":"Action Network season ATS + Covers recent/H2H ATS","capturedAt":"2026-10-03T18:55:00-04:00","recentOverlapsSeason":true,"away":{"h2h":{"w":1,"l":4,"p":0,"mostRecentSeasonsAgo":0},"season":{"w":1,"l":2,"p":0},"recent":{"w":5,"l":5,"p":0}},"home":{"h2h":{"w":4,"l":1,"p":0,"mostRecentSeasonsAgo":0},"season":{"w":2,"l":1,"p":0},"recent":{"w":8,"l":2,"p":0}}},
+      "money":{"metricType":"handle","awayPct":38,"homePct":62,"referenceAway":2.5,"source":"DraftKings Network Betting Splits","capturedAt":"2026-10-03T18:55:00-04:00"},
+      "defense":{"awayRank":9,"homeRank":24,"awayEpa":-0.070,"homeEpa":0.066,"sameMethodology":true,"source":"Yards Per Pass / nflverse","capturedAt":"2026-10-03","throughWeek":4}
+    }
+  ]
+}
