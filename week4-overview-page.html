@@ -7,25 +7,50 @@
  const G=()=>window.WEEK4_CURRENT_PUBLIC||[];
  const M=()=>window.WEEK4_CURRENT_META||{};
  const money=n=>'$'+Number(n||0).toLocaleString();
- function activate(){try{if(typeof window.switchView==='function'){window.switchView('overview');return;}}catch(e){}document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='overview'));document.querySelectorAll('[data-view]').forEach(v=>v.classList.toggle('active',v.dataset.view==='overview'));window.scrollTo(0,0);}
- function ensureNav(){for(const nav of [document.querySelector('.primary-nav'),document.querySelector('.mobile-nav')]){if(!nav||nav.querySelector('[data-view="overview"]'))continue;const b=document.createElement('button');if(nav.classList.contains('primary-nav'))b.className='nav-btn';b.dataset.view='overview';b.textContent='Overview';b.onclick=activate;const games=nav.querySelector('[data-view="games"]');games?nav.insertBefore(b,games):nav.appendChild(b);}}
- function sourceBits(g){const out=[];if(g.sportsline?.kind==='Spread')out.push('SportsLine '+g.sportsline.grade+' '+g.sportsline.visiblePick);if(g.gridiron){out.push(g.gridiron.bestSide==='NO TAKE'?'Gridiron 50/50':'Gridiron '+g.gridiron.grade+' '+g.gridiron.bestSide+' '+g.gridiron.bestPct+'%');}if(g.nfelo){out.push(g.nfelo.positiveEdge?'nfelo '+g.nfelo.bestSide+' EV +'+g.nfelo.bestEv+'%':'nfelo neutral');}return out;}
+ function forceActivate(){
+   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='overview'));
+   document.querySelectorAll('[data-view]').forEach(v=>v.classList.toggle('active',v.dataset.view==='overview'));
+   window.scrollTo(0,0);
+ }
+ function activate(e){
+   if(e){e.preventDefault();e.stopPropagation();}
+   try{if(typeof window.switchView==='function')window.switchView('overview');}catch(_e){}
+   forceActivate();
+   if(location.pathname!=='/overview')history.replaceState({},'', '/overview');
+ }
+ function ensureNav(){
+   for(const nav of [document.querySelector('.primary-nav'),document.querySelector('.mobile-nav')]){
+     if(!nav||nav.querySelector('[data-view="overview"]'))continue;
+     const b=document.createElement('button');
+     if(nav.classList.contains('primary-nav'))b.className='nav-btn';
+     b.dataset.view='overview';b.type='button';b.textContent='Overview';b.addEventListener('click',activate,true);
+     const games=nav.querySelector('[data-view="games"]');games?nav.insertBefore(b,games):nav.appendChild(b);
+   }
+ }
+ function sourceBits(g){const out=[];if(g.sportsline?.kind==='Spread')out.push('SportsLine '+g.sportsline.grade+' '+g.sportsline.visiblePick);if(g.gridiron)out.push(g.gridiron.bestSide==='NO TAKE'?'Gridiron 50/50':'Gridiron '+g.gridiron.grade+' '+g.gridiron.bestSide+' '+g.gridiron.bestPct+'%');if(g.nfelo)out.push(g.nfelo.positiveEdge?'nfelo '+g.nfelo.bestSide+' EV +'+g.nfelo.bestEv+'%':'nfelo neutral');return out;}
  function why(g){return g.whyPlay||g.evidence||'';}
  function evidence(g){const parts=sourceBits(g);if(g.current&&g.sly)parts.unshift('Sly '+g.sly+' · market '+g.current);return parts.join(' · ');}
  function render(){
-   ensureNav();let s=document.getElementById('overview');if(!s){s=document.createElement('section');s.id='overview';s.className='view';const games=document.getElementById('games');games?.parentNode?.insertBefore(s,games);}
-   const games=G(), meta=M(), plays=games.filter(g=>g.decision==='PLAY').slice(0,6), watches=games.filter(g=>g.decision==='WATCH').slice(0,3), p=meta.working_portfolio||{};
+   ensureNav();
+   let s=document.getElementById('overview');
+   if(!s){s=document.createElement('section');s.id='overview';s.className='view';const games=document.getElementById('games');const host=games?.parentNode||document.querySelector('main')||document.body;games?host.insertBefore(s,games):host.appendChild(s);}
+   const games=G(),meta=M(),plays=games.filter(g=>g.decision==='PLAY').slice(0,6),watches=games.filter(g=>g.decision==='WATCH').slice(0,3),p=meta.working_portfolio||{};
    const c=p.Catherine||[],a=p.Amanda||[];
    const top=plays.map(g=>'<div class="overview-pick"><div class="rank">#'+g.rank+' · '+g.confidence+'</div><div class="pick">'+g.lean+'</div><div class="overview-reasons">'+why(g)+'</div><div class="overview-evidence">'+evidence(g)+'</div><div><span class="overview-tag">'+g.role+'</span></div></div>').join('');
    const watch=watches.map(g=>'<div class="overview-card"><small>#'+g.rank+' · watch</small><h3>'+g.lean+'</h3><p class="overview-risk">'+why(g)+'</p><p class="overview-foot"><b>Why not a play yet:</b> '+(g.against||'Conflicting evidence / insufficient edge.')+'</p></div>').join('');
-   const wagers=(arr)=>arr.map(w=>'<div class="overview-wager"><span><b>'+w.pick+'</b><br><span class="overview-foot">'+w.role+'</span></span><b>'+money(w.amount)+'</b></div>').join('');
-   s.innerHTML='<div class="section-head"><div><div class="eyebrow">Week 4 · one-page decision brief</div><h2>What matters most right now</h2></div></div>'+ 
-   '<div class="overview-hero"><div class="overview-card"><small>Current thesis</small><h2>'+plays.slice(0,4).map(x=>x.lean).join(' · ')+'</h2><p class="overview-risk">The board is being driven by three things: <b>price advantage versus Sly</b>, <b>independent model agreement</b>, and <b>conflict penalties</b>. nfelo is treated as its own model lane, not as another generic vote. Games with exact model=market matches are neutral, not confirmations.</p></div><div class="overview-card"><small>Working deployment</small><h2>'+money(p.household_outlay||0)+'</h2><p class="overview-risk">Saturday working portfolio. Catherine '+money(c.reduce((x,w)=>x+w.amount,0))+' · Amanda '+money(a.reduce((x,w)=>x+w.amount,0))+'. Final Sunday refresh still needs current lines, inactives and weather.</p></div></div>'+ 
-   '<div class="overview-card" style="margin-bottom:12px"><small>Recommended games · ranked</small><div class="overview-picks">'+top+'</div></div>'+ 
-   '<div class="overview-card" style="margin-bottom:12px"><small>Most important watch / contradiction games</small><div class="overview-watch">'+watch+'</div></div>'+ 
-   '<div class="overview-card" style="margin-bottom:12px"><small>Working portfolio</small><div class="overview-portfolio"><div><h3>Catherine · '+money(c.reduce((x,w)=>x+w.amount,0))+'</h3>'+wagers(c)+'</div><div><h3>Amanda · '+money(a.reduce((x,w)=>x+w.amount,0))+'</h3>'+wagers(a)+'</div></div></div>'+ 
+   const wagers=arr=>arr.map(w=>'<div class="overview-wager"><span><b>'+w.pick+'</b><br><span class="overview-foot">'+w.role+'</span></span><b>'+money(w.amount)+'</b></div>').join('');
+   s.innerHTML='<div class="section-head"><div><div class="eyebrow">Week 4 · one-page decision brief</div><h2>What matters most right now</h2></div></div>'+
+   '<div class="overview-hero"><div class="overview-card"><small>Current thesis</small><h2>'+plays.slice(0,4).map(x=>x.lean).join(' · ')+'</h2><p class="overview-risk">The board is being driven by three things: <b>price advantage versus Sly</b>, <b>independent model agreement</b>, and <b>conflict penalties</b>. nfelo is treated as its own model lane, not as another generic vote. Games with exact model=market matches are neutral, not confirmations.</p></div><div class="overview-card"><small>Working deployment</small><h2>'+money(p.household_outlay||0)+'</h2><p class="overview-risk">Saturday working portfolio. Catherine '+money(c.reduce((x,w)=>x+w.amount,0))+' · Amanda '+money(a.reduce((x,w)=>x+w.amount,0))+'. Final Sunday refresh still needs current lines, inactives and weather.</p></div></div>'+
+   '<div class="overview-card" style="margin-bottom:12px"><small>Recommended games · ranked</small><div class="overview-picks">'+top+'</div></div>'+
+   '<div class="overview-card" style="margin-bottom:12px"><small>Most important watch / contradiction games</small><div class="overview-watch">'+watch+'</div></div>'+
+   '<div class="overview-card" style="margin-bottom:12px"><small>Working portfolio</small><div class="overview-portfolio"><div><h3>Catherine · '+money(c.reduce((x,w)=>x+w.amount,0))+'</h3>'+wagers(c)+'</div><div><h3>Amanda · '+money(a.reduce((x,w)=>x+w.amount,0))+'</h3>'+wagers(a)+'</div></div></div>'+
    '<div class="overview-card"><small>What could change this</small><p class="overview-risk"><b>Sunday line movement:</b> a half-point around 3 or 7 can materially change value. <b>Inactives:</b> PHI, NE, IND/WAS and other injury-sensitive games need final confirmation. <b>Weather:</b> refresh outdoor games before lock. <b>Source disagreement:</b> CAR, JAX and DAL/HOU should not be promoted unless conflicts resolve.</p><p class="overview-foot">'+(meta.snapshot_label||'Current Week 4 snapshot')+' · This page summarizes the normalized Command Center state; it does not create a separate recommendation layer.</p></div>';
+   if(location.pathname==='/overview'||new URLSearchParams(location.search).get('view')==='overview')forceActivate();
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(render,300));else setTimeout(render,300);[900,1800].forEach(ms=>setTimeout(render,ms));document.addEventListener('click',e=>{if(e.target.closest('[data-view],button'))setTimeout(render,120);},true);window.renderWeek4Overview=render;
+ function apply(){render();ensureNav();}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{setTimeout(apply,100);setTimeout(apply,500);setTimeout(apply,1400);});else{setTimeout(apply,100);setTimeout(apply,500);setTimeout(apply,1400);}
+ let timer=null;const obs=new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>{ensureNav();if(!document.getElementById('overview'))render();},100);});obs.observe(document.documentElement,{childList:true,subtree:true});
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-view="overview"]');if(b)activate(e);},true);
+ window.renderWeek4Overview=render;window.openWeek4Overview=()=>activate();
 })();
 </script>
