@@ -16,19 +16,16 @@
   #today .alert b{font-size:13px!important}
   #today .alert div{font-size:11px!important;line-height:1.4!important}
 
-  /* Preserve the app's original Decision Board controls/cards. Only make them fit. */
   #recommendedPlays{width:100%!important;max-width:100%!important}
   #recommendedPlays .play-card,#recommendedPlays .recommended-card,#recommendedPlays [data-game]{max-width:100%!important;box-sizing:border-box!important}
   #recommendedPlays button,#recommendedPlays .btn,#recommendedPlays .badge{min-height:32px;touch-action:manipulation}
 
-  /* Keep source tiles readable without changing their semantics or DOM structure. */
   .vg-sources{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
   .source-mini{min-width:0!important;padding:8px!important}
   .source-mini small{font-size:9px!important}
   .source-mini b{font-size:12px!important}
   .source-mini span{font-size:9px!important;overflow-wrap:anywhere!important}
 
-  /* Existing source comparison remains the existing component; allow horizontal swipe if needed. */
   #sourceCompare{max-width:100%!important;overflow:hidden!important}
   #sourceCompare .source-table{display:table!important;min-width:760px!important}
   #sourceCompare .source-table-wrap,#sourceCompare .table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
@@ -43,42 +40,55 @@
   .panel{padding:11px!important}
   #today .kpis{grid-template-columns:1fr 1fr!important}
 }
-.gridiron-games-chip{display:inline-flex;align-items:center;gap:5px;margin-top:5px;padding:4px 7px;border-radius:999px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.24);color:#c7d2fe;font-size:9px;font-weight:800;line-height:1.2;white-space:normal}
+.gridiron-games-chip{display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;margin-top:6px;padding:5px 8px;border-radius:8px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.24);color:#c7d2fe;font-size:9px;font-weight:800;line-height:1.25;white-space:normal;box-sizing:border-box}
+.gridiron-grade{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:20px;padding:0 6px;border-radius:999px;font-size:9px;font-weight:900;border:1px solid transparent;vertical-align:middle;margin-right:5px}.gridiron-grade-a{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.30)}.gridiron-grade-b{background:rgba(59,130,246,.16);color:#93c5fd;border-color:rgba(59,130,246,.30)}.gridiron-grade-c{background:rgba(245,158,11,.16);color:#fde68a;border-color:rgba(245,158,11,.28)}.gridiron-grade-n{background:rgba(148,163,184,.12);color:#cbd5e1;border-color:rgba(148,163,184,.22)}
 </style>
 <script id="week4-gridiron-games-board">
 (function(){
  const G={
-  'IND @ WAS':['WAS +3.5','IND 50% · WAS 50%'],
-  'TEN @ BAL':['BAL -11.5','TEN 52% · BAL 48%'],
-  'NE @ BUF':['BUF -7','NE 49% · BUF 51%'],
-  'NYJ @ CHI':['CHI -3.5','NYJ 48% · CHI 52%'],
-  'JAX @ CIN':['CIN -2.5','JAX 49% · CIN 51%'],
-  'DAL @ HOU':['HOU -2.5','DAL 52% · HOU 48%'],
-  'ARI @ NYG':['NYG +1.5','ARI 48% · NYG 52%'],
-  'LAR @ PHI':['PHI +2.5','LAR 50% · PHI 50%'],
-  'GB @ TB':['TB +3.5','GB 49% · TB 51%'],
-  'MIA @ MIN':['MIN -10.5','MIA 48% · MIN 52%'],
-  'KC @ LV':['LV +4.5','KC 57% · LV 43%'],
-  'LAC @ SEA':['SEA -7','LAC 50% · SEA 50%'],
-  'DEN @ SF':['SF -3','DEN 50% · SF 50%'],
-  'DET @ CAR':['CAR +3.5','DET 51% · CAR 49%'],
-  'ATL @ NO':['NO -3','ATL 51% · NO 49%']
+  'IND @ WAS':{spread:'WAS +3.5',away:'IND',awayPct:50,home:'WAS',homePct:50},
+  'TEN @ BAL':{spread:'BAL -11.5',away:'TEN',awayPct:52,home:'BAL',homePct:48},
+  'NE @ BUF':{spread:'BUF -7',away:'NE',awayPct:49,home:'BUF',homePct:51},
+  'NYJ @ CHI':{spread:'CHI -3.5',away:'NYJ',awayPct:48,home:'CHI',homePct:52},
+  'JAX @ CIN':{spread:'CIN -2.5',away:'JAX',awayPct:49,home:'CIN',homePct:51},
+  'DAL @ HOU':{spread:'HOU -2.5',away:'DAL',awayPct:52,home:'HOU',homePct:48},
+  'ARI @ NYG':{spread:'NYG +1.5',away:'ARI',awayPct:48,home:'NYG',homePct:52},
+  'LAR @ PHI':{spread:'PHI +2.5',away:'LAR',awayPct:50,home:'PHI',homePct:50},
+  'GB @ TB':{spread:'TB +3.5',away:'GB',awayPct:49,home:'TB',homePct:51},
+  'MIA @ MIN':{spread:'MIN -10.5',away:'MIA',awayPct:48,home:'MIN',homePct:52},
+  'KC @ LV':{spread:'LV +4.5',away:'KC',awayPct:57,home:'LV',homePct:43},
+  'LAC @ SEA':{spread:'SEA -7',away:'LAC',awayPct:50,home:'SEA',homePct:50},
+  'DEN @ SF':{spread:'SF -3',away:'DEN',awayPct:50,home:'SF',homePct:50},
+  'DET @ CAR':{spread:'CAR +3.5',away:'DET',awayPct:51,home:'CAR',homePct:49},
+  'ATL @ NO':{spread:'NO -3',away:'ATL',awayPct:51,home:'NO',homePct:49}
  };
- function gameId(text){text=String(text||'').replace(/\s+/g,' ');return Object.keys(G).find(k=>text.includes(k))||'';}
- function addChip(host,id){if(!host||host.querySelector('.gridiron-games-chip'))return;const c=document.createElement('span');c.className='gridiron-games-chip';c.textContent='Gridiron '+G[id][0]+' · '+G[id][1];host.appendChild(c);}
+ function norm(s){return String(s||'').toUpperCase().replace(/JAC/g,'JAX').replace(/[^A-Z0-9.+-]+/g,' ').replace(/\s+/g,' ').trim();}
+ function gameId(text){const t=norm(text);for(const [id,d] of Object.entries(G)){if(t.includes(d.away)&&t.includes(d.home))return id;}return '';}
+ function best(d){if(d.awayPct===d.homePct)return {team:'NO TAKE',pct:50};return d.awayPct>d.homePct?{team:d.away,pct:d.awayPct}:{team:d.home,pct:d.homePct};}
+ function grade(p){return p>=55?'A':p>=52?'B':p>=51?'C':'N';}
+ function gradeClass(g){return 'gridiron-grade gridiron-grade-'+g.toLowerCase();}
+ function chipText(id){const d=G[id],b=best(d);return b.team==='NO TAKE'?'Gridiron '+d.spread+' · 50/50':'Gridiron '+d.spread+' · '+b.team+' '+b.pct+'% cover';}
+ function addChip(host,id){if(!host||!G[id])return;let c=host.querySelector(':scope > .gridiron-games-chip');if(!c){c=document.createElement('div');c.className='gridiron-games-chip';host.appendChild(c);}const b=best(G[id]),gr=grade(b.pct);c.innerHTML='<span class="'+gradeClass(gr)+'">'+gr+'</span><span>'+chipText(id)+'</span>';}
  function patchGames(){
-   const root=document.getElementById('games')||document.querySelector('[data-view-panel="games"]')||document.body;
-   root.querySelectorAll('tr').forEach(r=>{const id=gameId(r.textContent);if(id)addChip(r.cells?.[0]||r,id);});
-   root.querySelectorAll('[data-game]').forEach(el=>{const id=el.getAttribute('data-game')||gameId(el.textContent);if(!G[id])return;const host=el.querySelector('.vg-sources,.game-meta,.card-meta,.play-meta')||el;addChip(host,id);});
-   root.querySelectorAll('.game-card,.play-card,.recommended-card,.matchup-card').forEach(el=>{const id=gameId(el.textContent);if(id)addChip(el,id);});
+   const roots=[document.getElementById('games'),document.getElementById('recommendedPlays'),document.querySelector('[data-view-panel="games"]')].filter(Boolean);
+   if(!roots.length)roots.push(document.body);
+   roots.forEach(root=>{
+     root.querySelectorAll('tr').forEach(r=>{const id=gameId(r.textContent);if(id)addChip(r.cells?.[0]||r,id);});
+     root.querySelectorAll('[data-game]').forEach(el=>{const raw=el.getAttribute('data-game')||'';const id=G[raw]?raw:gameId(raw+' '+el.textContent);if(id){const host=el.querySelector('.vg-sources,.game-meta,.card-meta,.play-meta,.game-info,.matchup')||el;addChip(host,id);}});
+     root.querySelectorAll('.game-card,.play-card,.recommended-card,.matchup-card,.game-row,.decision-row,.decision-card,.card').forEach(el=>{const id=gameId(el.textContent);if(id)addChip(el,id);});
+   });
  }
  function patchSourceCompare(){
    const tbody=document.getElementById('sourceCompareBody');if(!tbody)return;
-   [...tbody.rows].forEach(r=>{const id=gameId(r.cells?.[0]?.textContent);if(!id||r.cells.length<4)return;r.cells[3].innerHTML='<b>'+G[id][1]+'</b><span class="src-sub">Gridiron spread '+G[id][0]+'</span>';});
+   [...tbody.rows].forEach(r=>{const id=gameId(r.cells?.[0]?.textContent);if(!id||r.cells.length<4)return;const d=G[id],b=best(d),gr=grade(b.pct);r.cells[3].innerHTML='<div><span class="'+gradeClass(gr)+'">'+gr+'</span><b style="display:inline">'+(b.team==='NO TAKE'?'50/50 · NO TAKE':b.team+' '+b.pct+'%')+'</b></div><span class="src-sub">Gridiron '+d.spread+' · '+d.away+' '+d.awayPct+'% / '+d.home+' '+d.homePct+'%</span>';});
+   const th=document.querySelector('#sourceCompare .source-table thead tr');if(th&&th.cells[3])th.cells[3].textContent='Gridiron AI · grade / cover %';
  }
  function apply(){patchGames();patchSourceCompare();}
- function later(){setTimeout(apply,1450);setTimeout(apply,2300);}
+ let timer=null;function schedule(){clearTimeout(timer);timer=setTimeout(apply,120);}
+ function startObserver(){const obs=new MutationObserver(schedule);obs.observe(document.body,{childList:true,subtree:true});window.week4GridironBoardObserver=obs;}
+ function later(){[250,700,1300,2200].forEach(ms=>setTimeout(apply,ms));setTimeout(startObserver,300);}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',later);else later();
- document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-game],[data-source-view]'))setTimeout(apply,650);},true);
+ document.addEventListener('click',e=>{if(e.target.closest('[data-view],[data-game],[data-source-view],button'))setTimeout(apply,180);},true);
+ window.week4GridironBoardQA={games:Object.keys(G).length,gradeBands:'A>=55, B=52-54, C=51, N=50'};
 })();
 </script>
