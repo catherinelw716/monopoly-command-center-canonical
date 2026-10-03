@@ -1,17 +1,19 @@
 # Five-Factor Spread Scorecard Tasks
 
 Source spec: `FIVE_FACTOR_SPREAD_SCORECARD_SPEC.md`  
-Implementation plan: `tasks/five-factor-spread-scorecard-plan.md`
+Implementation plan: `tasks/five-factor-spread-scorecard-plan.md`  
+Preregistered scoring rules: `FIVE_FACTOR_SPREAD_SCORECARD_SCORING_RULES.md`
 
 This checklist is intentionally separate from the existing Week 4 `tasks/todo.md`. Do not close, overwrite, or reinterpret the unfinished Week 4 tasks while executing this feature.
 
 ## Phase 1 — Scoring contract
 
-- [ ] Task 1: Create preregistered scorecard configuration
-  - [ ] Define exact numeric rules for line movement, ATS trends, money, defense, key numbers, grade bands, alignment, and confidence caps
-  - [ ] Keep all five factors at equal 20-point maximums
-  - [ ] Ensure no team/game-specific exception appears in config
-  - [ ] Verify neutral = 10/20 per factor
+- [x] Task 1: Create preregistered scorecard configuration
+  - [x] Define exact numeric rules for line movement, ATS trends, money, defense, key numbers, grade bands, alignment, and confidence caps
+  - [x] Keep all five factors at equal 20-point maximums
+  - [x] Ensure no team/game-specific exception appears in config
+  - [x] Verify neutral = 10/20 per factor
+  - [x] Lock overlapping-key behavior (for example 6.5 between 6 and 7) and continuous line-movement bands before live Week 4 scoring
 
 - [ ] Task 2: Build deterministic scoring engine with fixtures
   - [ ] Favorite -2 -> -7 fixture strongly favors favorite
@@ -21,9 +23,9 @@ This checklist is intentionally separate from the existing Week 4 `tasks/todo.md
   - [ ] Overall total/grade/alignment/caps are reproducible
 
 ### Checkpoint A
-- [ ] Exact scoring rules committed before live Week 4 ranking is generated
+- [x] Exact scoring rules committed before live Week 4 ranking is generated
 - [ ] Engine fixture QA passes
-- [ ] No outcome/team-specific tuning exists
+- [x] No outcome/team-specific tuning exists in the scoring contract
 
 ## Phase 2 — Source-backed factor data
 
