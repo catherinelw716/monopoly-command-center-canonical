@@ -1,14 +1,14 @@
 {
   "season": 2026,
   "week": 4,
-  "generatedAt": "2026-10-04T01:29:17.660Z",
+  "generatedAt": "2026-10-04T01:34:36.786Z",
   "status": "SOURCE_BACKED_CHALLENGER_INPUT",
   "source": {
     "name": "nflverse/nfldata games.csv",
     "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
     "field": "spread_line",
     "interpretation": "positive spread_line means home team favored; team cover margin derived as actual team scoring margin minus team closing/reference spread",
-    "fetchedAt": "2026-10-04T01:29:17.660Z"
+    "fetchedAt": "2026-10-04T01:34:36.786Z"
   },
   "policy": {
     "challengerOnly": true,

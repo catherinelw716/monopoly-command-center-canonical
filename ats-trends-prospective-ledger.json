@@ -1,0 +1,799 @@
+{
+  "season": 2026,
+  "createdAt": "2026-10-04T01:34:36.786Z",
+  "purpose": "Prospective comparison of ATS Trends v1 versus v2 challenger. Predictions are frozen before results and must not be rewritten after outcomes.",
+  "promotionPolicy": "Do not replace v1 based on one week. Compare multiple weeks on directional ATS accuracy, strength-band separation, stability, and incremental value versus other five-factor signals.",
+  "methodology": {
+    "v1": "Locked Week 4 scorecard ATS Trends factor",
+    "v2": "45% current-season cover margin + 40% non-overlapping prior-form cover margin + 15% H2H"
+  },
+  "weeks": [
+    {
+      "week": 4,
+      "predictionFrozenAt": "2026-10-04T01:34:36.786Z",
+      "status": "PENDING_RESULTS",
+      "games": [
+        {
+          "game": "IND @ WAS",
+          "slyAway": -3.5,
+          "v1": {
+            "lean": "IND",
+            "scores": {
+              "away": 14,
+              "home": 6
+            }
+          },
+          "v2": {
+            "lean": "NO EDGE",
+            "scores": {
+              "away": 10,
+              "home": 10
+            }
+          },
+          "comparison": "NEUTRAL_INVOLVED",
+          "sourceAlignment": {
+            "away": {
+              "team": "IND",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "WAS",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "TEN @ BAL",
+          "slyAway": 11.5,
+          "v1": {
+            "lean": "BAL",
+            "scores": {
+              "away": 8,
+              "home": 12
+            }
+          },
+          "v2": {
+            "lean": "BAL",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "TEN",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "BAL",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 1,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": false
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "NE @ BUF",
+          "slyAway": 7,
+          "v1": {
+            "lean": "NE",
+            "scores": {
+              "away": 18,
+              "home": 2
+            }
+          },
+          "v2": {
+            "lean": "NE",
+            "scores": {
+              "away": 12,
+              "home": 8
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "NE",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 1,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": false
+            },
+            "home": {
+              "team": "BUF",
+              "nflverseImplied": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "NYJ @ CHI",
+          "slyAway": 3.5,
+          "v1": {
+            "lean": "CHI",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "v2": {
+            "lean": "CHI",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "NYJ",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 0,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 0,
+                "p": 1
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "CHI",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "JAX @ CIN",
+          "slyAway": 2.5,
+          "v1": {
+            "lean": "CIN",
+            "scores": {
+              "away": 2,
+              "home": 18
+            }
+          },
+          "v2": {
+            "lean": "JAX",
+            "scores": {
+              "away": 12,
+              "home": 8
+            }
+          },
+          "comparison": "DISAGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "JAX",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "CIN",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "DAL @ HOU",
+          "slyAway": 3,
+          "v1": {
+            "lean": "NO EDGE",
+            "scores": {
+              "away": 10,
+              "home": 10
+            }
+          },
+          "v2": {
+            "lean": "HOU",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "comparison": "NEUTRAL_INVOLVED",
+          "sourceAlignment": {
+            "away": {
+              "team": "DAL",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 1,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": false
+            },
+            "home": {
+              "team": "HOU",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "ARI @ NYG",
+          "slyAway": -2.5,
+          "v1": {
+            "lean": "ARI",
+            "scores": {
+              "away": 12,
+              "home": 8
+            }
+          },
+          "v2": {
+            "lean": "NYG",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "comparison": "DISAGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "ARI",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "NYG",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "LAR @ PHI",
+          "slyAway": -3.5,
+          "v1": {
+            "lean": "PHI",
+            "scores": {
+              "away": 8,
+              "home": 12
+            }
+          },
+          "v2": {
+            "lean": "LAR",
+            "scores": {
+              "away": 12,
+              "home": 8
+            }
+          },
+          "comparison": "DISAGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "LAR",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "PHI",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "GB @ TB",
+          "slyAway": -3.5,
+          "v1": {
+            "lean": "TB",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "v2": {
+            "lean": "TB",
+            "scores": {
+              "away": 8,
+              "home": 12
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "GB",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "TB",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "MIA @ MIN",
+          "slyAway": 10.5,
+          "v1": {
+            "lean": "MIN",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "v2": {
+            "lean": "MIN",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "MIA",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "MIN",
+              "nflverseImplied": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "KC @ LV",
+          "slyAway": -4.5,
+          "v1": {
+            "lean": "LV",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "v2": {
+            "lean": "LV",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "KC",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "LV",
+              "nflverseImplied": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 3,
+                "l": 0,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "LAC @ SEA",
+          "slyAway": 7,
+          "v1": {
+            "lean": "SEA",
+            "scores": {
+              "away": 4,
+              "home": 16
+            }
+          },
+          "v2": {
+            "lean": "SEA",
+            "scores": {
+              "away": 4,
+              "home": 16
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "LAC",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 3,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "SEA",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 1,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": false
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "DEN @ SF",
+          "slyAway": 3,
+          "v1": {
+            "lean": "SF",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "v2": {
+            "lean": "SF",
+            "scores": {
+              "away": 2,
+              "home": 18
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "DEN",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "SF",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "DET @ CAR",
+          "slyAway": -3.5,
+          "v1": {
+            "lean": "CAR",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "v2": {
+            "lean": "CAR",
+            "scores": {
+              "away": 6,
+              "home": 14
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "DET",
+              "nflverseImplied": {
+                "w": 0,
+                "l": 2,
+                "p": 1
+              },
+              "v1Reference": {
+                "w": 0,
+                "l": 2,
+                "p": 1
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "CAR",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        },
+        {
+          "game": "ATL @ NO",
+          "slyAway": 2.5,
+          "v1": {
+            "lean": "NO",
+            "scores": {
+              "away": 0,
+              "home": 20
+            }
+          },
+          "v2": {
+            "lean": "NO",
+            "scores": {
+              "away": 4,
+              "home": 16
+            }
+          },
+          "comparison": "AGREE",
+          "sourceAlignment": {
+            "away": {
+              "team": "ATL",
+              "nflverseImplied": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 1,
+                "l": 2,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            },
+            "home": {
+              "team": "NO",
+              "nflverseImplied": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "v1Reference": {
+                "w": 2,
+                "l": 1,
+                "p": 0
+              },
+              "matchesV1SeasonRecord": true
+            }
+          },
+          "result": null,
+          "v1Correct": null,
+          "v2Correct": null
+        }
+      ]
+    }
+  ]
+}
