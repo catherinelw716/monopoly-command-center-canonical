@@ -42,11 +42,12 @@ function globalsFrom(html){
 }
 function standaloneToday(html){
   const globals=globalsFrom(html);
-  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Today · Week 4 · NFL Monopoly</title>${globals}${todayPatch}</head><body class="w4today-standalone"><div style="padding:24px;font-family:system-ui;color:#e5edf6;background:#07111f;min-height:100vh">Loading Week 4…</div></body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="command-center-week" content="4"><title>Today · Week 4 · NFL Monopoly</title>${globals}${todayPatch}</head><body class="w4today-standalone"><div style="padding:24px;font-family:system-ui;color:#e5edf6;background:#07111f;min-height:100vh">Loading Week 4…</div></body></html>`;
 }
-function navGuard(){return `<script id="today-route-guard">(function(){function go(e){var c=e.target&&e.target.closest&&e.target.closest('[data-view="today"]');if(!c)return;e.preventDefault();e.stopImmediatePropagation();location.assign('/today');}document.addEventListener('click',go,true);document.addEventListener('touchend',go,{capture:true,passive:false});})();</script>`;}
-async function proxy(req,res){
-  const opts={hostname:'127.0.0.1',port:innerPort,path:req.url,method:req.method,headers:{...req.headers,host:`127.0.0.1:${innerPort}`}};
+function navGuard(){return `<script id="today-route-guard">(function(){function go(e){var c=e.target&&e.target.closest&&e.target.closest('[data-view="today"]');if(!c)return;e.preventDefault();e.stopImmediatePropagation();location.assign('/');}document.addEventListener('click',go,true);document.addEventListener('touchend',go,{capture:true,passive:false});})();</script>`;}
+async function proxy(req,res,pathOverride){
+  const targetPath=pathOverride||req.url;
+  const opts={hostname:'127.0.0.1',port:innerPort,path:targetPath,method:req.method,headers:{...req.headers,host:`127.0.0.1:${innerPort}`}};
   const p=http.request(opts,ir=>{
     const chunks=[];ir.on('data',c=>chunks.push(c));ir.on('end',()=>{
       let body=Buffer.concat(chunks);const headers={...ir.headers};delete headers['content-length'];
@@ -55,38 +56,65 @@ async function proxy(req,res){
         let text=body.toString('utf8');
         text=text.replace('</body>',`${navGuard()}</body>`);
         body=Buffer.from(text);
-        headers['cache-control']='no-store, max-age=0';
+        headers['cache-control']='no-store, no-cache, must-revalidate, max-age=0';
+        headers['pragma']='no-cache';
+        headers['expires']='0';
       }
       res.writeHead(ir.statusCode||500,headers);res.end(body);
     });
   });
   p.on('error',e=>{res.writeHead(502,{'content-type':'text/plain'});res.end(String(e));});
-  req.pipe(p);
+  if(req.method==='GET'||req.method==='HEAD')p.end();else req.pipe(p);
+}
+async function sendWeek4Today(res){
+  const root=await innerRequest('/?full=1');
+  const html=standaloneToday(root.body.toString('utf8'));
+  const ok=html.includes('Today — Week 4')&&!html.includes('Week 3');
+  if(!ok)throw new Error('Refusing to serve Today: Week 4 render contract failed');
+  res.writeHead(200,{
+    'content-type':'text/html; charset=utf-8',
+    'cache-control':'no-store, no-cache, must-revalidate, max-age=0',
+    'pragma':'no-cache',
+    'expires':'0',
+    'x-command-center-route':'week4-today-root-v11',
+    'x-command-center-week':'4'
+  });
+  res.end(html);
 }
 
 waitForInner().then(()=>{
   const server=http.createServer(async(req,res)=>{
     try{
       const url=new URL(req.url,'http://local');
-      if(req.method==='GET'&&url.pathname==='/'&&!url.searchParams.has('full')){
-        res.writeHead(302,{'location':'/today','cache-control':'no-store, max-age=0','x-command-center-route':'root-to-week4-today'});
-        return res.end();
+
+      // Canonical root is Week 4 Today itself. No redirect and no legacy shell.
+      if(req.method==='GET'&&(url.pathname==='/'||url.pathname==='/today'||url.pathname==='/today/')){
+        return sendWeek4Today(res);
       }
-      if(req.method==='GET'&&(url.pathname==='/today'||url.pathname==='/today/')){
-        const root=await innerRequest('/?full=1');
-        const html=standaloneToday(root.body.toString('utf8'));
-        res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store, max-age=0','x-command-center-route':'week4-today-v10'});
-        return res.end(html);
+
+      // Explicit escape hatch for the older multi-view shell and drill-downs.
+      if(req.method==='GET'&&(url.pathname==='/full'||url.pathname==='/full/')){
+        return proxy(req,res,'/?full=1');
       }
+
       if(req.method==='GET'&&url.pathname==='/today-healthz'){
         const root=await innerRequest('/?full=1');
-        const text=root.body.toString('utf8');
-        const ok=text.includes('window.WEEK4_CURRENT_PUBLIC')&&todayPatch.includes('Today — Week 4')&&!todayPatch.includes('Today — Week 3');
+        const html=standaloneToday(root.body.toString('utf8'));
+        const checks={
+          directRoot:true,
+          week4Title:html.includes('Today — Week 4'),
+          noWeek3:!html.includes('Week 3'),
+          week4Meta:html.includes('name="command-center-week" content="4"'),
+          currentGames:html.includes('window.WEEK4_CURRENT_PUBLIC'),
+          latestMarketStamp:html.includes('2026-10-03T21:45:00-04:00')
+        };
+        const ok=Object.values(checks).every(Boolean);
         res.writeHead(ok?200:503,{'content-type':'application/json','cache-control':'no-store'});
-        return res.end(JSON.stringify({status:ok?'ok':'error',route:'server-rendered /today',rootRedirect:'/today',week:4,containsWeek4:todayPatch.includes('Today — Week 4'),containsWeek3:todayPatch.includes('Today — Week 3')}));
+        return res.end(JSON.stringify({status:ok?'ok':'error',route:'canonical root + /today server-rendered Week 4',week:4,checks}));
       }
+
       return proxy(req,res);
-    }catch(e){res.writeHead(500,{'content-type':'text/plain'});res.end(String(e));}
+    }catch(e){res.writeHead(500,{'content-type':'text/plain','cache-control':'no-store'});res.end(String(e));}
   });
-  server.listen(port,'0.0.0.0',()=>console.log(`Command Center v10 proxy on ${port}; inner ${innerPort}; root + /today = Week 4`));
+  server.listen(port,'0.0.0.0',()=>console.log(`Command Center root-v11 on ${port}; / and /today directly serve Week 4`));
 }).catch(e=>{console.error(e);process.exit(1);});
