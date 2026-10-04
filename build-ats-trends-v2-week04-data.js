@@ -8,6 +8,7 @@ const NFLVERSE_URL='https://raw.githubusercontent.com/nflverse/nfldata/master/da
 const TARGET_SEASON=2026;
 const TARGET_WEEK=4;
 const PRIOR_SEASON=2025;
+const NFLVERSE_TEAM={LAR:'LA'};
 
 function parseCsvLine(line){
   const out=[];let cur='',quoted=false;
@@ -26,6 +27,7 @@ function parseCsv(text){
   return lines.slice(1).map(line=>{const cells=parseCsvLine(line),r={};header.forEach((h,i)=>r[h]=cells[i]??'');return r;});
 }
 function num(v){const n=Number(v);return v===''||!Number.isFinite(n)?null:n;}
+function sourceTeam(team){return NFLVERSE_TEAM[team]||team;}
 function completedReg(row,season){return Number(row.season)===season&&row.game_type==='REG'&&num(row.away_score)!=null&&num(row.home_score)!=null&&num(row.spread_line)!=null;}
 function teamMargin(row,team){
   const result=num(row.home_score)-num(row.away_score),spread=num(row.spread_line);
@@ -38,15 +40,19 @@ function historyFor(rows,team,season,filterFn){
     .sort((a,b)=>String(a.gameday).localeCompare(String(b.gameday))||Number(a.week)-Number(b.week));
 }
 function teamSide(rows,team,h2h){
-  const current=historyFor(rows,team,TARGET_SEASON,r=>Number(r.week)<TARGET_WEEK);
-  const prior=historyFor(rows,team,PRIOR_SEASON,()=>true).slice(-8);
+  const srcTeam=sourceTeam(team);
+  const current=historyFor(rows,srcTeam,TARGET_SEASON,r=>Number(r.week)<TARGET_WEEK);
+  const prior=historyFor(rows,srcTeam,PRIOR_SEASON,()=>true).slice(-8);
+  if(current.length!==3)throw new Error(`${team}: expected 3 completed ${TARGET_SEASON} games before Week ${TARGET_WEEK}, found ${current.length}`);
+  if(prior.length!==8)throw new Error(`${team}: expected 8 prior-form ${PRIOR_SEASON} games, found ${prior.length}`);
   return {
-    currentSeasonMargins:current.map(r=>teamMargin(r,team)),
-    priorFormMargins:prior.map(r=>teamMargin(r,team)),
+    currentSeasonMargins:current.map(r=>teamMargin(r,srcTeam)),
+    priorFormMargins:prior.map(r=>teamMargin(r,srcTeam)),
     h2h:h2h||null,
     provenance:{
-      currentSeasonGames:current.map(r=>({gameId:r.game_id,date:r.gameday,week:Number(r.week),opponent:r.home_team===team?r.away_team:r.home_team,site:r.home_team===team?'home':'away',spreadLine:num(r.spread_line),teamCoverMargin:teamMargin(r,team)})),
-      priorFormGames:prior.map(r=>({gameId:r.game_id,date:r.gameday,week:Number(r.week),opponent:r.home_team===team?r.away_team:r.home_team,site:r.home_team===team?'home':'away',spreadLine:num(r.spread_line),teamCoverMargin:teamMargin(r,team)}))
+      sourceTeam:srcTeam,
+      currentSeasonGames:current.map(r=>({gameId:r.game_id,date:r.gameday,week:Number(r.week),opponent:r.home_team===srcTeam?r.away_team:r.home_team,site:r.home_team===srcTeam?'home':'away',spreadLine:num(r.spread_line),teamCoverMargin:teamMargin(r,srcTeam)})),
+      priorFormGames:prior.map(r=>({gameId:r.game_id,date:r.gameday,week:Number(r.week),opponent:r.home_team===srcTeam?r.away_team:r.home_team,site:r.home_team===srcTeam?'home':'away',spreadLine:num(r.spread_line),teamCoverMargin:teamMargin(r,srcTeam)}))
     }
   };
 }
