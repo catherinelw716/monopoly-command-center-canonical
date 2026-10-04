@@ -1,0 +1,23 @@
+name: Verify Clean Landing
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-clean-landing.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public landing
+        run: |
+          set -euo pipefail
+          BASE='https://monopoly-command-center-canonical.onrender.com'
+          curl --fail --silent --show-error --retry 8 --retry-delay 4 --retry-all-errors "$BASE/" -o /tmp/root.html
+          grep -q 'Current operating picture' /tmp/root.html
+          grep -q 'Top Aligned Plays' /tmp/root.html
+          grep -q 'Important conflicts' /tmp/root.html
+          grep -q 'Decision chain' /tmp/root.html
+          ! grep -q 'How to read Today' /tmp/root.html
+          ! grep -q '<div class="today-rule">' /tmp/root.html
+          echo 'Live landing verified clean.'
