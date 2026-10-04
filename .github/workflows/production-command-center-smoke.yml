@@ -1,0 +1,44 @@
+name: Production Command Center Smoke
+
+on:
+  push:
+    paths:
+      - 'server-local.js'
+      - 'command-center-shell.html'
+      - 'package.json'
+      - '.github/workflows/production-command-center-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  production-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait briefly for production rollout
+        run: sleep 25
+      - name: Verify public health endpoint
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors \
+            https://monopoly-command-center-canonical.onrender.com/healthz -o /tmp/health.json
+          cat /tmp/health.json
+          grep -q '"status":"ok"' /tmp/health.json
+          grep -q '"architecture":"local-shell-v1"' /tmp/health.json
+          grep -q '"week4Today":true' /tmp/health.json
+          grep -q '"noStaleWeek3Today":true' /tmp/health.json
+      - name: Verify canonical root HTML
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 8 --retry-delay 5 --retry-all-errors \
+            https://monopoly-command-center-canonical.onrender.com/ -o /tmp/root.html
+          grep -q 'data-week="4"' /tmp/root.html
+          grep -q 'Week 4 · Saturday night' /tmp/root.html
+          grep -q '\$10,800' /tmp/root.html
+          grep -q '\$8,700' /tmp/root.html
+          node - <<'NODE'
+          const fs=require('fs');
+          const h=fs.readFileSync('/tmp/root.html','utf8');
+          const m=h.match(/<section class="view active" id="today"[\s\S]*?<\/section>/);
+          if(!m) throw new Error('Today section missing from canonical root');
+          if(m[0].includes('Week 3 · Saturday')) throw new Error('Stale Week 3 Today content is live');
+          console.log('Canonical root verified: Week 4 Today, no stale Week 3 Today content.');
+          NODE
