@@ -1,10 +1,12 @@
 'use strict';
 const fs=require('fs'),vm=require('vm');
-const p='ats-trends-v2-ui-patch.html';
+const p='five-factor-scorecard-page.html';
 const html=fs.readFileSync(p,'utf8');
-const required=['ATS Trends v1 vs v2','Top 5','Consensus','Differences','v1 · locked official factor','v2 · preferred challenger','ff-v12-cell','ff-v12-factorgrid','ats-trends-v2-ui-script'];
-for(const x of required)if(!html.includes(x))throw new Error('missing UI contract: '+x);
-const m=html.match(/<script id="ats-trends-v2-ui-script">([\s\S]*?)<\/script>/);
-if(!m)throw new Error('missing script body');
+const required=['ATS Trends top choices — v1 vs v2','Consensus and differences','All games — v1 and v2 side by side','ATS Trends v1 · locked official Week 4 factor','ATS Trends v2 · preferred challenger','__ATS_COMPARISON_NATIVE','five-factor-scorecard-script'];
+for(const x of required)if(!html.includes(x))throw new Error('missing native comparison UI contract: '+x);
+const m=html.match(/<script id="five-factor-scorecard-script">([\s\S]*?)<\/script>/);
+if(!m)throw new Error('missing native scorecard script body');
 new vm.Script(m[1]);
-console.log('ATS Trends v1/v2 UI QA passed');
+const legacy=fs.readFileSync('ats-trends-v2-ui-patch.html','utf8');
+if(!legacy.includes('if(window.__ATS_COMPARISON_NATIVE)return'))throw new Error('legacy patch is not safely disabled');
+console.log('Native ATS Trends v1/v2 UI QA passed');
