@@ -6,6 +6,8 @@ on:
     paths:
       - 'ats-trends-v2-challenger.js'
       - 'ats-trends-v2-challenger-qa.js'
+      - 'ats-trends-v2-ui-patch.html'
+      - 'ats-trends-v2-ui-qa.js'
       - 'build-ats-trends-v2-week04-data.js'
       - 'build-ats-trends-prospective-ledger.js'
       - 'five-factor-scorecard-data-week04.json'
@@ -24,6 +26,8 @@ jobs:
           node-version: '20'
       - name: Run challenger QA
         run: node ats-trends-v2-challenger-qa.js
+      - name: Run v1-v2 UI QA
+        run: node ats-trends-v2-ui-qa.js
       - name: Build source-backed Week 4 dataset
         run: node build-ats-trends-v2-week04-data.js
       - name: Freeze prospective v1-v2 ledger
