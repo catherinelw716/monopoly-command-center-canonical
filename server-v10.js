@@ -68,21 +68,25 @@ waitForInner().then(()=>{
   const server=http.createServer(async(req,res)=>{
     try{
       const url=new URL(req.url,'http://local');
+      if(req.method==='GET'&&url.pathname==='/'&&!url.searchParams.has('full')){
+        res.writeHead(302,{'location':'/today','cache-control':'no-store, max-age=0','x-command-center-route':'root-to-week4-today'});
+        return res.end();
+      }
       if(req.method==='GET'&&(url.pathname==='/today'||url.pathname==='/today/')){
-        const root=await innerRequest('/');
+        const root=await innerRequest('/?full=1');
         const html=standaloneToday(root.body.toString('utf8'));
         res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store, max-age=0','x-command-center-route':'week4-today-v10'});
         return res.end(html);
       }
       if(req.method==='GET'&&url.pathname==='/today-healthz'){
-        const root=await innerRequest('/');
+        const root=await innerRequest('/?full=1');
         const text=root.body.toString('utf8');
         const ok=text.includes('window.WEEK4_CURRENT_PUBLIC')&&todayPatch.includes('Today — Week 4')&&!todayPatch.includes('Today — Week 3');
         res.writeHead(ok?200:503,{'content-type':'application/json','cache-control':'no-store'});
-        return res.end(JSON.stringify({status:ok?'ok':'error',route:'server-rendered /today',week:4,containsWeek4:todayPatch.includes('Today — Week 4'),containsWeek3:todayPatch.includes('Today — Week 3')}));
+        return res.end(JSON.stringify({status:ok?'ok':'error',route:'server-rendered /today',rootRedirect:'/today',week:4,containsWeek4:todayPatch.includes('Today — Week 4'),containsWeek3:todayPatch.includes('Today — Week 3')}));
       }
       return proxy(req,res);
     }catch(e){res.writeHead(500,{'content-type':'text/plain'});res.end(String(e));}
   });
-  server.listen(port,'0.0.0.0',()=>console.log(`Command Center v10 proxy on ${port}; inner ${innerPort}; /today server-rendered Week 4`));
+  server.listen(port,'0.0.0.0',()=>console.log(`Command Center v10 proxy on ${port}; inner ${innerPort}; root + /today = Week 4`));
 }).catch(e=>{console.error(e);process.exit(1);});
