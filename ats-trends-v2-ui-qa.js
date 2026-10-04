@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('fs'),vm=require('vm');
+const p='ats-trends-v2-ui-patch.html';
+const html=fs.readFileSync(p,'utf8');
+const required=['ATS Trends v1 vs v2','Top 5','Consensus','Differences','v1 · locked official factor','v2 · preferred challenger','ff-v12-cell','ff-v12-factorgrid','ats-trends-v2-ui-script'];
+for(const x of required)if(!html.includes(x))throw new Error('missing UI contract: '+x);
+const m=html.match(/<script id="ats-trends-v2-ui-script">([\s\S]*?)<\/script>/);
+if(!m)throw new Error('missing script body');
+new vm.Script(m[1]);
+console.log('ATS Trends v1/v2 UI QA passed');
