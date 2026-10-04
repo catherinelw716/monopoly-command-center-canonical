@@ -17,9 +17,9 @@ s = s.slice(0, start) + compact + s.slice(end);
 
 const ruleStart = s.indexOf("    '<div class=\"today-rule\"><b>No master consensus score.</b>");
 if (ruleStart >= 0) {
-  const ruleEnd = s.indexOf("'+topAlignedHtml+", ruleStart);
-  if (ruleEnd < 0) throw new Error('Could not locate end of Today rule block');
-  s = s.slice(0, ruleStart) + "    topAlignedHtml+\n" + s.slice(ruleEnd + "'+topAlignedHtml+".length);
+  const topStart = s.indexOf('topAlignedHtml+', ruleStart);
+  if (topStart < 0) throw new Error('Could not locate Top Aligned block after Today rule');
+  s = s.slice(0, ruleStart) + '    ' + s.slice(topStart);
 }
 
 s = s.replace("current.version = 'week4-local-shell-v3-top-aligned-2026-10-04';", "current.version = 'week4-local-shell-v4-clean-landing-2026-10-04';");
