@@ -1,0 +1,50 @@
+name: Apply Today Decision Chain
+
+on:
+  push:
+    paths:
+      - 'scripts/apply-today-decision-chain.js'
+      - '.github/workflows/apply-today-decision-chain.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply migration
+        run: node scripts/apply-today-decision-chain.js
+      - name: Syntax check
+        run: node --check server-local.js
+      - name: Local decision-chain smoke
+        run: |
+          set -euo pipefail
+          PORT=18080 node server-local.js >/tmp/cc.log 2>&1 &
+          PID=$!
+          trap 'kill $PID || true' EXIT
+          for i in $(seq 1 40); do curl -fsS http://127.0.0.1:18080/healthz >/tmp/health.json && break || sleep .25; done
+          cat /tmp/health.json
+          grep -q '"decisionChain":true' /tmp/health.json
+          curl -fsS http://127.0.0.1:18080/ >/tmp/root.html
+          grep -q 'data-decision-framework="prediction-price-confirmation-fivefactor-context-decision"' /tmp/root.html
+          grep -q '1 · Prediction' /tmp/root.html
+          grep -q '2 · Price' /tmp/root.html
+          grep -q '3 · Independent confirmation' /tmp/root.html
+          grep -q '4 · 5-Factor diagnostic' /tmp/root.html
+          grep -q '5 · Material context' /tmp/root.html
+          grep -q '6 · Decision' /tmp/root.html
+          grep -q 'Stake comes last' /tmp/root.html
+      - name: Commit migrated server
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add server-local.js
+          git diff --cached --quiet || git commit -m "Rebuild Today around decision-chain synthesis"
+          git push
