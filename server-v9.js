@@ -9,6 +9,17 @@ function patchedJson(filePath,encoding){
   const raw=originalRead(filePath,encoding);
   if(encoding!=='utf8'&&encoding!=='utf-8')return raw;
 
+  if(base==='ats-trends-v2-ui-patch.html'){
+    const today=originalRead(path.join(__dirname,'week4-today-page.html'),'utf8');
+    return raw+'\n'+today;
+  }
+
+  if(base==='week4-nfelo-2026-10-03-1720ET.json'){
+    const data=JSON.parse(raw);
+    data.captured_at_local=latest.capturedAt;
+    return JSON.stringify(data);
+  }
+
   if(base==='week4-live-market-context-2026-10-03-1710ET.json'){
     const data=JSON.parse(raw);
     data.captured_at_local=latest.capturedAt;
