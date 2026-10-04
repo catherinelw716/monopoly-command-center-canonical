@@ -1,0 +1,28 @@
+name: Production Decision Chain Smoke
+
+on:
+  push:
+    paths:
+      - '.github/workflows/production-decision-chain-smoke.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify live health and Today HTML
+        run: |
+          set -euo pipefail
+          BASE='https://monopoly-command-center-canonical.onrender.com'
+          curl --fail --silent --show-error --retry 8 --retry-delay 4 --retry-all-errors "$BASE/healthz" -o /tmp/health.json
+          cat /tmp/health.json
+          grep -q '"decisionChain":true' /tmp/health.json
+          curl --fail --silent --show-error --retry 8 --retry-delay 4 --retry-all-errors "$BASE/" -o /tmp/root.html
+          grep -q 'data-decision-framework="prediction-price-confirmation-fivefactor-context-decision"' /tmp/root.html
+          grep -q '1 · Prediction' /tmp/root.html
+          grep -q '2 · Price' /tmp/root.html
+          grep -q '3 · Independent confirmation' /tmp/root.html
+          grep -q '4 · 5-Factor diagnostic' /tmp/root.html
+          grep -q '5 · Material context' /tmp/root.html
+          grep -q '6 · Decision' /tmp/root.html
+          grep -q 'Stake comes last' /tmp/root.html
+          echo 'Live canonical Today decision chain verified.'
