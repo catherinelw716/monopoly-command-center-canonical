@@ -79,7 +79,7 @@ for (const g of ffInput.games || []) {
 }
 const ff = ffEngine.scoreSlate(ffInput);
 
-current.version = 'week4-local-shell-v2-decision-chain-2026-10-04';
+current.version = 'week4-local-shell-v3-top-aligned-2026-10-04';
 current.captured_at_local = latest.capturedAt;
 current.snapshot_label = 'Week 4 · Saturday night · latest market Oct 3 9:45 PM ET';
 const by = Object.fromEntries(current.games.map(g => [g.game, g]));
@@ -285,10 +285,51 @@ function renderToday() {
     '</article>';
   }
 
+  function contextRisk(g){
+    const caution=String(g.against||'').toLowerCase();
+    return /injur|adverse|messy|\bout\b|cap exposure|priced substantial|material contradiction/.test(caution);
+  }
+  function alignmentRead(g){
+    const p=priceRead(g), ext=externalRead(g), five=fiveRead(g);
+    const support=ext.filter(x=>x.state==='support').length;
+    const oppose=ext.filter(x=>x.state==='oppose').length;
+    const contextCaution=contextRisk(g);
+    let category='PLAY — Aligned';
+    let tier=3;
+    if(p.kind==='good'&&support>=1&&five.state==='support'){category='TOP ALIGNED PLAY';tier=0;}
+    else if(support>=2&&five.state!=='oppose'){category='PLAY — Broad Confirmation';tier=1;}
+    else if(p.kind==='good'){category='PLAY — Model + Price';tier=2;}
+    const qualified=g.decision==='PLAY'&&p.kind!=='bad'&&oppose===0&&five.state!=='oppose'&&!contextCaution&&(support>=1||p.kind==='good');
+    return {g,p,ext,five,support,oppose,contextCaution,category,tier,qualified};
+  }
+  const alignedRows=games.map(alignmentRead);
+  const topAligned=alignedRows.filter(x=>x.qualified).sort((a,b)=>a.tier-b.tier||b.support-a.support||a.g.rank-b.g.rank).slice(0,3);
+  const conflicts=alignedRows.filter(x=>x.p.kind==='bad'||x.oppose>0||x.five.state==='oppose'||x.contextCaution).sort((a,b)=>a.g.rank-b.g.rank).slice(0,4);
+  function lens(state,label){return '<span class="align-lens '+state+'">'+esc(label)+'</span>';}
+  function topCard(x,i){
+    const g=x.g;
+    const price=x.p.kind==='good'?'PRICE ✓':x.p.kind==='neutral'?'PRICE —':'PRICE ×';
+    const five=x.five.state==='support'?'5F ✓':x.five.state==='oppose'?'5F ×':'5F ~';
+    const ext='EXTERNAL '+x.support+'✓';
+    return '<button class="top-align-card" data-game="'+esc(g.game)+'"><div class="top-align-rank">#'+(i+1)+'</div><div class="top-align-main"><div class="eyebrow">'+esc(x.category)+'</div><h3>'+esc(g.lean)+'</h3><div class="matchup">'+esc(g.game)+' · '+esc(g.time)+'</div><div class="align-lenses">'+lens('good','MODEL ✓')+lens(x.p.kind==='good'?'good':'neutral',price)+lens(x.support>=2?'good':'neutral',ext)+lens(x.five.state==='support'?'good':'neutral',five)+lens('good','CONTEXT ✓')+'</div><p><b>'+esc(x.p.headline)+'</b> · '+esc(x.support+' independent external support'+(x.support===1?'':'s'))+' · '+esc(x.five.headline)+'</p><div class="top-align-bottom"><span>'+esc(decisionLabel(g,x.p,x.ext,x.five))+'</span><b>'+esc(allocation(g))+'</b></div></div></button>';
+  }
+  function conflictCard(x){
+    let label='CONTEXT RISK';
+    let detail=x.g.against||'Material context needs review.';
+    if(x.p.kind==='bad'&&x.support>=2){label='CONSENSUS, BUT BAD PRICE';detail=x.p.detail;}
+    else if(x.p.kind==='bad'){label='PRICE PENALTY';detail=x.p.detail;}
+    else if(x.oppose>0){label='MODEL CONFLICT';detail=x.oppose+' external source'+(x.oppose===1?'':'s')+' oppose the primary side.';}
+    else if(x.five.state==='oppose'){label='5-FACTOR CONTRADICTION';detail='The diagnostic layer opposes the primary side.';}
+    return '<div class="conflict-card"><div><small>'+esc(label)+'</small><b>'+esc(x.g.lean)+'</b><span>'+esc(x.g.game)+'</span></div><p>'+esc(detail)+'</p></div>';
+  }
+  const topAlignedHtml='<div class="landing-priority" id="topAlignedPlays"><div class="section-head"><div><div class="eyebrow">Best current opportunities</div><h2>Top Aligned Plays</h2><p>Rule-qualified alignment across prediction, price, independent confirmation, 5-Factor diagnostics and material context. No master consensus score.</p></div></div>'+(topAligned.length?'<div class="top-align-grid">'+topAligned.map(topCard).join('')+'</div>':'<div class="panel empty-align">No game currently clears every Top Aligned guardrail. That is a valid result—not a reason to force a pick.</div>')+(conflicts.length?'<div class="conflict-wrap"><div class="eyebrow">Important conflicts</div><div class="conflict-grid">'+conflicts.map(conflictCard).join('')+'</div></div>':'')+'</div>';
+
   const cards=games.map(chainCard).join('');
+  const priorityStyles='<style id="top-aligned-styles">.landing-priority{margin:0 0 16px}.top-align-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.top-align-card{display:grid;grid-template-columns:30px 1fr;text-align:left;width:100%;border:1px solid #2b5d4a;background:#0b211c;border-radius:12px;padding:11px;color:inherit}.top-align-rank{font-size:16px;font-weight:950;color:#70dda8}.top-align-main h3{font-size:18px;margin:2px 0}.top-align-main p{font-size:9px;color:#94aa9f;line-height:1.4}.align-lenses{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0}.align-lens{font-size:7px;font-weight:900;padding:4px 5px;border-radius:999px;background:#142331;color:#9eb1c1}.align-lens.good{background:#123226;color:#70dda8}.top-align-bottom{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #23483b;padding-top:7px;font-size:8px;color:#9eb3aa}.top-align-bottom b{color:#70dda8}.conflict-wrap{margin-top:12px}.conflict-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:6px}.conflict-card{display:grid;grid-template-columns:155px 1fr;gap:9px;border:1px solid #52383a;background:#211416;border-radius:9px;padding:9px}.conflict-card small{display:block;color:#e38a90;font-size:7px;font-weight:950}.conflict-card b{display:block;font-size:11px;margin-top:2px}.conflict-card span,.conflict-card p{font-size:8px;color:#a58f92;margin:2px 0}.empty-align{font-size:10px;color:#9eb3aa}@media(max-width:800px){.top-align-grid,.conflict-grid{grid-template-columns:1fr}.conflict-card{grid-template-columns:1fr}.top-align-bottom{display:grid}}</style>';
   const styles='<style id="decision-chain-styles">.today-rule{margin:10px 0 16px;padding:11px 12px;border:1px solid #214055;background:#0b1b29;border-radius:11px;font-size:10px;color:#9eb3c4}.today-rule b{color:#fff}.decision-chain-list{display:grid;gap:10px}.decision-chain-card{padding:13px}.chain-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.chain-head h3{font-size:20px;margin:3px 0 0}.decision-chain{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px}.chain-step{background:#091725;border:1px solid #1d3549;border-radius:9px;padding:9px;min-width:0}.chain-step small,.chain-stake small{display:block;color:#718ca1;font-size:7px;text-transform:uppercase;font-weight:950;letter-spacing:.05em}.chain-step b{display:block;font-size:11px;margin-top:3px}.chain-step span{display:block;font-size:9px;color:#91a7b9;margin-top:3px;line-height:1.35}.chain-step em{display:block;font-size:8px;color:#70879a;font-style:normal;margin-top:5px}.chain-step.good{border-color:#285844}.chain-step.bad,.chain-step.oppose{border-color:#5a3436}.chain-step.support{border-color:#285844}.chain-step.final{background:#0d2430;border-color:#31536a}.chain-sources{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-top:6px}.chain-sources .dc-source{padding:6px}.chain-sources .dc-source small{font-size:7px}.chain-sources .dc-source b{font-size:9px}.chain-sources .dc-source span{font-size:7px}.chain-stake{display:grid;grid-template-columns:130px 1fr 2fr;gap:10px;align-items:center;border-top:1px solid #1b3146;margin-top:9px;padding-top:9px}.chain-stake b{font-size:11px;color:#70dda8}.chain-stake span{font-size:9px;color:#8198aa}@media(max-width:800px){.decision-chain{grid-template-columns:1fr}.chain-sources{grid-template-columns:1fr 1fr}.chain-stake{grid-template-columns:1fr}.chain-head{display:grid}.decision-chip{width:max-content}}</style>';
-  return '<section class="view active" id="today" data-week="4" data-render-source="server-local" data-decision-framework="prediction-price-confirmation-fivefactor-context-decision">'+styles+
+  return '<section class="view active" id="today" data-week="4" data-render-source="server-local" data-decision-framework="prediction-price-confirmation-fivefactor-context-decision">'+styles+priorityStyles+
     '<div class="hero-grid"><div class="panel slate-state"><div class="eyebrow">Current operating picture</div><div class="state-title">Week 4 · Saturday night</div><div class="state-sub">Interpret every game in the same order: prediction → price → confirmation → diagnostic evidence → material context → decision → stake.</div><div class="kpis"><div class="kpi"><small>Catherine</small><b>'+money(current.balances.Catherine)+'</b><span>#28 after Week 3</span></div><div class="kpi"><small>Amanda</small><b>'+money(current.balances.Amanda)+'</b><span>#65 after Week 3</span></div><div class="kpi"><small>Household outlay</small><b>'+money(current.working_portfolio.household_outlay)+'</b><span>current working portfolio</span></div><div class="kpi"><small>Market snapshot</small><b>9:45 PM ET</b><span>'+esc(latest.source)+'</span></div></div></div><div class="panel"><div class="eyebrow">How to read Today</div><div class="alerts"><div class="alert green"><span class="dot"></span><div><b>Prediction starts the chain.</b><br/>Our primary system establishes the side; the other evidence does not get one equal vote each.</div></div><div class="alert"><span class="dot"></span><div><b>Price is a gate, not a vote.</b><br/>Sly versus current market can upgrade or degrade an otherwise attractive side.</div></div><div class="alert"><span class="dot"></span><div><b>5-Factor is diagnostic.</b><br/>Raw line movement, money, defense and ATS context explain the bet; the 100-point score stays audit-only.</div></div></div></div></div>'+
+    topAlignedHtml+
     '<div class="today-rule"><b>No master consensus score.</b> SportsLine, Gridiron, nfelo, 4for4 and Lucas are shown separately so correlated or unavailable evidence cannot masquerade as independent certainty.</div>'+
     '<div class="section-head"><div><div class="eyebrow">Decision chain</div><h2>All 15 games</h2><p>Ranked by the current primary system. Open a game for the full evidence trail.</p></div></div><div class="decision-chain-list" id="todayDecisionChain">'+cards+'</div></section>';
 }
@@ -330,7 +371,7 @@ const server=http.createServer((req,res)=>{
   }
   if (url.pathname==='/healthz') {
     const today=appHtml.match(/<section class="view active" id="today"[\s\S]*?<\/section>/)?.[0] || '';
-    const checks={localShell:true,noRemoteFetch:true,games15:current.games.length===15,latestMarket:current.captured_at_local===latest.capturedAt,week4Today:today.includes('Week 4 · Saturday night'),noStaleWeek3Today:!today.includes('Week 3 · Saturday'),balances:today.includes('$10,800')&&today.includes('$8,700'),portfolio:current.working_portfolio.household_outlay===3800,overviewPatch:patches.includes('week4-overview-page-script'),fiveFactor15:ff.games.length===15,decisionChain:today.includes('Prediction')&&today.includes('2 · Price')&&today.includes('3 · Independent confirmation')&&today.includes('4 · 5-Factor diagnostic')&&today.includes('5 · Material context')&&today.includes('6 · Decision')&&today.includes('Stake comes last')};
+    const checks={localShell:true,noRemoteFetch:true,games15:current.games.length===15,latestMarket:current.captured_at_local===latest.capturedAt,week4Today:today.includes('Week 4 · Saturday night'),noStaleWeek3Today:!today.includes('Week 3 · Saturday'),balances:today.includes('$10,800')&&today.includes('$8,700'),portfolio:current.working_portfolio.household_outlay===3800,overviewPatch:patches.includes('week4-overview-page-script'),fiveFactor15:ff.games.length===15,decisionChain:today.includes('Prediction')&&today.includes('2 · Price')&&today.includes('3 · Independent confirmation')&&today.includes('4 · 5-Factor diagnostic')&&today.includes('5 · Material context')&&today.includes('6 · Decision')&&today.includes('Stake comes last'),topAligned:today.includes('Top Aligned Plays')&&today.includes('Important conflicts')&&today.includes('No master consensus score')};
     const ok=Object.values(checks).every(Boolean);
     res.writeHead(ok?200:503,{'content-type':'application/json','cache-control':'no-store'});
     return res.end(JSON.stringify({status:ok?'ok':'error',version:current.version,architecture:'local-shell-v1',checks}));
