@@ -1,0 +1,39 @@
+name: Freeze Command Center Shell
+
+on:
+  push:
+    paths:
+      - '.github/workflows/freeze-command-center-shell.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze-shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch current Mission Control shell
+        run: |
+          set -euo pipefail
+          URL='https://monopoly-command-center-v67.floot.app/_cdn/static/f4ebb851-c03c-451c-81c5-343be9983db0-command-center-v67-all3-currentmodel.txt'
+          curl --fail --location --silent --show-error "$URL" -o command-center-shell.html
+          test "$(wc -c < command-center-shell.html)" -gt 10000
+          grep -qi 'NFL' command-center-shell.html
+          grep -qi 'today' command-center-shell.html
+          echo "Frozen shell bytes: $(wc -c < command-center-shell.html)"
+      - name: Commit frozen shell
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add command-center-shell.html
+          if git diff --cached --quiet; then
+            echo 'Shell unchanged.'
+            exit 0
+          fi
+          git commit -m 'Freeze Mission Control shell locally'
+          git push
