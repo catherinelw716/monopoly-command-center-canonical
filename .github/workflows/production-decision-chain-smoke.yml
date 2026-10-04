@@ -16,8 +16,12 @@ jobs:
           curl --fail --silent --show-error --retry 8 --retry-delay 4 --retry-all-errors "$BASE/healthz" -o /tmp/health.json
           cat /tmp/health.json
           grep -q '"decisionChain":true' /tmp/health.json
+          grep -q '"topAligned":true' /tmp/health.json
           curl --fail --silent --show-error --retry 8 --retry-delay 4 --retry-all-errors "$BASE/" -o /tmp/root.html
           grep -q 'data-decision-framework="prediction-price-confirmation-fivefactor-context-decision"' /tmp/root.html
+          grep -q 'Top Aligned Plays' /tmp/root.html
+          grep -q 'Important conflicts' /tmp/root.html
+          grep -q 'No master consensus score' /tmp/root.html
           grep -q '1 · Prediction' /tmp/root.html
           grep -q '2 · Price' /tmp/root.html
           grep -q '3 · Independent confirmation' /tmp/root.html
@@ -25,4 +29,4 @@ jobs:
           grep -q '5 · Material context' /tmp/root.html
           grep -q '6 · Decision' /tmp/root.html
           grep -q 'Stake comes last' /tmp/root.html
-          echo 'Live canonical Today decision chain verified.'
+          echo 'Live canonical Today Top Aligned + decision chain verified.'
