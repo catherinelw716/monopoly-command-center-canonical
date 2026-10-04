@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "createdAt": "2026-10-04T01:34:36.786Z",
+  "createdAt": "2026-10-04T01:40:35.129Z",
   "purpose": "Prospective comparison of ATS Trends v1 versus v2 challenger. Predictions are frozen before results and must not be rewritten after outcomes.",
   "promotionPolicy": "Do not replace v1 based on one week. Compare multiple weeks on directional ATS accuracy, strength-band separation, stability, and incremental value versus other five-factor signals.",
   "methodology": {
@@ -10,7 +10,7 @@
   "weeks": [
     {
       "week": 4,
-      "predictionFrozenAt": "2026-10-04T01:34:36.786Z",
+      "predictionFrozenAt": "2026-10-04T01:40:35.129Z",
       "status": "PENDING_RESULTS",
       "games": [
         {
