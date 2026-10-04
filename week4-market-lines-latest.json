@@ -1,0 +1,24 @@
+{
+  "season": 2026,
+  "week": 4,
+  "capturedAt": "2026-10-03T21:45:00-04:00",
+  "source": "Covers NFL odds board",
+  "sourceNote": "Covers page last updated Oct 3, 2026 9:45 PM ET. Current line uses the prevailing market spread across the displayed sportsbook board; Sly lines remain immutable.",
+  "games": {
+    "IND @ WAS": {"away":"IND","home":"WAS","currentAway":-4.5,"display":"IND -4.5"},
+    "TEN @ BAL": {"away":"TEN","home":"BAL","currentAway":11.5,"display":"BAL -11.5"},
+    "NE @ BUF": {"away":"NE","home":"BUF","currentAway":6.5,"display":"BUF -6.5"},
+    "NYJ @ CHI": {"away":"NYJ","home":"CHI","currentAway":3.5,"display":"CHI -3.5"},
+    "JAX @ CIN": {"away":"JAX","home":"CIN","currentAway":2.5,"display":"CIN -2.5"},
+    "DAL @ HOU": {"away":"DAL","home":"HOU","currentAway":2.5,"display":"HOU -2.5"},
+    "ARI @ NYG": {"away":"ARI","home":"NYG","currentAway":-2.5,"display":"ARI -2.5"},
+    "LAR @ PHI": {"away":"LAR","home":"PHI","currentAway":-3.5,"display":"LAR -3.5"},
+    "GB @ TB": {"away":"GB","home":"TB","currentAway":-3.5,"display":"GB -3.5"},
+    "MIA @ MIN": {"away":"MIA","home":"MIN","currentAway":10.5,"display":"MIN -10.5"},
+    "KC @ LV": {"away":"KC","home":"LV","currentAway":-4.5,"display":"KC -4.5"},
+    "LAC @ SEA": {"away":"LAC","home":"SEA","currentAway":7.5,"display":"SEA -7.5"},
+    "DEN @ SF": {"away":"DEN","home":"SF","currentAway":2.5,"display":"SF -2.5"},
+    "DET @ CAR": {"away":"DET","home":"CAR","currentAway":-3.5,"display":"DET -3.5"},
+    "ATL @ NO": {"away":"ATL","home":"NO","currentAway":2.5,"display":"NO -2.5"}
+  }
+}
