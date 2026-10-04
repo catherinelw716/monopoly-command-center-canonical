@@ -1,0 +1,34 @@
+name: ATS Trends v2 data build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ats-trends-v2-challenger.js'
+      - 'ats-trends-v2-challenger-qa.js'
+      - 'build-ats-trends-v2-week04-data.js'
+      - 'five-factor-scorecard-data-week04.json'
+      - '.github/workflows/ats-trends-v2-data.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run challenger QA
+        run: node ats-trends-v2-challenger-qa.js
+      - name: Build source-backed Week 4 dataset
+        run: node build-ats-trends-v2-week04-data.js
+      - name: Show comparison summary
+        run: node -e "const r=require('./ats-trends-v2-week04-results.json'); console.log(JSON.stringify(r.summary,null,2));"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ats-trends-v2-week04
+          path: |
+            ats-trends-v2-week04-input.json
+            ats-trends-v2-week04-results.json
+          retention-days: 14
