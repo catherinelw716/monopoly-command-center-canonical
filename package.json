@@ -2,6 +2,6 @@
   "name": "monopoly-command-center-canonical",
   "version": "1.0.0",
   "private": true,
-  "scripts": {"start": "node server-v8.js"},
+  "scripts": {"start": "node server-v9.js"},
   "engines": {"node": ">=18"}
 }
