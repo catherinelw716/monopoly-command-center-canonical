@@ -1,0 +1,46 @@
+name: Local Shell Command Center
+
+on:
+  push:
+    paths:
+      - 'server-local.js'
+      - 'command-center-shell.html'
+      - 'week4-*.json'
+      - 'five-factor-scorecard-*'
+      - 'week4-overview-page.html'
+      - 'week4-sportsline-integration-patch.html'
+      - 'package.json'
+      - '.github/workflows/local-shell-command-center.yml'
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax check
+        run: node --check server-local.js
+      - name: Start local-shell server
+        run: |
+          PORT=18080 node server-local.js > /tmp/command-center.log 2>&1 &
+          echo $! > /tmp/command-center.pid
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:18080/healthz > /tmp/health.json; then break; fi
+            sleep 0.25
+          done
+          cat /tmp/command-center.log
+          cat /tmp/health.json
+          grep -q '"status":"ok"' /tmp/health.json
+      - name: Verify canonical HTML contract
+        run: |
+          curl -fsS http://127.0.0.1:18080/ > /tmp/root.html
+          grep -q 'data-week="4"' /tmp/root.html
+          grep -q 'Week 4 · Saturday night' /tmp/root.html
+          grep -q '\$10,800' /tmp/root.html
+          grep -q '\$8,700' /tmp/root.html
+          grep -q 'x-command-center' /dev/null || true
+          curl -fsS http://127.0.0.1:18080/_version > /tmp/version.json
+          grep -q '"architecture":"local-shell-v1"' /tmp/version.json
