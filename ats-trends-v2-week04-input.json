@@ -1,0 +1,4012 @@
+{
+  "season": 2026,
+  "week": 4,
+  "generatedAt": "2026-10-04T01:27:56.494Z",
+  "status": "SOURCE_BACKED_CHALLENGER_INPUT",
+  "source": {
+    "name": "nflverse/nfldata games.csv",
+    "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+    "field": "spread_line",
+    "interpretation": "positive spread_line means home team favored; team cover margin derived as actual team scoring margin minus team closing/reference spread",
+    "fetchedAt": "2026-10-04T01:27:56.494Z"
+  },
+  "policy": {
+    "challengerOnly": true,
+    "doesNotModifyFiveFactorV1": true,
+    "doesNotFeedV2OrOptimizer": true,
+    "currentSeasonWindow": "2026 completed regular-season games before Week 4",
+    "priorFormWindow": "last 8 2025 regular-season games per team"
+  },
+  "games": [
+    {
+      "game": "IND @ WAS",
+      "away": "IND",
+      "home": "WAS",
+      "slyAway": -3.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -15,
+            3,
+            3.5
+          ],
+          "priorFormMargins": [
+            -0.5,
+            0.5,
+            -7,
+            -19.5,
+            11.5,
+            -16.5,
+            -2.5,
+            1.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 1,
+            "p": 1,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "IND",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_BAL_IND",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "BAL",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": -15
+              },
+              {
+                "gameId": "2026_02_IND_KC",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": 6,
+                "teamCoverMargin": 3
+              },
+              {
+                "gameId": "2026_03_HOU_IND",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "HOU",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 3.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_ATL_IND",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_12_IND_KC",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_13_HOU_IND",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "HOU",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -7
+              },
+              {
+                "gameId": "2025_14_IND_JAX",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "JAX",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -19.5
+              },
+              {
+                "gameId": "2025_15_IND_SEA",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "SEA",
+                "site": "away",
+                "spreadLine": 13.5,
+                "teamCoverMargin": 11.5
+              },
+              {
+                "gameId": "2025_16_SF_IND",
+                "date": "2025-12-22",
+                "week": 16,
+                "opponent": "SF",
+                "site": "home",
+                "spreadLine": -4.5,
+                "teamCoverMargin": -16.5
+              },
+              {
+                "gameId": "2025_17_JAX_IND",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "JAX",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -2.5
+              },
+              {
+                "gameId": "2025_18_IND_HOU",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": 9.5,
+                "teamCoverMargin": 1.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            4,
+            -13.5,
+            10.5
+          ],
+          "priorFormMargins": [
+            -13.5,
+            -0.5,
+            5.5,
+            -32.5,
+            10.5,
+            -4,
+            1.5,
+            10
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 3,
+            "p": 1,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "WAS",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_WAS_PHI",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "PHI",
+                "site": "away",
+                "spreadLine": 6,
+                "teamCoverMargin": 4
+              },
+              {
+                "gameId": "2026_02_WAS_DAL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -13.5
+              },
+              {
+                "gameId": "2026_03_SEA_WAS",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -8.5,
+                "teamCoverMargin": 10.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_DET_WAS",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": -8.5,
+                "teamCoverMargin": -13.5
+              },
+              {
+                "gameId": "2025_11_WAS_MIA",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "MIA",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_13_DEN_WAS",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "DEN",
+                "site": "home",
+                "spreadLine": -6.5,
+                "teamCoverMargin": 5.5
+              },
+              {
+                "gameId": "2025_14_WAS_MIN",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "MIN",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -32.5
+              },
+              {
+                "gameId": "2025_15_WAS_NYG",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2025_16_PHI_WAS",
+                "date": "2025-12-20",
+                "week": 16,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": -7,
+                "teamCoverMargin": -4
+              },
+              {
+                "gameId": "2025_17_DAL_WAS",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "DAL",
+                "site": "home",
+                "spreadLine": -8.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_18_WAS_PHI",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "PHI",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 10
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "TEN @ BAL",
+      "away": "TEN",
+      "home": "BAL",
+      "slyAway": 11.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -14.5,
+            3,
+            -2.5
+          ],
+          "priorFormMargins": [
+            2.5,
+            6.5,
+            -16,
+            6.5,
+            -0.5,
+            20.5,
+            -6.5,
+            -21.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "TEN",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NYJ_TEN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -14.5
+              },
+              {
+                "gameId": "2026_02_PHI_TEN",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": -7,
+                "teamCoverMargin": 3
+              },
+              {
+                "gameId": "2026_03_TEN_NYG",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -2.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_HOU_TEN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "HOU",
+                "site": "home",
+                "spreadLine": -5.5,
+                "teamCoverMargin": 2.5
+              },
+              {
+                "gameId": "2025_12_SEA_TEN",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -12.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_13_JAX_TEN",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "JAX",
+                "site": "home",
+                "spreadLine": -6,
+                "teamCoverMargin": -16
+              },
+              {
+                "gameId": "2025_14_TEN_CLE",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "CLE",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_15_TEN_SF",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_16_KC_TEN",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "KC",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 20.5
+              },
+              {
+                "gameId": "2025_17_NO_TEN",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_18_TEN_JAX",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "JAX",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -21.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            15,
+            -15.5,
+            0
+          ],
+          "priorFormMargins": [
+            -0.5,
+            -1,
+            -25,
+            -10.5,
+            21.5,
+            -7.5,
+            19.5,
+            -6.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "BAL",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_BAL_IND",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "IND",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": 15
+              },
+              {
+                "gameId": "2026_02_NO_BAL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 8.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2026_03_BAL_DAL",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": 0
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_BAL_CLE",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "CLE",
+                "site": "away",
+                "spreadLine": -7.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_12_NYJ_BAL",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 14,
+                "teamCoverMargin": -1
+              },
+              {
+                "gameId": "2025_13_CIN_BAL",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "CIN",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": -25
+              },
+              {
+                "gameId": "2025_14_PIT_BAL",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "PIT",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_15_BAL_CIN",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "CIN",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 21.5
+              },
+              {
+                "gameId": "2025_16_NE_BAL",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "NE",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -7.5
+              },
+              {
+                "gameId": "2025_17_BAL_GB",
+                "date": "2025-12-27",
+                "week": 17,
+                "opponent": "GB",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 19.5
+              },
+              {
+                "gameId": "2025_18_BAL_PIT",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": -4.5,
+                "teamCoverMargin": -6.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "NE @ BUF",
+      "away": "NE",
+      "home": "BUF",
+      "slyAway": 7,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            0,
+            12.5,
+            -26
+          ],
+          "priorFormMargins": [
+            7.5,
+            0.5,
+            -1.5,
+            11,
+            -1.5,
+            7.5,
+            19.5,
+            14
+          ],
+          "h2h": {
+            "w": 4,
+            "l": 1,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "NE",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NE_SEA",
+                "date": "2026-09-09",
+                "week": 1,
+                "opponent": "SEA",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 0
+              },
+              {
+                "gameId": "2026_02_PIT_NE",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "PIT",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 12.5
+              },
+              {
+                "gameId": "2026_03_NE_JAX",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "JAX",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": -26
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_NE_TB",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 7.5
+              },
+              {
+                "gameId": "2025_11_NYJ_NE",
+                "date": "2025-11-13",
+                "week": 11,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_12_NE_CIN",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "CIN",
+                "site": "away",
+                "spreadLine": -7.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_13_NYG_NE",
+                "date": "2025-12-01",
+                "week": 13,
+                "opponent": "NYG",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": 11
+              },
+              {
+                "gameId": "2025_15_BUF_NE",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "BUF",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_16_NE_BAL",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "BAL",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 7.5
+              },
+              {
+                "gameId": "2025_17_NE_NYJ",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "NYJ",
+                "site": "away",
+                "spreadLine": -12.5,
+                "teamCoverMargin": 19.5
+              },
+              {
+                "gameId": "2025_18_MIA_NE",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "MIA",
+                "site": "home",
+                "spreadLine": 14,
+                "teamCoverMargin": 14
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            3.5,
+            4.5,
+            1
+          ],
+          "priorFormMargins": [
+            6,
+            -9.5,
+            16,
+            -1,
+            1.5,
+            -7.5,
+            -4,
+            14.5
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 4,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "BUF",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_BUF_HOU",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 3.5
+              },
+              {
+                "gameId": "2026_02_DET_BUF",
+                "date": "2026-09-17",
+                "week": 2,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2026_03_LAC_BUF",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "LAC",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": 1
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_TB_BUF",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "TB",
+                "site": "home",
+                "spreadLine": 6,
+                "teamCoverMargin": 6
+              },
+              {
+                "gameId": "2025_12_BUF_HOU",
+                "date": "2025-11-20",
+                "week": 12,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": -5.5,
+                "teamCoverMargin": -9.5
+              },
+              {
+                "gameId": "2025_13_BUF_PIT",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": 16
+              },
+              {
+                "gameId": "2025_14_CIN_BUF",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "CIN",
+                "site": "home",
+                "spreadLine": 6,
+                "teamCoverMargin": -1
+              },
+              {
+                "gameId": "2025_15_BUF_NE",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "NE",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_16_BUF_CLE",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "CLE",
+                "site": "away",
+                "spreadLine": -10.5,
+                "teamCoverMargin": -7.5
+              },
+              {
+                "gameId": "2025_17_PHI_BUF",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -4
+              },
+              {
+                "gameId": "2025_18_NYJ_BUF",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 14.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "NYJ @ CHI",
+      "away": "NYJ",
+      "home": "CHI",
+      "slyAway": 3.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            14.5,
+            0.5,
+            0
+          ],
+          "priorFormMargins": [
+            -0.5,
+            1,
+            6,
+            -21.5,
+            -14.5,
+            -16.5,
+            -19.5,
+            -14.5
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 4,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "NYJ",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NYJ_TEN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 14.5
+              },
+              {
+                "gameId": "2026_02_GB_NYJ",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2026_03_NYJ_DET",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "DET",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": 0
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_NYJ_NE",
+                "date": "2025-11-13",
+                "week": 11,
+                "opponent": "NE",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_12_NYJ_BAL",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "BAL",
+                "site": "away",
+                "spreadLine": 14,
+                "teamCoverMargin": 1
+              },
+              {
+                "gameId": "2025_13_ATL_NYJ",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 6
+              },
+              {
+                "gameId": "2025_14_MIA_NYJ",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "MIA",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -21.5
+              },
+              {
+                "gameId": "2025_15_NYJ_JAX",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "JAX",
+                "site": "away",
+                "spreadLine": 13.5,
+                "teamCoverMargin": -14.5
+              },
+              {
+                "gameId": "2025_16_NYJ_NO",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "NO",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -16.5
+              },
+              {
+                "gameId": "2025_17_NE_NYJ",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "NE",
+                "site": "home",
+                "spreadLine": -12.5,
+                "teamCoverMargin": -19.5
+              },
+              {
+                "gameId": "2025_18_NYJ_BUF",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -14.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            19,
+            -10.5,
+            23.5
+          ],
+          "priorFormMargins": [
+            5,
+            0,
+            16,
+            -0.5,
+            20.5,
+            4.5,
+            -0.5,
+            -6.5
+          ],
+          "h2h": {
+            "w": 4,
+            "l": 1,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "CHI",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_CHI_CAR",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "CAR",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": 19
+              },
+              {
+                "gameId": "2026_02_MIN_CHI",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2026_03_PHI_CHI",
+                "date": "2026-09-28",
+                "week": 3,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 23.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_CHI_MIN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "MIN",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 5
+              },
+              {
+                "gameId": "2025_12_PIT_CHI",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "PIT",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": 0
+              },
+              {
+                "gameId": "2025_13_CHI_PHI",
+                "date": "2025-11-28",
+                "week": 13,
+                "opponent": "PHI",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": 16
+              },
+              {
+                "gameId": "2025_14_CHI_GB",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "GB",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_15_CLE_CHI",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "CLE",
+                "site": "home",
+                "spreadLine": 7.5,
+                "teamCoverMargin": 20.5
+              },
+              {
+                "gameId": "2025_16_GB_CHI",
+                "date": "2025-12-20",
+                "week": 16,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2025_17_CHI_SF",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_18_DET_CHI",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -6.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "JAX @ CIN",
+      "away": "JAX",
+      "home": "CIN",
+      "slyAway": 2.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            15.5,
+            -4.5,
+            26
+          ],
+          "priorFormMargins": [
+            32,
+            0.5,
+            16,
+            19.5,
+            14.5,
+            17.5,
+            2.5,
+            21.5
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 4,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "JAX",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_CLE_JAX",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "CLE",
+                "site": "home",
+                "spreadLine": 8.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2026_02_JAX_DEN",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2026_03_NE_JAX",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "NE",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": 26
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_LAC_JAX",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "LAC",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 32
+              },
+              {
+                "gameId": "2025_12_JAX_ARI",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "ARI",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_13_JAX_TEN",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -6,
+                "teamCoverMargin": 16
+              },
+              {
+                "gameId": "2025_14_IND_JAX",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "IND",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 19.5
+              },
+              {
+                "gameId": "2025_15_NYJ_JAX",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 13.5,
+                "teamCoverMargin": 14.5
+              },
+              {
+                "gameId": "2025_16_JAX_DEN",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 17.5
+              },
+              {
+                "gameId": "2025_17_JAX_IND",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "IND",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 2.5
+              },
+              {
+                "gameId": "2025_18_TEN_JAX",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "TEN",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 21.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            2.5,
+            17,
+            -6.5
+          ],
+          "priorFormMargins": [
+            -16.5,
+            1.5,
+            25,
+            1,
+            -21.5,
+            20.5,
+            16,
+            -11.5
+          ],
+          "h2h": {
+            "w": 4,
+            "l": 1,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "CIN",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_TB_CIN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "TB",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 2.5
+              },
+              {
+                "gameId": "2026_02_CIN_HOU",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 17
+              },
+              {
+                "gameId": "2026_03_CIN_PIT",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -6.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_CIN_PIT",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -16.5
+              },
+              {
+                "gameId": "2025_12_NE_CIN",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "NE",
+                "site": "home",
+                "spreadLine": -7.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_13_CIN_BAL",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "BAL",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": 25
+              },
+              {
+                "gameId": "2025_14_CIN_BUF",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 6,
+                "teamCoverMargin": 1
+              },
+              {
+                "gameId": "2025_15_BAL_CIN",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "BAL",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -21.5
+              },
+              {
+                "gameId": "2025_16_CIN_MIA",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "MIA",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 20.5
+              },
+              {
+                "gameId": "2025_17_ARI_CIN",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": 16
+              },
+              {
+                "gameId": "2025_18_CLE_CIN",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "CLE",
+                "site": "home",
+                "spreadLine": 9.5,
+                "teamCoverMargin": -11.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "DAL @ HOU",
+      "away": "DAL",
+      "home": "HOU",
+      "slyAway": 3,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -11,
+            13.5,
+            0
+          ],
+          "priorFormMargins": [
+            13.5,
+            6,
+            6.5,
+            -10.5,
+            -13.5,
+            -18.5,
+            -1.5,
+            -20
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 2
+          },
+          "provenance": {
+            "sourceTeam": "DAL",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_DAL_NYG",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -11
+              },
+              {
+                "gameId": "2026_02_WAS_DAL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 13.5
+              },
+              {
+                "gameId": "2026_03_BAL_DAL",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "BAL",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 0
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_DAL_LV",
+                "date": "2025-11-17",
+                "week": 11,
+                "opponent": "LV",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 13.5
+              },
+              {
+                "gameId": "2025_12_PHI_DAL",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 6
+              },
+              {
+                "gameId": "2025_13_KC_DAL",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "KC",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_14_DAL_DET",
+                "date": "2025-12-04",
+                "week": 14,
+                "opponent": "DET",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_15_MIN_DAL",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -13.5
+              },
+              {
+                "gameId": "2025_16_LAC_DAL",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "LAC",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -18.5
+              },
+              {
+                "gameId": "2025_17_DAL_WAS",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "WAS",
+                "site": "away",
+                "spreadLine": -8.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_18_DAL_NYG",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -20
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            -3.5,
+            -17,
+            -3.5
+          ],
+          "priorFormMargins": [
+            -2.5,
+            9.5,
+            7,
+            14.5,
+            9.5,
+            -12.5,
+            5.5,
+            -1.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 2
+          },
+          "provenance": {
+            "sourceTeam": "HOU",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_BUF_HOU",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "BUF",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -3.5
+              },
+              {
+                "gameId": "2026_02_CIN_HOU",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "CIN",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -17
+              },
+              {
+                "gameId": "2026_03_HOU_IND",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "IND",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -3.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_HOU_TEN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -5.5,
+                "teamCoverMargin": -2.5
+              },
+              {
+                "gameId": "2025_12_BUF_HOU",
+                "date": "2025-11-20",
+                "week": 12,
+                "opponent": "BUF",
+                "site": "home",
+                "spreadLine": -5.5,
+                "teamCoverMargin": 9.5
+              },
+              {
+                "gameId": "2025_13_HOU_IND",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "IND",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 7
+              },
+              {
+                "gameId": "2025_14_HOU_KC",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 14.5
+              },
+              {
+                "gameId": "2025_15_ARI_HOU",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 10.5,
+                "teamCoverMargin": 9.5
+              },
+              {
+                "gameId": "2025_16_LV_HOU",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 14.5,
+                "teamCoverMargin": -12.5
+              },
+              {
+                "gameId": "2025_17_HOU_LAC",
+                "date": "2025-12-27",
+                "week": 17,
+                "opponent": "LAC",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 5.5
+              },
+              {
+                "gameId": "2025_18_IND_HOU",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "IND",
+                "site": "home",
+                "spreadLine": 9.5,
+                "teamCoverMargin": -1.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "ARI @ NYG",
+      "away": "ARI",
+      "home": "NYG",
+      "slyAway": -2.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            20.5,
+            -20.5,
+            1.5
+          ],
+          "priorFormMargins": [
+            -15.5,
+            -0.5,
+            1.5,
+            -18.5,
+            -9.5,
+            -4.5,
+            -16,
+            -2.5
+          ],
+          "h2h": {
+            "w": 5,
+            "l": 0,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "ARI",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_ARI_LAC",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "LAC",
+                "site": "away",
+                "spreadLine": 8.5,
+                "teamCoverMargin": 20.5
+              },
+              {
+                "gameId": "2026_02_SEA_ARI",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -20.5
+              },
+              {
+                "gameId": "2026_03_ARI_SF",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": 7.5,
+                "teamCoverMargin": 1.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_SF_ARI",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "SF",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2025_12_JAX_ARI",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "JAX",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_13_ARI_TB",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_14_LA_ARI",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": -9.5,
+                "teamCoverMargin": -18.5
+              },
+              {
+                "gameId": "2025_15_ARI_HOU",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": 10.5,
+                "teamCoverMargin": -9.5
+              },
+              {
+                "gameId": "2025_16_ATL_ARI",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2025_17_ARI_CIN",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "CIN",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": -16
+              },
+              {
+                "gameId": "2025_18_ARI_LA",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 14.5,
+                "teamCoverMargin": -2.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            11,
+            -15.5,
+            2.5
+          ],
+          "priorFormMargins": [
+            0.5,
+            0.5,
+            7,
+            -11,
+            -10.5,
+            -0.5,
+            21,
+            20
+          ],
+          "h2h": {
+            "w": 0,
+            "l": 5,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "NYG",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_DAL_NYG",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "DAL",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 11
+              },
+              {
+                "gameId": "2026_02_NYG_LA",
+                "date": "2026-09-21",
+                "week": 2,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2026_03_TEN_NYG",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "TEN",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 2.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_NYG_CHI",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "CHI",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_11_GB_NYG",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": -7.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_12_NYG_DET",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "DET",
+                "site": "away",
+                "spreadLine": 14,
+                "teamCoverMargin": 7
+              },
+              {
+                "gameId": "2025_13_NYG_NE",
+                "date": "2025-12-01",
+                "week": 13,
+                "opponent": "NE",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": -11
+              },
+              {
+                "gameId": "2025_15_WAS_NYG",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_16_MIN_NYG",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_17_NYG_LV",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "LV",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": 21
+              },
+              {
+                "gameId": "2025_18_DAL_NYG",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "DAL",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 20
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "LAR @ PHI",
+      "away": "LAR",
+      "home": "PHI",
+      "slyAway": -3.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -23.5,
+            15.5,
+            -2.5
+          ],
+          "priorFormMargins": [
+            -1,
+            20,
+            -13,
+            18.5,
+            1.5,
+            0.5,
+            -10.5,
+            2.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "LA",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_SF_LA",
+                "date": "2026-09-10",
+                "week": 1,
+                "opponent": "SF",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -23.5
+              },
+              {
+                "gameId": "2026_02_NYG_LA",
+                "date": "2026-09-21",
+                "week": 2,
+                "opponent": "NYG",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2026_03_LA_DEN",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -2.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_SEA_LA",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -1
+              },
+              {
+                "gameId": "2025_12_TB_LA",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "TB",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": 20
+              },
+              {
+                "gameId": "2025_13_LA_CAR",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "CAR",
+                "site": "away",
+                "spreadLine": -10,
+                "teamCoverMargin": -13
+              },
+              {
+                "gameId": "2025_14_LA_ARI",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "ARI",
+                "site": "away",
+                "spreadLine": -9.5,
+                "teamCoverMargin": 18.5
+              },
+              {
+                "gameId": "2025_15_DET_LA",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_16_LA_SEA",
+                "date": "2025-12-18",
+                "week": 16,
+                "opponent": "SEA",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_17_LA_ATL",
+                "date": "2025-12-29",
+                "week": 17,
+                "opponent": "ATL",
+                "site": "away",
+                "spreadLine": -7.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_18_ARI_LA",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 14.5,
+                "teamCoverMargin": 2.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            -4,
+            -3,
+            -23.5
+          ],
+          "priorFormMargins": [
+            4.5,
+            -6,
+            -16,
+            -4.5,
+            18.5,
+            4,
+            4,
+            -10
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 1
+          },
+          "provenance": {
+            "sourceTeam": "PHI",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_WAS_PHI",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": 6,
+                "teamCoverMargin": -4
+              },
+              {
+                "gameId": "2026_02_PHI_TEN",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -7,
+                "teamCoverMargin": -3
+              },
+              {
+                "gameId": "2026_03_PHI_CHI",
+                "date": "2026-09-28",
+                "week": 3,
+                "opponent": "CHI",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -23.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_DET_PHI",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2025_12_PHI_DAL",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -6
+              },
+              {
+                "gameId": "2025_13_CHI_PHI",
+                "date": "2025-11-28",
+                "week": 13,
+                "opponent": "CHI",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": -16
+              },
+              {
+                "gameId": "2025_14_PHI_LAC",
+                "date": "2025-12-08",
+                "week": 14,
+                "opponent": "LAC",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2025_15_LV_PHI",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 18.5
+              },
+              {
+                "gameId": "2025_16_PHI_WAS",
+                "date": "2025-12-20",
+                "week": 16,
+                "opponent": "WAS",
+                "site": "away",
+                "spreadLine": -7,
+                "teamCoverMargin": 4
+              },
+              {
+                "gameId": "2025_17_PHI_BUF",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 4
+              },
+              {
+                "gameId": "2025_18_WAS_PHI",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -10
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "GB @ TB",
+      "away": "GB",
+      "home": "TB",
+      "slyAway": -3.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -15.5,
+            -0.5,
+            -25.5
+          ],
+          "priorFormMargins": [
+            -0.5,
+            10.5,
+            9.5,
+            0.5,
+            -9.5,
+            -4.5,
+            -19.5,
+            -0.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "GB",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_GB_MIN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "MIN",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2026_02_GB_NYJ",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "NYJ",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2026_03_ATL_GB",
+                "date": "2026-09-24",
+                "week": 3,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -25.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_GB_NYG",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": -7.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_12_MIN_GB",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2025_13_GB_DET",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "DET",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 9.5
+              },
+              {
+                "gameId": "2025_14_CHI_GB",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "CHI",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_15_GB_DEN",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -9.5
+              },
+              {
+                "gameId": "2025_16_GB_CHI",
+                "date": "2025-12-20",
+                "week": 16,
+                "opponent": "CHI",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2025_17_BAL_GB",
+                "date": "2025-12-27",
+                "week": 17,
+                "opponent": "BAL",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -19.5
+              },
+              {
+                "gameId": "2025_18_GB_MIN",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "MIN",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -0.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            -2.5,
+            -12.5,
+            -5.5
+          ],
+          "priorFormMargins": [
+            -6,
+            -20,
+            -1.5,
+            -11.5,
+            -7,
+            -6,
+            -8.5,
+            -1
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "TB",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_TB_CIN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "CIN",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -2.5
+              },
+              {
+                "gameId": "2026_02_CLE_TB",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "CLE",
+                "site": "home",
+                "spreadLine": 8.5,
+                "teamCoverMargin": -12.5
+              },
+              {
+                "gameId": "2026_03_MIN_TB",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": -5.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_TB_BUF",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 6,
+                "teamCoverMargin": -6
+              },
+              {
+                "gameId": "2025_12_TB_LA",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": -20
+              },
+              {
+                "gameId": "2025_13_ARI_TB",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_14_NO_TB",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 7.5,
+                "teamCoverMargin": -11.5
+              },
+              {
+                "gameId": "2025_15_ATL_TB",
+                "date": "2025-12-11",
+                "week": 15,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": 6,
+                "teamCoverMargin": -7
+              },
+              {
+                "gameId": "2025_16_TB_CAR",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "CAR",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -6
+              },
+              {
+                "gameId": "2025_17_TB_MIA",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "MIA",
+                "site": "away",
+                "spreadLine": -5.5,
+                "teamCoverMargin": -8.5
+              },
+              {
+                "gameId": "2025_18_CAR_TB",
+                "date": "2026-01-03",
+                "week": 18,
+                "opponent": "CAR",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "MIA @ MIN",
+      "away": "MIA",
+      "home": "MIN",
+      "slyAway": 10.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -11,
+            -9.5,
+            -4
+          ],
+          "priorFormMargins": [
+            25.5,
+            0.5,
+            -1.5,
+            21.5,
+            -10,
+            -20.5,
+            8.5,
+            -14
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "MIA",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_MIA_LV",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "LV",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": -11
+              },
+              {
+                "gameId": "2026_02_MIA_SF",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -9.5
+              },
+              {
+                "gameId": "2026_03_KC_MIA",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "KC",
+                "site": "home",
+                "spreadLine": -10,
+                "teamCoverMargin": -4
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_BUF_MIA",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "BUF",
+                "site": "home",
+                "spreadLine": -8.5,
+                "teamCoverMargin": 25.5
+              },
+              {
+                "gameId": "2025_11_WAS_MIA",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_13_NO_MIA",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_14_MIA_NYJ",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "NYJ",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 21.5
+              },
+              {
+                "gameId": "2025_15_MIA_PIT",
+                "date": "2025-12-15",
+                "week": 15,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": -10
+              },
+              {
+                "gameId": "2025_16_CIN_MIA",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "CIN",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -20.5
+              },
+              {
+                "gameId": "2025_17_TB_MIA",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "TB",
+                "site": "home",
+                "spreadLine": -5.5,
+                "teamCoverMargin": 8.5
+              },
+              {
+                "gameId": "2025_18_MIA_NE",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "NE",
+                "site": "away",
+                "spreadLine": 14,
+                "teamCoverMargin": -14
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            15.5,
+            10.5,
+            5.5
+          ],
+          "priorFormMargins": [
+            -5,
+            -10.5,
+            -13.5,
+            32.5,
+            13.5,
+            0.5,
+            20,
+            0.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "MIN",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_GB_MIN",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2026_02_MIN_CHI",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "CHI",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2026_03_MIN_TB",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 5.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_CHI_MIN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "CHI",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -5
+              },
+              {
+                "gameId": "2025_12_MIN_GB",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "GB",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_13_MIN_SEA",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "SEA",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -13.5
+              },
+              {
+                "gameId": "2025_14_WAS_MIN",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "WAS",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 32.5
+              },
+              {
+                "gameId": "2025_15_MIN_DAL",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 13.5
+              },
+              {
+                "gameId": "2025_16_MIN_NYG",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "NYG",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_17_DET_MIN",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "DET",
+                "site": "home",
+                "spreadLine": -7,
+                "teamCoverMargin": 20
+              },
+              {
+                "gameId": "2025_18_GB_MIN",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 0.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "KC @ LV",
+      "away": "KC",
+      "home": "LV",
+      "slyAway": -4.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            18.5,
+            -3,
+            4
+          ],
+          "priorFormMargins": [
+            -6.5,
+            -0.5,
+            -6.5,
+            -14.5,
+            -8.5,
+            -20.5,
+            6.5,
+            -5.5
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 4,
+            "p": 0,
+            "mostRecentSeasonsAgo": 0
+          },
+          "provenance": {
+            "sourceTeam": "KC",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_DEN_KC",
+                "date": "2026-09-14",
+                "week": 1,
+                "opponent": "DEN",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 18.5
+              },
+              {
+                "gameId": "2026_02_IND_KC",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "IND",
+                "site": "home",
+                "spreadLine": 6,
+                "teamCoverMargin": -3
+              },
+              {
+                "gameId": "2026_03_KC_MIA",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "MIA",
+                "site": "away",
+                "spreadLine": -10,
+                "teamCoverMargin": 4
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_KC_DEN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_12_IND_KC",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "IND",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_13_KC_DAL",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_14_HOU_KC",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "HOU",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -14.5
+              },
+              {
+                "gameId": "2025_15_LAC_KC",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "LAC",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -8.5
+              },
+              {
+                "gameId": "2025_16_KC_TEN",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -20.5
+              },
+              {
+                "gameId": "2025_17_DEN_KC",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "DEN",
+                "site": "home",
+                "spreadLine": -13.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_18_KC_LV",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "LV",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -5.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            11,
+            18.5,
+            11.5
+          ],
+          "priorFormMargins": [
+            -13.5,
+            -17,
+            -7,
+            1.5,
+            -18.5,
+            12.5,
+            -21,
+            5.5
+          ],
+          "h2h": {
+            "w": 4,
+            "l": 1,
+            "p": 0,
+            "mostRecentSeasonsAgo": 0
+          },
+          "provenance": {
+            "sourceTeam": "LV",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_MIA_LV",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "MIA",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": 11
+              },
+              {
+                "gameId": "2026_02_LV_LAC",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "LAC",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": 18.5
+              },
+              {
+                "gameId": "2026_03_LV_NO",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "NO",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 11.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_DAL_LV",
+                "date": "2025-11-17",
+                "week": 11,
+                "opponent": "DAL",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": -13.5
+              },
+              {
+                "gameId": "2025_12_CLE_LV",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "CLE",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": -17
+              },
+              {
+                "gameId": "2025_13_LV_LAC",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "LAC",
+                "site": "away",
+                "spreadLine": 10,
+                "teamCoverMargin": -7
+              },
+              {
+                "gameId": "2025_14_DEN_LV",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "DEN",
+                "site": "home",
+                "spreadLine": -8.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_15_LV_PHI",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "PHI",
+                "site": "away",
+                "spreadLine": 12.5,
+                "teamCoverMargin": -18.5
+              },
+              {
+                "gameId": "2025_16_LV_HOU",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "HOU",
+                "site": "away",
+                "spreadLine": 14.5,
+                "teamCoverMargin": 12.5
+              },
+              {
+                "gameId": "2025_17_NYG_LV",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "NYG",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": -21
+              },
+              {
+                "gameId": "2025_18_KC_LV",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "KC",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 5.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "LAC @ SEA",
+      "away": "LAC",
+      "home": "SEA",
+      "slyAway": 7,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -20.5,
+            -18.5,
+            -1
+          ],
+          "priorFormMargins": [
+            12,
+            -32,
+            7,
+            4.5,
+            8.5,
+            18.5,
+            -5.5,
+            -1.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "LAC",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_ARI_LAC",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 8.5,
+                "teamCoverMargin": -20.5
+              },
+              {
+                "gameId": "2026_02_LV_LAC",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -18.5
+              },
+              {
+                "gameId": "2026_03_LAC_BUF",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": -1
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_PIT_LAC",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "PIT",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": 12
+              },
+              {
+                "gameId": "2025_11_LAC_JAX",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "JAX",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -32
+              },
+              {
+                "gameId": "2025_13_LV_LAC",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 10,
+                "teamCoverMargin": 7
+              },
+              {
+                "gameId": "2025_14_PHI_LAC",
+                "date": "2025-12-08",
+                "week": 14,
+                "opponent": "PHI",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2025_15_LAC_KC",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 8.5
+              },
+              {
+                "gameId": "2025_16_LAC_DAL",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "DAL",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 18.5
+              },
+              {
+                "gameId": "2025_17_HOU_LAC",
+                "date": "2025-12-27",
+                "week": 17,
+                "opponent": "HOU",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -5.5
+              },
+              {
+                "gameId": "2025_18_LAC_DEN",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "DEN",
+                "site": "away",
+                "spreadLine": 14.5,
+                "teamCoverMargin": -1.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            0,
+            20.5,
+            -10.5
+          ],
+          "priorFormMargins": [
+            1,
+            -6.5,
+            13.5,
+            21,
+            -11.5,
+            -0.5,
+            10.5,
+            7.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "SEA",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NE_SEA",
+                "date": "2026-09-09",
+                "week": 1,
+                "opponent": "NE",
+                "site": "home",
+                "spreadLine": 3,
+                "teamCoverMargin": 0
+              },
+              {
+                "gameId": "2026_02_SEA_ARI",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "ARI",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 20.5
+              },
+              {
+                "gameId": "2026_03_SEA_WAS",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "WAS",
+                "site": "away",
+                "spreadLine": -8.5,
+                "teamCoverMargin": -10.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_SEA_LA",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 1
+              },
+              {
+                "gameId": "2025_12_SEA_TEN",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -12.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_13_MIN_SEA",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "MIN",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 13.5
+              },
+              {
+                "gameId": "2025_14_SEA_ATL",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "ATL",
+                "site": "away",
+                "spreadLine": -7,
+                "teamCoverMargin": 21
+              },
+              {
+                "gameId": "2025_15_IND_SEA",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "IND",
+                "site": "home",
+                "spreadLine": 13.5,
+                "teamCoverMargin": -11.5
+              },
+              {
+                "gameId": "2025_16_LA_SEA",
+                "date": "2025-12-18",
+                "week": 16,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2025_17_SEA_CAR",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "CAR",
+                "site": "away",
+                "spreadLine": -6.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2025_18_SEA_SF",
+                "date": "2026-01-03",
+                "week": 18,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 7.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "DEN @ SF",
+      "away": "DEN",
+      "home": "SF",
+      "slyAway": 3,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -18.5,
+            4.5,
+            2.5
+          ],
+          "priorFormMargins": [
+            -6.5,
+            6.5,
+            -5.5,
+            -1.5,
+            9.5,
+            -17.5,
+            -6.5,
+            1.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "DEN",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_DEN_KC",
+                "date": "2026-09-14",
+                "week": 1,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -18.5
+              },
+              {
+                "gameId": "2026_02_JAX_DEN",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "JAX",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2026_03_LA_DEN",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 2.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_LV_DEN",
+                "date": "2025-11-06",
+                "week": 10,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 9.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_11_KC_DEN",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "KC",
+                "site": "home",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_13_DEN_WAS",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "WAS",
+                "site": "away",
+                "spreadLine": -6.5,
+                "teamCoverMargin": -5.5
+              },
+              {
+                "gameId": "2025_14_DEN_LV",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "LV",
+                "site": "away",
+                "spreadLine": -8.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_15_GB_DEN",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 9.5
+              },
+              {
+                "gameId": "2025_16_JAX_DEN",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "JAX",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -17.5
+              },
+              {
+                "gameId": "2025_17_DEN_KC",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "KC",
+                "site": "away",
+                "spreadLine": -13.5,
+                "teamCoverMargin": -6.5
+              },
+              {
+                "gameId": "2025_18_LAC_DEN",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "LAC",
+                "site": "home",
+                "spreadLine": 14.5,
+                "teamCoverMargin": 1.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            23.5,
+            9.5,
+            -1.5
+          ],
+          "priorFormMargins": [
+            -10.5,
+            15.5,
+            3.5,
+            12.5,
+            0.5,
+            16.5,
+            0.5,
+            -7.5
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 4
+          },
+          "provenance": {
+            "sourceTeam": "SF",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_SF_LA",
+                "date": "2026-09-10",
+                "week": 1,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 23.5
+              },
+              {
+                "gameId": "2026_02_MIA_SF",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "MIA",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 9.5
+              },
+              {
+                "gameId": "2026_03_ARI_SF",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "ARI",
+                "site": "home",
+                "spreadLine": 7.5,
+                "teamCoverMargin": -1.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_LA_SF",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": -5.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_11_SF_ARI",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "ARI",
+                "site": "away",
+                "spreadLine": -3.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2025_12_CAR_SF",
+                "date": "2025-11-24",
+                "week": 12,
+                "opponent": "CAR",
+                "site": "home",
+                "spreadLine": 7.5,
+                "teamCoverMargin": 3.5
+              },
+              {
+                "gameId": "2025_13_SF_CLE",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "CLE",
+                "site": "away",
+                "spreadLine": -5.5,
+                "teamCoverMargin": 12.5
+              },
+              {
+                "gameId": "2025_15_TEN_SF",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "TEN",
+                "site": "home",
+                "spreadLine": 12.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_16_SF_IND",
+                "date": "2025-12-22",
+                "week": 16,
+                "opponent": "IND",
+                "site": "away",
+                "spreadLine": -4.5,
+                "teamCoverMargin": 16.5
+              },
+              {
+                "gameId": "2025_17_CHI_SF",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "CHI",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 0.5
+              },
+              {
+                "gameId": "2025_18_SEA_SF",
+                "date": "2026-01-03",
+                "week": 18,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -7.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "DET @ CAR",
+      "away": "DET",
+      "home": "CAR",
+      "slyAway": -3.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -6,
+            -4.5,
+            0
+          ],
+          "priorFormMargins": [
+            -4.5,
+            -7,
+            -9.5,
+            10.5,
+            -1.5,
+            -12.5,
+            -20,
+            6.5
+          ],
+          "h2h": {
+            "w": 2,
+            "l": 3,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "DET",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NO_DET",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": -6
+              },
+              {
+                "gameId": "2026_02_DET_BUF",
+                "date": "2026-09-17",
+                "week": 2,
+                "opponent": "BUF",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2026_03_NYJ_DET",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 7,
+                "teamCoverMargin": 0
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_DET_PHI",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "PHI",
+                "site": "away",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -4.5
+              },
+              {
+                "gameId": "2025_12_NYG_DET",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "NYG",
+                "site": "home",
+                "spreadLine": 14,
+                "teamCoverMargin": -7
+              },
+              {
+                "gameId": "2025_13_GB_DET",
+                "date": "2025-11-27",
+                "week": 13,
+                "opponent": "GB",
+                "site": "home",
+                "spreadLine": 2.5,
+                "teamCoverMargin": -9.5
+              },
+              {
+                "gameId": "2025_14_DAL_DET",
+                "date": "2025-12-04",
+                "week": 14,
+                "opponent": "DAL",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2025_15_DET_LA",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "LA",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -1.5
+              },
+              {
+                "gameId": "2025_16_PIT_DET",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "PIT",
+                "site": "home",
+                "spreadLine": 7.5,
+                "teamCoverMargin": -12.5
+              },
+              {
+                "gameId": "2025_17_DET_MIN",
+                "date": "2025-12-25",
+                "week": 17,
+                "opponent": "MIN",
+                "site": "away",
+                "spreadLine": -7,
+                "teamCoverMargin": -20
+              },
+              {
+                "gameId": "2025_18_DET_CHI",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "CHI",
+                "site": "away",
+                "spreadLine": 3.5,
+                "teamCoverMargin": 6.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            -19,
+            28.5,
+            -5.5
+          ],
+          "priorFormMargins": [
+            -15.5,
+            7.5,
+            -3.5,
+            13,
+            -5.5,
+            6,
+            -10.5,
+            1
+          ],
+          "h2h": {
+            "w": 3,
+            "l": 2,
+            "p": 0,
+            "mostRecentSeasonsAgo": 3
+          },
+          "provenance": {
+            "sourceTeam": "CAR",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_CHI_CAR",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "CHI",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": -19
+              },
+              {
+                "gameId": "2026_02_CAR_ATL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "ATL",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 28.5
+              },
+              {
+                "gameId": "2026_03_CAR_CLE",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "CLE",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -5.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_NO_CAR",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 5.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2025_11_CAR_ATL",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "ATL",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 7.5
+              },
+              {
+                "gameId": "2025_12_CAR_SF",
+                "date": "2025-11-24",
+                "week": 12,
+                "opponent": "SF",
+                "site": "away",
+                "spreadLine": 7.5,
+                "teamCoverMargin": -3.5
+              },
+              {
+                "gameId": "2025_13_LA_CAR",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": -10,
+                "teamCoverMargin": 13
+              },
+              {
+                "gameId": "2025_15_CAR_NO",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "NO",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -5.5
+              },
+              {
+                "gameId": "2025_16_TB_CAR",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "TB",
+                "site": "home",
+                "spreadLine": -3,
+                "teamCoverMargin": 6
+              },
+              {
+                "gameId": "2025_17_SEA_CAR",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -6.5,
+                "teamCoverMargin": -10.5
+              },
+              {
+                "gameId": "2025_18_CAR_TB",
+                "date": "2026-01-03",
+                "week": 18,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": 3,
+                "teamCoverMargin": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": "ATL @ NO",
+      "away": "ATL",
+      "home": "NO",
+      "slyAway": 2.5,
+      "trendsV2": {
+        "away": {
+          "currentSeasonMargins": [
+            -0.5,
+            -28.5,
+            25.5
+          ],
+          "priorFormMargins": [
+            -7.5,
+            15.5,
+            -6,
+            -21,
+            7,
+            4.5,
+            10.5,
+            -2.5
+          ],
+          "h2h": {
+            "w": 1,
+            "l": 4,
+            "p": 0,
+            "mostRecentSeasonsAgo": 0
+          },
+          "provenance": {
+            "sourceTeam": "ATL",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_ATL_PIT",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "PIT",
+                "site": "away",
+                "spreadLine": 6.5,
+                "teamCoverMargin": -0.5
+              },
+              {
+                "gameId": "2026_02_CAR_ATL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "CAR",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": -28.5
+              },
+              {
+                "gameId": "2026_03_ATL_GB",
+                "date": "2026-09-24",
+                "week": 3,
+                "opponent": "GB",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 25.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_11_CAR_ATL",
+                "date": "2025-11-16",
+                "week": 11,
+                "opponent": "CAR",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -7.5
+              },
+              {
+                "gameId": "2025_12_ATL_NO",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "NO",
+                "site": "away",
+                "spreadLine": 1.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2025_13_ATL_NYJ",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "NYJ",
+                "site": "away",
+                "spreadLine": -3,
+                "teamCoverMargin": -6
+              },
+              {
+                "gameId": "2025_14_SEA_ATL",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "SEA",
+                "site": "home",
+                "spreadLine": -7,
+                "teamCoverMargin": -21
+              },
+              {
+                "gameId": "2025_15_ATL_TB",
+                "date": "2025-12-11",
+                "week": 15,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": 6,
+                "teamCoverMargin": 7
+              },
+              {
+                "gameId": "2025_16_ATL_ARI",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "ARI",
+                "site": "away",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 4.5
+              },
+              {
+                "gameId": "2025_17_LA_ATL",
+                "date": "2025-12-29",
+                "week": 17,
+                "opponent": "LA",
+                "site": "home",
+                "spreadLine": -7.5,
+                "teamCoverMargin": 10.5
+              },
+              {
+                "gameId": "2025_18_NO_ATL",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "NO",
+                "site": "home",
+                "spreadLine": 4.5,
+                "teamCoverMargin": -2.5
+              }
+            ]
+          }
+        },
+        "home": {
+          "currentSeasonMargins": [
+            6,
+            15.5,
+            -11.5
+          ],
+          "priorFormMargins": [
+            15.5,
+            -15.5,
+            1.5,
+            11.5,
+            5.5,
+            16.5,
+            6.5,
+            2.5
+          ],
+          "h2h": {
+            "w": 4,
+            "l": 1,
+            "p": 0,
+            "mostRecentSeasonsAgo": 0
+          },
+          "provenance": {
+            "sourceTeam": "NO",
+            "currentSeasonGames": [
+              {
+                "gameId": "2026_01_NO_DET",
+                "date": "2026-09-13",
+                "week": 1,
+                "opponent": "DET",
+                "site": "away",
+                "spreadLine": 7,
+                "teamCoverMargin": 6
+              },
+              {
+                "gameId": "2026_02_NO_BAL",
+                "date": "2026-09-20",
+                "week": 2,
+                "opponent": "BAL",
+                "site": "away",
+                "spreadLine": 8.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2026_03_LV_NO",
+                "date": "2026-09-27",
+                "week": 3,
+                "opponent": "LV",
+                "site": "home",
+                "spreadLine": 3.5,
+                "teamCoverMargin": -11.5
+              }
+            ],
+            "priorFormGames": [
+              {
+                "gameId": "2025_10_NO_CAR",
+                "date": "2025-11-09",
+                "week": 10,
+                "opponent": "CAR",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 15.5
+              },
+              {
+                "gameId": "2025_12_ATL_NO",
+                "date": "2025-11-23",
+                "week": 12,
+                "opponent": "ATL",
+                "site": "home",
+                "spreadLine": 1.5,
+                "teamCoverMargin": -15.5
+              },
+              {
+                "gameId": "2025_13_NO_MIA",
+                "date": "2025-11-30",
+                "week": 13,
+                "opponent": "MIA",
+                "site": "away",
+                "spreadLine": 5.5,
+                "teamCoverMargin": 1.5
+              },
+              {
+                "gameId": "2025_14_NO_TB",
+                "date": "2025-12-07",
+                "week": 14,
+                "opponent": "TB",
+                "site": "away",
+                "spreadLine": 7.5,
+                "teamCoverMargin": 11.5
+              },
+              {
+                "gameId": "2025_15_CAR_NO",
+                "date": "2025-12-14",
+                "week": 15,
+                "opponent": "CAR",
+                "site": "home",
+                "spreadLine": -2.5,
+                "teamCoverMargin": 5.5
+              },
+              {
+                "gameId": "2025_16_NYJ_NO",
+                "date": "2025-12-21",
+                "week": 16,
+                "opponent": "NYJ",
+                "site": "home",
+                "spreadLine": 6.5,
+                "teamCoverMargin": 16.5
+              },
+              {
+                "gameId": "2025_17_NO_TEN",
+                "date": "2025-12-28",
+                "week": 17,
+                "opponent": "TEN",
+                "site": "away",
+                "spreadLine": -1.5,
+                "teamCoverMargin": 6.5
+              },
+              {
+                "gameId": "2025_18_NO_ATL",
+                "date": "2026-01-04",
+                "week": 18,
+                "opponent": "ATL",
+                "site": "away",
+                "spreadLine": 4.5,
+                "teamCoverMargin": 2.5
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

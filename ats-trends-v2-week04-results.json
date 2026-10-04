@@ -1,0 +1,1248 @@
+{
+  "season": 2026,
+  "week": 4,
+  "generatedAt": "2026-10-04T01:27:56.494Z",
+  "engine": "ats-trends-v2-challenger",
+  "weights": {
+    "currentSeasonMargins": 0.45,
+    "priorFormMargins": 0.4,
+    "h2h": 0.15
+  },
+  "games": [
+    {
+      "game": "IND @ WAS",
+      "away": "IND",
+      "home": "WAS",
+      "slyAway": -3.5,
+      "v1": {
+        "status": "verified",
+        "lean": "IND",
+        "scores": {
+          "away": 14,
+          "home": 6
+        },
+        "awayIndex": 14.08,
+        "homeIndex": 10.78
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 10,
+          "home": 10
+        },
+        "lean": "neutral",
+        "awayIndex": 8.084,
+        "homeIndex": 8.364,
+        "difference": -0.28,
+        "away": {
+          "index": 8.083905566675325,
+          "parts": {
+            "currentSeasonMargins": 8.880326095134516,
+            "priorFormMargins": 4.21939705966198,
+            "h2h": 16
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 8.880326095134516,
+              "rawMean": -1.799021476284298,
+              "adjustedMean": -0.6746330536066117,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 4.21939705966198,
+              "rawMean": -3.9572678485559214,
+              "adjustedMean": -3.9572678485559214,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 16
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 8.36421096854328,
+          "parts": {
+            "currentSeasonMargins": 10.484393725709582,
+            "priorFormMargins": 7.615584479934919,
+            "h2h": 4
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 10.484393725709582,
+              "rawMean": 0.7756369856922105,
+              "adjustedMean": 0.29086386963457894,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 7.615584479934919,
+              "rawMean": -1.4587263962781358,
+              "adjustedMean": -1.4587263962781358,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 4
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "NO EDGE"
+      },
+      "comparison": "NEUTRAL_INVOLVED"
+    },
+    {
+      "game": "TEN @ BAL",
+      "away": "TEN",
+      "home": "BAL",
+      "slyAway": 11.5,
+      "v1": {
+        "status": "verified",
+        "lean": "BAL",
+        "scores": {
+          "away": 8,
+          "home": 12
+        },
+        "awayIndex": 6.12,
+        "homeIndex": 8.12
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "lean": "home",
+        "awayIndex": 7.068,
+        "homeIndex": 10.257,
+        "difference": -3.189,
+        "away": {
+          "index": 7.067959309798089,
+          "parts": {
+            "currentSeasonMargins": 7.5419736660211365,
+            "priorFormMargins": 6.560177900221442,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 7.5419736660211365,
+              "rawMean": -4.0150495477149795,
+              "adjustedMean": -1.5056435803931172,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 6.560177900221442,
+              "rawMean": -2.1516131305778936,
+              "adjustedMean": -2.1516131305778936,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 10.2572629079475,
+          "parts": {
+            "currentSeasonMargins": 9.405311625388062,
+            "priorFormMargins": 9.624681691307178,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 9.405311625388062,
+              "rawMean": -0.9526254606059603,
+              "adjustedMean": -0.3572345477272351,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 9.624681691307178,
+              "rawMean": -0.22529681222428666,
+              "adjustedMean": -0.22529681222428666,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "BAL"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "NE @ BUF",
+      "away": "NE",
+      "home": "BUF",
+      "slyAway": 7,
+      "v1": {
+        "status": "verified",
+        "lean": "NE",
+        "scores": {
+          "away": 18,
+          "home": 2
+        },
+        "awayIndex": 18.18,
+        "homeIndex": 9.6
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 12,
+          "home": 8
+        },
+        "lean": "away",
+        "awayIndex": 13.396,
+        "homeIndex": 10.713,
+        "difference": 2.683,
+        "away": {
+          "index": 13.396444865688391,
+          "parts": {
+            "currentSeasonMargins": 6.3735781701465015,
+            "priorFormMargins": 18.820836722806163,
+            "h2h": 20
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 6.3735781701465015,
+              "rawMean": -6.078797244433402,
+              "adjustedMean": -2.2795489666625257,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 18.820836722806163,
+              "rawMean": 8.310478477714835,
+              "adjustedMean": 8.310478477714835,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 20
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 10.713467014670924,
+          "parts": {
+            "currentSeasonMargins": 11.761957645918987,
+            "priorFormMargins": 13.551465185018449,
+            "h2h": 0
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 11.761957645918987,
+              "rawMean": 2.8488612623939527,
+              "adjustedMean": 1.0683229733977322,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 13.551465185018449,
+              "rawMean": 2.2279251860421496,
+              "adjustedMean": 2.2279251860421496,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 0
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "NE"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "NYJ @ CHI",
+      "away": "NYJ",
+      "home": "CHI",
+      "slyAway": 3.5,
+      "v1": {
+        "status": "verified",
+        "lean": "CHI",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "awayIndex": 7.4,
+        "homeIndex": 17.18
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "lean": "home",
+        "awayIndex": 6.182,
+        "homeIndex": 16.137,
+        "difference": -9.956,
+        "away": {
+          "index": 6.181598185136758,
+          "parts": {
+            "currentSeasonMargins": 12.559880055318198,
+            "priorFormMargins": 0.3866304006089205,
+            "h2h": 2.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 12.559880055318198,
+              "rawMean": 4.188965127572608,
+              "adjustedMean": 1.570861922839728,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 0.3866304006089205,
+              "rawMean": -11.779492606775456,
+              "adjustedMean": -11.779492606775456,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 2.5
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 16.13738426769936,
+          "parts": {
+            "currentSeasonMargins": 15.97598335903985,
+            "priorFormMargins": 15.807979390328567,
+            "h2h": 17.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 15.97598335903985,
+              "rawMean": 11.030447890193349,
+              "adjustedMean": 4.136417958822506,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 15.807979390328567,
+              "rawMean": 3.981995921457884,
+              "adjustedMean": 3.981995921457884,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 17.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "CHI"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "JAX @ CIN",
+      "away": "JAX",
+      "home": "CIN",
+      "slyAway": 2.5,
+      "v1": {
+        "status": "verified",
+        "lean": "CIN",
+        "scores": {
+          "away": 2,
+          "home": 18
+        },
+        "awayIndex": 10.18,
+        "homeIndex": 18.18
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 12,
+          "home": 8
+        },
+        "lean": "away",
+        "awayIndex": 15.471,
+        "homeIndex": 13.911,
+        "difference": 1.56,
+        "away": {
+          "index": 15.471205997633865,
+          "parts": {
+            "currentSeasonMargins": 16.716688256782465,
+            "priorFormMargins": 19.871740705204388,
+            "h2h": 0
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 16.716688256782465,
+              "rawMean": 13.020439411574964,
+              "adjustedMean": 4.882664779340612,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 19.871740705204388,
+              "rawMean": 15.128999942804679,
+              "adjustedMean": 15.128999942804679,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 0
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 13.9113219030037,
+          "parts": {
+            "currentSeasonMargins": 12.30361399415823,
+            "priorFormMargins": 13.436739014081237,
+            "h2h": 20
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 12.30361399415823,
+              "rawMean": 3.753137368759859,
+              "adjustedMean": 1.407426513284947,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 13.436739014081237,
+              "rawMean": 2.1495152754601348,
+              "adjustedMean": 2.1495152754601348,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 20
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "JAX"
+      },
+      "comparison": "DISAGREE"
+    },
+    {
+      "game": "DAL @ HOU",
+      "away": "DAL",
+      "home": "HOU",
+      "slyAway": 3,
+      "v1": {
+        "status": "verified",
+        "lean": "NO EDGE",
+        "scores": {
+          "away": 10,
+          "home": 10
+        },
+        "awayIndex": 9.08,
+        "homeIndex": 9.3
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "lean": "home",
+        "awayIndex": 6.469,
+        "homeIndex": 10.708,
+        "difference": -4.239,
+        "away": {
+          "index": 6.469436877468453,
+          "parts": {
+            "currentSeasonMargins": 10.87441013248665,
+            "priorFormMargins": 1.689880794623651,
+            "h2h": 6
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 10.87441013248665,
+              "rawMean": 1.4026383553467079,
+              "adjustedMean": 0.5259893832550154,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 1.689880794623651,
+              "rawMean": -7.148387635023161,
+              "adjustedMean": -7.148387635023161,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 6
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 10.70817000759429,
+          "parts": {
+            "currentSeasonMargins": 5.400831450924852,
+            "priorFormMargins": 14.694489636695266,
+            "h2h": 16
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 5.400831450924852,
+              "rawMean": -7.955293314303853,
+              "adjustedMean": -2.9832349928639452,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 14.694489636695266,
+              "rawMean": 3.056179791658355,
+              "adjustedMean": 3.056179791658355,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 16
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "HOU"
+      },
+      "comparison": "NEUTRAL_INVOLVED"
+    },
+    {
+      "game": "ARI @ NYG",
+      "away": "ARI",
+      "home": "NYG",
+      "slyAway": -2.5,
+      "v1": {
+        "status": "verified",
+        "lean": "ARI",
+        "scores": {
+          "away": 12,
+          "home": 8
+        },
+        "awayIndex": 12.68,
+        "homeIndex": 10.18
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "lean": "home",
+        "awayIndex": 7.485,
+        "homeIndex": 11.346,
+        "difference": -3.861,
+        "away": {
+          "index": 7.485130630597233,
+          "parts": {
+            "currentSeasonMargins": 9.695275411218512,
+            "priorFormMargins": 1.2431417388722554,
+            "h2h": 17.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 9.695275411218512,
+              "rawMean": -0.4877103372998287,
+              "adjustedMean": -0.18289137648743575,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 1.2431417388722554,
+              "rawMean": -8.141752871317948,
+              "adjustedMean": -8.141752871317948,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 17.5
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 11.345897110902463,
+          "parts": {
+            "currentSeasonMargins": 9.325076776098145,
+            "priorFormMargins": 16.936531404145747,
+            "h2h": 2.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 9.325076776098145,
+              "rawMean": -1.0815213447261316,
+              "adjustedMean": -0.40557050427229935,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 16.936531404145747,
+              "rawMean": 5.129775325410696,
+              "adjustedMean": 5.129775325410696,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 2.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "NYG"
+      },
+      "comparison": "DISAGREE"
+    },
+    {
+      "game": "LAR @ PHI",
+      "away": "LAR",
+      "home": "PHI",
+      "slyAway": -3.5,
+      "v1": {
+        "status": "verified",
+        "lean": "PHI",
+        "scores": {
+          "away": 8,
+          "home": 12
+        },
+        "awayIndex": 5.72,
+        "homeIndex": 8.3
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 12,
+          "home": 8
+        },
+        "lean": "away",
+        "awayIndex": 9.738,
+        "homeIndex": 7.799,
+        "difference": 1.94,
+        "away": {
+          "index": 9.738434824154362,
+          "parts": {
+            "currentSeasonMargins": 8.518848101387952,
+            "priorFormMargins": 12.51238294632446,
+            "h2h": 6
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 8.518848101387952,
+              "rawMean": -2.3874047449978977,
+              "adjustedMean": -0.8952767793742116,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 12.51238294632446,
+              "rawMean": 1.5404045793810435,
+              "adjustedMean": 1.5404045793810435,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 6
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 7.798876348270204,
+          "parts": {
+            "currentSeasonMargins": 3.9077414846288754,
+            "priorFormMargins": 9.100981700468022,
+            "h2h": 16
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 3.9077414846288754,
+              "rawMean": -11.323029896828368,
+              "adjustedMean": -4.246136211310638,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 9.100981700468022,
+              "rawMean": -0.5408713021181167,
+              "adjustedMean": -0.5408713021181167,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 16
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "LAR"
+      },
+      "comparison": "DISAGREE"
+    },
+    {
+      "game": "GB @ TB",
+      "away": "GB",
+      "home": "TB",
+      "slyAway": -3.5,
+      "v1": {
+        "status": "verified",
+        "lean": "TB",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "awayIndex": 4.2,
+        "homeIndex": 7.2
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 8,
+          "home": 12
+        },
+        "lean": "home",
+        "awayIndex": 4.384,
+        "homeIndex": 5.522,
+        "difference": -1.139,
+        "away": {
+          "index": 4.383520918840248,
+          "parts": {
+            "currentSeasonMargins": 2.8144803742593787,
+            "priorFormMargins": 5.1675118760588195,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 2.8144803742593787,
+              "rawMean": -14.47431595358401,
+              "adjustedMean": -5.427868482594004,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 5.1675118760588195,
+              "rawMean": -3.1632858230390584,
+              "adjustedMean": -3.1632858230390584,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 5.5220599152649825,
+          "parts": {
+            "currentSeasonMargins": 5.895929573544055,
+            "priorFormMargins": 1.7347290179253942,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 5.895929573544055,
+              "rawMean": -6.977609827364527,
+              "adjustedMean": -2.6166036852616976,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 1.7347290179253942,
+              "rawMean": -7.062450842127486,
+              "adjustedMean": -7.062450842127486,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "TB"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "MIA @ MIN",
+      "away": "MIA",
+      "home": "MIN",
+      "slyAway": 10.5,
+      "v1": {
+        "status": "verified",
+        "lean": "MIN",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "awayIndex": 4.7,
+        "homeIndex": 16.4
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "lean": "home",
+        "awayIndex": 6.872,
+        "homeIndex": 16.228,
+        "difference": -9.356,
+        "away": {
+          "index": 6.872126231937463,
+          "parts": {
+            "currentSeasonMargins": 5.498747190579053,
+            "priorFormMargins": 8.369224990442222,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 5.498747190579053,
+              "rawMean": -7.757718108665544,
+              "adjustedMean": -2.909144290749579,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 8.369224990442222,
+              "rawMean": -0.9872799499724019,
+              "adjustedMean": -0.9872799499724019,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 16.22803504350536,
+          "parts": {
+            "currentSeasonMargins": 15.513564253867633,
+            "priorFormMargins": 17.679827823162313,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 15.513564253867633,
+              "rawMean": 9.925249506706574,
+              "adjustedMean": 3.7219685650149654,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 17.679827823162313,
+              "rawMean": 6.092348764723499,
+              "adjustedMean": 6.092348764723499,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "MIN"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "KC @ LV",
+      "away": "KC",
+      "home": "LV",
+      "slyAway": -4.5,
+      "v1": {
+        "status": "verified",
+        "lean": "LV",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "awayIndex": 5.68,
+        "homeIndex": 17.6
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "lean": "home",
+        "awayIndex": 6.78,
+        "homeIndex": 11.539,
+        "difference": -4.759,
+        "away": {
+          "index": 6.780122875117269,
+          "parts": {
+            "currentSeasonMargins": 13.426682346661817,
+            "priorFormMargins": 1.845289547798627,
+            "h2h": 0
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 13.426682346661817,
+              "rawMean": 5.713802175181579,
+              "adjustedMean": 2.1426758156930923,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 1.845289547798627,
+              "rawMean": -6.858881563291377,
+              "adjustedMean": -6.858881563291377,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 0
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 11.539191989007348,
+          "parts": {
+            "currentSeasonMargins": 16.933934388293714,
+            "priorFormMargins": 2.297303785687939,
+            "h2h": 20
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 16.933934388293714,
+              "rawMean": 13.671395045309334,
+              "adjustedMean": 5.126773141991,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 2.297303785687939,
+              "rawMean": -6.125942364812402,
+              "adjustedMean": -6.125942364812402,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 20
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "LV"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "LAC @ SEA",
+      "away": "LAC",
+      "home": "SEA",
+      "slyAway": 7,
+      "v1": {
+        "status": "verified",
+        "lean": "SEA",
+        "scores": {
+          "away": 4,
+          "home": 16
+        },
+        "awayIndex": 5.7,
+        "homeIndex": 11.62
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 4,
+          "home": 16
+        },
+        "lean": "home",
+        "awayIndex": 7.876,
+        "homeIndex": 14.054,
+        "difference": -6.178,
+        "away": {
+          "index": 7.875603479418614,
+          "parts": {
+            "currentSeasonMargins": 3.579336346977863,
+            "priorFormMargins": 13.037255308196439,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 3.579336346977863,
+              "rawMean": -12.18690492221522,
+              "adjustedMean": -4.5700893458307075,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 13.037255308196439,
+              "rawMean": 1.8817119088894474,
+              "adjustedMean": 1.8817119088894474,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 14.054085824057381,
+          "parts": {
+            "currentSeasonMargins": 11.637968168529284,
+            "priorFormMargins": 16.605000370548005,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 11.637968168529284,
+              "rawMean": 2.6445714519177717,
+              "adjustedMean": 0.9917142944691644,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 16.605000370548005,
+              "rawMean": 4.762200675836157,
+              "adjustedMean": 4.762200675836157,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "SEA"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "DEN @ SF",
+      "away": "DEN",
+      "home": "SF",
+      "slyAway": 3,
+      "v1": {
+        "status": "verified",
+        "lean": "SF",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "awayIndex": 11.98,
+        "homeIndex": 14.98
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 2,
+          "home": 18
+        },
+        "lean": "home",
+        "awayIndex": 7.098,
+        "homeIndex": 15.08,
+        "difference": -7.982,
+        "away": {
+          "index": 7.0978514400373784,
+          "parts": {
+            "currentSeasonMargins": 8.347935814831146,
+            "priorFormMargins": 5.728200808408407,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 8.347935814831146,
+              "rawMean": -2.6677523767654265,
+              "adjustedMean": -1.000407141287035,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 5.728200808408407,
+              "rawMean": -2.7386520577952034,
+              "adjustedMean": -2.7386520577952034,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 15.079993333093082,
+          "parts": {
+            "currentSeasonMargins": 15.129726653818834,
+            "priorFormMargins": 15.241540847186519,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 15.129726653818834,
+              "rawMean": 9.068091176288235,
+              "adjustedMean": 3.400534191108088,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 15.241540847186519,
+              "rawMean": 3.492302226478396,
+              "adjustedMean": 3.492302226478396,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "SF"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "DET @ CAR",
+      "away": "DET",
+      "home": "CAR",
+      "slyAway": -3.5,
+      "v1": {
+        "status": "verified",
+        "lean": "CAR",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "awayIndex": 5.4,
+        "homeIndex": 10.12
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 6,
+          "home": 14
+        },
+        "lean": "home",
+        "awayIndex": 6.02,
+        "homeIndex": 10.699,
+        "difference": -4.679,
+        "away": {
+          "index": 6.0201183255632715,
+          "parts": {
+            "currentSeasonMargins": 8.056188199141268,
+            "priorFormMargins": 3.3620840898742523,
+            "h2h": 7
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 8.056188199141268,
+              "rawMean": -3.1501822945021516,
+              "adjustedMean": -1.1813183604383068,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 3.3620840898742523,
+              "rawMean": -4.797369405688597,
+              "adjustedMean": -4.797369405688597,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 7
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 10.698705212594447,
+          "parts": {
+            "currentSeasonMargins": 11.22771185875746,
+            "priorFormMargins": 8.678087190383977,
+            "h2h": 14.5
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 11.22771185875746,
+              "rawMean": 1.9742985406040496,
+              "adjustedMean": 0.7403619527265186,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 8.678087190383977,
+              "rawMean": -0.7978166999964876,
+              "adjustedMean": -0.7978166999964876,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 14.5
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "CAR"
+      },
+      "comparison": "AGREE"
+    },
+    {
+      "game": "ATL @ NO",
+      "away": "ATL",
+      "home": "NO",
+      "slyAway": 2.5,
+      "v1": {
+        "status": "verified",
+        "lean": "NO",
+        "scores": {
+          "away": 0,
+          "home": 20
+        },
+        "awayIndex": 4.32,
+        "homeIndex": 18.18
+      },
+      "v2": {
+        "status": "challenger",
+        "scores": {
+          "away": 4,
+          "home": 16
+        },
+        "lean": "home",
+        "awayIndex": 9.014,
+        "homeIndex": 15.146,
+        "difference": -6.133,
+        "away": {
+          "index": 9.01362413787524,
+          "parts": {
+            "currentSeasonMargins": 10.289581811370404,
+            "priorFormMargins": 10.958280806896397,
+            "h2h": 0
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 10.289581811370404,
+              "rawMean": 0.46346047615860847,
+              "adjustedMean": 0.17379767855947817,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 10.958280806896397,
+              "rawMean": 0.5767382279404714,
+              "adjustedMean": 0.5767382279404714,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 0
+          },
+          "available": 3
+        },
+        "home": {
+          "index": 15.146178174180243,
+          "parts": {
+            "currentSeasonMargins": 11.407520045848905,
+            "priorFormMargins": 17.531985383870584,
+            "h2h": 20
+          },
+          "detail": {
+            "currentSeasonMargins": {
+              "rating": 11.407520045848905,
+              "rawMean": 2.2670831542213463,
+              "adjustedMean": 0.8501561828330049,
+              "n": 3,
+              "sampleMultiplier": 0.375
+            },
+            "priorFormMargins": {
+              "rating": 17.531985383870584,
+              "rawMean": 5.881838761773035,
+              "adjustedMean": 5.881838761773035,
+              "n": 8,
+              "sampleMultiplier": 1
+            },
+            "h2h": 20
+          },
+          "available": 3
+        },
+        "flags": [],
+        "leanTeam": "NO"
+      },
+      "comparison": "AGREE"
+    }
+  ],
+  "summary": {
+    "agree": 10,
+    "disagree": 3,
+    "neutralInvolved": 2
+  }
+}
