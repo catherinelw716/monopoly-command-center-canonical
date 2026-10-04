@@ -11,6 +11,9 @@ on:
       - '.github/workflows/ats-trends-v2-data.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,6 +28,17 @@ jobs:
         run: node build-ats-trends-v2-week04-data.js
       - name: Show comparison summary
         run: node -e "const r=require('./ats-trends-v2-week04-results.json'); console.log(JSON.stringify(r.summary,null,2));"
+      - name: Persist generated challenger data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ats-trends-v2-week04-input.json ats-trends-v2-week04-results.json
+          if git diff --cached --quiet; then
+            echo "No generated-data changes to commit"
+          else
+            git commit -m "Refresh source-backed ATS Trends v2 Week 4 data"
+            git push
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: ats-trends-v2-week04
