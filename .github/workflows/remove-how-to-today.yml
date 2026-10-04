@@ -41,3 +41,4 @@ jobs:
           git add server-local.js
           git diff --cached --quiet || git commit -m "Remove How to read Today from landing page"
           git push
+# retry after source-string fix
