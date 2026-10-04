@@ -10,6 +10,7 @@ on:
       - 'generate-five-factor-scorecard.js'
       - 'server-v7.js'
       - 'FIVE_FACTOR_SPREAD_SCORECARD_*.md'
+      - 'command-center-consistency-qa.js'
       - '.github/workflows/five-factor-scorecard.yml'
   workflow_dispatch:
 
@@ -29,6 +30,8 @@ jobs:
         run: node five-factor-scorecard-qa.js
       - name: Page integration QA
         run: node five-factor-scorecard-page-qa.js
+      - name: Global Command Center consistency QA
+        run: node command-center-consistency-qa.js
       - name: Upload generated canonical candidate
         uses: actions/upload-artifact@v4
         with:
