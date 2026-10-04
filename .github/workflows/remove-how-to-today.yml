@@ -1,0 +1,43 @@
+name: Remove How To Today
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-how-to-today.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply cleanup
+        run: node remove-how-to-today.js
+      - name: Syntax check
+        run: node --check server-local.js
+      - name: Local landing smoke
+        run: |
+          PORT=18080 node server-local.js > /tmp/cc.log 2>&1 &
+          pid=$!
+          for i in $(seq 1 40); do
+            curl -fsS http://127.0.0.1:18080/ -o /tmp/root.html && break
+            sleep 0.25
+          done
+          grep -q 'Top Aligned Plays' /tmp/root.html
+          grep -q 'Important conflicts' /tmp/root.html
+          grep -q 'Current operating picture' /tmp/root.html
+          ! grep -q 'How to read Today' /tmp/root.html
+          ! grep -q '<div class="today-rule">' /tmp/root.html
+          kill $pid
+      - name: Commit migrated server
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add server-local.js
+          git diff --cached --quiet || git commit -m "Remove How to read Today from landing page"
+          git push
