@@ -1,0 +1,675 @@
+{
+  "season": 2026,
+  "week": 4,
+  "reportedAt": "2026-10-09",
+  "source": "Official Week 4 standings PDF provided by pool participant",
+  "activeCount": 111,
+  "rows": [
+    {
+      "rank": 1,
+      "name": "Logan Couture",
+      "bankroll": 31700,
+      "movement": null
+    },
+    {
+      "rank": 2,
+      "name": "Paul Matthews",
+      "bankroll": 20100,
+      "movement": null
+    },
+    {
+      "rank": 3,
+      "name": "George Bazos",
+      "bankroll": 19500,
+      "movement": 1
+    },
+    {
+      "rank": 4,
+      "name": "Marc Boyle",
+      "bankroll": 18000,
+      "movement": -1
+    },
+    {
+      "rank": 5,
+      "name": "Jason Spezza",
+      "bankroll": 17500,
+      "movement": 4
+    },
+    {
+      "rank": 6,
+      "name": "Colin Whitney",
+      "bankroll": 17300,
+      "movement": 11
+    },
+    {
+      "rank": 7,
+      "name": "Zach Hyman",
+      "bankroll": 17000,
+      "movement": 18
+    },
+    {
+      "rank": 8,
+      "name": "Ryan Hartman",
+      "bankroll": 16700,
+      "movement": 23
+    },
+    {
+      "rank": 9,
+      "name": "Dave Conklin",
+      "bankroll": 15000,
+      "movement": -4
+    },
+    {
+      "rank": 10,
+      "name": "Adam Banko",
+      "bankroll": 14000,
+      "movement": -3
+    },
+    {
+      "rank": 10,
+      "name": "Alex Goligoski",
+      "bankroll": 14000,
+      "movement": 5
+    },
+    {
+      "rank": 10,
+      "name": "Dave Bergeron",
+      "bankroll": 14000,
+      "movement": 2
+    },
+    {
+      "rank": 13,
+      "name": "Sly Boyle",
+      "bankroll": 13800,
+      "movement": -3
+    },
+    {
+      "rank": 14,
+      "name": "Adam Winchester",
+      "bankroll": 13500,
+      "movement": 62
+    },
+    {
+      "rank": 14,
+      "name": "JT Miller",
+      "bankroll": 13500,
+      "movement": -8
+    },
+    {
+      "rank": 16,
+      "name": "Bill James",
+      "bankroll": 13250,
+      "movement": 27
+    },
+    {
+      "rank": 17,
+      "name": "Catherine Williams",
+      "bankroll": 12800,
+      "movement": 11
+    },
+    {
+      "rank": 18,
+      "name": "Andrew Mitchell",
+      "bankroll": 12500,
+      "movement": 7
+    },
+    {
+      "rank": 18,
+      "name": "Brock Boeser",
+      "bankroll": 12500,
+      "movement": -7
+    },
+    {
+      "rank": 20,
+      "name": "Chad & Eric",
+      "bankroll": 12000,
+      "movement": -1
+    },
+    {
+      "rank": 20,
+      "name": "Eric Cutting",
+      "bankroll": 12000,
+      "movement": -6
+    },
+    {
+      "rank": 20,
+      "name": "Jared Sandler",
+      "bankroll": 12000,
+      "movement": -7
+    },
+    {
+      "rank": 23,
+      "name": "Sammy Shah",
+      "bankroll": 11300,
+      "movement": 5
+    },
+    {
+      "rank": 24,
+      "name": "Adam Burish",
+      "bankroll": 11000,
+      "movement": -6
+    },
+    {
+      "rank": 24,
+      "name": "Krish",
+      "bankroll": 11000,
+      "movement": 1
+    },
+    {
+      "rank": 26,
+      "name": "Andy Saucier",
+      "bankroll": 10500,
+      "movement": 9
+    },
+    {
+      "rank": 27,
+      "name": "Geoff Durling",
+      "bankroll": 10400,
+      "movement": 67
+    },
+    {
+      "rank": 28,
+      "name": "Jeff Harrison",
+      "bankroll": 10350,
+      "movement": 46
+    },
+    {
+      "rank": 29,
+      "name": "Erik Ralston",
+      "bankroll": 10300,
+      "movement": 12
+    },
+    {
+      "rank": 30,
+      "name": "Stu Hurvitz",
+      "bankroll": 10200,
+      "movement": 22
+    },
+    {
+      "rank": 30,
+      "name": "Tony Del Monaco",
+      "bankroll": 10200,
+      "movement": -6
+    },
+    {
+      "rank": 32,
+      "name": "Jonathan Marchetti",
+      "bankroll": 10050,
+      "movement": 2
+    },
+    {
+      "rank": 33,
+      "name": "Chris Bassett",
+      "bankroll": 10000,
+      "movement": 59
+    },
+    {
+      "rank": 33,
+      "name": "Jack & Tim",
+      "bankroll": 10000,
+      "movement": 30
+    },
+    {
+      "rank": 35,
+      "name": "Zach Labbe",
+      "bankroll": 9920,
+      "movement": 35
+    },
+    {
+      "rank": 36,
+      "name": "Jim Schiffman",
+      "bankroll": 9900,
+      "movement": 10
+    },
+    {
+      "rank": 36,
+      "name": "Tyler Doyle",
+      "bankroll": 9900,
+      "movement": -3
+    },
+    {
+      "rank": 38,
+      "name": "Nathan Lyon",
+      "bankroll": 9700,
+      "movement": 61
+    },
+    {
+      "rank": 39,
+      "name": "Jason Boyd",
+      "bankroll": 9600,
+      "movement": 21
+    },
+    {
+      "rank": 40,
+      "name": "Johnny Vegas",
+      "bankroll": 9450,
+      "movement": 2
+    },
+    {
+      "rank": 41,
+      "name": "Wesley Boyle",
+      "bankroll": 9300,
+      "movement": 11
+    },
+    {
+      "rank": 42,
+      "name": "Matt Schepers",
+      "bankroll": 9250,
+      "movement": -20
+    },
+    {
+      "rank": 43,
+      "name": "Guy Champagne",
+      "bankroll": 9050,
+      "movement": 12
+    },
+    {
+      "rank": 44,
+      "name": "Brian Hunley",
+      "bankroll": 9000,
+      "movement": 18
+    },
+    {
+      "rank": 44,
+      "name": "David Wendell",
+      "bankroll": 9000,
+      "movement": 42
+    },
+    {
+      "rank": 44,
+      "name": "Paul DeHaro",
+      "bankroll": 9000,
+      "movement": 4
+    },
+    {
+      "rank": 47,
+      "name": "Tim Leahy",
+      "bankroll": 8950,
+      "movement": 12
+    },
+    {
+      "rank": 48,
+      "name": "Kyle Cook",
+      "bankroll": 8900,
+      "movement": 21
+    },
+    {
+      "rank": 49,
+      "name": "Matt Grim",
+      "bankroll": 8700,
+      "movement": -18
+    },
+    {
+      "rank": 50,
+      "name": "Juan Flores",
+      "bankroll": 8665,
+      "movement": -42
+    },
+    {
+      "rank": 51,
+      "name": "Greg Schaefers",
+      "bankroll": 8600,
+      "movement": 16
+    },
+    {
+      "rank": 52,
+      "name": "Amanda Kessel",
+      "bankroll": 8500,
+      "movement": 13
+    },
+    {
+      "rank": 52,
+      "name": "Frederick Schaefers",
+      "bankroll": 8500,
+      "movement": 24
+    },
+    {
+      "rank": 52,
+      "name": "Nicole Gohering",
+      "bankroll": 8500,
+      "movement": 2
+    },
+    {
+      "rank": 52,
+      "name": "Norma Kinser",
+      "bankroll": 8500,
+      "movement": 34
+    },
+    {
+      "rank": 52,
+      "name": "Sean Steinwald",
+      "bankroll": 8500,
+      "movement": -3
+    },
+    {
+      "rank": 57,
+      "name": "Matt Devine",
+      "bankroll": 8300,
+      "movement": -34
+    },
+    {
+      "rank": 58,
+      "name": "Flip Collyer",
+      "bankroll": 8250,
+      "movement": -18
+    },
+    {
+      "rank": 59,
+      "name": "Erin Medved Burnham",
+      "bankroll": 8200,
+      "movement": -3
+    },
+    {
+      "rank": 59,
+      "name": "Mike Munoz",
+      "bankroll": 8200,
+      "movement": 41
+    },
+    {
+      "rank": 59,
+      "name": "Wes Howard",
+      "bankroll": 8200,
+      "movement": -3
+    },
+    {
+      "rank": 62,
+      "name": "Brian Maxwell",
+      "bankroll": 8000,
+      "movement": 13
+    },
+    {
+      "rank": 62,
+      "name": "Kent Cook",
+      "bankroll": 8000,
+      "movement": 9
+    },
+    {
+      "rank": 62,
+      "name": "Robert Coley",
+      "bankroll": 8000,
+      "movement": 3
+    },
+    {
+      "rank": 62,
+      "name": "Seb Boyle",
+      "bankroll": 8000,
+      "movement": -27
+    },
+    {
+      "rank": 62,
+      "name": "Seb Huard",
+      "bankroll": 8000,
+      "movement": -27
+    },
+    {
+      "rank": 67,
+      "name": "Dan Boyle",
+      "bankroll": 7900,
+      "movement": 13
+    },
+    {
+      "rank": 67,
+      "name": "Tate Olson",
+      "bankroll": 7900,
+      "movement": 17
+    },
+    {
+      "rank": 69,
+      "name": "Kris Picard",
+      "bankroll": 7800,
+      "movement": 4
+    },
+    {
+      "rank": 70,
+      "name": "James McAughey",
+      "bankroll": 7050,
+      "movement": -19
+    },
+    {
+      "rank": 71,
+      "name": "Dave Dubnyk",
+      "bankroll": 7000,
+      "movement": 10
+    },
+    {
+      "rank": 71,
+      "name": "Kyle Dubas",
+      "bankroll": 7000,
+      "movement": 19
+    },
+    {
+      "rank": 73,
+      "name": "Frank Vance",
+      "bankroll": 6900,
+      "movement": -34
+    },
+    {
+      "rank": 74,
+      "name": "Richard Cho",
+      "bankroll": 6700,
+      "movement": -25
+    },
+    {
+      "rank": 75,
+      "name": "Ara Doyle",
+      "bankroll": 6600,
+      "movement": -4
+    },
+    {
+      "rank": 75,
+      "name": "Christian Connors",
+      "bankroll": 6600,
+      "movement": 29
+    },
+    {
+      "rank": 75,
+      "name": "David D'Intino",
+      "bankroll": 6600,
+      "movement": 10
+    },
+    {
+      "rank": 78,
+      "name": "Jim Newton",
+      "bankroll": 6500,
+      "movement": 24
+    },
+    {
+      "rank": 79,
+      "name": "Mathieu Leonard",
+      "bankroll": 6400,
+      "movement": -23
+    },
+    {
+      "rank": 80,
+      "name": "Jonathan Huisel",
+      "bankroll": 6200,
+      "movement": 11
+    },
+    {
+      "rank": 80,
+      "name": "Matt Conte",
+      "bankroll": 6200,
+      "movement": 24
+    },
+    {
+      "rank": 82,
+      "name": "Devan Dubnyk",
+      "bankroll": 6000,
+      "movement": -1
+    },
+    {
+      "rank": 82,
+      "name": "Janee Medved",
+      "bankroll": 6000,
+      "movement": -39
+    },
+    {
+      "rank": 82,
+      "name": "Lucas Malloy",
+      "bankroll": 6000,
+      "movement": -63
+    },
+    {
+      "rank": 82,
+      "name": "Randy Krenzin",
+      "bankroll": 6000,
+      "movement": -47
+    },
+    {
+      "rank": 86,
+      "name": "Ryan Donovan",
+      "bankroll": 5900,
+      "movement": -7
+    },
+    {
+      "rank": 86,
+      "name": "Vince Trocheck",
+      "bankroll": 5900,
+      "movement": -40
+    },
+    {
+      "rank": 88,
+      "name": "Tom Simmons",
+      "bankroll": 5700,
+      "movement": 6
+    },
+    {
+      "rank": 89,
+      "name": "Charlie Click",
+      "bankroll": 5500,
+      "movement": -70
+    },
+    {
+      "rank": 89,
+      "name": "Dave Kinser",
+      "bankroll": 5500,
+      "movement": 3
+    },
+    {
+      "rank": 91,
+      "name": "Dru Dillard",
+      "bankroll": 5300,
+      "movement": -10
+    },
+    {
+      "rank": 92,
+      "name": "Matt & Farhad",
+      "bankroll": 5100,
+      "movement": -29
+    },
+    {
+      "rank": 93,
+      "name": "Jeff Cook",
+      "bankroll": 5000,
+      "movement": 15
+    },
+    {
+      "rank": 93,
+      "name": "Sam Viere",
+      "bankroll": 5000,
+      "movement": 13
+    },
+    {
+      "rank": 95,
+      "name": "Shawn Hennigan",
+      "bankroll": 4900,
+      "movement": 3
+    },
+    {
+      "rank": 96,
+      "name": "Chefy",
+      "bankroll": 4000,
+      "movement": -53
+    },
+    {
+      "rank": 96,
+      "name": "Matt Dumba",
+      "bankroll": 4000,
+      "movement": -10
+    },
+    {
+      "rank": 98,
+      "name": "Vukie Mpofu",
+      "bankroll": 3900,
+      "movement": -38
+    },
+    {
+      "rank": 99,
+      "name": "Chris Winchester",
+      "bankroll": 3500,
+      "movement": 3
+    },
+    {
+      "rank": 100,
+      "name": "Patzalec Koscher",
+      "bankroll": 3100,
+      "movement": 1
+    },
+    {
+      "rank": 101,
+      "name": "Bob Wiederhold",
+      "bankroll": 2200,
+      "movement": 12
+    },
+    {
+      "rank": 101,
+      "name": "Ron Guenther",
+      "bankroll": 2200,
+      "movement": 6
+    },
+    {
+      "rank": 103,
+      "name": "Brent Roles",
+      "bankroll": 2100,
+      "movement": -75
+    },
+    {
+      "rank": 104,
+      "name": "Doug Wilder",
+      "bankroll": 2000,
+      "movement": 4
+    },
+    {
+      "rank": 105,
+      "name": "Shawn Medved",
+      "bankroll": 1600,
+      "movement": -9
+    },
+    {
+      "rank": 106,
+      "name": "Scott Smith",
+      "bankroll": 1500,
+      "movement": -30
+    },
+    {
+      "rank": 107,
+      "name": "Travis Niesen",
+      "bankroll": 1200,
+      "movement": 8
+    },
+    {
+      "rank": 108,
+      "name": "Maddie Medved",
+      "bankroll": 1000,
+      "movement": -40
+    },
+    {
+      "rank": 109,
+      "name": "Mattias Janmark",
+      "bankroll": 800,
+      "movement": 2
+    },
+    {
+      "rank": 110,
+      "name": "Cathy Brisbin",
+      "bankroll": 700,
+      "movement": 2
+    },
+    {
+      "rank": 111,
+      "name": "Duff",
+      "bankroll": 500,
+      "movement": -22
+    }
+  ]
+}
