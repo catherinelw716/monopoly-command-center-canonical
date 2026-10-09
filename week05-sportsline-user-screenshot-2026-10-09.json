@@ -1,0 +1,445 @@
+{
+  "season": 2026,
+  "week": 5,
+  "source": "SportsLine",
+  "snapshotType": "USER_SUPPLIED_SCREENSHOTS",
+  "receivedDateET": "2026-10-09",
+  "exactCaptureTimestamp": null,
+  "screenshots": [
+    "IMG_0943.jpeg",
+    "IMG_0944.jpeg",
+    "IMG_0945.jpeg",
+    "IMG_0946.jpeg"
+  ],
+  "gamesShown": 14,
+  "fieldPolicy": {
+    "simGrade": "Screenshot shows SportsLine SIM recommendation and letter grade, not model cover percentage",
+    "simType": "ATS, TOTAL, or MONEYLINE; only ATS SIM is an ATS source vote",
+    "sportslinePickCount": "Count of available SportsLine picks; contents not visible in screenshots; do not count as spread votes",
+    "moneyPct": "Not present in screenshots",
+    "simCoverPct": "Not present in screenshots",
+    "spreadProvenance": "SportsLine open/current and totals, independent of frozen Sly line or general market"
+  },
+  "games": {
+    "PHI @ JAX": {
+      "game": "PHI @ JAX",
+      "projectedScore": {
+        "away": 16,
+        "home": 24
+      },
+      "openSpread": {
+        "team": "JAX",
+        "line": -7.5,
+        "display": "JAX -7.5"
+      },
+      "currentSpread": {
+        "team": "JAX",
+        "line": -7.5,
+        "display": "JAX -7.5"
+      },
+      "openTotal": 41.5,
+      "currentTotal": 41.5,
+      "sportslinePickCount": 4,
+      "sim": {
+        "grade": "B",
+        "type": "MONEYLINE",
+        "side": "PHI",
+        "value": 303,
+        "display": "PHI +303"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "CIN @ MIA": {
+      "game": "CIN @ MIA",
+      "projectedScore": {
+        "away": 27,
+        "home": 18
+      },
+      "openSpread": {
+        "team": "MIA",
+        "line": 6.5,
+        "display": "MIA +6.5"
+      },
+      "currentSpread": {
+        "team": "MIA",
+        "line": 7,
+        "display": "MIA +7"
+      },
+      "openTotal": 42.5,
+      "currentTotal": 43.5,
+      "sportslinePickCount": 1,
+      "sim": {
+        "grade": "B",
+        "type": "ATS",
+        "side": "CIN",
+        "value": -7,
+        "display": "CIN -7"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "LV @ NE": {
+      "game": "LV @ NE",
+      "projectedScore": {
+        "away": 20,
+        "home": 23
+      },
+      "openSpread": {
+        "team": "NE",
+        "line": -3.5,
+        "display": "NE -3.5"
+      },
+      "currentSpread": {
+        "team": "NE",
+        "line": -3.5,
+        "display": "NE -3.5"
+      },
+      "openTotal": 45,
+      "currentTotal": 44.5,
+      "sportslinePickCount": 2,
+      "sim": {
+        "grade": "C",
+        "type": "TOTAL",
+        "side": "UNDER",
+        "value": 44.5,
+        "display": "UNDER +44.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "MIN @ NO": {
+      "game": "MIN @ NO",
+      "projectedScore": {
+        "away": 25,
+        "home": 20
+      },
+      "openSpread": {
+        "team": "NO",
+        "line": 2,
+        "display": "NO +2"
+      },
+      "currentSpread": {
+        "team": "NO",
+        "line": 2.5,
+        "display": "NO +2.5"
+      },
+      "openTotal": 42,
+      "currentTotal": 41.5,
+      "sportslinePickCount": 5,
+      "sim": {
+        "grade": "A",
+        "type": "ATS",
+        "side": "MIN",
+        "value": -2.5,
+        "display": "MIN -2.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "CLE @ NYJ": {
+      "game": "CLE @ NYJ",
+      "projectedScore": {
+        "away": 20,
+        "home": 24
+      },
+      "openSpread": {
+        "team": "NYJ",
+        "line": -2.5,
+        "display": "NYJ -2.5"
+      },
+      "currentSpread": {
+        "team": "NYJ",
+        "line": -2.5,
+        "display": "NYJ -2.5"
+      },
+      "openTotal": 39.5,
+      "currentTotal": 39.5,
+      "sportslinePickCount": 5,
+      "sim": {
+        "grade": "B",
+        "type": "TOTAL",
+        "side": "OVER",
+        "value": 39.5,
+        "display": "OVER +39.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "IND @ PIT": {
+      "game": "IND @ PIT",
+      "projectedScore": {
+        "away": 27,
+        "home": 25
+      },
+      "openSpread": {
+        "team": "PIT",
+        "line": -2.5,
+        "display": "PIT -2.5"
+      },
+      "currentSpread": {
+        "team": "PIT",
+        "line": -2.5,
+        "display": "PIT -2.5"
+      },
+      "openTotal": 43.5,
+      "currentTotal": 44,
+      "sportslinePickCount": 3,
+      "sim": {
+        "grade": "A",
+        "type": "ATS",
+        "side": "IND",
+        "value": 2.5,
+        "display": "IND +2.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "HOU @ TEN": {
+      "game": "HOU @ TEN",
+      "projectedScore": {
+        "away": 27,
+        "home": 18
+      },
+      "openSpread": {
+        "team": "TEN",
+        "line": 7.5,
+        "display": "TEN +7.5"
+      },
+      "currentSpread": {
+        "team": "TEN",
+        "line": 7,
+        "display": "TEN +7"
+      },
+      "openTotal": 37.5,
+      "currentTotal": 38,
+      "sportslinePickCount": 3,
+      "sim": {
+        "grade": "B",
+        "type": "TOTAL",
+        "side": "OVER",
+        "value": 38,
+        "display": "OVER +38"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "NYG @ WAS": {
+      "game": "NYG @ WAS",
+      "projectedScore": {
+        "away": 21,
+        "home": 26
+      },
+      "openSpread": {
+        "team": "WAS",
+        "line": -4.5,
+        "display": "WAS -4.5"
+      },
+      "currentSpread": {
+        "team": "WAS",
+        "line": -4,
+        "display": "WAS -4"
+      },
+      "openTotal": 42.5,
+      "currentTotal": 41.5,
+      "sportslinePickCount": 7,
+      "sim": {
+        "grade": "C",
+        "type": "TOTAL",
+        "side": "OVER",
+        "value": 41.5,
+        "display": "OVER +41.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "CHI @ GB": {
+      "game": "CHI @ GB",
+      "projectedScore": {
+        "away": 25,
+        "home": 24
+      },
+      "openSpread": {
+        "team": "GB",
+        "line": 1.5,
+        "display": "GB +1.5"
+      },
+      "currentSpread": {
+        "team": "GB",
+        "line": 1.5,
+        "display": "GB +1.5"
+      },
+      "openTotal": 45.5,
+      "currentTotal": 45.5,
+      "sportslinePickCount": 11,
+      "sim": {
+        "grade": "C",
+        "type": "TOTAL",
+        "side": "OVER",
+        "value": 45.5,
+        "display": "OVER +45.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "DEN @ LAC": {
+      "game": "DEN @ LAC",
+      "projectedScore": {
+        "away": 21,
+        "home": 20
+      },
+      "openSpread": {
+        "team": "LAC",
+        "line": 3.5,
+        "display": "LAC +3.5"
+      },
+      "currentSpread": {
+        "team": "LAC",
+        "line": 3.5,
+        "display": "LAC +3.5"
+      },
+      "openTotal": 41.5,
+      "currentTotal": 42,
+      "sportslinePickCount": 3,
+      "sim": {
+        "grade": "B",
+        "type": "MONEYLINE",
+        "side": "LAC",
+        "value": 152,
+        "display": "LAC +152"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "DET @ ARI": {
+      "game": "DET @ ARI",
+      "projectedScore": {
+        "away": 34,
+        "home": 26
+      },
+      "openSpread": {
+        "team": "ARI",
+        "line": 4.5,
+        "display": "ARI +4.5"
+      },
+      "currentSpread": {
+        "team": "ARI",
+        "line": 5.5,
+        "display": "ARI +5.5"
+      },
+      "openTotal": 54,
+      "currentTotal": 54.5,
+      "sportslinePickCount": 8,
+      "sim": {
+        "grade": "B",
+        "type": "ATS",
+        "side": "DET",
+        "value": -5.5,
+        "display": "DET -5.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "SF @ SEA": {
+      "game": "SF @ SEA",
+      "projectedScore": {
+        "away": 21,
+        "home": 26
+      },
+      "openSpread": {
+        "team": "SEA",
+        "line": -3,
+        "display": "SEA -3"
+      },
+      "currentSpread": {
+        "team": "SEA",
+        "line": -3,
+        "display": "SEA -3"
+      },
+      "openTotal": 45.5,
+      "currentTotal": 46.5,
+      "sportslinePickCount": 5,
+      "sim": {
+        "grade": "A",
+        "type": "ATS",
+        "side": "SEA",
+        "value": -3,
+        "display": "SEA -3"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "BAL @ ATL": {
+      "game": "BAL @ ATL",
+      "projectedScore": {
+        "away": 25,
+        "home": 26
+      },
+      "openSpread": {
+        "team": "ATL",
+        "line": -3,
+        "display": "ATL -3"
+      },
+      "currentSpread": {
+        "team": "ATL",
+        "line": -3.5,
+        "display": "ATL -3.5"
+      },
+      "openTotal": 43.5,
+      "currentTotal": 43.5,
+      "sportslinePickCount": 6,
+      "sim": {
+        "grade": "B",
+        "type": "TOTAL",
+        "side": "OVER",
+        "value": 43.5,
+        "display": "OVER +43.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    },
+    "BUF @ LAR": {
+      "game": "BUF @ LAR",
+      "projectedScore": {
+        "away": 24,
+        "home": 26
+      },
+      "openSpread": {
+        "team": "LAR",
+        "line": -2.5,
+        "display": "LAR -2.5"
+      },
+      "currentSpread": {
+        "team": "LAR",
+        "line": -3.5,
+        "display": "LAR -3.5"
+      },
+      "openTotal": 54.5,
+      "currentTotal": 54.5,
+      "sportslinePickCount": 5,
+      "sim": {
+        "grade": "B",
+        "type": "TOTAL",
+        "side": "UNDER",
+        "value": 54.5,
+        "display": "UNDER +54.5"
+      },
+      "moneyPct": null,
+      "simCoverPct": null,
+      "otherPicksVisible": false
+    }
+  }
+}
