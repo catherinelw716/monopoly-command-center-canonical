@@ -79,7 +79,7 @@ function verify(){
   correctUpcomingCount:games.length===14&&new Set(games.map(g=>g.id)).size===14,
   thursdayFinal:payload.thursday.status==='FINAL'&&payload.thursday.eligible===false,
   freezePreserved:games.every(g=>g.slyFavoriteSpread<0&&g.favorite&&g.slyHomeSpread===(g.favorite===g.home?g.slyFavoriteSpread:-g.slyFavoriteSpread)),
-  fiveFactorPage:html.includes('Five-Criteria Spread Scorecard')&&html.includes('Money / Handle')&&html.includes('Defensive EPA'),
+  fiveFactorPage:html.includes('Five Criteria — Week 5 scorecard')&&html.includes('ffFactorDetail')&&html.includes('Money / Handle')&&html.includes('Defensive EPA'),
   views:html.includes('Catherine — solo portfolio planner')&&html.includes('Four-source comparison')&&html.includes('Official standings'),
   probabilityContract:modelProb,
   sportslineFullSlate:games.every(g=>g.sportsline&&g.sportsline.sim&&g.sportsline.projectedScore&&g.sportsline.currentSpread),
