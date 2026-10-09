@@ -2,6 +2,11 @@
   "name": "monopoly-command-center-canonical",
   "version": "1.0.0",
   "private": true,
-  "scripts": {"start": "node server-local.js"},
-  "engines": {"node": ">=18"}
+  "scripts": {
+    "start": "node server-week05.js",
+    "start:week4": "node server-local.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
