@@ -6,6 +6,7 @@ const input=JSON.parse(fs.readFileSync('./week05-canonical-data.json','utf8'));
 const standings=JSON.parse(fs.readFileSync('./week05-standings.json','utf8'));
 const html=fs.readFileSync('./week05-command-center.html','utf8');
 const sl=JSON.parse(fs.readFileSync('./week05-sportsline-user-screenshot-2026-10-09.json','utf8'));
+const grid=JSON.parse(fs.readFileSync('./week05-gridironai-user-screenshot-2026-10-09.json','utf8'));
 function normalizeSportsline(g) {
  const record=sl.games[g.id];
  if(!record)throw Error('SportsLine screenshot match missing: '+g.id);
@@ -18,10 +19,29 @@ function normalizeSportsline(g) {
   exactLineStatus:!ats?'NON_ATS_MARKET':exact?'EXACT_SLY':'DIRECTION_ONLY_DIFFERENT_SPREAD'},
   snapshotSource:sl.source,snapshotReceivedDateET:sl.receivedDateET,exactCaptureTimestamp:sl.exactCaptureTimestamp};
 }
-const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g)}));
+function normalizeGridiron(g) {
+ const d=grid.games[g.id];
+ if(!d)throw Error('GridironAI screenshot game missing: '+g.id);
+ if(d.isCompletedThursday)throw Error('Completed Thursday game must not appear in live slate');
+ const exact=Math.abs(d.homeSpread-g.slyHomeSpread)<1e-9;
+ const noTake=d.awayCoverPct===50 && d.homeCoverPct===50;
+ if(d.awayCoverPct+d.homeCoverPct!==100)throw Error('GridironAI paired probabilities invalid: '+g.id);
+ const team=noTake?null:d.awayCoverPct>d.homeCoverPct?d.away:d.home;
+ const coverPct=noTake?50:Math.max(d.awayCoverPct,d.homeCoverPct);
+ const strongerSideNative=team===g.home?d.homeSpread:team===g.away?d.awaySpread:null;
+ const strongerSideSly=team===g.home?g.slyHomeSpread:team===g.away?-g.slyHomeSpread:null;
+ return {...d,source: 'GridironAI',sourceCaptureET:grid.exactCaptureTimestamp,exactSlyLine:exact,
+   strongerSide:team,strongerCoverPct:coverPct,strongerSideNativeLine:strongerSideNative,strongerSideSlyLine:strongerSideSly,
+   grade:noTake?'N':coverPct>=55?'A':coverPct>=52?'B':coverPct===51?'C':'N',
+   referenceStatus:noTake?'NO_TAKE_50_50':exact?'EXACT_SLY_LINE':'DIRECTIONAL_DIFFERENT_LINE',
+   countedAsExactSlyATS:!noTake&&exact,
+   interpretation:exact?'Probability applies at exact Sly spread.':'Probability applies to GridironAI native line only; no numerical adjustment has been made to Sly.'};
+}
+const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g),gridiron:normalizeGridiron(g)}));
 const sportslineCounts=games.reduce((n,g)=>{n[g.sportsline.sim.type]++;if(g.sportsline.sim.exactSlyLine)n.exactSlyATS++;return n;},{ATS:0,TOTAL:0,MONEYLINE:0,exactSlyATS:0});
-const dataQuality={...input.dataQuality,sportsline:'User-provided Week 5 SportsLine screenshots cover all 14 games. SIM: '+sportslineCounts.ATS+' ATS ('+sportslineCounts.exactSlyATS+' exact Sly), '+sportslineCounts.TOTAL+' totals, '+sportslineCounts.MONEYLINE+' moneyline. SIM cover probabilities and handle percentages not shown. Exact capture clock time unavailable.'};
-const payload={...input,games,standings,dataQuality,sportslineSummary:{source:sl.source,receivedDateET:sl.receivedDateET,captureTimeVerified:false,screenshotFiles:sl.screenshots,...sportslineCounts},modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
+const gridironCounts=games.reduce((n,g)=>{n.exact+=g.gridiron.exactSlyLine?1:0;n.noTake+=g.gridiron.referenceStatus==='NO_TAKE_50_50'?1:0;n.actionableExact+=g.gridiron.countedAsExactSlyATS?1:0;return n;},{exact:0,noTake:0,actionableExact:0});
+const dataQuality={...input.dataQuality,gridiron:'User-provided GridironAI Week 5 screenshot shows 15 games (14 upcoming plus completed Thursday). Native home spreads and both team cover probabilities verified, including 3 50/50 NO TAKE matchups. '+gridironCounts.exact+' exactly match Sly; '+gridironCounts.actionableExact+' actionable exact-line directional reads. Unverified screenshot clock time; different-line percentages must NOT be relabeled as Sly probabilities.',sportsline:'User-provided Week 5 SportsLine screenshots cover all 14 games. SIM: '+sportslineCounts.ATS+' ATS ('+sportslineCounts.exactSlyATS+' exact Sly), '+sportslineCounts.TOTAL+' totals, '+sportslineCounts.MONEYLINE+' moneyline. SIM cover probabilities and handle percentages not shown. Exact capture clock time unavailable.'};
+const payload={...input,games,standings,dataQuality,sportslineSummary:{source:sl.source,receivedDateET:sl.receivedDateET,captureTimeVerified:false,screenshotFiles:sl.screenshots,...sportslineCounts},gridironSummary:{source:grid.source,receivedDateET:grid.receivedDateET,captureTimeVerified:false,screenshot:grid.screenshot,gamesShown:grid.gamesShown,upcomingGames:games.length,...gridironCounts},modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
 function verify(){
  const w=payload.week4.bets;
  const modelProb=games.every(g=>{const p=g.model.hybrid;return [p.p_home_cover,p.p_away_cover,p.p_push].every(x=>Number.isFinite(x)&&x>=0&&x<=1)&&Math.abs(p.p_home_cover+p.p_away_cover+p.p_push-1)<1e-6});
@@ -39,7 +59,10 @@ function verify(){
   probabilityContract:modelProb,
   sportslineFullSlate:games.every(g=>g.sportsline&&g.sportsline.sim&&g.sportsline.projectedScore&&g.sportsline.currentSpread),
   sportslineTypeIntegrity:sportslineCounts.ATS===5&&sportslineCounts.TOTAL===7&&sportslineCounts.MONEYLINE===2&&sportslineCounts.exactSlyATS===4,
-  excludedExternalHallucination:games.every(g=>g.gridiron===null&&g.lucas===null&&g.sportsline.moneyPct===null&&g.sportsline.simCoverPct===null)
+  gridironCoverage:grid.gamesShown===15&&games.length===14&&grid.games['TB @ DAL'].isCompletedThursday===true&&games.every(g=>g.gridiron&&g.gridiron.homeCoverPct+g.gridiron.awayCoverPct===100),
+  gridironExactAndNoTakes:gridironCounts.exact===4&&gridironCounts.actionableExact===4&&gridironCounts.noTake===3&&games.filter(g=>g.gridiron.referenceStatus==='NO_TAKE_50_50').every(g=>g.gridiron.strongerSide===null),
+  gridironLineIntegrity:games.every(g=>g.gridiron.exactSlyLine===(Math.abs(g.gridiron.homeSpread-g.slyHomeSpread)<1e-9)),
+  excludedExternalHallucination:games.every(g=>g.lucas===null&&g.sportsline.moneyPct===null&&g.sportsline.simCoverPct===null)
  }
 }
 const checks=verify();if(Object.values(checks).some(x=>!x))throw Error('Week 5 startup integrity check failure: '+JSON.stringify(checks));
