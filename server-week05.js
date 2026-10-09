@@ -7,6 +7,7 @@ const standings=JSON.parse(fs.readFileSync('./week05-standings.json','utf8'));
 const html=fs.readFileSync('./week05-command-center.html','utf8');
 const sl=JSON.parse(fs.readFileSync('./week05-sportsline-user-screenshot-2026-10-09.json','utf8'));
 const grid=JSON.parse(fs.readFileSync('./week05-gridironai-user-screenshot-2026-10-09.json','utf8'));
+const lucas=JSON.parse(fs.readFileSync('./week05-lucas-first-thoughts-2026-10-09.json','utf8'));
 function normalizeSportsline(g) {
  const record=sl.games[g.id];
  if(!record)throw Error('SportsLine screenshot match missing: '+g.id);
@@ -37,11 +38,19 @@ function normalizeGridiron(g) {
    countedAsExactSlyATS:!noTake&&exact,
    interpretation:exact?'Probability applies at exact Sly spread.':'Probability applies to GridironAI native line only; no numerical adjustment has been made to Sly.'};
 }
-const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g),gridiron:normalizeGridiron(g)}));
+function normalizeLucas(g){
+ const record=lucas.games[g.id];
+ if(!record)return {source:'Lucas',game:g.id,team:null,status:'NOT_MENTIONED',designation:'NO_TAKE',qualifier:'Lucas did not mention this matchup',numericProbability:null,actionableAsFirmPick:false};
+ if(record.team!==g.away&&record.team!==g.home)throw Error('Lucas selected team mismatch '+g.id);
+ const sny=record.team===g.home?g.slyHomeSpread:-g.slyHomeSpread;
+ return {...record,source:'Lucas',status:record.designation,referenceLinePolicy:'Mapped to Sly for comparison only; Lucas did not provide an official contest spread',slyMappedSpread:sny,slyMappedDisplay:record.team+' '+(sny>0?'+':'')+sny,numericProbability:null};
+}
+const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g),gridiron:normalizeGridiron(g),lucas:normalizeLucas(g)}));
 const sportslineCounts=games.reduce((n,g)=>{n[g.sportsline.sim.type]++;if(g.sportsline.sim.exactSlyLine)n.exactSlyATS++;return n;},{ATS:0,TOTAL:0,MONEYLINE:0,exactSlyATS:0});
 const gridironCounts=games.reduce((n,g)=>{n.exact+=g.gridiron.exactSlyLine?1:0;n.noTake+=g.gridiron.referenceStatus==='NO_TAKE_50_50'?1:0;n.actionableExact+=g.gridiron.countedAsExactSlyATS?1:0;return n;},{exact:0,noTake:0,actionableExact:0});
-const dataQuality={...input.dataQuality,gridiron:'User-provided GridironAI Week 5 screenshot shows 15 games (14 upcoming plus completed Thursday). Native home spreads and both team cover probabilities verified, including 3 50/50 NO TAKE matchups. '+gridironCounts.exact+' exactly match Sly; '+gridironCounts.actionableExact+' actionable exact-line directional reads. Unverified screenshot clock time; different-line percentages must NOT be relabeled as Sly probabilities.',sportsline:'User-provided Week 5 SportsLine screenshots cover all 14 games. SIM: '+sportslineCounts.ATS+' ATS ('+sportslineCounts.exactSlyATS+' exact Sly), '+sportslineCounts.TOTAL+' totals, '+sportslineCounts.MONEYLINE+' moneyline. SIM cover probabilities and handle percentages not shown. Exact capture clock time unavailable.'};
-const payload={...input,games,standings,dataQuality,sportslineSummary:{source:sl.source,receivedDateET:sl.receivedDateET,captureTimeVerified:false,screenshotFiles:sl.screenshots,...sportslineCounts},gridironSummary:{source:grid.source,receivedDateET:grid.receivedDateET,captureTimeVerified:false,screenshot:grid.screenshot,gamesShown:grid.gamesShown,upcomingGames:games.length,...gridironCounts},modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
+const lucasCounts=games.reduce((n,g)=>{n[g.lucas.designation]=(n[g.lucas.designation]||0)+1;return n;},{});
+const dataQuality={...input.dataQuality,lucas:'Lucas first thoughts, user relayed 2026-10-09: 1 LIKE (CHI), 1 CONDITIONAL_LIKE (CIN; Chase/Higgins health and Lucas -7 market note), 4 tentative LEAN with question marks (CLE, IND, BAL, NYG), 1 LEAN_PASS (LAR; probably would not bet), 7 not mentioned. These are directional expressions, not probabilistic or finalized bets. No Sly line is overwritten.',gridiron:'User-provided GridironAI Week 5 screenshot shows 15 games (14 upcoming plus completed Thursday). Native home spreads and both team cover probabilities verified, including 3 50/50 NO TAKE matchups. '+gridironCounts.exact+' exactly match Sly; '+gridironCounts.actionableExact+' actionable exact-line directional reads. Unverified screenshot clock time; different-line percentages must NOT be relabeled as Sly probabilities.',sportsline:'User-provided Week 5 SportsLine screenshots cover all 14 games. SIM: '+sportslineCounts.ATS+' ATS ('+sportslineCounts.exactSlyATS+' exact Sly), '+sportslineCounts.TOTAL+' totals, '+sportslineCounts.MONEYLINE+' moneyline. SIM cover probabilities and handle percentages not shown. Exact capture clock time unavailable.'};
+const payload={...input,games,standings,dataQuality,sportslineSummary:{source:sl.source,receivedDateET:sl.receivedDateET,captureTimeVerified:false,screenshotFiles:sl.screenshots,...sportslineCounts},gridironSummary:{source:grid.source,receivedDateET:grid.receivedDateET,captureTimeVerified:false,screenshot:grid.screenshot,gamesShown:grid.gamesShown,upcomingGames:games.length,...gridironCounts},lucasSummary:{source:'Lucas',receivedDateET:lucas.receivedDateET,finalPicks:false,numericProbabilitiesProvided:false,...lucasCounts},modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
 function verify(){
  const w=payload.week4.bets;
  const modelProb=games.every(g=>{const p=g.model.hybrid;return [p.p_home_cover,p.p_away_cover,p.p_push].every(x=>Number.isFinite(x)&&x>=0&&x<=1)&&Math.abs(p.p_home_cover+p.p_away_cover+p.p_push-1)<1e-6});
@@ -62,7 +71,9 @@ function verify(){
   gridironCoverage:grid.gamesShown===15&&games.length===14&&grid.games['TB @ DAL'].isCompletedThursday===true&&games.every(g=>g.gridiron&&g.gridiron.homeCoverPct+g.gridiron.awayCoverPct===100),
   gridironExactAndNoTakes:gridironCounts.exact===4&&gridironCounts.actionableExact===4&&gridironCounts.noTake===3&&games.filter(g=>g.gridiron.referenceStatus==='NO_TAKE_50_50').every(g=>g.gridiron.strongerSide===null),
   gridironLineIntegrity:games.every(g=>g.gridiron.exactSlyLine===(Math.abs(g.gridiron.homeSpread-g.slyHomeSpread)<1e-9)),
-  excludedExternalHallucination:games.every(g=>g.lucas===null&&g.sportsline.moneyPct===null&&g.sportsline.simCoverPct===null)
+  lucasCoverage:games.every(g=>g.lucas&&g.lucas.numericProbability===null)&&lucasCounts.LIKE===1&&lucasCounts.CONDITIONAL_LIKE===1&&lucasCounts.LEAN===4&&lucasCounts.LEAN_PASS===1&&lucasCounts.NO_TAKE===7,
+  lucasNoFalseFirmPicks:games.every(g=>g.lucas.actionableAsFirmPick!==true)&&games.find(g=>g.id==='CIN @ MIA').lucas.marketSpreadMention.line===-7&&games.find(g=>g.id==='CIN @ MIA').slyFavoriteSpread===-6.5,
+  excludedExternalHallucination:games.every(g=>g.sportsline.moneyPct===null&&g.sportsline.simCoverPct===null)
  }
 }
 const checks=verify();if(Object.values(checks).some(x=>!x))throw Error('Week 5 startup integrity check failure: '+JSON.stringify(checks));
