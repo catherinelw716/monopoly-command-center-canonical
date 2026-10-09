@@ -1,0 +1,144 @@
+{
+  "season": 2026,
+  "week": 5,
+  "freeze_type": "SLY_FRIDAY_FREEZE_INPUT",
+  "freeze_date_local": "2026-10-09",
+  "exact_freeze_timestamp": null,
+  "provenance": "User-provided official Sly Week 5 Friday sheet image uploaded Oct 9, 2026. Thursday Tampa Bay at Dallas already final (24–16) and Friday sheet omitted Thursday Sly spread.",
+  "use_policy": "Immutable source of contest lines. No market/sportsline/model value is permitted to alter the freeze.",
+  "spread_convention": "conventional team-side spread, negative=favorite positive=underdog",
+  "excluded_or_missing": [
+    {
+      "game": "TB @ DAL",
+      "reason": "Thursday final, no contest spread supplied on Friday sheet"
+    }
+  ],
+  "games": [
+    {
+      "game": "PHI @ JAX",
+      "away": "PHI",
+      "home": "JAX",
+      "sly_pick_display": "JAX -7.5",
+      "sly_home_spread": -7.5,
+      "game_time_et": "SUN 9:30 AM",
+      "location": "London"
+    },
+    {
+      "game": "CLE @ NYJ",
+      "away": "CLE",
+      "home": "NYJ",
+      "sly_pick_display": "NYJ -2.5",
+      "sly_home_spread": -2.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "East Rutherford"
+    },
+    {
+      "game": "CIN @ MIA",
+      "away": "CIN",
+      "home": "MIA",
+      "sly_pick_display": "CIN -6.5",
+      "sly_home_spread": 6.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Miami"
+    },
+    {
+      "game": "LV @ NE",
+      "away": "LV",
+      "home": "NE",
+      "sly_pick_display": "NE -3.5",
+      "sly_home_spread": -3.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Foxborough"
+    },
+    {
+      "game": "MIN @ NO",
+      "away": "MIN",
+      "home": "NO",
+      "sly_pick_display": "MIN -2.5",
+      "sly_home_spread": 2.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "New Orleans"
+    },
+    {
+      "game": "HOU @ TEN",
+      "away": "HOU",
+      "home": "TEN",
+      "sly_pick_display": "HOU -7.5",
+      "sly_home_spread": 7.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Nashville"
+    },
+    {
+      "game": "NYG @ WAS",
+      "away": "NYG",
+      "home": "WAS",
+      "sly_pick_display": "WAS -3.5",
+      "sly_home_spread": -3.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Landover"
+    },
+    {
+      "game": "CHI @ GB",
+      "away": "CHI",
+      "home": "GB",
+      "sly_pick_display": "CHI -1.5",
+      "sly_home_spread": 1.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Green Bay"
+    },
+    {
+      "game": "IND @ PIT",
+      "away": "IND",
+      "home": "PIT",
+      "sly_pick_display": "PIT -2.5",
+      "sly_home_spread": -2.5,
+      "game_time_et": "SUN 1:00 PM",
+      "location": "Pittsburgh"
+    },
+    {
+      "game": "DEN @ LAC",
+      "away": "DEN",
+      "home": "LAC",
+      "sly_pick_display": "DEN -3.5",
+      "sly_home_spread": 3.5,
+      "game_time_et": "SUN 4:05 PM",
+      "location": "Inglewood"
+    },
+    {
+      "game": "SF @ SEA",
+      "away": "SF",
+      "home": "SEA",
+      "sly_pick_display": "SEA -3",
+      "sly_home_spread": -3,
+      "game_time_et": "SUN 4:25 PM",
+      "location": "Seattle"
+    },
+    {
+      "game": "DET @ ARI",
+      "away": "DET",
+      "home": "ARI",
+      "sly_pick_display": "DET -5.5",
+      "sly_home_spread": 5.5,
+      "game_time_et": "SUN 4:25 PM",
+      "location": "Glendale"
+    },
+    {
+      "game": "BAL @ ATL",
+      "away": "BAL",
+      "home": "ATL",
+      "sly_pick_display": "ATL -3",
+      "sly_home_spread": -3,
+      "game_time_et": "SUN 8:20 PM",
+      "location": "Atlanta"
+    },
+    {
+      "game": "BUF @ LAR",
+      "away": "BUF",
+      "home": "LAR",
+      "sly_pick_display": "LAR -3",
+      "sly_home_spread": -3,
+      "game_time_et": "MON 8:15 PM",
+      "location": "Inglewood"
+    }
+  ]
+}
