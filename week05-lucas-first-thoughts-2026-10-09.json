@@ -1,0 +1,80 @@
+{
+  "source": "Lucas",
+  "season": 2026,
+  "week": 5,
+  "snapshotType": "USER_RELAYED_DIRECT_QUOTE",
+  "receivedDateET": "2026-10-09",
+  "exactPickTimestamp": null,
+  "rawQuote": "First thoughts are bears, bengals* (pending Chase and tee health but that line is 7 now), browns?, colts?, ravens?, giants?, rams? (Probably wouldn’t pick that game personally)",
+  "sourceStatus": "FIRST_THOUGHTS_NOT_FINAL_SUBMISSION",
+  "symbols": {
+    "?": "slight like / LEAN (user explicitly clarified)",
+    "*": "conditional qualifier; Bengals pending Chase and Higgins health"
+  },
+  "linePolicy": "Lucas mentions Bengals -7 as market observation, never alter official Sly Bengals -6.5. Other picks mapped to Sly's locked team spreads; Lucas provided no numeric spreads for them.",
+  "interpretation": "LIKE, CONDITIONAL_LIKE, LEAN, LEAN_PASS are distinct nonprobability judgments. Unmentioned matchups are NO TAKE / NOT MENTIONED, not opposition.",
+  "games": {
+    "CHI @ GB": {
+      "game": "CHI @ GB",
+      "team": "CHI",
+      "original": "bears",
+      "designation": "LIKE",
+      "qualifier": "Unqualified initial like",
+      "actionableAsFirmPick": false
+    },
+    "CIN @ MIA": {
+      "game": "CIN @ MIA",
+      "team": "CIN",
+      "original": "bengals*",
+      "designation": "CONDITIONAL_LIKE",
+      "qualifier": "Pending Ja'Marr Chase and Tee Higgins health; Lucas notes market Bengals -7",
+      "marketSpreadMention": {
+        "team": "CIN",
+        "line": -7,
+        "source": "Lucas comment",
+        "notSly": true
+      },
+      "actionableAsFirmPick": false
+    },
+    "CLE @ NYJ": {
+      "game": "CLE @ NYJ",
+      "team": "CLE",
+      "original": "browns?",
+      "designation": "LEAN",
+      "qualifier": "Question mark means slight like / lean",
+      "actionableAsFirmPick": false
+    },
+    "IND @ PIT": {
+      "game": "IND @ PIT",
+      "team": "IND",
+      "original": "colts?",
+      "designation": "LEAN",
+      "qualifier": "Question mark means slight like / lean",
+      "actionableAsFirmPick": false
+    },
+    "BAL @ ATL": {
+      "game": "BAL @ ATL",
+      "team": "BAL",
+      "original": "ravens?",
+      "designation": "LEAN",
+      "qualifier": "Question mark means slight like / lean",
+      "actionableAsFirmPick": false
+    },
+    "NYG @ WAS": {
+      "game": "NYG @ WAS",
+      "team": "NYG",
+      "original": "giants?",
+      "designation": "LEAN",
+      "qualifier": "Question mark means slight like / lean",
+      "actionableAsFirmPick": false
+    },
+    "BUF @ LAR": {
+      "game": "BUF @ LAR",
+      "team": "LAR",
+      "original": "rams?",
+      "designation": "LEAN_PASS",
+      "qualifier": "Question mark means slight lean; Lucas explicitly says he probably would not personally bet the game",
+      "actionableAsFirmPick": false
+    }
+  }
+}
