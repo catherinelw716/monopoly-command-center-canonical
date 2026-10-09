@@ -5,8 +5,23 @@ const port=Number(process.env.PORT||10000);
 const input=JSON.parse(fs.readFileSync('./week05-canonical-data.json','utf8'));
 const standings=JSON.parse(fs.readFileSync('./week05-standings.json','utf8'));
 const html=fs.readFileSync('./week05-command-center.html','utf8');
-const games=input.games.map(g=>({...g,model:predict(g)}));
-const payload={...input,games,standings,modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
+const sl=JSON.parse(fs.readFileSync('./week05-sportsline-user-screenshot-2026-10-09.json','utf8'));
+function normalizeSportsline(g) {
+ const record=sl.games[g.id];
+ if(!record)throw Error('SportsLine screenshot match missing: '+g.id);
+ const away=g.away,home=g.home;
+ const expected=record.sim.side===g.favorite?g.slyFavoriteSpread:-g.slyFavoriteSpread;
+ const ats=record.sim.type==='ATS';
+ const exact=ats&&Math.abs(record.sim.value-expected)<1e-9;
+ return {...record,sim:{...record.sim,exactSlyLine:exact,
+  slyReference:ats?record.sim.side+' '+(expected>0?'+':'')+expected:null,
+  exactLineStatus:!ats?'NON_ATS_MARKET':exact?'EXACT_SLY':'DIRECTION_ONLY_DIFFERENT_SPREAD'},
+  snapshotSource:sl.source,snapshotReceivedDateET:sl.receivedDateET,exactCaptureTimestamp:sl.exactCaptureTimestamp};
+}
+const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g)}));
+const sportslineCounts=games.reduce((n,g)=>{n[g.sportsline.sim.type]++;if(g.sportsline.sim.exactSlyLine)n.exactSlyATS++;return n;},{ATS:0,TOTAL:0,MONEYLINE:0,exactSlyATS:0});
+const dataQuality={...input.dataQuality,sportsline:'User-provided Week 5 SportsLine screenshots cover all 14 games. SIM: '+sportslineCounts.ATS+' ATS ('+sportslineCounts.exactSlyATS+' exact Sly), '+sportslineCounts.TOTAL+' totals, '+sportslineCounts.MONEYLINE+' moneyline. SIM cover probabilities and handle percentages not shown. Exact capture clock time unavailable.'};
+const payload={...input,games,standings,dataQuality,sportslineSummary:{source:sl.source,receivedDateET:sl.receivedDateET,captureTimeVerified:false,screenshotFiles:sl.screenshots,...sportslineCounts},modelVersion:games[0].model.model_version,derivedAt:'2026-10-09',sourceHash:games[0].model.artifact_hash};
 function verify(){
  const w=payload.week4.bets;
  const modelProb=games.every(g=>{const p=g.model.hybrid;return [p.p_home_cover,p.p_away_cover,p.p_push].every(x=>Number.isFinite(x)&&x>=0&&x<=1)&&Math.abs(p.p_home_cover+p.p_away_cover+p.p_push-1)<1e-6});
@@ -22,7 +37,9 @@ function verify(){
   fiveFactorPage:html.includes('Five-Criteria Spread Scorecard')&&html.includes('Money / Handle')&&html.includes('Defensive EPA'),
   views:html.includes('Catherine — solo portfolio planner')&&html.includes('Four-source comparison')&&html.includes('Official standings'),
   probabilityContract:modelProb,
-  excludedExternalHallucination:games.every(g=>g.sportsline===null&&g.gridiron===null&&g.lucas===null)
+  sportslineFullSlate:games.every(g=>g.sportsline&&g.sportsline.sim&&g.sportsline.projectedScore&&g.sportsline.currentSpread),
+  sportslineTypeIntegrity:sportslineCounts.ATS===5&&sportslineCounts.TOTAL===7&&sportslineCounts.MONEYLINE===2&&sportslineCounts.exactSlyATS===4,
+  excludedExternalHallucination:games.every(g=>g.gridiron===null&&g.lucas===null&&g.sportsline.moneyPct===null&&g.sportsline.simCoverPct===null)
  }
 }
 const checks=verify();if(Object.values(checks).some(x=>!x))throw Error('Week 5 startup integrity check failure: '+JSON.stringify(checks));
