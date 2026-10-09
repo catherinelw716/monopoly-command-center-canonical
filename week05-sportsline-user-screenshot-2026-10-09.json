@@ -105,7 +105,7 @@
         "type": "TOTAL",
         "side": "UNDER",
         "value": 44.5,
-        "display": "UNDER +44.5"
+        "display": "UNDER 44.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -165,7 +165,7 @@
         "type": "TOTAL",
         "side": "OVER",
         "value": 39.5,
-        "display": "OVER +39.5"
+        "display": "OVER 39.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -225,7 +225,7 @@
         "type": "TOTAL",
         "side": "OVER",
         "value": 38,
-        "display": "OVER +38"
+        "display": "OVER 38"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -255,7 +255,7 @@
         "type": "TOTAL",
         "side": "OVER",
         "value": 41.5,
-        "display": "OVER +41.5"
+        "display": "OVER 41.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -285,7 +285,7 @@
         "type": "TOTAL",
         "side": "OVER",
         "value": 45.5,
-        "display": "OVER +45.5"
+        "display": "OVER 45.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -405,7 +405,7 @@
         "type": "TOTAL",
         "side": "OVER",
         "value": 43.5,
-        "display": "OVER +43.5"
+        "display": "OVER 43.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
@@ -435,7 +435,7 @@
         "type": "TOTAL",
         "side": "UNDER",
         "value": 54.5,
-        "display": "UNDER +54.5"
+        "display": "UNDER 54.5"
       },
       "moneyPct": null,
       "simCoverPct": null,
