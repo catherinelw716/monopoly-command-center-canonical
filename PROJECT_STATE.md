@@ -1,5 +1,28 @@
 # NFL Monopoly — Canonical Project State / Handoff
 
+## CURRENT STATE — 2026-10-09 · WEEK 5 · CATHERINE ONLY
+
+**Live target:** https://monopoly-command-center-canonical.onrender.com/
+**Canonical Week 5 data:** `week05-canonical-data.json`
+**Immutable Week 5 Sly Friday freeze:** `v2/season_2026/week_05_sly_freeze.json`
+**Official all-111-player Week 4 standings:** `week05-standings.json`
+**Week 5 server / UI / challenger:** `server-week05.js`, `week05-command-center.html`, `week05-model.js`.
+**Deployment notice:** GitHub update is not proof of live Render deployment; verify `/_version`, `/healthz`, and `/api/week5` after deployment. Current deployment status must be checked independently.
+
+- User explicitly changed scope to **Catherine solo**. No joint Catherine/Amanda wagering, portfolio optimization, or exposure in active dashboards. Old household research is historical only.
+- Commissioner Week 4 balance: Catherine **$12,800; rank #17 (+11 places)**, 111 active, leader $31,700, tied #10 $14,000.
+- Catherine Week 4 submitted Oct 4: IND −3.5 $2,000 W; DET −3.5 $500 L; ARI −2.5 $500 L; LV +4.5 $500 W; LAR −3.5 $300 W; MIA +10.5 $200 W.
+- IMPORTANT settlement: **Cover net +1× wager, loss −1×, push 0** (a cover receives total 2× *including returned stake*, not net +2×). Week4 outlay $4,000, record 4–2, net **+$2,000**, Week3 official bankroll **$10,800** → Week4 **$12,800**.
+- Week 5 has 14 upcoming games plus already-completed TB @ DAL Thursday (TB 24–16). Sly's Thursday spread is not provided; never infer it.
+- Oct9 ~5:53pm ET market consensus used as dated market snapshot; not a promise of executable prices.
+- Frozen V2 challenger `V2-0006C-global-hybrid-r1` is **not promoted**; Week5 predictions derive from market-to-Sly price gaps plus frozen push model, not injury-adjusted football forecasts.
+- No Week5 independently verified SportsLine exact-line ATS, GridironAI exact-line ATS, Lucas take, complete money handle/ATS trends/Defensive EPA series, or complete game-time weather forecasts. UI MUST label these missing and never transfer Week4 signals to Week5.
+- Dedicated five-criteria page exists but grades MUST remain unverified until full inputs validated. Five factors remain Line Movement, ATS Trends, Money/Handle, Defensive EPA, and Key Numbers.
+- Week5 draft portfolio is a local what-if calculator, not a validated prize-equity optimizer or final wager recommendation.
+- The earlier October 1 snapshot below is preserved for V2 audit **but is superseded by this block for current player balances and scope**.
+
+---
+
 Read this file first when continuing the project in a new conversation.
 
 **Repo:** `catherinelw716/monopoly-command-center-canonical`  
