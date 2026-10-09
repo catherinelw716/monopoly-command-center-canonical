@@ -15,7 +15,7 @@ function verify(){
   solo:payload.settings.mode==='SOLO'&&payload.settings.amandaEnabled===false,
   standings111:standings.rows.length===111,
   playerConfirmed:standings.rows.some(x=>x.name==='Catherine Williams'&&x.rank===17&&x.bankroll===12800),
-  historicalAccounting:w.length===6&&w.reduce((s,g)=>s+g.wager,0)===4000&&w.reduce((s,g)=>s+g.net,0)===5000&&payload.week4.startingBankroll+payload.week4.net===payload.player.bankroll,
+  historicalAccounting:w.length===6&&w.reduce((s,g)=>s+g.wager,0)===4000&&w.reduce((s,g)=>s+g.net,0)===2000&&payload.week4.startingBankroll===10800&&payload.week4.startingBankroll+payload.week4.net===payload.player.bankroll,
   correctUpcomingCount:games.length===14&&new Set(games.map(g=>g.id)).size===14,
   thursdayFinal:payload.thursday.status==='FINAL'&&payload.thursday.eligible===false,
   freezePreserved:games.every(g=>g.slyFavoriteSpread<0&&g.favorite&&g.slyHomeSpread===(g.favorite===g.home?g.slyFavoriteSpread:-g.slyFavoriteSpread)),
