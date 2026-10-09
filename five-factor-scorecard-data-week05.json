@@ -1,0 +1,276 @@
+{
+  "season": 2026,
+  "week": 5,
+  "capturedAt": null,
+  "status": "TWO_FACTOR_PARTIAL_CHALLENGER",
+  "engineVersion": "1.0.1",
+  "policy": {
+    "slyImmutable": true,
+    "scoringRules": "FIVE_FACTOR_SPREAD_SCORECARD_SCORING_RULES.md",
+    "moneyMustBeHandle": true,
+    "scoreIsNotCoverProbability": true,
+    "noResultGradeWithTwoOrFewerAvailable": true,
+    "sourceHeterogeneity": "SportsLine open-current from same screenshot; NFL key-number relative to SportsLine current; V2 and GridironAI/ Lucas do not score five factors"
+  },
+  "sources": {
+    "sly": "v2/season_2026/week_05_sly_freeze.json",
+    "market": "SportsLine user-provided Week 5 screenshot; source-specific opener & current; exact capture time not shown",
+    "ats": "UNAVAILABLE: no complete Week 5 H2H/current-season/recent component verification",
+    "money": "UNAVAILABLE: no timestamped dollars/handle-only percent with reference line",
+    "defense": "UNAVAILABLE: no uniform through-week-4 2026 defensive EPA/play ranking table"
+  },
+  "games": [
+    {
+      "game": "PHI @ JAX",
+      "away": "PHI",
+      "home": "JAX",
+      "slyAway": 7.5,
+      "market": {
+        "openAway": 7.5,
+        "currentAway": 7.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "CLE @ NYJ",
+      "away": "CLE",
+      "home": "NYJ",
+      "slyAway": 2.5,
+      "market": {
+        "openAway": 2.5,
+        "currentAway": 2.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "CIN @ MIA",
+      "away": "CIN",
+      "home": "MIA",
+      "slyAway": -6.5,
+      "market": {
+        "openAway": -6.5,
+        "currentAway": -7,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "LV @ NE",
+      "away": "LV",
+      "home": "NE",
+      "slyAway": 3.5,
+      "market": {
+        "openAway": 3.5,
+        "currentAway": 3.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "MIN @ NO",
+      "away": "MIN",
+      "home": "NO",
+      "slyAway": -2.5,
+      "market": {
+        "openAway": -2,
+        "currentAway": -2.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "HOU @ TEN",
+      "away": "HOU",
+      "home": "TEN",
+      "slyAway": -7.5,
+      "market": {
+        "openAway": -7.5,
+        "currentAway": -7,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "NYG @ WAS",
+      "away": "NYG",
+      "home": "WAS",
+      "slyAway": 3.5,
+      "market": {
+        "openAway": 4.5,
+        "currentAway": 4,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "CHI @ GB",
+      "away": "CHI",
+      "home": "GB",
+      "slyAway": -1.5,
+      "market": {
+        "openAway": -1.5,
+        "currentAway": -1.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "IND @ PIT",
+      "away": "IND",
+      "home": "PIT",
+      "slyAway": 2.5,
+      "market": {
+        "openAway": 2.5,
+        "currentAway": 2.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "DEN @ LAC",
+      "away": "DEN",
+      "home": "LAC",
+      "slyAway": -3.5,
+      "market": {
+        "openAway": -3.5,
+        "currentAway": -3.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "SF @ SEA",
+      "away": "SF",
+      "home": "SEA",
+      "slyAway": 3,
+      "market": {
+        "openAway": 3,
+        "currentAway": 3,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "DET @ ARI",
+      "away": "DET",
+      "home": "ARI",
+      "slyAway": -5.5,
+      "market": {
+        "openAway": -4.5,
+        "currentAway": -5.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "BAL @ ATL",
+      "away": "BAL",
+      "home": "ATL",
+      "slyAway": 3,
+      "market": {
+        "openAway": 3,
+        "currentAway": 3.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    },
+    {
+      "game": "BUF @ LAR",
+      "away": "BUF",
+      "home": "LAR",
+      "slyAway": 3,
+      "market": {
+        "openAway": 2.5,
+        "currentAway": 3.5,
+        "source": "SportsLine",
+        "capturedAt": null,
+        "sourceReceivedDateET": "2026-10-09",
+        "sourceCaptureClockTimeUnknown": true,
+        "crossCheckDirectionDisagreement": false
+      },
+      "trends": null,
+      "money": null,
+      "defense": null
+    }
+  ]
+}
