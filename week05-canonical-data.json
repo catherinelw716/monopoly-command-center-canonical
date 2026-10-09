@@ -20,7 +20,7 @@
     "minimumWager": 100,
     "wagerIncrement": 100,
     "modelStatus": "FROZEN_CHALLENGER_NOT_PROMOTED",
-    "externalSourcesPolicy": "unverified=NO TAKE; do not reuse older-week views",
+    "externalSourcesPolicy": "SportsLine: only ATS SIM at exact Sly line qualifies exact source support; GridironAI: >50 at native line, 50/50 NO TAKE, different-line numbers never exact Sly; Lucas: LIKE vs CONDITIONAL LIKE vs ? LEAN vs LEAN_PASS, initial only; none automatically receives mathematical weighting",
     "weatherPolicy": "context only"
   },
   "week4": {
@@ -98,8 +98,8 @@
     "market": "VegasInsider consensus odds page last updated Oct 9 2026 5:53 PM; mixed book offers; current prices are a snapshot, not executable odds",
     "opener": "Only two matchups have same-source verified opener fields; all other opener values are unavailable",
     "sportsline": "Week 5 SportsLine full-slate screenshot captured and joined from week05-sportsline-user-screenshot-2026-10-09.json. 5 visible ATS SIMs (4 exact contest spreads; CIN -7 differs from Sly CIN -6.5), 7 total and 2 moneyline. SportsLine SIM cover% and public money/handle% not shown. Other pick contents not visible.",
-    "gridiron": "Week 5 reference spread and cover probabilities not verified",
-    "lucas": "Week 5 Lucas selections not provided",
+    "gridiron": "Week 5 GridironAI screenshot verified: all 14 upcoming games plus completed Thursday; 4 exact frozen Sly spreads, 3 neutral 50/50 NO TAKE, all percentages tied to native line; never convert without modeling; exact capture clock time not visible.",
+    "lucas": "Week 5 initial user-relayed Lucas text: CHI LIKE, CIN CONDITIONAL_LIKE pending Chase/Higgins (Lucas cites market CIN -7; Sly remains -6.5), CLE/IND/BAL/NYG soft LEAN due question mark, LAR LEAN_PASS (Lucas probably would not personally pick); seven other games not mentioned. No final confirmed picks or probabilities.",
     "weather": "Game-time forecasts not verified; not inserted into probability model",
     "model": "Frozen 2016–2025 empirical hybrid run at contemporaneous Week 5 consensus vs exact Sly lines. Not production champion and not independently injury adjusted.",
     "portfolio": "Preview only; actual week4 reconciled at +1x cover / -1x loss",
@@ -454,6 +454,26 @@
       "moneylineSim": 2,
       "captureTime": "UNKNOWN",
       "provenanceDateET": "2026-10-09"
+    },
+    "gridironai": {
+      "path": "week05-gridironai-user-screenshot-2026-10-09.json",
+      "source": "User-supplied Week 5 GridironAI screenshot",
+      "upcoming": 14,
+      "completedThursday": 1,
+      "exactSlyLines": 4,
+      "noTake50_50": 3,
+      "nativeLineOnlyWhereDifferent": true,
+      "captureTime": "UNKNOWN"
+    },
+    "lucas": {
+      "path": "week05-lucas-first-thoughts-2026-10-09.json",
+      "source": "Lucas user-relayed quoted first thoughts",
+      "likes": 1,
+      "conditionalLikes": 1,
+      "softLeans": 4,
+      "leanButPass": 1,
+      "notMentioned": 7,
+      "finalized": false
     }
   }
 }
