@@ -97,7 +97,7 @@
   "dataQuality": {
     "market": "VegasInsider consensus odds page last updated Oct 9 2026 5:53 PM; mixed book offers; current prices are a snapshot, not executable odds",
     "opener": "Only two matchups have same-source verified opener fields; all other opener values are unavailable",
-    "sportsline": "Week 5 exact-spread ATS recommendations not verified",
+    "sportsline": "Week 5 SportsLine full-slate screenshot captured and joined from week05-sportsline-user-screenshot-2026-10-09.json. 5 visible ATS SIMs (4 exact contest spreads; CIN -7 differs from Sly CIN -6.5), 7 total and 2 moneyline. SportsLine SIM cover% and public money/handle% not shown. Other pick contents not visible.",
     "gridiron": "Week 5 reference spread and cover probabilities not verified",
     "lucas": "Week 5 Lucas selections not provided",
     "weather": "Game-time forecasts not verified; not inserted into probability model",
@@ -442,5 +442,18 @@
       "lucas": null,
       "week5V2": null
     }
-  ]
+  ],
+  "sourceReferences": {
+    "sportsline": {
+      "path": "week05-sportsline-user-screenshot-2026-10-09.json",
+      "source": "SportsLine screenshot supplied by user",
+      "games": 14,
+      "atsSim": 5,
+      "atsExactSly": 4,
+      "totalSim": 7,
+      "moneylineSim": 2,
+      "captureTime": "UNKNOWN",
+      "provenanceDateET": "2026-10-09"
+    }
+  }
 }
