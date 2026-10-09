@@ -24,9 +24,9 @@
     "weatherPolicy": "context only"
   },
   "week4": {
-    "startingBankroll": 7800,
+    "startingBankroll": 10800,
     "endingBankroll": 12800,
-    "net": 5000,
+    "net": 2000,
     "covered": 4,
     "losses": 2,
     "pushes": 0,
@@ -38,7 +38,7 @@
         "line": -3.5,
         "wager": 2000,
         "result": "WIN",
-        "net": 4000
+        "net": 2000
       },
       {
         "team": "DET",
@@ -59,23 +59,24 @@
         "line": 4.5,
         "wager": 500,
         "result": "WIN",
-        "net": 1000
+        "net": 500
       },
       {
         "team": "LAR",
         "line": -3.5,
         "wager": 300,
         "result": "WIN",
-        "net": 600
+        "net": 300
       },
       {
         "team": "MIA",
         "line": 10.5,
         "wager": 200,
         "result": "WIN",
-        "net": 400
+        "net": 200
       }
-    ]
+    ],
+    "poolSettlementRule": "COVER net +1x, LOSS net -1x, PUSH 0 (matches repo monopoly_contract.json and official Week 3-to-4 standings)"
   },
   "thursday": {
     "game": "TB @ DAL",
@@ -101,7 +102,7 @@
     "lucas": "Week 5 Lucas selections not provided",
     "weather": "Game-time forecasts not verified; not inserted into probability model",
     "model": "Frozen 2016–2025 empirical hybrid run at contemporaneous Week 5 consensus vs exact Sly lines. Not production champion and not independently injury adjusted.",
-    "portfolio": "Preview / no submitted Week 5 wagers",
+    "portfolio": "Preview only; actual week4 reconciled at +1x cover / -1x loss",
     "fiveFactor": "Missing ATS trends/handle/defensive EPA prevents authoritative five-factor grades; preserve as partial"
   },
   "games": [
