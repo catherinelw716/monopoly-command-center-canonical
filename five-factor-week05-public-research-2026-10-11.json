@@ -1,0 +1,681 @@
+{
+  "season": 2026,
+  "week": 5,
+  "provenance": {
+    "seasonATS": {
+      "source": "Action Network NFL Against-the-Spread Standings",
+      "url": "https://www.actionnetwork.com/nfl/against-the-spread-standings",
+      "asOf": "2026-10-11 before Sunday early slate",
+      "note": "No future outcomes included; only 2026 regular season ATS overall W-L-P. Last-10 and H2H not extracted."
+    },
+    "defense": {
+      "source": "Draft With Doug — 2026 NFL Team Stats & EPA Rankings",
+      "url": "https://www.draftwithdoug.com/nfl-team-stats",
+      "snapshotThroughWeek": 4,
+      "lastUpdated": "2026-10-06T13:10:00Z",
+      "methodology": "nflverse / nflfastR, opponent defensive EPA allowed per play, lower is better",
+      "rankPolicy": "Sort 32 published 3-decimal values ascending; ties ordered by team abbreviation (underlying unrounded order not provided)",
+      "note": "Do not blend with other defensive sources or later Week 5 in-progress plays"
+    },
+    "spreadHandle": {
+      "source": "DraftKings Network spread betting splits",
+      "url": "https://dknetwork.draftkings.com/draftkings-sportsbook-betting-splits/?itm_content=NFL&tb_edate=n30days&tb_eg=NFL&tb_emt=Spread&tb_page=1",
+      "page2": "https://dknetwork.draftkings.com/draftkings-sportsbook-betting-splits/?itm_content=NFL&tb_edate=n30days&tb_eg=88808&tb_emt=Spread&tb_page=2",
+      "retrievedAround": "2026-10-11T12:14:53-04:00",
+      "note": "Values are dynamic, snapshot may change. PHI @ JAX not included because early game had already begun and current spread-handle table removed it."
+    }
+  },
+  "teams": {
+    "ARI": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.085,
+        "rank": 27,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "ATL": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.055,
+        "rank": 8,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "BAL": {
+      "seasonATS": {
+        "w": 1,
+        "l": 3,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.004,
+        "rank": 13,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "BUF": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.114,
+        "rank": 29,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "CAR": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.012,
+        "rank": 16,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "CHI": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.066,
+        "rank": 5,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "CIN": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.019,
+        "rank": 11,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "CLE": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.02,
+        "rank": 17,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "DAL": {
+      "seasonATS": {
+        "w": 3,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 5
+      },
+      "defEPA": {
+        "value": 0.191,
+        "rank": 31,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "DEN": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.046,
+        "rank": 23,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "DET": {
+      "seasonATS": {
+        "w": 0,
+        "l": 3,
+        "p": 1,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.208,
+        "rank": 32,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "GB": {
+      "seasonATS": {
+        "w": 1,
+        "l": 3,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.062,
+        "rank": 24,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "HOU": {
+      "seasonATS": {
+        "w": 0,
+        "l": 4,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.068,
+        "rank": 26,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "IND": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.039,
+        "rank": 22,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "JAX": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.063,
+        "rank": 7,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "KC": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.035,
+        "rank": 9,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "LAR": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.107,
+        "rank": 3,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "LAC": {
+      "seasonATS": {
+        "w": 0,
+        "l": 3,
+        "p": 1,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.021,
+        "rank": 10,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "LV": {
+      "seasonATS": {
+        "w": 4,
+        "l": 0,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.119,
+        "rank": 2,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "MIA": {
+      "seasonATS": {
+        "w": 1,
+        "l": 3,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.092,
+        "rank": 28,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "MIN": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.209,
+        "rank": 1,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "NE": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.007,
+        "rank": 12,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "NO": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.161,
+        "rank": 30,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "NYG": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.031,
+        "rank": 20,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "NYJ": {
+      "seasonATS": {
+        "w": 2,
+        "l": 1,
+        "p": 1,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.024,
+        "rank": 18,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "PHI": {
+      "seasonATS": {
+        "w": 0,
+        "l": 4,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.065,
+        "rank": 25,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "PIT": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.003,
+        "rank": 14,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "SEA": {
+      "seasonATS": {
+        "w": 1,
+        "l": 2,
+        "p": 1,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": -0.103,
+        "rank": 4,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "SF": {
+      "seasonATS": {
+        "w": 3,
+        "l": 1,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.003,
+        "rank": 15,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "TB": {
+      "seasonATS": {
+        "w": 1,
+        "l": 4,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 5
+      },
+      "defEPA": {
+        "value": -0.066,
+        "rank": 6,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "TEN": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.038,
+        "rank": 21,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    },
+    "WAS": {
+      "seasonATS": {
+        "w": 2,
+        "l": 2,
+        "p": 0,
+        "source": "Action Network",
+        "throughWeek": 4
+      },
+      "defEPA": {
+        "value": 0.029,
+        "rank": 19,
+        "source": "Draft With Doug / nflverse",
+        "throughWeek": 4
+      }
+    }
+  },
+  "spreadHandle": {
+    "LV @ NE": {
+      "matchup": "LV @ NE",
+      "referenceTeam": "NE",
+      "referenceTeamSpread": -3.5,
+      "referenceAway": 3.5,
+      "awayPct": 34,
+      "homePct": 66,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "CIN @ MIA": {
+      "matchup": "CIN @ MIA",
+      "referenceTeam": "CIN",
+      "referenceTeamSpread": -7,
+      "referenceAway": -7,
+      "awayPct": 71,
+      "homePct": 29,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "HOU @ TEN": {
+      "matchup": "HOU @ TEN",
+      "referenceTeam": "HOU",
+      "referenceTeamSpread": -6.5,
+      "referenceAway": -6.5,
+      "awayPct": 70,
+      "homePct": 30,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "CLE @ NYJ": {
+      "matchup": "CLE @ NYJ",
+      "referenceTeam": "NYJ",
+      "referenceTeamSpread": -2.5,
+      "referenceAway": 2.5,
+      "awayPct": 61,
+      "homePct": 39,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "CHI @ GB": {
+      "matchup": "CHI @ GB",
+      "referenceTeam": "CHI",
+      "referenceTeamSpread": -1.5,
+      "referenceAway": -1.5,
+      "awayPct": 71,
+      "homePct": 29,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "MIN @ NO": {
+      "matchup": "MIN @ NO",
+      "referenceTeam": "MIN",
+      "referenceTeamSpread": -2.5,
+      "referenceAway": -2.5,
+      "awayPct": 41,
+      "homePct": 59,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "IND @ PIT": {
+      "matchup": "IND @ PIT",
+      "referenceTeam": "PIT",
+      "referenceTeamSpread": -3,
+      "referenceAway": 3,
+      "awayPct": 39,
+      "homePct": 61,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "NYG @ WAS": {
+      "matchup": "NYG @ WAS",
+      "referenceTeam": "WAS",
+      "referenceTeamSpread": -3.5,
+      "referenceAway": 3.5,
+      "awayPct": 78,
+      "homePct": 22,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "DEN @ LAC": {
+      "matchup": "DEN @ LAC",
+      "referenceTeam": "DEN",
+      "referenceTeamSpread": -3.5,
+      "referenceAway": -3.5,
+      "awayPct": 51,
+      "homePct": 49,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "DET @ ARI": {
+      "matchup": "DET @ ARI",
+      "referenceTeam": "DET",
+      "referenceTeamSpread": -5.5,
+      "referenceAway": -5.5,
+      "awayPct": 61,
+      "homePct": 39,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "SF @ SEA": {
+      "matchup": "SF @ SEA",
+      "referenceTeam": "SEA",
+      "referenceTeamSpread": -3,
+      "referenceAway": 3,
+      "awayPct": 22,
+      "homePct": 78,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "BAL @ ATL": {
+      "matchup": "BAL @ ATL",
+      "referenceTeam": "ATL",
+      "referenceTeamSpread": -3,
+      "referenceAway": 3,
+      "awayPct": 49,
+      "homePct": 51,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    },
+    "BUF @ LAR": {
+      "matchup": "BUF @ LAR",
+      "referenceTeam": "LAR",
+      "referenceTeamSpread": -3,
+      "referenceAway": 3,
+      "awayPct": 27,
+      "homePct": 73,
+      "source": "DraftKings Network — Betting Splits — % Handle (spread)",
+      "metricType": "handle",
+      "capturedAt": "2026-10-11T12:14:53-04:00",
+      "capturePrecision": "Approximate retrieval-time clock (same browsing session; dynamic source may move rapidly)",
+      "betPctIntentionallyExcluded": true
+    }
+  }
+}
