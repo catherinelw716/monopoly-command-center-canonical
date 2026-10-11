@@ -1,8 +1,8 @@
 {
   "season": 2026,
   "week": 5,
-  "capturedAt": null,
-  "status": "TWO_FACTOR_PARTIAL_CHALLENGER",
+  "capturedAt": "2026-10-11T12:14:53-04:00",
+  "status": "WEEK05_RESEARCH_GRADED_PARTIAL_ATS",
   "engineVersion": "1.0.1",
   "policy": {
     "slyImmutable": true,
@@ -10,14 +10,15 @@
     "moneyMustBeHandle": true,
     "scoreIsNotCoverProbability": true,
     "noResultGradeWithTwoOrFewerAvailable": true,
-    "sourceHeterogeneity": "SportsLine open-current from same screenshot; NFL key-number relative to SportsLine current; V2 and GridironAI/ Lucas do not score five factors"
+    "sourceHeterogeneity": "SportsLine open-current from same screenshot; NFL key-number relative to SportsLine current; V2 and GridironAI/ Lucas do not score five factors",
+    "researchContract": "ATS season record only, with absent H2H/recent components; engine caps trends at 14/6 degraded. Defense ranks use 2026 Week4 uniform source. Handle from exact book reference, mismatches/key crossings capped. PHI/JAX handle unavailable because London kickoff already occurred at time of research."
   },
   "sources": {
     "sly": "v2/season_2026/week_05_sly_freeze.json",
     "market": "SportsLine user-provided Week 5 screenshot; source-specific opener & current; exact capture time not shown",
-    "ats": "UNAVAILABLE: no complete Week 5 H2H/current-season/recent component verification",
-    "money": "UNAVAILABLE: no timestamped dollars/handle-only percent with reference line",
-    "defense": "UNAVAILABLE: no uniform through-week-4 2026 defensive EPA/play ranking table"
+    "ats": "2026 season ATS W-L-P: Action Network NFL ATS Standings, accessed 2026-10-11; H2H and last-ten are missing",
+    "money": "DraftKings Network Spread % Handle: 13 unstarted games, retrieved approximately Oct11 12:15 ET; PHI JAX not accessible pre-kick",
+    "defense": "Draft With Doug 2026 Week4 defensive EPA/play allowed, nflverse/nflfastR; rankings sorted ascending across 32 published team EPA values"
   },
   "games": [
     {
@@ -34,9 +35,46 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 0,
+            "l": 4,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
       "money": null,
-      "defense": null
+      "defense": {
+        "awayRank": 25,
+        "homeRank": 7,
+        "awayEpa": 0.065,
+        "homeEpa": -0.063,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "CLE @ NYJ",
@@ -52,9 +90,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 1,
+            "p": 1,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 61,
+        "homePct": 39,
+        "referenceAway": 2.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "NYJ -2.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 17,
+        "homeRank": 18,
+        "awayEpa": 0.02,
+        "homeEpa": 0.024,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "CIN @ MIA",
@@ -70,9 +154,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 1,
+            "l": 3,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 71,
+        "homePct": 29,
+        "referenceAway": -7,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "CIN -7",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 11,
+        "homeRank": 28,
+        "awayEpa": -0.019,
+        "homeEpa": 0.092,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "LV @ NE",
@@ -88,9 +218,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 4,
+            "l": 0,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 34,
+        "homePct": 66,
+        "referenceAway": 3.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "NE -3.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 2,
+        "homeRank": 12,
+        "awayEpa": -0.119,
+        "homeEpa": -0.007,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "MIN @ NO",
@@ -106,9 +282,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 41,
+        "homePct": 59,
+        "referenceAway": -2.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "MIN -2.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 1,
+        "homeRank": 30,
+        "awayEpa": -0.209,
+        "homeEpa": 0.161,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "HOU @ TEN",
@@ -124,9 +346,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 0,
+            "l": 4,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 70,
+        "homePct": 30,
+        "referenceAway": -6.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "HOU -6.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 26,
+        "homeRank": 21,
+        "awayEpa": 0.068,
+        "homeEpa": 0.038,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "NYG @ WAS",
@@ -142,9 +410,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 78,
+        "homePct": 22,
+        "referenceAway": 3.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "WAS -3.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 20,
+        "homeRank": 19,
+        "awayEpa": 0.031,
+        "homeEpa": 0.029,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "CHI @ GB",
@@ -160,9 +474,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 1,
+            "l": 3,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 71,
+        "homePct": 29,
+        "referenceAway": -1.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "CHI -1.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 5,
+        "homeRank": 24,
+        "awayEpa": -0.066,
+        "homeEpa": 0.062,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "IND @ PIT",
@@ -178,9 +538,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 39,
+        "homePct": 61,
+        "referenceAway": 3,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "PIT -3",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 22,
+        "homeRank": 14,
+        "awayEpa": 0.039,
+        "homeEpa": -0.003,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "DEN @ LAC",
@@ -196,9 +602,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 0,
+            "l": 3,
+            "p": 1,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 51,
+        "homePct": 49,
+        "referenceAway": -3.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "DEN -3.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 23,
+        "homeRank": 10,
+        "awayEpa": 0.046,
+        "homeEpa": -0.021,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "SF @ SEA",
@@ -214,9 +666,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 1,
+            "l": 2,
+            "p": 1,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 22,
+        "homePct": 78,
+        "referenceAway": 3,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "SEA -3",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 15,
+        "homeRank": 4,
+        "awayEpa": 0.003,
+        "homeEpa": -0.103,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "DET @ ARI",
@@ -232,9 +730,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 0,
+            "l": 3,
+            "p": 1,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 61,
+        "homePct": 39,
+        "referenceAway": -5.5,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "DET -5.5",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 32,
+        "homeRank": 27,
+        "awayEpa": 0.208,
+        "homeEpa": 0.085,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "BAL @ ATL",
@@ -250,9 +794,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 1,
+            "l": 3,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 49,
+        "homePct": 51,
+        "referenceAway": 3,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "ATL -3",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 13,
+        "homeRank": 8,
+        "awayEpa": -0.004,
+        "homeEpa": -0.055,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     },
     {
       "game": "BUF @ LAR",
@@ -268,9 +858,55 @@
         "sourceCaptureClockTimeUnknown": true,
         "crossCheckDirectionDisagreement": false
       },
-      "trends": null,
-      "money": null,
-      "defense": null
+      "trends": {
+        "source": "Action Network 2026 ATS standings (season record only)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "recentOverlapsSeason": false,
+        "away": {
+          "h2h": null,
+          "season": {
+            "w": 3,
+            "l": 1,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "home": {
+          "h2h": null,
+          "season": {
+            "w": 2,
+            "l": 2,
+            "p": 0,
+            "source": "Action Network",
+            "throughWeek": 4
+          },
+          "recent": null
+        },
+        "partial": "Both sides have 2026 season ATS record; missing recent and head-to-head. Degraded per preregistered scoring cap."
+      },
+      "money": {
+        "metricType": "handle",
+        "awayPct": 27,
+        "homePct": 73,
+        "referenceAway": 3,
+        "source": "DraftKings Network (% Handle; spread)",
+        "capturedAt": "2026-10-11T12:14:53-04:00",
+        "sourceLine": "LAR -3",
+        "approxCaptureTime": true
+      },
+      "defense": {
+        "awayRank": 29,
+        "homeRank": 3,
+        "awayEpa": 0.114,
+        "homeEpa": -0.107,
+        "sameMethodology": true,
+        "source": "Draft With Doug (nflverse/nflfastR 2026 through Week 4)",
+        "capturedAt": "2026-10-06T13:10:00Z",
+        "throughWeek": 4,
+        "rankInputPrecision": "rounded 3 decimals; tie sorted by team abbreviation"
+      }
     }
   ]
 }
