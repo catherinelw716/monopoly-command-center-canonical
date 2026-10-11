@@ -58,7 +58,7 @@ function normalizeFiveFactor(g){
  const openAway=record.openSpread.team===g.away?record.openSpread.line:-record.openSpread.line;
  const currentAway=record.currentSpread.team===g.away?record.currentSpread.line:-record.currentSpread.line;
  if(Math.abs(x.market.openAway-openAway)>1e-9||Math.abs(x.market.currentAway-currentAway)>1e-9)throw Error('Five-factor movement input differs from SportsLine source: '+g.id);
- return x.fiveFactor;
+ return {...x.fiveFactor,sourceEvidence:{awaySeasonATS:x.trends?.away?.season||null,homeSeasonATS:x.trends?.home?.season||null,handleCapturedAt:x.money?.capturedAt||null}};
 }
 const games=input.games.map(g=>({...g,model:predict(g),sportsline:normalizeSportsline(g),gridiron:normalizeGridiron(g),lucas:normalizeLucas(g),fiveFactor:normalizeFiveFactor(g)}));
 const sportslineCounts=games.reduce((n,g)=>{n[g.sportsline.sim.type]++;if(g.sportsline.sim.exactSlyLine)n.exactSlyATS++;return n;},{ATS:0,TOTAL:0,MONEYLINE:0,exactSlyATS:0});
